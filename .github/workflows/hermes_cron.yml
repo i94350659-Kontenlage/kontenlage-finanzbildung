@@ -2,9 +2,9 @@ name: Hermes Content & Strategy Automation
 
 on:
   schedule:
-    # Führt das Hermes-Skript jeden Montag um 08:00 Uhr UTC aus
+    # Jeden Montag um 08:00 Uhr UTC — vollautomatisch
     - cron: '0 8 * * 1'
-  workflow_dispatch: # Erlaubt auch manuelles Ausführen im GitHub Dashboard
+  workflow_dispatch: # Manuelles Ausführen im GitHub Dashboard jederzeit möglich
 
 jobs:
   run-hermes:
@@ -26,13 +26,23 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install @supabase/supabase-js
+          npm install
 
-      - name: Execute Hermes Automation Script
+      - name: Execute Hermes AI Automation (+ Postiz Auto-Publish)
         env:
+          # ── Supabase (Datenbank & Logging) ───────────────────────────
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # ── Website URL ──────────────────────────────────────────────
+          SITE_URL: ${{ secrets.SITE_URL }}
+          # ── Postiz Social Media Publishing ───────────────────────────
+          POSTIZ_API_URL: ${{ secrets.POSTIZ_API_URL }}
+          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
+          POSTIZ_CHANNEL_LINKEDIN: ${{ secrets.POSTIZ_CHANNEL_LINKEDIN }}
+          POSTIZ_CHANNEL_X: ${{ secrets.POSTIZ_CHANNEL_X }}
+          POSTIZ_CHANNEL_INSTAGRAM: ${{ secrets.POSTIZ_CHANNEL_INSTAGRAM }}
+          POSTIZ_CHANNEL_TIKTOK: ${{ secrets.POSTIZ_CHANNEL_TIKTOK }}
+          POSTIZ_CHANNEL_TELEGRAM: ${{ secrets.POSTIZ_CHANNEL_TELEGRAM }}
         run: |
           node scripts/hermes_runner.js
 
@@ -41,5 +51,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff-index --quiet HEAD || git commit -m "auto(hermes): weekly social drafts & learnings update"
+          git diff-index --quiet HEAD || git commit -m "auto(hermes): weekly social drafts & postiz schedule update"
           git push
