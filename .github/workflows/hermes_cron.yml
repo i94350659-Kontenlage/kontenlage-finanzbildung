@@ -10,11 +10,15 @@ jobs:
   run-hermes:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout Code & Obsidian Vault
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3
@@ -39,4 +43,5 @@ jobs:
           git config --global user.email 'hermes-bot@kontenlage.de'
           git add .
           git diff-index --quiet HEAD || git commit -m "auto(hermes): generate weekly social drafts and update learnings"
-          git push
+          git push origin HEAD:${{ github.ref_name }}
+
