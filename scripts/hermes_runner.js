@@ -1,33 +1,66 @@
 /**
- * Hermes AI Runner — Kontenlage Automatisierungskern
- * 
- * Wöchentlich via GitHub Actions ausgeführt:
- *  1. Liest neueste Artikel aus /artikel/ & Learnings aus Obsidian Vault
- *  2. Generiert 5-Kanal Social Media Entwürfe (LinkedIn / X / Instagram / TikTok / Telegram)
- *  3. Publisht AUTOMATISCH über Postiz Public API auf alle verknüpften Accounts
- *  4. Loggt Ergebnis in Supabase Datenbank
- *  5. Aktualisiert Self-Improvement Learnings (Confidence Score, Anti-Shadowban)
+ * Hermes AI Runner — Kontenlage Automatisierungskern v2.0
  *
- * Konfiguration via GitHub Secrets / .env:
- *  POSTIZ_API_URL     — z.B. https://app.postiz.com (oder deine Self-Hosted URL)
- *  POSTIZ_API_KEY     — In Postiz: Settings → Developers → Public API → Generate Key
- *  POSTIZ_CHANNEL_LINKEDIN   — Channel-ID des LinkedIn-Accounts in Postiz
- *  POSTIZ_CHANNEL_X          — Channel-ID des X (Twitter)-Accounts in Postiz
- *  POSTIZ_CHANNEL_INSTAGRAM  — Channel-ID des Instagram-Accounts in Postiz
- *  POSTIZ_CHANNEL_TIKTOK     — Channel-ID des TikTok-Accounts in Postiz
- *  POSTIZ_CHANNEL_TELEGRAM   — Channel-ID des Telegram-Accounts in Postiz
- *  SUPABASE_URL       — Supabase Projekt-URL
- *  SUPABASE_SERVICE_KEY — Supabase Service Role Key
+ * Wöchentlich via GitHub Actions ausgeführt:
+ *  1. Liest Learnings & Artikel-Kontext aus Obsidian Vault
+ *  2. Generiert ECHTEN 5-Kanal AI-Content via OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free)
+ *     → Fallback 1: EdenAI  (google/gemma-4-31b-it)
+ *     → Fallback 2: Requesty (nvidia/nemotron-3-ultra-550b-a55b)
+ *  3. Publisht automatisch über Postiz Public API auf alle 5 Kanäle
+ *  4. Loggt Ergebnis in Supabase Datenbank
+ *  5. Aktualisiert Self-Improvement Learnings
+ *
+ * GitHub Secrets benötigt:
+ *  OPENROUTER_API_KEY        — OpenRouter Primary Key
+ *  EDENAI_API_KEY            — EdenAI Fallback Key
+ *  REQUESTY_API_KEY          — Requesty Fallback Key
+ *  POSTIZ_API_URL            — Postiz Instanz URL (Render.com Self-Hosted)
+ *  POSTIZ_API_KEY            — Postiz Public API Key
+ *  POSTIZ_CHANNEL_LINKEDIN   — Channel-ID LinkedIn
+ *  POSTIZ_CHANNEL_X          — Channel-ID X / Twitter
+ *  POSTIZ_CHANNEL_INSTAGRAM  — Channel-ID Instagram
+ *  POSTIZ_CHANNEL_TIKTOK     — Channel-ID TikTok
+ *  POSTIZ_CHANNEL_TELEGRAM   — Channel-ID Telegram
+ *  SUPABASE_URL              — Supabase Projekt-URL
+ *  SUPABASE_SERVICE_KEY      — Supabase Service Role Key
+ *  SITE_URL                  — https://kontolage.de
  */
 
-const fs   = require('fs');
-const path = require('path');
+const fs    = require('fs');
+const path  = require('path');
 const https = require('https');
 
-// ─── Konfiguration ────────────────────────────────────────────────────────────
-const POSTIZ_URL  = process.env.POSTIZ_API_URL   || 'https://app.postiz.com';
-const POSTIZ_KEY  = process.env.POSTIZ_API_KEY   || '';
+// ─── AI Provider Konfiguration (Primär + 2 Fallbacks) ────────────────────────
+const AI_PROVIDERS = [
+  {
+    name: 'OpenRouter (Nemotron Primary)',
+    url: 'https://openrouter.ai/api/v1/chat/completions',
+    key: process.env.OPENROUTER_API_KEY || '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',
+    model: 'nvidia/nemotron-3-ultra-550b-a55b:free',
+    headers: {
+      'HTTP-Referer': 'https://kontolage.de',
+      'X-Title': 'Kontenlage Hermes Agent',
+    },
+  },
+  {
+    name: 'EdenAI Fallback (Gemma 4)',
+    url: 'https://api.edenai.run/v1/text/chat',
+    key: process.env.EDENAI_API_KEY || 'sk-eden-live-C4c-hSfcoY_ZWZUK-dnoZOczPC2qvS_dHR8k2ekmUsccb0cd546',
+    model: 'google/gemma-4-31b-it',
+    isEdenAI: true,
+  },
+  {
+    name: 'Requesty Fallback (Nemotron via Requesty)',
+    url: 'https://router.requesty.ai/v1/chat/completions',
+    key: process.env.REQUESTY_API_KEY || 'rqsty-sk-WkF9OjrpTDK8bDtBTB5+oo+Tx5Kw4lW9M/yP65kZXYCEMq13xvvQq0wVYXz40oXT787BXwtoPV+He9libTw6rZ5mp+zmR57ithwpniAS/g4=',
+    model: 'nvidia/nemotron-3-ultra-550b-a55b',
+    headers: {},
+  },
+];
 
+// ─── Sonstige Konfiguration ───────────────────────────────────────────────────
+const POSTIZ_URL  = process.env.POSTIZ_API_URL  || '';
+const POSTIZ_KEY  = process.env.POSTIZ_API_KEY  || '';
 const CHANNELS = {
   linkedin:  process.env.POSTIZ_CHANNEL_LINKEDIN  || '',
   x:         process.env.POSTIZ_CHANNEL_X         || '',
@@ -35,23 +68,25 @@ const CHANNELS = {
   tiktok:    process.env.POSTIZ_CHANNEL_TIKTOK    || '',
   telegram:  process.env.POSTIZ_CHANNEL_TELEGRAM  || '',
 };
+const SUPABASE_URL = process.env.SUPABASE_URL          || '';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY  || '';
+const SITE_URL     = process.env.SITE_URL               || 'https://kontolage.de';
 
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || '';
-const SITE_URL     = process.env.SITE_URL || 'https://kontolage.de';
-
-// ─── HTTP-Helper ─────────────────────────────────────────────────────────────
-function httpRequest(url, method = 'GET', body = null, headers = {}) {
+// ─── HTTP Helper ──────────────────────────────────────────────────────────────
+function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
   return new Promise((resolve, reject) => {
     const parsed = new URL(url);
+    const bodyStr = body ? JSON.stringify(body) : null;
     const options = {
       hostname: parsed.hostname,
+      port: 443,
       path: parsed.pathname + parsed.search,
       method,
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'HermesAgent/1.0 Kontenlage',
-        ...headers,
+        'User-Agent': 'HermesAgent/2.0 Kontenlage',
+        ...(bodyStr ? { 'Content-Length': Buffer.byteLength(bodyStr) } : {}),
+        ...extraHeaders,
       },
     };
     const req = https.request(options, res => {
@@ -63,197 +98,206 @@ function httpRequest(url, method = 'GET', body = null, headers = {}) {
       });
     });
     req.on('error', reject);
-    if (body) req.write(JSON.stringify(body));
+    if (bodyStr) req.write(bodyStr);
     req.end();
   });
 }
 
-// ─── Postiz API: Post einplanen ───────────────────────────────────────────────
-async function schedulePostOnPostiz(channelId, content, publishAt) {
-  if (!POSTIZ_KEY || !channelId) {
-    console.warn(`  ⚠️  Postiz Key oder Channel-ID fehlt (Channel: ${channelId}) — überspringe.`);
-    return null;
+// ─── AI Completion mit Cascade-Fallback ──────────────────────────────────────
+async function callAI(prompt, systemPrompt = '') {
+  for (const provider of AI_PROVIDERS) {
+    console.log(`  🤖 Versuche Provider: ${provider.name}...`);
+    try {
+      let result;
+
+      if (provider.isEdenAI) {
+        // EdenAI hat eigenes API-Format
+        result = await httpRequest(
+          provider.url,
+          'POST',
+          {
+            providers: 'google',
+            text: prompt,
+            chatbot_global_action: systemPrompt || 'Du bist ein Finanz-Redakteur bei Kontenlage.',
+            previous_history: [],
+            temperature: 0.7,
+            max_tokens: 1200,
+          },
+          { Authorization: `Bearer ${provider.key}` }
+        );
+        if (result.status === 200 && result.body?.google?.generated_text) {
+          console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
+          return { text: result.body.google.generated_text, provider: provider.name };
+        }
+      } else {
+        // OpenAI-kompatibler Endpunkt (OpenRouter & Requesty)
+        result = await httpRequest(
+          provider.url,
+          'POST',
+          {
+            model: provider.model,
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt },
+            ],
+            max_tokens: 1200,
+            temperature: 0.75,
+          },
+          {
+            Authorization: `Bearer ${provider.key}`,
+            ...(provider.headers || {}),
+          }
+        );
+        if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
+          console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
+          return { text: result.body.choices[0].message.content, provider: provider.name };
+        }
+      }
+
+      console.warn(`  ⚠️  ${provider.name} — Status ${result.status}, weiter zum nächsten Fallback.`);
+      if (result.body?.error) console.warn('     Fehler:', JSON.stringify(result.body.error).slice(0, 200));
+
+    } catch (err) {
+      console.warn(`  ⚠️  ${provider.name} — Netzwerkfehler: ${err.message}`);
+    }
   }
 
-  const body = {
-    type: 'post',
-    date: publishAt,                 // ISO 8601, z.B. "2026-08-10T08:00:00.000Z"
-    shortLink: false,
-    settings: {},
-    value: [
-      {
-        content,
-        id: channelId,
-      },
-    ],
-  };
+  // Alle Provider fehlgeschlagen → statischer Fallback
+  console.error('  ❌ Alle AI Provider fehlgeschlagen — verwende statischen Fallback-Content.');
+  return { text: null, provider: 'static-fallback' };
+}
 
+// ─── 5-Kanal Content via AI generieren ───────────────────────────────────────
+async function generateAIContent(dateStr, learnings) {
+  const weekNum = Math.ceil(new Date().getDate() / 7);
+  const systemPrompt = `Du bist Hermes, der KI-Redakteur von Kontenlage.de — einem deutschen Finanzbildungsportal für Einkommensbezieher ab 60.000 € Jahreseinkommen.
+Dein Stil: NZZ / Handelsblatt — sachlich, mathematisch präzise, keine Emojis im Fließtext (maximal 1 pro Post auf LinkedIn), keine Füllwörter.
+Nenne immer konkrete § EStG-Paragraphen und Eurobeträge. Verlinke stets auf ${SITE_URL}.
+Heutiges Datum: ${dateStr} | Woche ${weekNum}.
+Learnings aus vergangenen Läufen: ${learnings.slice(-500) || 'keine'}`;
+
+  const prompt = `Erstelle jetzt präzise, veröffentlichungsfertige Social-Media-Posts für diese 5 Kanäle:
+
+1. LINKEDIN (max. 1.200 Zeichen): Seriöser Finanzanalyse-Post, §21 EStG oder Rürup oder Sparerpauschbetrag 2026 — wähle das aktuellste Thema. 1 Emoji erlaubt.
+
+2. X_THREAD (4 Tweets, je max. 280 Zeichen): Format: "1/4 ...", "2/4 ...", "3/4 ...", "4/4 ... ${SITE_URL}"
+
+3. INSTAGRAM (Slide-Format, 5 Slides): Format: "[SLIDE 1] Titel\n[SLIDE 2] ...\n[CTA] ..."
+
+4. TIKTOK_SKRIPT (45-Sekunden-Sprecher-Skript): Format: "[INTRO 0-5s] ...\n[HAUPT 5-35s] ...\n[CTA 35-45s] ..."
+
+5. TELEGRAM (max. 400 Zeichen, Markdown erlaubt): Sachlicher Digest mit Direktlink.
+
+Trenne die 5 Abschnitte mit "===KANAL===" als Trennzeichen. Kein Einleitungstext, direkt mit Inhalt beginnen.`;
+
+  const aiResult = await callAI(prompt, systemPrompt);
+
+  if (!aiResult.text) {
+    // Statischer Fallback-Content
+    return {
+      linkedin: `📊 Sparerpauschbetrag 2026: 1.000 € für Ledige, 2.000 € für Ehepaare.\n\nViele Anleger verschenken diesen Freibetrag, weil kein Freistellungsauftrag hinterlegt ist. §20 Abs. 9 EStG erlaubt die vollständige Nutzung — vorausgesetzt, der Auftrag ist korrekt bei jeder depotführenden Bank eingerichtet.\n\nRechner ohne Provision: ${SITE_URL}\n\n#Steuern #Geldanlage #Finanzbildung`,
+      xThread:  `1/4 Sparerpauschbetrag 2026: 1.000 € Freibetrag — den die meisten Anleger nicht voll nutzen. 🧵\n2/4 §20 Abs. 9 EStG: Zinsen, Dividenden & Kursgewinne bleiben steuerfrei — bis zum Limit.\n3/4 Problem: Kein Freistellungsauftrag = Steuereinbehalt von 25% auf alle Erträge.\n4/4 Jetzt kostenlos prüfen: ${SITE_URL}`,
+      instagram: `[SLIDE 1] 1.000 € Steuerfreibetrag — nutzt du ihn wirklich?\n[SLIDE 2] §20 Abs. 9 EStG: Kapitalerträge bis 1.000 € steuerfrei ✓\n[SLIDE 3] Ohne Freistellungsauftrag: 25% Abgeltungsteuer auf alles ⚠️\n[SLIDE 4] Ehepaare: 2.000 € Freibetrag — aufgeteilt auf alle Banken\n[SLIDE 5] Jetzt berechnen: ${SITE_URL}\n[CTA] Link in Bio → kostenloser Rechner`,
+      tiktok:   `[INTRO 0-5s] "Hast du einen Freistellungsauftrag bei deiner Bank eingerichtet? Falls nicht, verschenkst du bares Geld."\n[HAUPT 5-35s] "Der Sparerpauschbetrag 2026 beträgt 1.000 Euro pro Person, 2.000 Euro für Ehepaare. Paragraph 20 Absatz 9 des Einkommensteuergesetzes garantiert dir, dass Zinsen, Dividenden und Kursgewinne bis zu dieser Grenze komplett steuerfrei sind. Aber nur, wenn du den Freistellungsauftrag bei jeder Bank korrekt eingerichtet hast."\n[CTA 35-45s] "Link in der Bio: kostenloser Rechner auf Kontolage Punkt de."`,
+      telegram:  `📌 *Kontenlage — ${dateStr}*\n\nSparerpauschbetrag 2026: 1.000 € (§20 Abs. 9 EStG) — steuerfrei für Kapitalerträge. Freistellungsauftrag bei jeder Bank pflegen!\n\n→ Rechner: ${SITE_URL}`,
+      provider: 'static-fallback',
+    };
+  }
+
+  // AI-Antwort parsen (Trennzeichen "===KANAL===")
+  const sections = aiResult.text.split(/===KANAL===/);
+  const get = (i) => (sections[i] || '').trim();
+
+  return {
+    linkedin:  get(0) || `Finanzanalyse auf ${SITE_URL}`,
+    xThread:   get(1) || `Steuerwissen auf ${SITE_URL}`,
+    instagram: get(2) || `[SLIDE 1] Steuern sparen\n[CTA] ${SITE_URL}`,
+    tiktok:    get(3) || `[INTRO] Steuertipp\n[CTA] ${SITE_URL}`,
+    telegram:  get(4) || `📌 Kontenlage — ${SITE_URL}`,
+    provider:  aiResult.provider,
+  };
+}
+
+// ─── Postiz: Post einplanen ───────────────────────────────────────────────────
+async function schedulePostOnPostiz(channelId, content, publishAt) {
+  if (!POSTIZ_KEY || !POSTIZ_URL || !channelId) {
+    console.warn(`  ⚠️  Postiz nicht konfiguriert (URL: ${POSTIZ_URL ? '✓' : '✗'}, Key: ${POSTIZ_KEY ? '✓' : '✗'}, Channel: ${channelId || 'fehlt'}) — überspringe.`);
+    return null;
+  }
   const res = await httpRequest(
     `${POSTIZ_URL}/public/v1/posts`,
     'POST',
-    body,
+    { type: 'post', date: publishAt, shortLink: false, settings: {}, value: [{ content, id: channelId }] },
     { Authorization: `Bearer ${POSTIZ_KEY}` }
   );
-
   if (res.status === 200 || res.status === 201) {
-    console.log(`  ✅ Postiz: Geplant für Channel ${channelId} (Post-ID: ${res.body?.id || 'n/a'})`);
+    console.log(`  ✅ Postiz: Eingeplant für Channel ${channelId} (ID: ${res.body?.id || 'n/a'})`);
     return res.body;
-  } else {
-    console.error(`  ❌ Postiz Fehler (Status ${res.status}):`, JSON.stringify(res.body));
-    return null;
   }
-}
-
-// ─── Postiz: Verfügbare Channels prüfen ──────────────────────────────────────
-async function getPostizChannels() {
-  if (!POSTIZ_KEY) return [];
-  const res = await httpRequest(
-    `${POSTIZ_URL}/public/v1/integrations`,
-    'GET',
-    null,
-    { Authorization: `Bearer ${POSTIZ_KEY}` }
-  );
-  if (res.status === 200) {
-    console.log(`  📡 Postiz: ${res.body?.length || 0} Channels verbunden.`);
-    return res.body || [];
-  }
-  return [];
+  console.error(`  ❌ Postiz Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
 }
 
 // ─── Supabase Logging ─────────────────────────────────────────────────────────
 async function logToSupabase(runData) {
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.warn('  ⚠️  Supabase nicht konfiguriert — Logging übersprungen.');
-    return;
-  }
+  if (!SUPABASE_URL || !SUPABASE_KEY) return;
   const res = await httpRequest(
     `${SUPABASE_URL}/rest/v1/hermes_logs`,
     'POST',
     runData,
-    {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Prefer': 'return=representation',
-    }
+    { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, Prefer: 'return=representation' }
   );
-  if (res.status === 201 || res.status === 200) {
-    console.log('  💾 Supabase: Lauf-Log gespeichert.');
-  } else {
-    console.warn('  ⚠️  Supabase Log fehlgeschlagen:', res.status);
-  }
+  console.log(res.status === 201 ? '  💾 Supabase: Log gespeichert.' : `  ⚠️  Supabase Log: Status ${res.status}`);
 }
 
-// ─── Content-Generierung: 5-Kanal Social Drafts ──────────────────────────────
-function generateSocialContent(dateStr, learnings) {
-  // Anti-Shadowban: Timestamp-Variation macht jeden Post einzigartig
-  const weekNum = Math.ceil((new Date().getDate()) / 7);
-
-  const linkedin = `📊 Woche ${weekNum} | Steueranalyse für Einkommensbezieher ab 60.000 €
-
-Weshalb "Steuern sparen mit Immobilien" oft eine Vertriebsfalle ist.
-
-Bei zu versteuerndem Einkommen über 60.000 € klingt das Versprechen verlockend: Steuern in Eigentum umwandeln. Doch §21 EStG bietet kein Freifahrtticket — es erlaubt lediglich, Werbungskostenüberschüsse gegen das Einkommen zu verrechnen.
-
-Die entscheidende Frage: Wurde das Objekt 12–18 % über Marktwert verkauft?
-
-→ Dann frisst die Zinslast die Steuerersparnis in unter 36 Monaten auf.
-→ Interaktiver Szenario-Rechner ohne Vertriebsprovisionen: ${SITE_URL}
-
-#Steuern #Immobilien #Finanzbildung #§21EStG #Altersvorsorge`;
-
-  const xThread = `1/4 Steuern sparen mit Immobilien? Die reine Mathematik hinter §21 EStG — ein Thread 🧵
-
-2/4 AfA (2% p.a.) + Hypothekenzinsen senken dein zu versteuerndes Einkommen. Klingt gut. ABER: Du sparst nur deinen Grenzsteuersatz (42%). 58% trägst du weiter selbst.
-
-3/4 Kaufst du das Objekt 15% über Marktwert → brauchst du ~8 Jahre, bis der steuerliche Vorteil die überbezahlte Summe ausgleicht. Kein Vertrieb rechnet das durch.
-
-4/4 Rechne es selbst — ohne Provision, ohne Beratungsinteresse: ${SITE_URL} #Steuern #Finanzbildung`;
-
-  const instagram = `[SLIDE 1] Steuern sparen mit Immobilien — Fakt oder Mythos?
-[SLIDE 2] §21 EStG erlaubt: Zinsen + AfA vom Einkommen abziehen. ✓
-[SLIDE 3] Du sparst nur deinen Steuersatz (42%) — nicht 100% der Kosten. ✓
-[SLIDE 4] Kaufst du 15% über Marktwert → 8+ Jahre bis zum Break-Even. ⚠️
-[SLIDE 5] Unser kostenloser Rechner zeigt dir dein persönliches Szenario: ${SITE_URL}
-[CTA] Link in Bio → Jetzt kostenlos berechnen`;
-
-  const tiktok = `[TikTok / Shorts Skript — 45 Sek]
-
-INTRO (0-5 Sek): "Dein Steuerberater hat dir empfohlen, in Immobilien zu investieren? Schau dir erst diese Rechnung an."
-
-HAUPTTEIL (5-35 Sek): "§ 21 EStG erlaubt es, Zinsen und Abschreibungen vom Einkommen abzuziehen. Klingt gut. Aber du sparst nur deinen Steuersatz. Bei 42 Prozent zahlst du immer noch 58 Prozent aus eigener Tasche. Wenn das Objekt dann noch 15 Prozent über Marktwert verkauft wurde — brauchst du acht Jahre, bis du im Plus bist. Rechne das durch — ohne Provision, ohne Interessenkonflikt."
-
-CTA (35-45 Sek): "Link in der Bio: kostenloser Steuerrechner auf Kontenlage Punkt de."`;
-
-  const telegram = `📌 *Kontenlage Wochenanalyse — ${dateStr}*
-
-Thema dieser Woche: Steuersparimmobilien & §21 EStG — Was der Vertrieb Ihnen nicht rechnet.
-
-✔️ AfA + Zinsabzug senken das zu versteuernde Einkommen
-⚠️ Bei 15% Aufschlag auf Marktwert: Break-Even erst nach 8 Jahren
-📊 Interaktiver Rechner (kostenlos, ohne Anmeldung): ${SITE_URL}
-
-_Kontenlage — Finanzbildung ohne Interessenkonflikt._`;
-
-  return { linkedin, xThread, instagram, tiktok, telegram };
-}
-
-// ─── Nächsten Montag 08:00 UTC berechnen ─────────────────────────────────────
+// ─── Nächsten Montag 08:00 UTC ────────────────────────────────────────────────
 function nextMondayMorning() {
   const now = new Date();
-  const day = now.getUTCDay(); // 0 = Sonntag, 1 = Montag
-  const daysUntilMonday = day === 1 ? 7 : (8 - day) % 7 || 7;
-  const nextMonday = new Date(now);
-  nextMonday.setUTCDate(now.getUTCDate() + daysUntilMonday);
-  nextMonday.setUTCHours(8, 0, 0, 0);
-  return nextMonday.toISOString();
+  const daysUntil = (8 - now.getUTCDay()) % 7 || 7;
+  const d = new Date(now);
+  d.setUTCDate(now.getUTCDate() + daysUntil);
+  d.setUTCHours(8, 0, 0, 0);
+  return d.toISOString();
 }
 
 // ─── Hauptprogramm ────────────────────────────────────────────────────────────
 async function main() {
-  console.log('\n🤖 [Hermes Agent] ====================================');
-  console.log('🤖 [Hermes Agent] Starte wöchentlichen Automatisierungs-Lauf...');
-  console.log(`🤖 [Hermes Agent] Zeitpunkt: ${new Date().toISOString()}`);
-  console.log('🤖 [Hermes Agent] ====================================\n');
+  console.log('\n🤖 [Hermes v2.0] ══════════════════════════════════════');
+  console.log(`🤖 [Hermes v2.0] Start: ${new Date().toISOString()}`);
+  console.log('🤖 [Hermes v2.0] ══════════════════════════════════════\n');
 
-  const dateStr     = new Date().toISOString().split('T')[0];
-  const vaultPath   = path.join(__dirname, '..', 'obsidian_vault');
-  const draftsPath  = path.join(vaultPath, 'Drafts');
+  const dateStr       = new Date().toISOString().split('T')[0];
+  const vaultPath     = path.join(__dirname, '..', 'obsidian_vault');
+  const draftsPath    = path.join(vaultPath, 'Drafts');
   const learningsPath = path.join(vaultPath, 'Learnings.md');
 
-  // Verzeichnisse sicherstellen
   if (!fs.existsSync(draftsPath)) fs.mkdirSync(draftsPath, { recursive: true });
 
-  // Learnings lesen
-  let learnings = '';
-  if (fs.existsSync(learningsPath)) {
-    learnings = fs.readFileSync(learningsPath, 'utf-8');
-  }
+  const learnings = fs.existsSync(learningsPath)
+    ? fs.readFileSync(learningsPath, 'utf-8')
+    : '';
 
-  // 1. Postiz: Verfügbare Channels prüfen
-  console.log('📡 [Hermes] Prüfe Postiz Channel-Verbindungen...');
-  const channels = await getPostizChannels();
-  const channelNames = channels.map(c => `${c.name} (${c.id})`).join(', ') || 'keine';
-  console.log(`   Verbundene Channels: ${channelNames}\n`);
+  // 1. AI-Content generieren (mit Fallback-Kaskade)
+  console.log('✍️  [Hermes] Generiere AI-Content (OpenRouter → EdenAI → Requesty)...');
+  const content = await generateAIContent(dateStr, learnings);
+  console.log(`   🧠 Verwendet: ${content.provider}\n`);
 
-  // 2. Content generieren
-  console.log('✍️  [Hermes] Generiere 5-Kanal Social Media Content...');
-  const content = generateSocialContent(dateStr, learnings);
-
-  // 3. Entwürfe lokal speichern (Backup)
+  // 2. Entwürfe lokal speichern (Backup im Repo)
   const draftFile = path.join(draftsPath, `${dateStr}-social-drafts.md`);
-  const draftMarkdown = `# Social Media Entwürfe — ${dateStr} (Hermes AI)\n
-## 💼 LinkedIn\n${content.linkedin}\n
-## 🧵 X (Twitter) Thread\n${content.xThread}\n
-## 📸 Instagram Carousel\n${content.instagram}\n
-## 🎬 TikTok / Shorts Skript\n${content.tiktok}\n
-## 📢 Telegram\n${content.telegram}\n`;
-  fs.writeFileSync(draftFile, draftMarkdown, 'utf-8');
-  console.log(`   ✅ Entwürfe gespeichert: ${path.basename(draftFile)}\n`);
+  fs.writeFileSync(draftFile, [
+    `# Social Media Entwürfe — ${dateStr}`,
+    `_Generiert von: ${content.provider}_\n`,
+    `## 💼 LinkedIn\n${content.linkedin}\n`,
+    `## 🧵 X (Twitter) Thread\n${content.xThread}\n`,
+    `## 📸 Instagram Carousel\n${content.instagram}\n`,
+    `## 🎬 TikTok / Shorts\n${content.tiktok}\n`,
+    `## 📢 Telegram\n${content.telegram}\n`,
+  ].join('\n'), 'utf-8');
+  console.log(`   ✅ Drafts gespeichert: ${path.basename(draftFile)}\n`);
 
-  // 4. Automatisch über Postiz auf alle Kanäle publishen
+  // 3. Postiz Auto-Publishing
   const publishAt = nextMondayMorning();
-  console.log(`📅 [Hermes] Plane Posts für: ${publishAt}`);
-
+  console.log(`📅 [Hermes] Plane Postiz-Posts für: ${publishAt}`);
   const results = {
     linkedin:  await schedulePostOnPostiz(CHANNELS.linkedin,  content.linkedin,  publishAt),
     x:         await schedulePostOnPostiz(CHANNELS.x,         content.xThread,   publishAt),
@@ -261,34 +305,32 @@ async function main() {
     tiktok:    await schedulePostOnPostiz(CHANNELS.tiktok,    content.tiktok,    publishAt),
     telegram:  await schedulePostOnPostiz(CHANNELS.telegram,  content.telegram,  publishAt),
   };
+  const successCount = Object.values(results).filter(Boolean).length;
+  console.log(`\n   📊 Postiz: ${successCount}/5 Kanäle eingeplant.\n`);
 
-  const successCount = Object.values(results).filter(r => r !== null).length;
-  console.log(`\n   📊 ${successCount}/5 Kanäle erfolgreich geplant.\n`);
-
-  // 5. Supabase Lauf-Log
-  console.log('💾 [Hermes] Speichere Lauf-Log in Supabase...');
+  // 4. Supabase Logging
+  console.log('💾 [Hermes] Logging in Supabase...');
   await logToSupabase({
-    run_date: dateStr,
-    publish_at: publishAt,
-    channels_ok: successCount,
-    channels_total: 5,
-    confidence_score: 0.92,
-    draft_file: path.basename(draftFile),
-    decision_reason: 'Wöchentlicher Hermes-Lauf — 5-Kanal Content-Automation via Postiz',
-    affected_parameters: ['social_drafts', 'postiz_schedule', 'learnings'],
+    run_date:          dateStr,
+    publish_at:        publishAt,
+    ai_provider:       content.provider,
+    channels_ok:       successCount,
+    channels_total:    5,
+    confidence_score:  0.92,
+    draft_file:        path.basename(draftFile),
+    decision_reason:   `Hermes v2.0 — AI via ${content.provider}`,
+    affected_parameters: ['social_drafts', 'postiz_schedule', 'learnings', 'ai_provider'],
   });
 
-  // 6. Self-Improvement Learnings aktualisieren
-  const newEntry = `\n- [${dateStr}] Lauf OK. ${successCount}/5 Kanäle via Postiz geplant. Confidence Score: 0.92. Publish-Zeitpunkt: ${publishAt}`;
-  const updatedLearnings = learnings
-    ? learnings + newEntry
-    : `# Hermes Learnings & Self-Improvement Log\n\n- **Regel #1**: Zahlenorientierte Headlines (\"15% Marge\", \"30.825 €\") erzielen 40% höhere CTR bei 40-55 Jährigen.\n- **Regel #2**: §-Paragraphen in ersten 2 Zeilen steigern wahrgenommene Kompetenz.\n- **Regel #3**: Emoji sparsam — max. 1 pro Post auf LinkedIn (Handelsblatt-Stil).` + newEntry;
-  fs.writeFileSync(learningsPath, updatedLearnings, 'utf-8');
-  console.log('🧠 [Hermes] Self-Improvement Learnings aktualisiert.');
+  // 5. Self-Improvement Learnings aktualisieren
+  const newEntry = `\n- [${dateStr}] ✅ ${successCount}/5 Kanäle via Postiz. AI: ${content.provider}. Confidence: 0.92. Publish: ${publishAt}`;
+  const baselearnings = learnings || `# Hermes Learnings & Self-Improvement Log\n\n- **Regel #1**: Zahlenorientierte Headlines (+40% CTR bei 40-55 Jährigen).\n- **Regel #2**: §-Paragraphen in ersten 2 Zeilen steigern Kompetenzwahrnehmung.\n- **Regel #3**: Max. 1 Emoji auf LinkedIn (Handelsblatt-Stil).\n- **Regel #4**: Direkte Verlinkung auf ${SITE_URL} im ersten Drittel des Posts.`;
+  fs.writeFileSync(learningsPath, baselearnings + newEntry, 'utf-8');
+  console.log('🧠 [Hermes] Learnings aktualisiert.\n');
 
-  console.log('\n🚀 [Hermes Agent] ====================================');
-  console.log(`🚀 [Hermes Agent] Lauf abgeschlossen. ${successCount}/5 Channels live.`);
-  console.log('🚀 [Hermes Agent] ====================================\n');
+  console.log('🚀 [Hermes v2.0] ══════════════════════════════════════');
+  console.log(`🚀 [Hermes v2.0] Fertig. ${successCount}/5 live. AI: ${content.provider}`);
+  console.log('🚀 [Hermes v2.0] ══════════════════════════════════════\n');
 }
 
 main().catch(err => {

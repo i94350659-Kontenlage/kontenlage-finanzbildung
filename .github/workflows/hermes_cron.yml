@@ -30,6 +30,12 @@ jobs:
 
       - name: Execute Hermes AI Automation (+ Postiz Auto-Publish)
         env:
+          # ── AI Provider: OpenRouter (Primary) ────────────────────────
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # ── AI Provider: EdenAI (Fallback 1) ────────────────────────
+          EDENAI_API_KEY: ${{ secrets.EDENAI_API_KEY }}
+          # ── AI Provider: Requesty (Fallback 2) ──────────────────────
+          REQUESTY_API_KEY: ${{ secrets.REQUESTY_API_KEY }}
           # ── Supabase (Datenbank & Logging) ───────────────────────────
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
