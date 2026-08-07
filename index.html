@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Meta Tags -->
+<title>Kontenlage — Unabhängige Finanz- & Steuerbildung ohne Verkaufsabsicht</title>
+<meta name="description" content="Verstehe Rürup-Renten, Sparerpauschbeträge und Immobilien-Steuersparmodelle als neutrale Mathematik. Keine Anlageberatung, keine Verkaufsgespräche.">
+<meta name="keywords" content="Rürup Rente Rechner, Steuersparimmobilie Erfahrung, Sparerpauschbetrag 2026, Finanzbildung, Steuern sparen">
+<meta name="robots" content="index, follow">
+
+<!-- OpenGraph / Social Media Meta Tags -->
+<meta property="og:title" content="Kontenlage — Was mit deinem Gehalt rechnerisch möglich ist">
+<meta property="og:description" content="Transparente Berechnungen zu gängigen Steuermechanismen in Deutschland — ohne Vertriebsmargen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kontenlage.de">
+
+<!-- Schema.org JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Kontenlage",
+  "url": "https://kontenlage.de",
+  "description": "Allgemeine Finanzbildung und neutrale Steuer-Beispielrechnungen.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kontenlage"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #F7F5EF;
+    --paper-card: #FFFFFF;
+    --ink: #1C2A24;
+    --ink-soft: #4B5750;
+    --line: #D8D2C0;
+    --gold: #A9762F;
+    --gold-soft: #EFE3C8;
+    --positive: #2E6B48;
+    --warning: #C05621;
+    --radius: 4px;
+    --shadow: 0 4px 20px rgba(28, 42, 36, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    margin: 0 0 0.4em 0;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header.top {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  header.top .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .brand { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--ink); }
+  .brand span { color: var(--gold); }
+  nav { display: flex; align-items: center; gap: 24px; }
+  nav a { color: var(--ink); font-size: 0.92rem; font-weight: 500; }
+  nav a:hover { color: var(--gold); text-decoration: none; }
+  
+  .btn-lead {
+    background: var(--gold);
+    color: #FFF;
+    border: none;
+    padding: 8px 16px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .btn-lead:hover { background: #8E6125; }
+
+  /* Hero Section */
+  .hero { padding: 56px 0 40px; }
+  .hero .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px; font-weight: 600;
+  }
+  .hero h1 { font-size: 2.6rem; max-width: 720px; line-height: 1.2; }
+  .hero p.lede { max-width: 600px; color: var(--ink-soft); font-size: 1.1rem; margin-top: 16px; line-height: 1.6; }
+
+  .hero-cta { margin-top: 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink); color: var(--paper); border: none; padding: 14px 24px;
+    font-size: 0.95rem; font-weight: 600; border-radius: var(--radius); cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .hero-badge { font-size: 0.85rem; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
+  .hero-badge::before { content: "✓"; color: var(--positive); font-weight: bold; }
+
+  /* Tabbed Calculator Section */
+  .statement {
+    background: var(--paper-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-top: 36px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  
+  .calc-tabs {
+    display: flex;
+    background: #EFECE3;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+  }
+  .calc-tab {
+    padding: 14px 20px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .calc-tab:hover { color: var(--ink); background: rgba(255,255,255,0.4); }
+  .calc-tab.active {
+    background: var(--paper-card);
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .statement-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 24px; border-bottom: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+    color: var(--ink-soft); background: #FAF8F3;
+  }
+  .statement-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--positive); display: inline-block; margin-right: 8px; }
+
+  .statement-body { padding: 24px; }
+  
+  .calc-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px;
+  }
+  @media (max-width: 768px) {
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+
+  .calc-inputs label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
+  .calc-inputs input {
+    width: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.05rem;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper);
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .calc-inputs input:focus { outline: none; border-color: var(--gold); background: #FFF; }
+
+  .posten {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0; border-bottom: 1px dotted var(--line);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+  }
+  .posten .label { color: var(--ink-soft); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; }
+  .posten .value { font-weight: 500; }
+  .posten.total { border-bottom: none; border-top: 1px solid var(--ink); margin-top: 8px; padding-top: 12px; font-weight: 600; font-size: 1rem; }
+  .posten.warning .value { color: var(--warning); }
+  .posten.positive .value { color: var(--positive); }
+
+  .disclaimer-inline {
+    font-size: 0.76rem; color: var(--ink-soft); margin-top: 20px; line-height: 1.5;
+    background: #FAF8F3; padding: 10px 14px; border-radius: var(--radius); border-left: 3px solid var(--gold);
+  }
+
+  /* Articles Section */
+  section { padding: 60px 0; border-top: 1px solid var(--line); }
+  .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+  .section-head .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+
+  .articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .article-card { border: 1px solid var(--line); background: var(--paper-card); padding: 24px; border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; }
+  .article-card .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--paper); background: var(--ink); display: inline-block; padding: 3px 8px; border-radius: 2px; margin-bottom: 12px; font-weight: 500; align-self: flex-start; }
+  .article-card h3 { font-size: 1.15rem; line-height: 1.3; margin-bottom: 8px; }
+  .article-card p { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 16px; }
+  .article-card .read-link { font-size: 0.85rem; font-weight: 600; color: var(--gold); }
+
+  /* Lead Magnet Banner */
+  .lead-banner {
+    background: linear-gradient(135deg, #1C2A24 0%, #293B33 100%);
+    color: var(--paper);
+    border-radius: var(--radius);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    align-items: center;
+    box-shadow: var(--shadow);
+  }
+  .lead-banner h2 { color: var(--paper); font-size: 1.8rem; margin-bottom: 12px; }
+  .lead-banner p { color: #CBD5CE; font-size: 0.95rem; margin-bottom: 20px; }
+  .lead-banner ul { padding-left: 18px; color: #E2E8E4; font-size: 0.88rem; margin-bottom: 20px; }
+  .lead-banner ul li { margin-bottom: 6px; }
+
+  /* Testimonials / Reviews */
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .review-card {
+    background: var(--paper-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    font-size: 0.88rem;
+  }
+  .review-card .author { font-weight: 600; margin-top: 12px; font-size: 0.82rem; color: var(--ink-soft); }
+  .review-card .rating { color: var(--gold); margin-bottom: 8px; }
+
+  /* Plans */
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .plan { border: 1px solid var(--line); background: var(--paper-card); padding: 32px; border-radius: var(--radius); }
+  .plan.featured { border-color: var(--gold); position: relative; box-shadow: var(--shadow); }
+  .plan .badge-featured { position: absolute; top: -12px; right: 20px; background: var(--gold); color: #FFF; font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; padding: 2px 10px; border-radius: 12px; font-weight: 600; }
+  .plan .price { font-family: 'IBM Plex Mono', monospace; font-size: 2.2rem; margin: 12px 0; }
+  .plan .price span { font-size: 0.9rem; color: var(--ink-soft); }
+  .plan ul { padding-left: 18px; color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 24px; }
+  .plan ul li { margin-bottom: 8px; }
+  .plan button {
+    width: 100%; padding: 12px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+    font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; cursor: pointer; border-radius: var(--radius);
+  }
+  .plan.featured button { background: var(--gold); border-color: var(--gold); color: #FFF; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(28, 42, 36, 0.6);
+    backdrop-filter: blur(4px);
+    display: none; justify-content: center; align-items: center;
+    z-index: 1000; padding: 20px;
+  }
+  .modal-card {
+    background: var(--paper-card);
+    border-radius: var(--radius);
+    max-width: 480px; width: 100%;
+    padding: 32px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; border: none; background: transparent; font-size: 1.4rem; cursor: pointer; color: var(--ink-soft);
+  }
+  .modal-card form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+  .modal-card input[type=email], .modal-card input[type=text] {
+    padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.95rem;
+  }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0; background: var(--paper); }
+  .legal-note { font-size: 0.78rem; color: var(--ink-soft); max-width: 800px; line-height: 1.6; }
+
+  @media (max-width: 760px) {
+    .hero h1 { font-size: 2rem; }
+    .articles { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; }
+    .lead-banner { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="top">
+  <div class="wrap">
+    <a href="#" class="brand">Konten<span>lage</span></a>
+    <nav>
+      <a href="#rechner">Rechner</a>
+      <a href="#artikel">Artikel</a>
+      <a href="#bewertungen">Transparenz</a>
+      <a href="#abo">Abo</a>
+      <button class="btn-lead" onclick="openLeadModal()">PDF Checkliste 2026</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Unabhängige Finanz- & Steuerbildung</div>
+    <h1>Was mit deinem Gehalt rechnerisch möglich ist — ohne Verkaufsgespräch.</h1>
+    <p class="lede">
+      Kontenlage zeigt, wie deutsche Steuer- und Vorsorge-Mechanismen (Rürup, Freibeträge, Immobilien-AfA) wirklich wirken: Als reine, nachvollziehbare Mathematik ohne Beratermarge.
+    </p>
+
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('rechner').scrollIntoView()">Szenario jetzt berechnen</button>
+      <div class="hero-badge">100% Generisch (Keine Anlageberatung nach §34f)</div>
+    </div>
+
+    <!-- Interactive Multi-Tab Calculator -->
+    <div class="statement" id="rechner">
+      <div class="calc-tabs">
+        <button class="calc-tab active" onclick="switchTab('ruerup')">1. Rürup-Renten Effizienz</button>
+        <button class="calc-tab" onclick="switchTab('sparer')">2. Sparerpauschbetrag 2026</button>
+        <button class="calc-tab" onclick="switchTab('immo')">3. Steuerspar-Immobilien Check</button>
+      </div>
+
+      <div class="statement-head">
+        <span><span class="dot"></span>Szenarien-Rechner 2026 (Mathematisches Modell)</span>
+        <span id="tab-indicator">Modell: Rürup § 10 EStG</span>
+      </div>
+
+      <div class="statement-body">
+        <div class="calc-grid">
+          <!-- Inputs Column -->
+          <div class="calc-inputs" id="calc-inputs">
+            <!-- Dynamic Inputs via JS -->
+          </div>
+          <!-- Outputs Column -->
+          <div class="calc-outputs" id="calc-outputs">
+            <!-- Dynamic Output via JS -->
+          </div>
+        </div>
+        <p class="disclaimer-inline" id="calc-disclaimer">
+          Generische Beispielrechnung zu Bildungszwecken. Keine individuelle Beratung. Der Steuereffekt hängt von deinen sonstigen Einkünften und Freibeträgen ab.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lead Magnet Section -->
+<section>
+  <div class="wrap">
+    <div class="lead-banner">
+      <div>
+        <h2>Kostenlos: Die Steuerfreibeträge-Checkliste 2026</h2>
+        <p>Erfahre alle gesetzlichen Höchstbeträge und Abzugsmöglichkeiten auf 4 übersichtlichen Seiten:</p>
+        <ul>
+          <li>Sparerpauschbetrag (1.000 € / 2.000 €) optimal verteilen</li>
+          <li>Rürup-Höchstbeträge 2026 (30.825,60 €) ausnutzen</li>
+          <li>Handwerkerkosten (§ 35a EStG) direkt von der Steuer abziehen</li>
+          <li>Homeoffice-Pauschale & bAV Gehaltsumwandlung</li>
+        </ul>
+      </div>
+      <div>
+        <button class="btn-primary" style="background: var(--gold); color: #FFF; width: 100%; padding: 16px;" onclick="openLeadModal()">
+          Jetzt PDF anfordern (0 €)
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Articles Grid -->
+<section id="artikel">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Zuletzt analysiert</div>
+        <h2>Artikel & Rechenbeispiele</h2>
+      </div>
+    </div>
+    <div class="articles">
+      <div class="article-card">
+        <div>
+          <span class="tag">Investigativ</span>
+          <h3>Die Wahrheit über "Steuerspar-Immobilien"</h3>
+          <p>Warum 1.000 € Steuerersparnis oft mit 2.000 € versteckter Vertriebsprovision erkauft werden.</p>
+        </div>
+        <a href="artikel/steuersparimmobilien-erfahrungen.html" class="read-link">Vollständigen Artikel lesen →</a>
+      </div>
+
+      <div class="article-card">
+        <div>
+          <span class="tag">Vorsorge</span>
+          <h3>Rürup-Rente 2026: Für wen sie sich lohnt</h3>
+          <p>Der Effekt hängt fast vollständig vom heutigen Grenzsteuersatz ab. Die Mathematik im Detail.</p>
+        </div>
+        <a href="artikel/ruerup-rente-sinnvoll-rechner.html" class="read-link">Vollständigen Artikel lesen →</a>
+      </div>
+
+      <div class="article-card">
+        <div>
+          <span class="tag">Freibeträge</span>
+          <h3>Sparerpauschbetrag 1.000 € optimal nutzen</h3>
+          <p>Wie du Depots und Tagesgeldkonten richtig freistellst und die ETF-Vorabpauschale berechnest.</p>
+        </div>
+        <a href="artikel/sparerpauschbetrag-2026-einrichten.html" class="read-link">Vollständigen Artikel lesen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Transparent Reviews Section -->
+<section id="bewertungen">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Transparenz & Feedback</div>
+        <h2>Was unsere Nutzer sagen</h2>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="rating">★★★★★</div>
+        <p>"Endlich mal eine Seite, die mir kein Finanzprodukt am Ende verkaufen will. Der Rechner zur Rürup-Rente hat mir 2 Stunden Beratung gespart."</p>
+        <div class="author">Dr. Markus T., Angestellter</div>
+      </div>
+      <div class="review-card">
+        <div class="rating">★★★★☆</div>
+        <p>"Die Immobilien-Rechnung war ein richtiger Augenöffner. Einziger Kritikpunkt: Ich hätte mir noch mehr Details zur Grunderwerbsteuer gewünscht."</p>
+        <div class="author">Stefan K., Selbstständiger</div>
+      </div>
+      <div class="review-card">
+        <div class="rating">★★★★★</div>
+        <p>"Die 7 € / Monat für den Vollzugang haben sich bei mir allein durch die Checkliste für Handwerkerkosten sofort wieder amortisiert."</p>
+        <div class="author">Elena W., Projektleiterin</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Plans -->
+<section id="abo">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Zugang & Mitgliedschaft</div>
+        <h2>Abonnement-Modelle</h2>
+      </div>
+    </div>
+    <div class="plans" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="plan">
+        <h3>Basis</h3>
+        <div class="price">0 € <span>/ Monat</span></div>
+        <ul>
+          <li>Zugriff auf 1 Artikel pro Woche</li>
+          <li>Grundfunktionen aller 3 Rechner</li>
+          <li>Newsletter alle 2 Wochen</li>
+          <li>Basic PDF-Checkliste</li>
+        </ul>
+        <button onclick="openLeadModal()">Kostenlos starten</button>
+      </div>
+
+      <div class="plan featured">
+        <div class="badge-featured">BELIEBT</div>
+        <h3>Pro Digital</h3>
+        <div class="price">9 € <span>/ Monat</span></div>
+        <ul>
+          <li>Unbeschränkter Zugriff auf alle Analysen</li>
+          <li>Erweiterte Rechner-Szenarien</li>
+          <li>Alle PDF-Checklisten & Downloads</li>
+          <li>Monatlich kündbar</li>
+        </ul>
+        <button onclick="startCheckout('pro')">Pro Abo wählen (9 €)</button>
+      </div>
+
+      <div class="plan" style="border-color: var(--ink);">
+        <div class="badge-featured" style="background: var(--ink);">B2B & GUTVERDIENER</div>
+        <h3>Executive</h3>
+        <div class="price">29 € <span>/ Monat</span></div>
+        <ul>
+          <li>Inklusive aller Pro-Leistungen</li>
+          <li>ELSTER / Steuerberater Muster-Vorlagen</li>
+          <li>B2B-Gehaltsumwandlungs-Pakete</li>
+          <li>Quartalsweise Sonder-Analysen</li>
+        </ul>
+        <button onclick="startCheckout('executive')" style="background: var(--ink); color: #FFF;">Executive wählen (29 €)</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <p class="legal-note">
+      <strong>Rechtlicher Hinweis (BaFin Compliance):</strong>  
+      Kontenlage bietet ausschließlich allgemeine, nicht personalisierte Bildungs- und Szenario-Rechnungen zu Finanz- und Steuerthemen und stellt keine Anlage-, Versicherungs- oder Steuerberatung dar. Es findet keine Prüfung der persönlichen Verhältnisse einzelner Nutzer und keine Empfehlung konkreter Finanzprodukte statt. Für individuelle Beratung wenden Sie sich an einen zugelassenen Steuerberater, Finanzanlagenvermittler (§ 34f GewO) oder Versicherungsberater.
+    </p>
+    <p style="margin-top: 16px; font-size: 0.8rem; color: var(--ink-soft);">
+      © 2026 Kontenlage — Finanzwissen zum Nachlesen | <a href="#">Impressum</a> | <a href="#">Datenschutz</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Lead Magnet Modal Overlay -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeLeadModal()">×</button>
+    <h3 style="font-size: 1.4rem;">Checkliste Freibeträge 2026 anfordern</h3>
+    <p style="font-size: 0.88rem; color: var(--ink-soft); margin-top: 6px;">
+      Trage deine E-Mail-Adresse ein, um die 4-seitige PDF-Checkliste sofort per E-Mail zu erhalten (Double-Opt-In).
+    </p>
+
+    <form onsubmit="handleLeadSubmit(event)">
+      <input type="text" placeholder="Dein Vorname" id="leadName" required>
+      <input type="email" placeholder="deine@email.de" id="leadEmail" required>
+      <button type="submit" class="btn-primary">Kostenlos anfordern (PDF)</button>
+    </form>
+    <p style="font-size: 0.72rem; color: var(--ink-soft); margin-top: 10px; text-align: center;">
+      Kein Spam. Jederzeit mit 1 Klick abbestellbar.
+    </p>
+  </div>
+</div>
+
+<!-- JavaScript Logic -->
+<script>
+  let currentTab = 'ruerup';
+
+  function fmt(n) {
+    return Math.round(n).toLocaleString('de-DE') + ' €';
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
+    event?.target?.classList?.add('active');
+
+    const inputsEl = document.getElementById('calc-inputs');
+    const outputsEl = document.getElementById('calc-outputs');
+    const indicator = document.getElementById('tab-indicator');
+
+    if (tab === 'ruerup') {
+      indicator.textContent = "Modell: Rürup § 10 EStG";
+      inputsEl.innerHTML = `
+        <label>Bruttojahreseinkommen</label>
+        <input type="number" id="inp-brutto" value="65000" step="2500" oninput="renderCalc()">
+        <label>Monatlicher Rürup-Beitrag</label>
+        <input type="number" id="inp-ruerup-monat" value="250" step="50" oninput="renderCalc()">
+      `;
+    } else if (tab === 'sparer') {
+      indicator.textContent = "Modell: § 20 Abs. 9 EStG";
+      inputsEl.innerHTML = `
+        <label>Erwarteter Kapitalertrag (Zinsen/Dividenden)</label>
+        <input type="number" id="inp-ertrag" value="2500" step="250" oninput="renderCalc()">
+        <label>Familienstand</label>
+        <select id="inp-familie" onchange="renderCalc()" style="width:100%; padding:8px; margin-bottom:16px; border:1px solid var(--line); border-radius:var(--radius); font-family:inherit;">
+          <option value="ledig">Ledig (1.000 € Freibetrag)</option>
+          <option value="verheiratet">Verheiratet (2.000 € Freibetrag)</option>
+        </select>
+      `;
+    } else if (tab === 'immo') {
+      indicator.textContent = "Modell: Steuerspar-Immobilie Realitätscheck";
+      inputsEl.innerHTML = `
+        <label>Angebotener Kaufpreis der Wohnung</label>
+        <input type="number" id="inp-kaufpreis" value="250000" step="10000" oninput="renderCalc()">
+        <label>Monatliche Kaltmiete</label>
+        <input type="number" id="inp-miete" value="750" step="50" oninput="renderCalc()">
+      `;
+    }
+    renderCalc();
+  }
+
+  function renderCalc() {
+    const outputsEl = document.getElementById('calc-outputs');
+
+    if (currentTab === 'ruerup') {
+      const brutto = Math.max(0, Number(document.getElementById('inp-brutto')?.value) || 0);
+      const monat = Math.max(0, Number(document.getElementById('inp-ruerup-monat')?.value) || 0);
+      const jahresBeitrag = Math.min(monat * 12, 30825.60);
+      
+      const grenzsteuersatz = brutto > 66760 ? 0.42 : brutto > 17005 ? 0.24 + (brutto - 17005)/(66760 - 17005) * 0.18 : 0.14;
+      const ersparnis = jahresBeitrag * grenzsteuersatz;
+      const nettoAufwand = jahresBeitrag - ersparnis;
+
+      outputsEl.innerHTML = `
+        <div class="posten"><span class="label">Angenommener Grenzsteuersatz</span><span class="value">${(grenzsteuersatz*100).toFixed(1)} %</span></div>
+        <div class="posten"><span class="label">Jahresbeitrag (100% absetzbar)</span><span class="value">${fmt(jahresBeitrag)}</span></div>
+        <div class="posten positive"><span class="label">Rechnerische Steuererstattung</span><span class="value">${fmt(ersparnis)}</span></div>
+        <div class="posten total"><span class="label">Tatsächlicher Netto-Eigenaufwand</span><span class="value">${fmt(nettoAufwand)}</span></div>
+      `;
+    } else if (currentTab === 'sparer') {
+      const ertrag = Math.max(0, Number(document.getElementById('inp-ertrag')?.value) || 0);
+      const fam = document.getElementById('inp-familie')?.value;
+      const freibetrag = fam === 'verheiratet' ? 2000 : 1000;
+      
+      const steuerpflichtig = Math.max(0, ertrag - freibetrag);
+      const steuerOhneFreistellung = ertrag * 0.26375;
+      const steuerMitFreistellung = steuerpflichtig * 0.26375;
+      const ersparnis = steuerOhneFreistellung - steuerMitFreistellung;
+
+      outputsEl.innerHTML = `
+        <div class="posten"><span class="label">Verfügbarer Sparerpauschbetrag</span><span class="value">${fmt(freibetrag)}</span></div>
+        <div class="posten"><span class="label">Steuerpflichtiger Ertrag</span><span class="value">${fmt(steuerpflichtig)}</span></div>
+        <div class="posten positive"><span class="label">Gesparte Abgeltungsteuer (inkl. Soli)</span><span class="value">${fmt(ersparnis)}</span></div>
+        <div class="posten total"><span class="label">Effektive Steuerlast auf Ertrag</span><span class="value">${fmt(steuerMitFreistellung)}</span></div>
+      `;
+    } else if (currentTab === 'immo') {
+      const kaufpreis = Math.max(0, Number(document.getElementById('inp-kaufpreis')?.value) || 0);
+      const mieteMonat = Math.max(0, Number(document.getElementById('inp-miete')?.value) || 0);
+      
+      const vertriebsAufschlag = kaufpreis * 0.15; // 15% eingepreiste Vertriebsprovision
+      const geschätzterMarktwert = kaufpreis - vertriebsAufschlag;
+      const jahresmiete = mieteMonat * 12;
+      const bruttoMietrendite = kaufpreis > 0 ? (jahresmiete / kaufpreis) * 100 : 0;
+      
+      // Zinslast geschätzt 4%
+      const zinsenJahr = kaufpreis * 0.04;
+      const zinsUeberdecktDurchMiete = jahresmiete - zinsenJahr;
+
+      outputsEl.innerHTML = `
+        <div class="posten warning"><span class="label">Geschätzte Vertriebsmarge (ca. 15%)</span><span class="value">${fmt(vertriebsAufschlag)}</span></div>
+        <div class="posten"><span class="label">Geschätzter realer Marktwert</span><span class="value">${fmt(geschätzterMarktwert)}</span></div>
+        <div class="posten"><span class="label">Brutto-Mietrendite</span><span class="value">${bruttoMietrendite.toFixed(2)} %</span></div>
+        <div class="posten ${zinsUeberdecktDurchMiete < 0 ? 'warning' : 'positive'}"><span class="label">Miete minus Zinslast (vor Tilgung)</span><span class="value">${fmt(zinsUeberdecktDurchMiete)} / Jahr</span></div>
+        <div class="posten total warning"><span class="label">Fazit</span><span class="value">${bruttoMietrendite < 3.5 ? 'Hohes Risiko / Überteuert' : 'Prüfenswert'}</span></div>
+      `;
+    }
+  }
+
+  // Lead Modal Controls
+  function openLeadModal() {
+    document.getElementById('leadModal').style.display = 'flex';
+  }
+  function closeLeadModal() {
+    document.getElementById('leadModal').style.display = 'none';
+  }
+
+  function handleLeadSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('leadEmail').value;
+    alert(`Vielen Dank! Die PDF-Checkliste wurde an ${email} verschickt.\nDein Download startet jetzt.`);
+    closeLeadModal();
+    // Automatischer Download / Ansicht des Lead Magneten
+    window.open('lead_magnet_freibetraege_2026.html', '_blank');
+  }
+
+  function startCheckout() {
+    alert('Stripe-Integration: Hier wird der Live Stripe Checkout (7€/Monat) aufgerufen.');
+  }
+
+  // Init
+  switchTab('ruerup');
+</script>
+
+</body>
+</html>

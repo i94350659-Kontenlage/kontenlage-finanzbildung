@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Kontenlage — Checkliste Freibeträge & Pauschalen 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  :root {
+    --paper: #FFFFFF;
+    --ink: #1C2A24;
+    --ink-soft: #4B5750;
+    --gold: #A9762F;
+    --gold-soft: #F9F5EC;
+    --line: #E2DDD0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.5;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 24px;
+  }
+  
+  .header-pdf {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .brand-pdf {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  .brand-pdf span { color: var(--gold); }
+  .badge-pdf {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  h1 { font-family: 'Fraunces', serif; font-size: 1.8rem; margin: 0 0 8px 0; color: var(--ink); }
+  p.subtitle { color: var(--ink-soft); font-size: 10pt; margin-bottom: 24px; }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 28px;
+    font-size: 9.5pt;
+  }
+  table.data-table th, table.data-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  table.data-table th {
+    background: var(--gold-soft);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  table.data-table tr:nth-child(even) { background: #FAFAFA; }
+
+  .highlight-box {
+    background: #FAF8F3;
+    border-left: 4px solid var(--gold);
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 2px;
+  }
+  .highlight-box h3 { margin: 0 0 6px 0; font-size: 11pt; color: var(--ink); }
+
+  .checklist { list-style: none; padding: 0; margin: 0 0 28px 0; }
+  .checklist li {
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--line);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .checkbox {
+    width: 16px; height: 16px; border: 1.5px solid var(--ink); border-radius: 2px; display: inline-block;
+  }
+
+  .footer-pdf {
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    font-size: 8pt;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print" style="background:#1C2A24; color:#FFF; padding:12px 24px; margin:-24px -24px 24px -24px; display:flex; justify-content:space-between; align-items:center;">
+  <span>📄 Kontenlage Lead Magnet PDF — Druckvorschau</span>
+  <button onclick="window.print()" style="background:var(--gold); color:#FFF; border:none; padding:8px 16px; font-weight:600; cursor:pointer; border-radius:2px;">Als PDF drucken / speichern</button>
+</div>
+
+<div class="header-pdf">
+  <div>
+    <div class="brand-pdf">Konten<span>lage</span></div>
+    <div style="font-size:8pt; color:var(--ink-soft);">Finanzwissen zum Nachlesen</div>
+  </div>
+  <div class="badge-pdf">STEUERJAHR 2026 | UNABHÄNGIGE CHECKLISTE</div>
+</div>
+
+<h1>Alle Steuerfreibeträge & Pauschalen 2026</h1>
+<p class="subtitle">Übersicht aller gesetzlichen Abzugsmöglichkeiten in Deutschland — ohne Verkaufs- oder Beratungsabsicht.</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Freibetrag / Pauschale</th>
+      <th>Ledig (2026)</th>
+      <th>Verheiratet (2026)</th>
+      <th>Anlage / Formulartipp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Sparerpauschbetrag</strong> (§ 20 Abs. 9 EStG)</td>
+      <td>1.000 €</td>
+      <td>2.000 €</td>
+      <td>Freistellungsauftrag bei Bank / Broker</td>
+    </tr>
+    <tr>
+      <td><strong>Grundfreibetrag</strong> (§ 32a EStG)</td>
+      <td>11.784 €</td>
+      <td>23.568 €</td>
+      <td>Automatisch im Lohnsteuerabzug</td>
+    </tr>
+    <tr>
+      <td><strong>Rürup-Rente / Basisrente</strong> (§ 10 Abs. 1 Nr. 2)</td>
+      <td>30.825,60 €</td>
+      <td>61.651,20 €</td>
+      <td>Anlage AV (100% Sonderausgabenabzug)</td>
+    </tr>
+    <tr>
+      <td><strong>Arbeitnehmer-Pauschbetrag</strong></td>
+      <td>1.230 €</td>
+      <td>2.460 €</td>
+      <td>Anlage N (Werbungskosten)</td>
+    </tr>
+    <tr>
+      <td><strong>Homeoffice-Pauschale</strong> (max. 210 Tage × 6€)</td>
+      <td>1.260 €</td>
+      <td>2.520 €</td>
+      <td>Anlage N (Werbungskosten ohne Nachweis)</td>
+    </tr>
+    <tr>
+      <td><strong>bAV Gehaltsumwandlung</strong> (8% BBG)</td>
+      <td>7.200 €</td>
+      <td>14.400 €</td>
+      <td>Lohnabrechnung (4% frei von Sozialabgaben)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <h3>💡 Steuerbonus für Handwerker & Haushalt (§ 35a EStG)</h3>
+  <p style="margin:0; font-size:9pt; color:var(--ink-soft);">
+    <strong>20% der Arbeitskosten</strong> für Handwerker im eigenen Haushalt ziehen direkt von der Steuerschuld ab (max. 1.200 € / Jahr). Für haushaltsnahe Dienstleistungen (Reinigung, Garten) winken bis zu 4.000 € direkte Erstattung!
+  </p>
+</div>
+
+<h2>Die 4-Schritte Jahresanfangs-Checkliste</h2>
+<ul class="checklist">
+  <li>
+    <span class="checkbox"></span>
+    <div><strong>Freistellungsaufträge abgleichen:</strong> Sind die 1.000 € Sparerpauschbetrag passgenau auf Tagesgeld und Wertpapierdepots verteilt?</div>
+  </li>
+  <li>
+    <span class="checkbox"></span>
+    <div><strong>Nebenkostenabrechnung auf § 35a prüfen:</strong> Werden Treppenhausreinigung oder Winterdienst vom Vermieter ausgewiesen? (Direkt absetzbar!)</div>
+  </li>
+  <li>
+    <span class="checkbox"></span>
+    <div><strong>Rürup-Sonderausgaben berechnen:</strong> Passt dein Grenzsteuersatz (z.B. > 35%), um Steuern in Altersvorsorge umzuwandeln?</div>
+  </li>
+  <li>
+    <span class="checkbox"></span>
+    <div><strong>Arbeitgeber-Zuschuss zur bAV einfordern:</strong> Der gesetzliche Pflichtzuschuss beträgt mindestens 15% bei Entgeltumwandlung.</div>
+  </li>
+</ul>
+
+<div class="footer-pdf">
+  <span>Erstellt von Kontenlage.de — Keine Steuer- oder Anlageberatung.</span>
+  <span>Seite 1 von 1</span>
+</div>
+
+</body>
+</html>

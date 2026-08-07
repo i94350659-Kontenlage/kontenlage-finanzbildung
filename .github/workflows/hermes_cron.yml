@@ -1,0 +1,42 @@
+name: Hermes Content & Strategy Automation
+
+on:
+  schedule:
+    # Führt das Hermes-Skript jeden Montag um 08:00 Uhr UTC aus
+    - cron: '0 8 * * 1'
+  workflow_dispatch: # Erlaubt auch manuelles Ausführen im GitHub Dashboard
+
+jobs:
+  run-hermes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code & Obsidian Vault
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          npm install @supabase/supabase-js
+
+      - name: Execute Hermes Automation Script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          node scripts/hermes_runner.js
+
+      - name: Commit & Push Updated Obsidian Vault & Drafts
+        run: |
+          git config --global user.name 'Hermes Automation Bot'
+          git config --global user.email 'hermes-bot@kontenlage.de'
+          git add .
+          git diff-index --quiet HEAD || git commit -m "auto(hermes): generate weekly social drafts and update learnings"
+          git push
