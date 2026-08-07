@@ -1,29 +1,32 @@
 /**
- * Hermes AI Runner — Kontenlage Automatisierungskern v2.0
+ * Hermes AI Runner — Kontenlage Automatisierungskern v2.1
  *
- * Wöchentlich via GitHub Actions ausgeführt:
+ * Wöchentlich via GitHub Actions ausgeführt (0 € Infrastruktur, keine Kreditkarte):
  *  1. Liest Learnings & Artikel-Kontext aus Obsidian Vault
  *  2. Generiert ECHTEN 5-Kanal AI-Content via OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free)
  *     → Fallback 1: EdenAI  (google/gemma-4-31b-it)
  *     → Fallback 2: Requesty (nvidia/nemotron-3-ultra-550b-a55b)
- *  3. Publisht automatisch über Postiz Public API auf alle 5 Kanäle
+ *  3. Publiziert DIREKT & KOSTENLOS:
+ *     → Telegram: Sofort über Bot API (100% kostenlos, keine Limits)
+ *     → LinkedIn / X / Instagram / TikTok: Drafts im GitHub Repo (2 Min Copy-Paste/Woche)
  *  4. Loggt Ergebnis in Supabase Datenbank
  *  5. Aktualisiert Self-Improvement Learnings
  *
- * GitHub Secrets benötigt:
- *  OPENROUTER_API_KEY        — OpenRouter Primary Key
- *  EDENAI_API_KEY            — EdenAI Fallback Key
- *  REQUESTY_API_KEY          — Requesty Fallback Key
- *  POSTIZ_API_URL            — Postiz Instanz URL (Render.com Self-Hosted)
- *  POSTIZ_API_KEY            — Postiz Public API Key
- *  POSTIZ_CHANNEL_LINKEDIN   — Channel-ID LinkedIn
- *  POSTIZ_CHANNEL_X          — Channel-ID X / Twitter
- *  POSTIZ_CHANNEL_INSTAGRAM  — Channel-ID Instagram
- *  POSTIZ_CHANNEL_TIKTOK     — Channel-ID TikTok
- *  POSTIZ_CHANNEL_TELEGRAM   — Channel-ID Telegram
- *  SUPABASE_URL              — Supabase Projekt-URL
- *  SUPABASE_SERVICE_KEY      — Supabase Service Role Key
- *  SITE_URL                  — https://kontolage.de
+ * GitHub Secrets benötigt (alle kostenlos, keine Kreditkarte):
+ *  OPENROUTER_API_KEY   — OpenRouter Primary Key (kostenlos)
+ *  EDENAI_API_KEY       — EdenAI Fallback (kostenlos)
+ *  REQUESTY_API_KEY     — Requesty Fallback (kostenlos)
+ *  TELEGRAM_BOT_TOKEN   — Bot Token von @BotFather (kostenlos)
+ *  TELEGRAM_CHANNEL_ID  — z.B. @kontenlage_de oder numerische ID
+ *  SUPABASE_URL         — Supabase Projekt-URL (kostenlos)
+ *  SUPABASE_SERVICE_KEY — Supabase Service Role Key (kostenlos)
+ *  SITE_URL             — https://kontolage.de
+ *
+ * Telegram Bot einrichten (2 Min):
+ *  1. In Telegram: @BotFather anschreiben → /newbot → Name: KontenlageBot
+ *  2. Bot-Token kopieren → GitHub Secret TELEGRAM_BOT_TOKEN
+ *  3. Bot als Admin in deinen Telegram-Kanal @kontenlage_de hinzufügen
+ *  4. Kanal-ID (z.B. -1001234567890) → GitHub Secret TELEGRAM_CHANNEL_ID
  */
 
 const fs    = require('fs');
@@ -58,19 +61,12 @@ const AI_PROVIDERS = [
   },
 ];
 
-// ─── Sonstige Konfiguration ───────────────────────────────────────────────────
-const POSTIZ_URL  = process.env.POSTIZ_API_URL  || '';
-const POSTIZ_KEY  = process.env.POSTIZ_API_KEY  || '';
-const CHANNELS = {
-  linkedin:  process.env.POSTIZ_CHANNEL_LINKEDIN  || '',
-  x:         process.env.POSTIZ_CHANNEL_X         || '',
-  instagram: process.env.POSTIZ_CHANNEL_INSTAGRAM || '',
-  tiktok:    process.env.POSTIZ_CHANNEL_TIKTOK    || '',
-  telegram:  process.env.POSTIZ_CHANNEL_TELEGRAM  || '',
-};
+// ─── Konfiguration ───────────────────────────────────────────────────────────
+const TELEGRAM_TOKEN   = process.env.TELEGRAM_BOT_TOKEN   || '';
+const TELEGRAM_CHANNEL = process.env.TELEGRAM_CHANNEL_ID  || '';
 const SUPABASE_URL = process.env.SUPABASE_URL          || '';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY  || '';
-const SITE_URL     = process.env.SITE_URL               || 'https://kontolage.de';
+const SITE_URL     = process.env.SITE_URL              || 'https://kontolage.de';
 
 // ─── HTTP Helper ──────────────────────────────────────────────────────────────
 function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
@@ -218,25 +214,31 @@ Trenne die 5 Abschnitte mit "===KANAL===" als Trennzeichen. Kein Einleitungstext
   };
 }
 
-// ─── Postiz: Post einplanen ───────────────────────────────────────────────────
-async function schedulePostOnPostiz(channelId, content, publishAt) {
-  if (!POSTIZ_KEY || !POSTIZ_URL || !channelId) {
-    console.warn(`  ⚠️  Postiz nicht konfiguriert (URL: ${POSTIZ_URL ? '✓' : '✗'}, Key: ${POSTIZ_KEY ? '✓' : '✗'}, Channel: ${channelId || 'fehlt'}) — überspringe.`);
+// ─── Telegram: Direkt & kostenlos senden ────────────────────────────────────
+async function sendToTelegram(text) {
+  if (!TELEGRAM_TOKEN || !TELEGRAM_CHANNEL) {
+    console.warn('  ⚠️  Telegram nicht konfiguriert — überspringe. (Bitte TELEGRAM_BOT_TOKEN + TELEGRAM_CHANNEL_ID als GitHub Secret setzen)');
     return null;
   }
   const res = await httpRequest(
-    `${POSTIZ_URL}/public/v1/posts`,
+    `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
     'POST',
-    { type: 'post', date: publishAt, shortLink: false, settings: {}, value: [{ content, id: channelId }] },
-    { Authorization: `Bearer ${POSTIZ_KEY}` }
+    { chat_id: TELEGRAM_CHANNEL, text, parse_mode: 'Markdown', disable_web_page_preview: false }
   );
-  if (res.status === 200 || res.status === 201) {
-    console.log(`  ✅ Postiz: Eingeplant für Channel ${channelId} (ID: ${res.body?.id || 'n/a'})`);
-    return res.body;
+  if (res.status === 200 && res.body?.ok) {
+    console.log(`  ✅ Telegram: Nachricht gesendet (ID: ${res.body.result?.message_id})`);
+    return res.body.result;
   }
-  console.error(`  ❌ Postiz Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  console.error(`  ❌ Telegram Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
   return null;
 }
+
+// ─── Dummy-Platzhalter für entfernte Postiz-Funktion (wird nicht mehr aufgerufen)
+async function _postizRemoved() {
+  // Postiz ersetzt durch direktes Telegram + GitHub Drafts (keine Kreditkarte nötig)
+  return null;
+}
+
 
 // ─── Supabase Logging ─────────────────────────────────────────────────────────
 async function logToSupabase(runData) {
@@ -295,18 +297,12 @@ async function main() {
   ].join('\n'), 'utf-8');
   console.log(`   ✅ Drafts gespeichert: ${path.basename(draftFile)}\n`);
 
-  // 3. Postiz Auto-Publishing
-  const publishAt = nextMondayMorning();
-  console.log(`📅 [Hermes] Plane Postiz-Posts für: ${publishAt}`);
-  const results = {
-    linkedin:  await schedulePostOnPostiz(CHANNELS.linkedin,  content.linkedin,  publishAt),
-    x:         await schedulePostOnPostiz(CHANNELS.x,         content.xThread,   publishAt),
-    instagram: await schedulePostOnPostiz(CHANNELS.instagram, content.instagram, publishAt),
-    tiktok:    await schedulePostOnPostiz(CHANNELS.tiktok,    content.tiktok,    publishAt),
-    telegram:  await schedulePostOnPostiz(CHANNELS.telegram,  content.telegram,  publishAt),
-  };
-  const successCount = Object.values(results).filter(Boolean).length;
-  console.log(`\n   📊 Postiz: ${successCount}/5 Kanäle eingeplant.\n`);
+  // 3. Telegram: Direkt & kostenlos publishen
+  console.log('📢 [Hermes] Sende Telegram-Post direkt...');
+  const telegramResult = await sendToTelegram(content.telegram);
+  const successCount = telegramResult ? 1 : 0;
+  console.log(`\n   📊 Direkt-Publishing: Telegram ${telegramResult ? '✅' : '⚠️ (konfigurieren)'}`);
+  console.log('   ℹ️  LinkedIn/X/Instagram/TikTok → Drafts in obsidian_vault/Drafts/ (Copy-Paste in 2 Min)\n');
 
   // 4. Supabase Logging
   console.log('💾 [Hermes] Logging in Supabase...');
@@ -323,14 +319,14 @@ async function main() {
   });
 
   // 5. Self-Improvement Learnings aktualisieren
-  const newEntry = `\n- [${dateStr}] ✅ ${successCount}/5 Kanäle via Postiz. AI: ${content.provider}. Confidence: 0.92. Publish: ${publishAt}`;
+  const newEntry = `\n- [${dateStr}] ✅ Telegram: ${telegramResult ? 'gesendet' : 'nicht konfiguriert'}. AI: ${content.provider}. Confidence: 0.92.`;
   const baselearnings = learnings || `# Hermes Learnings & Self-Improvement Log\n\n- **Regel #1**: Zahlenorientierte Headlines (+40% CTR bei 40-55 Jährigen).\n- **Regel #2**: §-Paragraphen in ersten 2 Zeilen steigern Kompetenzwahrnehmung.\n- **Regel #3**: Max. 1 Emoji auf LinkedIn (Handelsblatt-Stil).\n- **Regel #4**: Direkte Verlinkung auf ${SITE_URL} im ersten Drittel des Posts.`;
   fs.writeFileSync(learningsPath, baselearnings + newEntry, 'utf-8');
   console.log('🧠 [Hermes] Learnings aktualisiert.\n');
 
-  console.log('🚀 [Hermes v2.0] ══════════════════════════════════════');
-  console.log(`🚀 [Hermes v2.0] Fertig. ${successCount}/5 live. AI: ${content.provider}`);
-  console.log('🚀 [Hermes v2.0] ══════════════════════════════════════\n');
+  console.log('🚀 [Hermes v2.1] ══════════════════════════════════════');
+  console.log(`🚀 [Hermes v2.1] Fertig. Telegram: ${telegramResult ? '✅ Live' : '⚠️ konfigurieren'}. AI: ${content.provider}`);
+  console.log('🚀 [Hermes v2.1] ══════════════════════════════════════\n');
 }
 
 main().catch(err => {
