@@ -662,8 +662,13 @@
     window.open('lead_magnet_freibetraege_2026.html', '_blank');
   }
 
-  function startCheckout() {
-    alert('Stripe-Integration: Hier wird der Live Stripe Checkout (7€/Monat) aufgerufen.');
+  function startCheckout(plan) {
+    const prices = {
+      'pro': 'price_1U1rXRPoNfLOPXfNMHK4F2yE',       // 9 € / Monat
+      'executive': 'price_1U1rXRPoNfLOPXfNUnOvBzXo' // 29 € / Monat
+    };
+    const priceId = prices[plan] || prices['pro'];
+    alert(`Starte Stripe Checkout für Plan '${plan.toUpperCase()}' (Price ID: ${priceId})...\n(Sobald deine Publishable Key pk_live_... im Dashboard kopiert wurde, wird die Bezahlseite direkt geöffnet).`);
   }
 
   // Init
