@@ -1,14 +1,44 @@
-name: Hermes Content & Strategy Automation
+name: Hermes v2.2 — Content, Social & Deploy Automation
 
 on:
   schedule:
     # Jeden Montag um 08:00 Uhr UTC — vollautomatisch
     - cron: '0 8 * * 1'
   workflow_dispatch: # Manuelles Ausführen im GitHub Dashboard jederzeit möglich
+  push:
+    branches: [main]  # Auto-Deploy bei jedem Push auf main
 
 jobs:
+  # ── Job 1: Vercel Deploy (bei jedem Push auf main) ─────────────────────────
+  deploy-vercel:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy to Vercel Production
+        run: |
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  # ── Job 2: Hermes Content & Social Publishing (Montag 08:00) ──────────────
   run-hermes:
     runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
 
     permissions:
       contents: write
@@ -25,10 +55,9 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: |
-          npm install
+        run: npm install
 
-      - name: Execute Hermes AI Automation (+ Postiz Auto-Publish)
+      - name: Execute Hermes AI Automation
         env:
           # ── AI Provider: OpenRouter (Primary) ────────────────────────
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -41,21 +70,22 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           # ── Website URL ──────────────────────────────────────────────
           SITE_URL: ${{ secrets.SITE_URL }}
-          # ── Postiz Social Media Publishing ───────────────────────────
-          POSTIZ_API_URL: ${{ secrets.POSTIZ_API_URL }}
-          POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
-          POSTIZ_CHANNEL_LINKEDIN: ${{ secrets.POSTIZ_CHANNEL_LINKEDIN }}
-          POSTIZ_CHANNEL_X: ${{ secrets.POSTIZ_CHANNEL_X }}
-          POSTIZ_CHANNEL_INSTAGRAM: ${{ secrets.POSTIZ_CHANNEL_INSTAGRAM }}
-          POSTIZ_CHANNEL_TIKTOK: ${{ secrets.POSTIZ_CHANNEL_TIKTOK }}
-          POSTIZ_CHANNEL_TELEGRAM: ${{ secrets.POSTIZ_CHANNEL_TELEGRAM }}
+          # ── Telegram (Direktes Posting) ──────────────────────────────
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # ── X/Twitter (OAuth 1.0a Direktes Posting) ──────────────────
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
         run: |
           node scripts/hermes_runner.js
 
-      - name: Commit & Push Updated Obsidian Vault & Drafts
+      - name: Commit & Push Updated Drafts & Learnings
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "Hermes[bot]"
+          git config user.email "hermes@kontolage.de"
           git add .
-          git diff-index --quiet HEAD || git commit -m "auto(hermes): weekly social drafts & postiz schedule update"
+          git diff-index --quiet HEAD || git commit -m "auto(hermes): weekly social drafts + learnings update [skip ci]"
           git push

@@ -68,6 +68,12 @@ const SUPABASE_URL = process.env.SUPABASE_URL          || '';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY  || '';
 const SITE_URL     = process.env.SITE_URL              || 'https://kontolage.de';
 
+// X/Twitter OAuth 1.0a
+const X_API_KEY    = process.env.X_API_KEY    || '';
+const X_API_SECRET = process.env.X_API_SECRET || '';
+const X_ACC_TOKEN  = process.env.X_ACCESS_TOKEN  || '';
+const X_ACC_SECRET = process.env.X_ACCESS_SECRET || '';
+
 // ─── HTTP Helper ──────────────────────────────────────────────────────────────
 function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
   return new Promise((resolve, reject) => {
@@ -233,12 +239,46 @@ async function sendToTelegram(text) {
   return null;
 }
 
-// ─── Dummy-Platzhalter für entfernte Postiz-Funktion (wird nicht mehr aufgerufen)
-async function _postizRemoved() {
-  // Postiz ersetzt durch direktes Telegram + GitHub Drafts (keine Kreditkarte nötig)
-  return null;
+
+// ─── X/Twitter: OAuth 1.0a direktes Posting ──────────────────────────────────
+function xOAuthSign(method, url, params) {
+  const crypto = require('crypto');
+  const sorted = Object.keys(params).sort()
+    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+    .join('&');
+  const base = method.toUpperCase() + '&' + encodeURIComponent(url) + '&' + encodeURIComponent(sorted);
+  const sigKey = encodeURIComponent(X_API_SECRET) + '&' + encodeURIComponent(X_ACC_SECRET);
+  return require('crypto').createHmac('sha1', sigKey).update(base).digest('base64');
 }
 
+function xAuthHeader(method, url) {
+  const crypto = require('crypto');
+  const nonce = crypto.randomBytes(16).toString('hex');
+  const ts    = Math.floor(Date.now() / 1000).toString();
+  const op = {
+    oauth_consumer_key: X_API_KEY, oauth_nonce: nonce,
+    oauth_signature_method: 'HMAC-SHA1', oauth_timestamp: ts,
+    oauth_token: X_ACC_TOKEN, oauth_version: '1.0'
+  };
+  op.oauth_signature = xOAuthSign(method, url, op);
+  return 'OAuth ' + Object.keys(op).map(k => encodeURIComponent(k) + '="' + encodeURIComponent(op[k]) + '"').join(', ');
+}
+
+async function postToX(text) {
+  if (!X_API_KEY || !X_ACC_TOKEN) {
+    console.warn('  ⚠️  X/Twitter nicht konfiguriert — überspringe.');
+    return null;
+  }
+  const url = 'https://api.twitter.com/2/tweets';
+  const auth = xAuthHeader('POST', url);
+  const res  = await httpRequest(url, 'POST', { text }, { Authorization: auth });
+  if (res.status === 201 && res.body?.data?.id) {
+    console.log(`  ✅ X/Twitter: Tweet gesendet (ID: ${res.body.data.id})`);
+    return res.body.data;
+  }
+  console.error(`  ❌ X/Twitter Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
 
 // ─── Supabase Logging ─────────────────────────────────────────────────────────
 async function logToSupabase(runData) {
@@ -297,25 +337,29 @@ async function main() {
   ].join('\n'), 'utf-8');
   console.log(`   ✅ Drafts gespeichert: ${path.basename(draftFile)}\n`);
 
-  // 3. Telegram: Direkt & kostenlos publishen
-  console.log('📢 [Hermes] Sende Telegram-Post direkt...');
-  const telegramResult = await sendToTelegram(content.telegram);
-  const successCount = telegramResult ? 1 : 0;
-  console.log(`\n   📊 Direkt-Publishing: Telegram ${telegramResult ? '✅' : '⚠️ (konfigurieren)'}`);
-  console.log('   ℹ️  LinkedIn/X/Instagram/TikTok → Drafts in obsidian_vault/Drafts/ (Copy-Paste in 2 Min)\n');
+  // 3. Direkt-Publishing: Telegram + X/Twitter
+  console.log('📢 [Hermes] Publishing auf Telegram & X/Twitter...');
+  const [telegramResult, xResult] = await Promise.all([
+    sendToTelegram(content.telegram),
+    postToX(content.xThread.split('\n')[0]), // Ersten Tweet des Threads posten
+  ]);
+  const successCount = [telegramResult, xResult].filter(Boolean).length;
+  console.log(`\n   📊 Publishing-Ergebnis:`);
+  console.log(`      Telegram: ${telegramResult ? '✅ Gesendet' : '⚠️  Nicht konfiguriert'}`);
+  console.log(`      X/Twitter: ${xResult ? '✅ Gesendet (@kontolage)' : '⚠️  Fehler'}`);
+  console.log('   ℹ️  LinkedIn/Facebook/Instagram/TikTok → Drafts in obsidian_vault/Drafts/\n');
 
   // 4. Supabase Logging
   console.log('💾 [Hermes] Logging in Supabase...');
   await logToSupabase({
-    run_date:          dateStr,
-    publish_at:        publishAt,
-    ai_provider:       content.provider,
-    channels_ok:       successCount,
-    channels_total:    5,
-    confidence_score:  0.92,
-    draft_file:        path.basename(draftFile),
-    decision_reason:   `Hermes v2.0 — AI via ${content.provider}`,
-    affected_parameters: ['social_drafts', 'postiz_schedule', 'learnings', 'ai_provider'],
+    run_date:         dateStr,
+    ai_provider:      content.provider,
+    channels_ok:      successCount,
+    channels_total:   5,
+    confidence_score: 0.92,
+    draft_file:       path.basename(draftFile),
+    decision_reason:  `Hermes v2.1 — Telegram+X via ${content.provider}`,
+    affected_parameters: ['telegram', 'x_twitter', 'social_drafts', 'learnings'],
   });
 
   // 5. Self-Improvement Learnings aktualisieren

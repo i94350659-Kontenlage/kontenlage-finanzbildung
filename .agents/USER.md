@@ -27,17 +27,18 @@
 ## Verbundene Services (Credentials in GitHub Secrets)
 | Service | Status |
 |---|---|
-| GitHub PAT | `ghp_VcLt87...` — repo + workflow |
-| Vercel Token | `vck_5Lu9...` — deployed |
+| GitHub PAT | In GitHub Secrets — repo + workflow |
+| Vercel Token | In GitHub Secrets — deployed |
 | Supabase URL | `https://acgfcjcikjlrlfilqdyk.supabase.co` |
 | Supabase Anon Key | In GitHub Secrets |
 | Supabase Service Key | In GitHub Secrets |
-| Stripe Live Key | `rk_live_51TIo9fP...` — Produkte angelegt |
+| Stripe Live Key | In GitHub Secrets — Produkte angelegt |
 | Mailchimp | Audience `c3728821fc`, DC `us5` |
 | OpenRouter | In GitHub Secrets (Nemotron Primary) |
 | EdenAI | In GitHub Secrets (Fallback 1) |
 | Requesty | In GitHub Secrets (Fallback 2) |
-| Telegram Bot | In GitHub Secrets (Bot live, Kanal-ID: `5158552659`) |
+| Telegram Bot | In GitHub Secrets (Bot live) |
+| X/Twitter | In GitHub Secrets (OAuth 1.0a, @kontolage) |
 
 ## Stripe Produkte (LIVE)
 | Plan | Produkt-ID | Preis-ID | Betrag |
