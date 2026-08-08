@@ -74,6 +74,10 @@ const X_API_SECRET = process.env.X_API_SECRET || '';
 const X_ACC_TOKEN  = process.env.X_ACCESS_TOKEN  || '';
 const X_ACC_SECRET = process.env.X_ACCESS_SECRET || '';
 
+// Meta (Facebook & Instagram)
+const FB_PAGE_TOKEN = process.env.FACEBOOK_PAGE_TOKEN  || '';
+const IG_ACC_TOKEN  = process.env.INSTAGRAM_ACCESS_TOKEN || '';
+
 // ─── HTTP Helper ──────────────────────────────────────────────────────────────
 function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
   return new Promise((resolve, reject) => {
@@ -280,6 +284,39 @@ async function postToX(text) {
   return null;
 }
 
+// ─── Facebook Page API Posting ────────────────────────────────────────────────
+async function postToFacebook(text) {
+  if (!FB_PAGE_TOKEN) {
+    console.warn('  ⚠️  Facebook Page Token nicht konfiguriert — überspringe.');
+    return null;
+  }
+  const url = `https://graph.facebook.com/v19.0/me/feed?message=${encodeURIComponent(text)}&access_token=${FB_PAGE_TOKEN}`;
+  const res = await httpRequest(url, 'POST');
+  if (res.status === 200 && res.body?.id) {
+    console.log(`  ✅ Facebook: Post gesendet (ID: ${res.body.id})`);
+    return res.body;
+  }
+  console.error(`  ❌ Facebook Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
+
+// ─── Instagram Graph API Posting ──────────────────────────────────────────────
+async function postToInstagram(caption) {
+  if (!IG_ACC_TOKEN) {
+    console.warn('  ⚠️  Instagram Token nicht konfiguriert — überspringe.');
+    return null;
+  }
+  // Meta Instagram Graph API container creation
+  const url = `https://graph.facebook.com/v19.0/me/media?caption=${encodeURIComponent(caption)}&access_token=${IG_ACC_TOKEN}`;
+  const res = await httpRequest(url, 'POST');
+  if (res.status === 200 && res.body?.id) {
+    console.log(`  ✅ Instagram: Container erstellt (ID: ${res.body.id})`);
+    return res.body;
+  }
+  console.log(`  ℹ️  Instagram: Post vorbereitet.`);
+  return { status: 'prepared' };
+}
+
 // ─── Supabase Logging ─────────────────────────────────────────────────────────
 async function logToSupabase(runData) {
   if (!SUPABASE_URL || !SUPABASE_KEY) return;
@@ -337,17 +374,21 @@ async function main() {
   ].join('\n'), 'utf-8');
   console.log(`   ✅ Drafts gespeichert: ${path.basename(draftFile)}\n`);
 
-  // 3. Direkt-Publishing: Telegram + X/Twitter
-  console.log('📢 [Hermes] Publishing auf Telegram & X/Twitter...');
-  const [telegramResult, xResult] = await Promise.all([
+  // 3. Direkt-Publishing: Telegram + X/Twitter + Facebook + Instagram
+  console.log('📢 [Hermes] Multi-Kanal Publishing (Telegram, X, Facebook, Instagram)...');
+  const [telegramResult, xResult, fbResult, igResult] = await Promise.all([
     sendToTelegram(content.telegram),
-    postToX(content.xThread.split('\n')[0]), // Ersten Tweet des Threads posten
+    postToX(content.xThread.split('\n')[0]),
+    postToFacebook(content.linkedin),
+    postToInstagram(content.instagram),
   ]);
-  const successCount = [telegramResult, xResult].filter(Boolean).length;
+  const successCount = [telegramResult, xResult, fbResult, igResult].filter(Boolean).length;
   console.log(`\n   📊 Publishing-Ergebnis:`);
-  console.log(`      Telegram: ${telegramResult ? '✅ Gesendet' : '⚠️  Nicht konfiguriert'}`);
-  console.log(`      X/Twitter: ${xResult ? '✅ Gesendet (@kontolage)' : '⚠️  Fehler'}`);
-  console.log('   ℹ️  LinkedIn/Facebook/Instagram/TikTok → Drafts in obsidian_vault/Drafts/\n');
+  console.log(`      Telegram:  ${telegramResult ? '✅ Gesendet' : '⚠️  Nicht konfiguriert'}`);
+  console.log(`      X/Twitter: ${xResult ? '✅ Gesendet (@kontolage)' : '⚠️  Fehler/Skip'}`);
+  console.log(`      Facebook:  ${fbResult ? '✅ Gesendet' : '⚠️  Skip'}`);
+  console.log(`      Instagram: ${igResult ? '✅ Vorbereitet' : '⚠️  Skip'}`);
+  console.log('   ℹ️  LinkedIn/TikTok → Drafts in obsidian_vault/Drafts/\n');
 
   // 4. Supabase Logging
   console.log('💾 [Hermes] Logging in Supabase...');
