@@ -176,22 +176,31 @@ async function callAI(prompt, systemPrompt = '') {
 // ─── 5-Kanal Content via AI generieren ───────────────────────────────────────
 async function generateAIContent(dateStr, learnings) {
   const weekNum = Math.ceil(new Date().getDate() / 7);
-  const systemPrompt = `Du bist Hermes, der KI-Redakteur von Kontenlage.de — einem deutschen Finanzbildungsportal für Einkommensbezieher ab 60.000 € Jahreseinkommen.
-Dein Stil: NZZ / Handelsblatt — sachlich, mathematisch präzise, keine Emojis im Fließtext (maximal 1 pro Post auf LinkedIn), keine Füllwörter.
-Nenne immer konkrete § EStG-Paragraphen und Eurobeträge. Verlinke stets auf ${SITE_URL}.
+  const topics = ['ruerup (§10 EStG)', 'sparerpauschbetrag (§20 Abs. 9 EStG)', 'steuersparimmobilien (§21 EStG)', 'bav_gehaltsumwandlung (§3 Nr. 63 EStG)', 'defi_crypto_steuern (§22 Nr. 3 EStG, Staking/Lending, 1-Jahr-Haltefrist)'];
+  const activeTopic = topics[weekNum % topics.length];
+
+  const systemPrompt = `Du bist Hermes, der autonome KI-Redakteur & Wachstumsstratege von Kontenlage.de (Finanzbildungsportal für Einkommensbezieher ab 60.000 €).
+
+DEINE SKILL-BIBLIOTHEK (SKILLS.md):
+- SKILL-01 (Steuer-Content): Vertiefte Erklärungen zu EStG Paragraphen, Euro-Beispiele, sachliche Tonalität.
+- SKILL-02 (Artikel-Prüfer): Exakte Gesetzeszitate, 100% BaFin-konform (keine Anlageberatung/Produktvermittlung).
+- SKILL-03 (Anti-Shadowban): Variierte Satzstrukturen, kein Keyword-Stuffing.
+- SKILL-04 (Confidence-Score): Jede Zahl mathematisch plausibel prüfen.
+- SKILL-05 (DeFi & Crypto Steuern): §22 Nr. 3 EStG, Haltefrist 1 Jahr = steuerfrei, Staking 256 € Freigrenze, Risikoeinschätzung (Smart-Contract, Oracle, Bridge, TVL).
+- SKILL-06 (Whitepaper & Risk): Sachliche Risiko-Matrix (1 bis 5) für Finanzmodelle.
+- SKILL-07 (SEO & Marketing): Handelsblatt/NZZ Stil, hochwirksame Hooks, Mehrwert vor Angebot.
+- SKILL-08 (Risk Assessment): BaFin Compliance, keine Produktempfehlungen, 100% Unabhängigkeit.
+
+THEMA DIESER WOCHE: ${activeTopic}
 Heutiges Datum: ${dateStr} | Woche ${weekNum}.
 Learnings aus vergangenen Läufen: ${learnings.slice(-500) || 'keine'}`;
 
-  const prompt = `Erstelle jetzt präzise, veröffentlichungsfertige Social-Media-Posts für diese 5 Kanäle:
+  const prompt = `Erstelle jetzt präzise, veröffentlichungsfertige Social-Media-Posts für das Thema "${activeTopic}" für diese 5 Kanäle:
 
-1. LINKEDIN (max. 1.200 Zeichen): Seriöser Finanzanalyse-Post, §21 EStG oder Rürup oder Sparerpauschbetrag 2026 — wähle das aktuellste Thema. 1 Emoji erlaubt.
-
+1. LINKEDIN (max. 1.200 Zeichen): Seriöser Finanzanalyse-Post. 1 Emoji erlaubt. Nenne konkrete Paragraphen & Euro-Beispiele.
 2. X_THREAD (4 Tweets, je max. 280 Zeichen): Format: "1/4 ...", "2/4 ...", "3/4 ...", "4/4 ... ${SITE_URL}"
-
 3. INSTAGRAM (Slide-Format, 5 Slides): Format: "[SLIDE 1] Titel\n[SLIDE 2] ...\n[CTA] ..."
-
 4. TIKTOK_SKRIPT (45-Sekunden-Sprecher-Skript): Format: "[INTRO 0-5s] ...\n[HAUPT 5-35s] ...\n[CTA 35-45s] ..."
-
 5. TELEGRAM (max. 400 Zeichen, Markdown erlaubt): Sachlicher Digest mit Direktlink.
 
 Trenne die 5 Abschnitte mit "===KANAL===" als Trennzeichen. Kein Einleitungstext, direkt mit Inhalt beginnen.`;
