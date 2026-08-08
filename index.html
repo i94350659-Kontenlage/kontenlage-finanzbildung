@@ -339,7 +339,7 @@
 
     <div class="hero-cta">
       <button class="btn-primary" onclick="document.getElementById('rechner').scrollIntoView()">Szenario jetzt berechnen</button>
-      <div class="hero-badge">100% Generisch (Keine Anlageberatung nach §34f)</div>
+      <div class="hero-badge">🛡️ 100% Unabhängig: Keine Provisionen, reine Mathematik nach §§ EStG</div>
     </div>
 
     <!-- Interactive Multi-Tab Calculator -->
@@ -653,6 +653,13 @@
         <div class="posten total warning"><span class="label">Fazit</span><span class="value">${bruttoMietrendite < 3.5 ? 'Hohes Risiko / Überteuert' : 'Prüfenswert'}</span></div>
       `;
     }
+
+    // High-Converting CTA Button at the bottom of calc-outputs
+    outputsEl.innerHTML += `
+      <button class="btn-primary" style="background: var(--gold); color: #FFF; width: 100%; margin-top: 16px; padding: 12px; font-size: 0.85rem;" onclick="openLeadModal()">
+        📄 Detaillierte Auswertung & PDF-Checkliste anfordern (0 €)
+      </button>
+    `;
   }
 
   // Lead Modal Controls
