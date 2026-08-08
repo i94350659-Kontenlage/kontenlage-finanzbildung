@@ -102,3 +102,15 @@ Hermes liest bei jedem Lauf `Learnings.md` und passt Prompts automatisch an:
 | Anti-Shadowban | "Diese Phrase letzte Woche" | Neue Formulierung |
 | Plattform-spezifisch | "LinkedIn: max. 1 Emoji" | Automatisch eingehalten |
 | Zeitlich | "Freitagabend = hohe Reichweite auf X" | Publishzeit anpassen |
+
+---
+
+## SOP-008: DeFi Ensemble Risk & Backtesting Lauf (2x wöchentlich)
+**Trigger**: Dienstag 07:00 UTC & Freitag 16:00 UTC via GitHub Actions  
+**Ergebnis**:
+1. Live-Daten von DeFiLlama API (TVL, Yields, Bridges) holen
+2. 600+ historische Hacks aus DeFiLlama Hacks API als Ground-Truth laden
+3. 4-Modell Ensemble Risk Engine deterministisch rechnen (Regel, Anomalie, Peer, Extern)
+4. Backtest durchführen: Treffsicherheit (%) & Qualitätsscore (%) berechnen
+5. Telegram-Bericht mit Handlungsempfehlungen für kleine Kapitalansätze senden
+6. Ergebnis in Supabase DB `defi_backtest_logs` & `defi_scores` speichern
