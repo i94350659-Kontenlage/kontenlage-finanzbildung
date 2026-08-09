@@ -1,47 +1,83 @@
-name: Hermes DeFi Ensemble Risk & Backtest Automation
+name: Hermes DeFi Ensemble Risk & Backtest Automation v2
 
 on:
   schedule:
-    # 2-mal in der Woche vollautomatisch:
-    # 1. Dienstag um 07:00 Uhr UTC (Mid-week Risk Check)
+    # ── Stufe 1: Tägl. FLASH-Check 08:00 UTC ──────────────────────────────────
+    # Nur Mo, Mi, Do, Sa, So (nicht Di & Fr, die haben den Deep-Report)
+    - cron: '0 8 * * 1,3,4,6,0'
+
+    # ── Stufe 2: DEEP-REPORT Di & Fr ──────────────────────────────────────────
+    # Dienstag 07:00 UTC: Mid-Week Risk Check (vor US-Marktöffnung)
     - cron: '0 7 * * 2'
-    # 2. Freitag um 16:00 Uhr UTC (Weekend Exposure & Backtest Audit)
+    # Freitag 16:00 UTC: Wochenend-Exposure Audit (nach EU-Marktschluss)
     - cron: '0 16 * * 5'
-  workflow_dispatch: # Manuelles Ausführen im GitHub Dashboard jederzeit möglich
+
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Ausführungsmodus (flash / deep / emergency)'
+        required: false
+        default: 'deep'
 
 jobs:
-  run-defi-ensemble:
+  # ─── Flash-Check Job (tägl. außer Di & Fr) ─────────────────────────────────
+  flash-check:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'schedule' &&
+       (contains(github.event.schedule, '1,3,4,6,0')))
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Environment
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Execute Hermes DeFi Ensemble & Backtesting Engine
+      - name: Hermes DeFi Flash-Check
         env:
-          # ── Supabase (State lives in Backend DB) ───────────────────
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          # ── Website URL ──────────────────────────────────────────────
-          SITE_URL: ${{ secrets.SITE_URL }}
-          # ── Telegram (Direktes Posting) ──────────────────────────────
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
-        run: |
-          node scripts/hermes_defi_researcher.js
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          RUN_MODE: flash
+        run: node scripts/hermes_defi_researcher.js
 
-      - name: Commit & Push Updated Backtest Audit Logs
+  # ─── Deep-Report Job (Di 07:00 & Fr 16:00) ─────────────────────────────────
+  deep-report:
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'schedule' &&
+       (contains(github.event.schedule, '0 7 * * 2') ||
+        contains(github.event.schedule, '0 16 * * 5')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Hermes DeFi Deep-Report & Backtest-Audit
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          RUN_MODE: deep
+        run: node scripts/hermes_defi_researcher.js
+
+      - name: Commit Updated Backtest Logs
         run: |
           git config user.name "HermesDeFi[bot]"
           git config user.email "hermes-defi@kontolage.de"
           git add .
-          git diff-index --quiet HEAD || git commit -m "auto(hermes-defi): backtest audit & ensemble risk update [skip ci]"
+          git diff-index --quiet HEAD || git commit -m "auto(hermes-defi): deep-report backtest update [skip ci]"
           git push
