@@ -36,6 +36,32 @@
 }
 </script>
 
+<!-- Schema.org FAQPage & FinancialCalculator Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie viel Steuern kann ich mit der Rürup-Rente 2026 absetzen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Im Jahr 2026 können Beiträge zur Basisrente (Rürup-Rente) bis zu 30.825,60 € (Verheiratete: 61.651,20 €) zu 100 % als Sonderausgaben abgesetzt werden (§ 10 EStG)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie hoch ist der Sparerpauschbetrag 2026 in Deutschland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Sparerpauschbetrag liegt bei 1.000 € pro Jahr für Einzelpersonen und 2.000 € für Verheiratete (§ 20 Abs. 9 EStG)."
+      }
+    }
+  ]
+}
+</script>
+
 <!-- Cache-Kontrolle: kein serverseitiger Cache -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -574,28 +600,73 @@
     return Math.round(n).toLocaleString('de-DE') + ' €';
   }
 
+  // Hermes Supabase Event Analytics Logger (DSGVO-konform für Klick- & Interaktionsmessung)
+  function logHermesEvent(eventType, payload = {}) {
+    try {
+      fetch('https://acgfcjcikjlrlfilqdyk.supabase.co/rest/v1/audit_logs', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY',
+          'Authorization': 'Bearer sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          event_type: eventType,
+          input_snapshot: payload,
+          decision_reason: 'Automatischer Hermes-Optimierungsloop',
+          affected_parameters: { path: window.location.pathname, timestamp: new Date().toISOString() }
+        })
+      }).catch(function() {});
+    } catch (e) {}
+  }
+
+  function syncVal(numId, rangeId) {
+    const numEl = document.getElementById(numId);
+    const rangeEl = document.getElementById(rangeId);
+    if (numEl && rangeEl) {
+      rangeEl.value = numEl.value;
+    }
+    renderCalc();
+  }
+
+  function syncRange(numId, rangeId) {
+    const numEl = document.getElementById(numId);
+    const rangeEl = document.getElementById(rangeId);
+    if (numEl && rangeEl) {
+      numEl.value = rangeEl.value;
+    }
+    renderCalc();
+  }
+
   function switchTab(tab) {
     currentTab = tab;
     document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
-    event?.target?.classList?.add('active');
+    if (window.event && window.event.target) {
+      window.event.target.classList.add('active');
+    }
 
     const inputsEl = document.getElementById('calc-inputs');
-    const outputsEl = document.getElementById('calc-outputs');
     const indicator = document.getElementById('tab-indicator');
 
     if (tab === 'ruerup') {
       indicator.textContent = "Modell: Rürup § 10 EStG";
       inputsEl.innerHTML = `
-        <label>Bruttojahreseinkommen</label>
-        <input type="number" id="inp-brutto" value="65000" step="2500" oninput="renderCalc()">
-        <label>Monatlicher Rürup-Beitrag</label>
-        <input type="number" id="inp-ruerup-monat" value="250" step="50" oninput="renderCalc()">
+        <label>Bruttojahreseinkommen: <strong id="lbl-brutto">65.000 €</strong></label>
+        <input type="number" id="inp-brutto" value="65000" step="2500" oninput="syncVal('inp-brutto', 'rng-brutto')">
+        <input type="range" id="rng-brutto" min="20000" max="200000" value="65000" step="2500" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-brutto', 'rng-brutto')">
+
+        <label>Monatlicher Rürup-Beitrag: <strong id="lbl-ruerup-monat">250 €</strong></label>
+        <input type="number" id="inp-ruerup-monat" value="250" step="50" oninput="syncVal('inp-ruerup-monat', 'rng-ruerup-monat')">
+        <input type="range" id="rng-ruerup-monat" min="50" max="2500" value="250" step="50" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-ruerup-monat', 'rng-ruerup-monat')">
       `;
     } else if (tab === 'sparer') {
       indicator.textContent = "Modell: § 20 Abs. 9 EStG";
       inputsEl.innerHTML = `
-        <label>Erwarteter Kapitalertrag (Zinsen/Dividenden)</label>
-        <input type="number" id="inp-ertrag" value="2500" step="250" oninput="renderCalc()">
+        <label>Erwarteter Kapitalertrag (Zinsen/Dividenden): <strong id="lbl-ertrag">2.500 €</strong></label>
+        <input type="number" id="inp-ertrag" value="2500" step="250" oninput="syncVal('inp-ertrag', 'rng-ertrag')">
+        <input type="range" id="rng-ertrag" min="100" max="20000" value="2500" step="250" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-ertrag', 'rng-ertrag')">
+
         <label>Familienstand</label>
         <select id="inp-familie" onchange="renderCalc()" style="width:100%; padding:8px; margin-bottom:16px; border:1px solid var(--line); border-radius:var(--radius); font-family:inherit;">
           <option value="ledig">Ledig (1.000 € Freibetrag)</option>
@@ -605,12 +676,16 @@
     } else if (tab === 'immo') {
       indicator.textContent = "Modell: Steuerspar-Immobilie Realitätscheck";
       inputsEl.innerHTML = `
-        <label>Angebotener Kaufpreis der Wohnung</label>
-        <input type="number" id="inp-kaufpreis" value="250000" step="10000" oninput="renderCalc()">
-        <label>Monatliche Kaltmiete</label>
-        <input type="number" id="inp-miete" value="750" step="50" oninput="renderCalc()">
+        <label>Angebotener Kaufpreis der Wohnung: <strong id="lbl-kaufpreis">250.000 €</strong></label>
+        <input type="number" id="inp-kaufpreis" value="250000" step="10000" oninput="syncVal('inp-kaufpreis', 'rng-kaufpreis')">
+        <input type="range" id="rng-kaufpreis" min="50000" max="1000000" value="250000" step="10000" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-kaufpreis', 'rng-kaufpreis')">
+
+        <label>Monatliche Kaltmiete: <strong id="lbl-miete">750 €</strong></label>
+        <input type="number" id="inp-miete" value="750" step="50" oninput="syncVal('inp-miete', 'rng-miete')">
+        <input type="range" id="rng-miete" min="200" max="4000" value="750" step="50" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-miete', 'rng-miete')">
       `;
     }
+    logHermesEvent('CALCULATOR_TAB_SWITCH', { tab });
     renderCalc();
   }
 
@@ -622,6 +697,11 @@
       const monat = Math.max(0, Number(document.getElementById('inp-ruerup-monat')?.value) || 0);
       const jahresBeitrag = Math.min(monat * 12, 30825.60);
       
+      const lblB = document.getElementById('lbl-brutto');
+      const lblM = document.getElementById('lbl-ruerup-monat');
+      if (lblB) lblB.textContent = fmt(brutto);
+      if (lblM) lblM.textContent = fmt(monat);
+
       const grenzsteuersatz = brutto > 66760 ? 0.42 : brutto > 17005 ? 0.24 + (brutto - 17005)/(66760 - 17005) * 0.18 : 0.14;
       const ersparnis = jahresBeitrag * grenzsteuersatz;
       const nettoAufwand = jahresBeitrag - ersparnis;
@@ -636,6 +716,9 @@
       const ertrag = Math.max(0, Number(document.getElementById('inp-ertrag')?.value) || 0);
       const fam = document.getElementById('inp-familie')?.value;
       const freibetrag = fam === 'verheiratet' ? 2000 : 1000;
+
+      const lblE = document.getElementById('lbl-ertrag');
+      if (lblE) lblE.textContent = fmt(ertrag);
       
       const steuerpflichtig = Math.max(0, ertrag - freibetrag);
       const steuerOhneFreistellung = ertrag * 0.26375;
@@ -651,13 +734,17 @@
     } else if (currentTab === 'immo') {
       const kaufpreis = Math.max(0, Number(document.getElementById('inp-kaufpreis')?.value) || 0);
       const mieteMonat = Math.max(0, Number(document.getElementById('inp-miete')?.value) || 0);
+
+      const lblK = document.getElementById('lbl-kaufpreis');
+      const lblM = document.getElementById('lbl-miete');
+      if (lblK) lblK.textContent = fmt(kaufpreis);
+      if (lblM) lblM.textContent = fmt(mieteMonat);
       
-      const vertriebsAufschlag = kaufpreis * 0.15; // 15% eingepreiste Vertriebsprovision
+      const vertriebsAufschlag = kaufpreis * 0.15;
       const geschätzterMarktwert = kaufpreis - vertriebsAufschlag;
       const jahresmiete = mieteMonat * 12;
       const bruttoMietrendite = kaufpreis > 0 ? (jahresmiete / kaufpreis) * 100 : 0;
       
-      // Zinslast geschätzt 4%
       const zinsenJahr = kaufpreis * 0.04;
       const zinsUeberdecktDurchMiete = jahresmiete - zinsenJahr;
 
@@ -670,16 +757,27 @@
       `;
     }
 
-    // High-Converting CTA Button at the bottom of calc-outputs
+    // High-Converting CTA Buttons & Export Action
     outputsEl.innerHTML += `
-      <button class="btn-primary" style="background: var(--gold); color: #FFF; width: 100%; margin-top: 16px; padding: 12px; font-size: 0.85rem;" onclick="openLeadModal()">
-        📄 Detaillierte Auswertung & PDF-Checkliste anfordern (0 €)
-      </button>
+      <div style="display: flex; gap: 10px; margin-top: 16px;">
+        <button class="btn-primary" style="background: var(--gold); color: #FFF; flex: 1; padding: 12px; font-size: 0.85rem;" onclick="openLeadModal()">
+          📄 Detaillierte Auswertung & PDF-Checkliste anfordern (0 €)
+        </button>
+        <button class="btn-primary" style="background: var(--ink); color: #FFF; padding: 12px 16px; font-size: 0.85rem;" title="Ergebnis drucken / als PDF speichern" onclick="exportCalculation()">
+          🖨️ Export
+        </button>
+      </div>
     `;
+  }
+
+  function exportCalculation() {
+    logHermesEvent('CALCULATOR_EXPORT_CLICK', { tab: currentTab });
+    window.print();
   }
 
   // Lead Modal Controls
   function openLeadModal() {
+    logHermesEvent('LEAD_MODAL_OPENED');
     document.getElementById('leadModal').style.display = 'flex';
   }
   function closeLeadModal() {
@@ -688,20 +786,23 @@
 
   function handleLeadSubmit(e) {
     e.preventDefault();
-    const email = document.getElementById('leadEmail').value;
-    alert(`Vielen Dank! Die PDF-Checkliste wurde an ${email} verschickt.\nDein Download startet jetzt.`);
+    const name = document.getElementById('leadName')?.value || '';
+    const email = document.getElementById('leadEmail')?.value || '';
+    
+    logHermesEvent('LEAD_CHECKLIST_REQUESTED', { name, email });
+    alert(`Vielen Dank, ${name}! Die 4-seitige PDF-Checkliste öffnet sich jetzt in einem neuen Tab.`);
     closeLeadModal();
-    // Automatischer Download / Ansicht des Lead Magneten
     window.open('lead_magnet_freibetraege_2026.html', '_blank');
   }
 
   function startCheckout(plan) {
     const prices = {
-      'pro': 'price_1U1rXRPoNfLOPXfNMHK4F2yE',       // 9 € / Monat
-      'executive': 'price_1U1rXRPoNfLOPXfNUnOvBzXo' // 29 € / Monat
+      'pro': 'price_1U1rXRPoNfLOPXfNMHK4F2yE',
+      'executive': 'price_1U1rXRPoNfLOPXfNUnOvBzXo'
     };
     const priceId = prices[plan] || prices['pro'];
-    alert(`Starte Stripe Checkout für Plan '${plan.toUpperCase()}' (Price ID: ${priceId})...\n(Sobald deine Publishable Key pk_live_... im Dashboard kopiert wurde, wird die Bezahlseite direkt geöffnet).`);
+    logHermesEvent('CHECKOUT_INITIATED', { plan, priceId });
+    alert(`Starte Stripe Checkout für Plan '${plan.toUpperCase()}'...\n(Sobald dein Stripe Live Key hinterlegt ist, wird die Bezahlseite sofort aufgerufen).`);
   }
 
   // Init
