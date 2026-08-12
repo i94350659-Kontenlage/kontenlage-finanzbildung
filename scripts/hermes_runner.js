@@ -79,7 +79,7 @@ const FB_PAGE_TOKEN = process.env.FACEBOOK_PAGE_TOKEN  || '';
 const IG_ACC_TOKEN  = process.env.INSTAGRAM_ACCESS_TOKEN || '';
 
 // ─── HTTP Helper ──────────────────────────────────────────────────────────────
-function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
+function httpRequest(url, method = 'GET', body = null, extraHeaders = {}, timeoutMs = 6000) {
   return new Promise((resolve, reject) => {
     const parsed = new URL(url);
     const bodyStr = body ? JSON.stringify(body) : null;
@@ -88,6 +88,7 @@ function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
       port: 443,
       path: parsed.pathname + parsed.search,
       method,
+      timeout: timeoutMs,
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'HermesAgent/2.0 Kontenlage',
@@ -103,7 +104,11 @@ function httpRequest(url, method = 'GET', body = null, extraHeaders = {}) {
         catch (e) { resolve({ status: res.statusCode, body: data }); }
       });
     });
-    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      resolve({ status: 408, body: { error: 'Request timeout' } });
+    });
+    req.on('error', err => resolve({ status: 500, body: { error: err.message } }));
     if (bodyStr) req.write(bodyStr);
     req.end();
   });

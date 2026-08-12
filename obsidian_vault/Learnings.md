@@ -6,3 +6,4 @@
 
 - [2026-08-07] Lauf erfolgreich durchgeführt. 2 Entwürfe generiert. Confidence Score: 0.92
 - [2026-08-07] Lauf erfolgreich durchgeführt. 2 Entwürfe generiert. Confidence Score: 0.92
+- [2026-08-12] ✅ Telegram: nicht konfiguriert. AI: static-fallback. Confidence: 0.92.
