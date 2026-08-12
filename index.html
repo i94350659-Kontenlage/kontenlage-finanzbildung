@@ -550,6 +550,10 @@
     <form onsubmit="handleLeadSubmit(event)">
       <input type="text" placeholder="Dein Vorname" id="leadName" required>
       <input type="email" placeholder="deine@email.de" id="leadEmail" required>
+      <label style="font-size: 0.78rem; color: var(--ink-soft); display: flex; align-items: flex-start; gap: 8px; margin: 4px 0 6px 0; cursor: pointer;">
+        <input type="checkbox" required style="margin-top: 3px;">
+        <span>Ich akzeptiere die <a href="#datenschutz" style="color: var(--gold); text-decoration: underline;">Datenschutzerklärung</a> und willige in die Kontaktaufnahme ein.</span>
+      </label>
       <button type="submit" class="btn-primary">Kostenlos anfordern (PDF)</button>
     </form>
     <p style="font-size: 0.72rem; color: var(--ink-soft); margin-top: 10px; text-align: center;">
