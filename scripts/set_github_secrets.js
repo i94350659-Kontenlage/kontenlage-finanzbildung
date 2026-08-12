@@ -5,13 +5,13 @@
 const https = require('https');
 const sodium = require('tweetsodium');
 
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 const OWNER = 'i94350659-Kontenlage';
 const REPO = 'kontenlage-finanzbildung';
 
 const secretsToSet = {
-  SUPABASE_URL: 'https://acgfcjcikjlrlfilqdyk.supabase.co',
-  SUPABASE_SERVICE_KEY: 'sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY'
+  SUPABASE_URL: process.env.SUPABASE_URL || 'https://acgfcjcikjlrlfilqdyk.supabase.co',
+  SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY || 'sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY'
 };
 
 function githubRequest(path, method = 'GET', body = null) {
