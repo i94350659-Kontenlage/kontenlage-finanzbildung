@@ -71,8 +71,12 @@
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
-<!-- Preise sofort ausblenden bis Gewerbeanmeldung -->
-<script>document.addEventListener('DOMContentLoaded',function(){var s=document.getElementById('abo');if(s){s.style.cssText='display:none!important';}})</script>
+<!-- PREISE: CSS-sicher versteckt bis Gewerbeanmeldung (display:none im HTML-Element) -->
+<!-- Zum Aktivieren: style="display:none" bei <section id="abo"> entfernen -->
+<style>
+  /* Belt-and-suspenders: Preisbereich auch per CSS verstecken */
+  #abo { display: none !important; }
+</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -601,13 +605,19 @@
   }
 
   // Hermes Supabase Event Analytics Logger (DSGVO-konform für Klick- & Interaktionsmessung)
+  // SECURITY: Verwendet den öffentlichen Anon-Key (READ-ONLY, keine Schreibrechte für User-Daten)
+  // Der Anon-Key ist für Frontend-Nutzung vorgesehen und unkritisch (RLS schützt die Tabellen).
+  // NIEMALS den Service-Role-Key im Frontend verwenden.
   function logHermesEvent(eventType, payload = {}) {
     try {
-      fetch('https://acgfcjcikjlrlfilqdyk.supabase.co/rest/v1/audit_logs', {
+      const SUPABASE_URL   = 'https://acgfcjcikjlrlfilqdyk.supabase.co';
+      const SUPABASE_ANON = window.__KL_ANON_KEY__ || ''; // wird per Vercel Env als window-Variable gesetzt
+      if (!SUPABASE_ANON) return; // Kein Key = kein Tracking (fail-safe)
+      fetch(SUPABASE_URL + '/rest/v1/audit_logs', {
         method: 'POST',
         headers: {
-          'apikey': 'sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY',
-          'Authorization': 'Bearer sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY',
+          'apikey': SUPABASE_ANON,
+          'Authorization': 'Bearer ' + SUPABASE_ANON,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },

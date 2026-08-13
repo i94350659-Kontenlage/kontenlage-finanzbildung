@@ -97,3 +97,53 @@ ALTER TABLE defi_protocols ENABLE ROW LEVEL SECURITY;
 ALTER TABLE defi_signals ENABLE ROW LEVEL SECURITY;
 ALTER TABLE defi_scores ENABLE ROW LEVEL SECURITY;
 ALTER TABLE defi_backtest_logs ENABLE ROW LEVEL SECURITY;
+
+-- 8. Tabelle: Hermes Wochenlauf-Logs (AI Provider, Kanal-Status, Confidence)
+CREATE TABLE IF NOT EXISTS hermes_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    run_date DATE NOT NULL,
+    ai_provider VARCHAR(100),
+    channels_ok INT DEFAULT 0,
+    channels_total INT DEFAULT 0,
+    confidence_score NUMERIC(3,2) DEFAULT 0.92,
+    draft_file VARCHAR(200),
+    decision_reason TEXT,
+    affected_parameters JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 9. Tabelle: Stripe Subscriber-Daten (Abo-Verwaltung via Webhook)
+CREATE TABLE IF NOT EXISTS kontenlage_subscribers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    stripe_customer_id TEXT,
+    stripe_subscription_id TEXT UNIQUE,
+    email TEXT NOT NULL,
+    plan TEXT DEFAULT 'pro',                   -- 'pro' (9€) oder 'executive' (29€)
+    status TEXT DEFAULT 'active',              -- 'active', 'cancelled', 'payment_failed'
+    subscribed_at TIMESTAMPTZ DEFAULT NOW(),
+    cancelled_at TIMESTAMPTZ,
+    last_payment_failed_at TIMESTAMPTZ,
+    confidence_score NUMERIC(3,2) DEFAULT 1.0, -- Architekturpflicht gemäß AGENTS.md
+    decision_reason TEXT,
+    affected_parameters JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- RLS für neue Tabellen
+ALTER TABLE hermes_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE kontenlage_subscribers ENABLE ROW LEVEL SECURITY;
+
+-- Policies: Nur Service Role darf schreiben (Webhook, Hermes)
+CREATE POLICY "hermes_logs_service_only" ON hermes_logs
+  FOR ALL USING (auth.role() = 'service_role');
+
+CREATE POLICY "subscribers_service_only" ON kontenlage_subscribers
+  FOR ALL USING (auth.role() = 'service_role');
+
+-- audit_logs: Anon darf schreiben (für Frontend-Analytics)
+-- ACHTUNG: Keine personenbezogenen Daten! Nur event_type + anonymisierter payload
+CREATE POLICY "audit_logs_anon_insert" ON audit_logs
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "audit_logs_service_select" ON audit_logs
+  FOR SELECT USING (auth.role() = 'service_role');

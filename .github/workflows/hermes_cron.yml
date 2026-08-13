@@ -1,4 +1,4 @@
-name: Hermes v2.2 — Content, Social & Deploy Automation
+name: Hermes v2.3 — Content, Social (6-Kanal) & Deploy Automation
 
 on:
   schedule:
@@ -57,7 +57,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Execute Hermes AI Automation
+      - name: Execute Hermes AI Automation (6 Kanäle)
         env:
           # ── AI Provider: OpenRouter (Primary) ────────────────────────
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -70,27 +70,35 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           # ── Website URL ──────────────────────────────────────────────
           SITE_URL: ${{ secrets.SITE_URL }}
-          # ── Telegram (Direktes Posting) ──────────────────────────────
+          # ── Telegram (Direktes Posting — kostenlos) ──────────────────
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
-          # ── X/Twitter (OAuth 1.0a Direktes Posting) ──────────────────
+          # ── X/Twitter (OAuth 1.0a) ────────────────────────────────────
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
-          # ── Meta (Facebook & Instagram Direktes Posting) ─────────────
+          # ── Meta: Facebook Page ───────────────────────────────────────
           META_APP_ID: ${{ secrets.META_APP_ID }}
           META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
           FACEBOOK_PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_TOKEN }}
+          # ── Meta: Instagram Graph API (2-Step: Container + Publish) ──
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          # ── LinkedIn API v2 (UGC Post, w_member_social scope) ─────────
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          # ── Stripe (Testmodus bis Gewerbeanmeldung) ───────────────────
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
         run: |
           node scripts/hermes_runner.js
 
       - name: Commit & Push Updated Drafts & Learnings
         run: |
           git config user.name "Hermes[bot]"
-          git config user.email "hermes@kontolage.de"
+          git config user.email "hermes@kontenlage.de"
           git add .
           git diff-index --quiet HEAD || git commit -m "auto(hermes): weekly social drafts + learnings update [skip ci]"
           git push
