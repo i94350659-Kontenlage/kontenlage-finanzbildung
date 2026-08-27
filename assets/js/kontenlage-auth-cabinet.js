@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  const KONTENLAGE_PLANS = {
+    const KONTENLAGE_PLANS = {
     free: {
       id: 'free',
       label: 'Free Starter 🌱',
@@ -17,26 +17,52 @@
         basicCalcs: true,
         assetCompass: true,
         freeChecklist: true,
+        calcLimitPerMonth: 3,
         proSimulations: false,
         taxMatrices: false,
-        hermesResearch: false
+        excelVault: false,
+        deepResearch: false
       }
     },
     pro_investor: {
       id: 'pro_investor',
       label: 'Pro Investor 📈',
-      price: 19,
-      priceLabel: '19 € / Monat',
+      price: 9,
+      priceLabel: '9 € / Monat',
       color: '#10B981',
       features: {
         basicCalcs: true,
         assetCompass: true,
         freeChecklist: true,
+        calcLimitPerMonth: null, // Unlimited
         proSimulations: true,
+        advancedSliders: true,  // Inflation, Kirchensteuer, Vorabpauschale
         taxMatrices: true,
         interestRadar: true,
         taxAlerts: true,
-        hermesResearch: false
+        excelVault: false,
+        deepResearch: false
+      }
+    },
+    executive_b2b: {
+      id: 'executive_b2b',
+      label: 'Executive & B2B 📑',
+      price: 29,
+      priceLabel: '29 € / Monat',
+      color: '#0284C7',
+      features: {
+        basicCalcs: true,
+        assetCompass: true,
+        freeChecklist: true,
+        calcLimitPerMonth: null,
+        proSimulations: true,
+        advancedSliders: true,
+        taxMatrices: true,
+        interestRadar: true,
+        taxAlerts: true,
+        excelVault: true, // Downloadable Master Excel & Sheets Tools
+        holdingModels: true,
+        deepResearch: false
       }
     },
     private_owner: {
@@ -49,11 +75,15 @@
         basicCalcs: true,
         assetCompass: true,
         freeChecklist: true,
+        calcLimitPerMonth: null,
         proSimulations: true,
+        advancedSliders: true,
         taxMatrices: true,
         interestRadar: true,
         taxAlerts: true,
-        hermesResearch: true,
+        excelVault: true,
+        holdingModels: true,
+        deepResearch: true,
         decisionJournal: true,
         protocolAudit: true
       }

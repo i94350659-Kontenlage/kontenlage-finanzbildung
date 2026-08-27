@@ -362,6 +362,7 @@
     </a>
     <nav>
       <a href="#rechner">Rechner</a>
+      <a href="#holding-modelle">Holding & Steuern</a>
       <a href="#anlageklassen">Anlageformen</a>
       <a href="#artikel">Artikel</a>
       <a href="#bewertungen">Transparenz</a>
@@ -385,6 +386,10 @@
       <button class="btn-primary" onclick="document.getElementById('rechner').scrollIntoView()">Szenario jetzt berechnen</button>
       <div class="hero-badge">🛡️ 100% Unabhängig: Keine Provisionen, reine Mathematik nach §§ EStG</div>
     </div>
+
+    
+    <!-- Above-the-Fold Quick Estimator -->
+    <div id="quickEstimatorContainer"></div>
 
     <!-- Interactive Multi-Tab Calculator -->
     <div class="statement" id="rechner">
@@ -444,6 +449,38 @@
 <!-- Articles Grid -->
 
 <!-- Asset Classes Taxonomy & Knowledge Hub -->
+
+<!-- Advanced Tax & Holding Models (Holding, VV-GmbH, Fünftelregelung, Chef-Gehalt) -->
+<section id="holding-modelle">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Komplexe Steuermechanismen für Gutverdiener & Unternehmer</div>
+        <h2>Holding, VV-GmbH & Fünftelregelung im Vergleich</h2>
+      </div>
+      <button class="btn-lead" onclick="window.taxEngine && window.taxEngine.openExcelVaultModal()">
+        📑 Excel-Rechenmodelle herunterladen →
+      </button>
+    </div>
+
+    <p style="max-width: 720px; color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 24px;">
+      Mathematische Gegenüberstellung von vermögensverwaltenden GmbHs (§ 8b KStG), Entlastung nach der Fünftelregelung (§ 34 EStG) und steuerfreien Sachbezügen für Mitarbeiter.
+    </p>
+
+    <!-- Holding & Tax Simulator Container -->
+    <div id="holdingSimulatorContainer"></div>
+
+    <!-- Salary Benchmark Table Container -->
+    <div id="benchmarkTableContainer"></div>
+
+    <!-- 2026-2028 Reform Outlook Container -->
+    <div id="reformOutlookContainer"></div>
+
+    <!-- Ambiguity & Inconclusive Decision Warning Radar Container -->
+    <div id="inconclusiveWarningContainer"></div>
+  </div>
+</section>
+
 <section id="anlageklassen">
   <div class="wrap">
     <div class="section-head">
@@ -664,11 +701,11 @@
     return Math.round(n).toLocaleString('de-DE') + ' €';
   }
 
-  // Hermes Supabase Event Analytics Logger (DSGVO-konform für Klick- & Interaktionsmessung)
+  // Smart Financial Engine Supabase Event Analytics Logger (DSGVO-konform für Klick- & Interaktionsmessung)
   // SECURITY: Verwendet den öffentlichen Anon-Key (READ-ONLY, keine Schreibrechte für User-Daten)
   // Der Anon-Key ist für Frontend-Nutzung vorgesehen und unkritisch (RLS schützt die Tabellen).
   // NIEMALS den Service-Role-Key im Frontend verwenden.
-  function logHermesEvent(eventType, payload = {}) {
+  function logSmart Financial EngineEvent(eventType, payload = {}) {
     try {
       const SUPABASE_URL   = 'https://acgfcjcikjlrlfilqdyk.supabase.co';
       const SUPABASE_ANON = window.__KL_ANON_KEY__ || ''; // wird per Vercel Env als window-Variable gesetzt
@@ -684,7 +721,7 @@
         body: JSON.stringify({
           event_type: eventType,
           input_snapshot: payload,
-          decision_reason: 'Automatischer Hermes-Optimierungsloop',
+          decision_reason: 'Automatischer Smart Financial Engine-Optimierungsloop',
           affected_parameters: { path: window.location.pathname, timestamp: new Date().toISOString() }
         })
       }).catch(function() {});
@@ -755,7 +792,7 @@
         <input type="range" id="rng-miete" min="200" max="4000" value="750" step="50" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-miete', 'rng-miete')">
       `;
     }
-    logHermesEvent('CALCULATOR_TAB_SWITCH', { tab });
+    logSmart Financial EngineEvent('CALCULATOR_TAB_SWITCH', { tab });
     renderCalc();
   }
 
@@ -841,13 +878,13 @@
   }
 
   function exportCalculation() {
-    logHermesEvent('CALCULATOR_EXPORT_CLICK', { tab: currentTab });
+    logSmart Financial EngineEvent('CALCULATOR_EXPORT_CLICK', { tab: currentTab });
     window.print();
   }
 
   // Lead Modal Controls
   function openLeadModal() {
-    logHermesEvent('LEAD_MODAL_OPENED');
+    logSmart Financial EngineEvent('LEAD_MODAL_OPENED');
     document.getElementById('leadModal').style.display = 'flex';
   }
   function closeLeadModal() {
@@ -859,7 +896,7 @@
     const name = document.getElementById('leadName')?.value || '';
     const email = document.getElementById('leadEmail')?.value || '';
     
-    logHermesEvent('LEAD_CHECKLIST_REQUESTED', { name, email });
+    logSmart Financial EngineEvent('LEAD_CHECKLIST_REQUESTED', { name, email });
     alert(`Vielen Dank, ${name}! Die 4-seitige PDF-Checkliste öffnet sich jetzt in einem neuen Tab.`);
     closeLeadModal();
     window.open('lead_magnet_freibetraege_2026.html', '_blank');
@@ -871,7 +908,7 @@
       'executive': 'price_1U1rXRPoNfLOPXfNUnOvBzXo'
     };
     const priceId = prices[plan] || prices['pro'];
-    logHermesEvent('CHECKOUT_INITIATED', { plan, priceId });
+    logSmart Financial EngineEvent('CHECKOUT_INITIATED', { plan, priceId });
     alert(`Starte Stripe Checkout für Plan '${plan.toUpperCase()}'...\n(Sobald dein Stripe Live Key hinterlegt ist, wird die Bezahlseite sofort aufgerufen).`);
   }
 
@@ -881,5 +918,6 @@
 
   <script src="assets/js/kontenlage-asset-engine.js"></script>
   <script src="assets/js/kontenlage-auth-cabinet.js"></script>
+  <script src="assets/js/kontenlage-tax-holding-engine.js"></script>
 </body>
 </html>
