@@ -1,9 +1,11 @@
 {
+  "framework": null,
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
@@ -20,8 +22,5 @@
       "source": "/api/stripe-webhook",
       "destination": "/api/stripe-webhook.js"
     }
-  ],
-  "env": {
-    "KL_ANON_KEY": "@supabase_anon_key"
-  }
+  ]
 }
