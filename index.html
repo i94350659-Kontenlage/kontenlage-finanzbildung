@@ -362,10 +362,12 @@
     </a>
     <nav>
       <a href="#rechner">Rechner</a>
+      <a href="#anlageklassen">Anlageformen</a>
       <a href="#artikel">Artikel</a>
       <a href="#bewertungen">Transparenz</a>
       <a href="#abo">Abo</a>
       <button class="btn-lead" onclick="openLeadModal()">PDF Checkliste 2026</button>
+      <button id="navCabinetBtn" class="btn-lead" style="background: var(--ink); color: var(--paper);" onclick="window.klCabinet && window.klCabinet.showLoginModal()">🔐 Kabinett Login</button>
     </nav>
   </div>
 </header>
@@ -440,6 +442,56 @@
 </section>
 
 <!-- Articles Grid -->
+
+<!-- Asset Classes Taxonomy & Knowledge Hub -->
+<section id="anlageklassen">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Objektive Orientierung & Risikomatrix</div>
+        <h2>Klassische & Alternative Anlageformen im Vergleich</h2>
+      </div>
+      <button class="btn-lead" onclick="window.assetEngine && window.assetEngine.openArchetypeModal()">
+        🧭 Mein Anlage-Profil testen →
+      </button>
+    </div>
+
+    <p style="max-width: 720px; color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 24px;">
+      Vergleiche Renditechancen, Reale Kosten (TER, Spreads), Liquidität, Steuern (§ 20 vs. § 23 EStG) und gesetzliche Einlagensicherungen – neutral aufgeschlüsselt nach WpHG § 2 / MAR Art. 20.
+    </p>
+
+    <!-- Container for dynamic JS rendering -->
+    <div id="assetHubContainer"></div>
+
+    <!-- 3-Dimensions Strategy Matrix -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px;">
+      <div style="background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;">
+        <div style="font-size: 1.5rem; margin-bottom: 6px;">🎯</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 6px; color: var(--ink);">1. Das Anlageziel</h4>
+        <p style="font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0;">
+          Notgroschen, Eigenkapital für Immobilien oder passives Zusatzeinkommen im Alter? Das Ziel bestimmt zwingend die erlaubte Risikoklasse.
+        </p>
+      </div>
+
+      <div style="background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;">
+        <div style="font-size: 1.5rem; margin-bottom: 6px;">⏳</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 6px; color: var(--ink);">2. Der Anlagehorizont</h4>
+        <p style="font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0;">
+          Unter 3 Jahren gehören Gelder nur in Tages-/Festgeld. Ab 10–15 Jahren minimiert der Zinseszins historische Kursschwankungen von Aktien-ETFs.
+        </p>
+      </div>
+
+      <div style="background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;">
+        <div style="font-size: 1.5rem; margin-bottom: 6px;">⚡</div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 6px; color: var(--ink);">3. Die Risikobereitschaft</h4>
+        <p style="font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0;">
+          Wie verhältst du dich bei -30% Marktkorrektur? Nur ein Portfolio, das du emotional durchhalten kannst, bringt langfristig Rendite.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="artikel">
   <div class="wrap">
     <div class="section-head">
@@ -570,6 +622,14 @@
       © 2026 Kontenlage — Finanzwissen zum Nachlesen | 🔒 100% ohne Tracking-Cookies | <a href="#" id="impressum">Impressum</a> | <a href="#" id="datenschutz">Datenschutz</a>
     </p>
   </div>
+
+<div style="margin-top: 24px; padding: 16px; background: #FAF8F3; border: 1px solid var(--line); border-radius: var(--radius);">
+  <strong style="color: var(--ink); font-size: 0.82rem; display: block; margin-bottom: 4px;">⚖️ Gesetzlicher Hinweis nach § 2 Abs. 8 Nr. 10 WpHG & Art. 20 MAR:</strong>
+  <p class="legal-note" style="margin: 0; font-size: 0.76rem;">
+    Die auf Kontenlage.de bereitgestellten Inhalte, Rechner, Simulationen und Vergleiche dienen ausschließlich der allgemeinen Finanz- und Steuerbildung. Sie stellen keine Anlageberatung, keine individuelle Vermögensberatung, keine Rechts- oder Steuerberatung und keine Aufforderung zum Kauf oder Verkauf von Finanzinstrumenten, Kryptowährungen oder Sachwerten dar. Historische Wertentwicklungen sind kein verlässlicher Indikator für zukünftige Renditen. Alle Berechnungen erfolgen nach objektiven mathematischen Modellen ohne Beraterprovisionen.
+  </p>
+</div>
+
 </footer>
 
 <!-- Lead Magnet Modal Overlay -->
@@ -819,5 +879,7 @@
   switchTab('ruerup');
 </script>
 
+  <script src="assets/js/kontenlage-asset-engine.js"></script>
+  <script src="assets/js/kontenlage-auth-cabinet.js"></script>
 </body>
 </html>
