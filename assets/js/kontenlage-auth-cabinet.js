@@ -1,12 +1,12 @@
 /**
- * Kontenlage — Customer Cabinet, Auth & Subscription Engine v6.0
- * Stripe / Supabase / LocalStorage Bridge for Financial Education Platform
+ * Kontenlage — Customer Cabinet, Auth & Subscription Engine v6.3
+ * 4-Tier Subscription Architecture (0 € / 9 € / 29 € / 49 €)
  */
 
 (function () {
   'use strict';
 
-    const KONTENLAGE_PLANS = {
+  const KONTENLAGE_PLANS = {
     free: {
       id: 'free',
       label: 'Free Starter 🌱',
@@ -19,6 +19,7 @@
         freeChecklist: true,
         calcLimitPerMonth: 3,
         proSimulations: false,
+        advancedSliders: false,
         taxMatrices: false,
         excelVault: false,
         deepResearch: false
@@ -34,9 +35,9 @@
         basicCalcs: true,
         assetCompass: true,
         freeChecklist: true,
-        calcLimitPerMonth: null, // Unlimited
+        calcLimitPerMonth: null,
         proSimulations: true,
-        advancedSliders: true,  // Inflation, Kirchensteuer, Vorabpauschale
+        advancedSliders: true,
         taxMatrices: true,
         interestRadar: true,
         taxAlerts: true,
@@ -60,7 +61,7 @@
         taxMatrices: true,
         interestRadar: true,
         taxAlerts: true,
-        excelVault: true, // Downloadable Master Excel & Sheets Tools
+        excelVault: true,
         holdingModels: true,
         deepResearch: false
       }
@@ -104,8 +105,8 @@
         {
           id: 'n_ezb_rate',
           icon: '🏦',
-          title: 'EZB Leitzins Update',
-          body: 'Tagesgeld-Spitzenzinsen im EWR liegen stabil bei 3,50%–3,75% p.a. Einlagensicherungen prüfen!',
+          title: 'EZB Leitzins & Festgeld-Radar',
+          body: 'Tagesgeld-Spitzenzinsen im EWR liegen stabil bei 3,50%–3,75% p.a. Gesetzliche Einlagensicherung bis 100.000 € beachten.',
           date: 'Heute',
           read: false
         },
@@ -133,7 +134,7 @@
           <div style="text-align: center; margin-bottom: 20px;">
             <span style="font-size: 2.2rem;">🔐</span>
             <h3 style="font-size: 1.4rem; color: var(--ink); margin: 6px 0 2px;">Kunden-Kabinett Anmelden</h3>
-            <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Zugang zu deinen gespeicherten Steuer-Szenarien.</p>
+            <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Zugang zu deinen gespeicherten Steuer- & Anlage-Szenarien.</p>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
@@ -155,13 +156,13 @@
     showRegisterModal(preselectedPlan) {
       const plan = preselectedPlan || 'free';
       this.renderModal('authModal', `
-        <div class="modal-card" style="max-width: 480px;">
+        <div class="modal-card" style="max-width: 500px;">
           <button class="modal-close" onclick="document.getElementById('authModal').style.display='none'">×</button>
           
           <div style="text-align: center; margin-bottom: 20px;">
             <span style="font-size: 2.2rem;">🏛️</span>
             <h3 style="font-size: 1.4rem; color: var(--ink); margin: 6px 0 2px;">Kunden-Kabinett Anlegen</h3>
-            <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Unabhängige Finanzbildung auf höchstem Niveau.</p>
+            <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Wähle deinen passenden Kontenlage-Tarif.</p>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
@@ -169,10 +170,12 @@
             <input type="email" id="klRegEmail" placeholder="E-Mail Adresse" style="padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.95rem;">
             <input type="password" id="klRegPass" placeholder="Passwort (min. 8 Zeichen)" style="padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.95rem;">
             
-            <select id="klRegPlan" style="padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.95rem;">
-              <option value="free" ${plan === 'free' ? 'selected' : ''}>Free Starter (0 €)</option>
-              <option value="pro_investor" ${plan === 'pro_investor' ? 'selected' : ''}>Pro Investor (19 € / Monat)</option>
-              <option value="private_owner" ${plan === 'private_owner' ? 'selected' : ''}>Private Banking & Research (49 € / Monat)</option>
+            <label style="font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); margin-top: 4px; display: block;">Gewünschter Tarif:</label>
+            <select id="klRegPlan" style="padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 0.92rem; font-family: inherit; background: var(--paper);">
+              <option value="free" ${plan === 'free' ? 'selected' : ''}>🌱 Free Starter (0 € – 3 Rechner-Nutzungen / Monat)</option>
+              <option value="pro_investor" ${plan === 'pro_investor' ? 'selected' : ''}>📈 Pro Investor (9 € / Monat – Unbegrenzt, alle Schieberegler)</option>
+              <option value="executive_b2b" ${plan === 'executive_b2b' ? 'selected' : ''}>📑 Executive & B2B (29 € / Monat – Inkl. Excel-Vault & Holding)</option>
+              <option value="private_owner" ${plan === 'private_owner' ? 'selected' : ''}>👑 Private Banking & Research (49 € / Monat – Deep Research)</option>
             </select>
           </div>
 
@@ -192,6 +195,15 @@
       const u = this.currentUser;
       const p = KONTENLAGE_PLANS[u.plan] || KONTENLAGE_PLANS.free;
 
+      let upgradeHtml = '';
+      if (u.plan === 'free') {
+        upgradeHtml = `<button class="btn-lead" onclick="window.klCabinet.showRegisterModal('pro_investor')">⬆️ Auf Pro (9 €) upgraden</button>`;
+      } else if (u.plan === 'pro_investor') {
+        upgradeHtml = `<button class="btn-lead" onclick="window.klCabinet.showRegisterModal('executive_b2b')">⬆️ Auf Executive (29 €) upgraden</button>`;
+      } else {
+        upgradeHtml = `<span style="color: var(--positive); font-size: 0.82rem; font-weight: 700;">✓ Vollzugriff aktiv</span>`;
+      }
+
       this.renderModal('cabinetModal', `
         <div class="modal-card" style="max-width: 640px;">
           <button class="modal-close" onclick="document.getElementById('cabinetModal').style.display='none'">×</button>
@@ -209,12 +221,12 @@
 
           <!-- Active Plan Status -->
           <div style="background: #FAF8F3; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
               <div>
                 <span class="badge" style="background: ${p.color}; color: #FFF; font-size: 0.75rem; padding: 3px 8px; border-radius: 2px;">${p.label}</span>
                 <div style="font-size: 0.84rem; color: var(--ink-soft); margin-top: 4px;">Status: <strong>Aktiv (${p.priceLabel})</strong></div>
               </div>
-              ${u.plan === 'free' ? '<button class="btn-lead" onclick="window.klCabinet.showRegisterModal(\'pro_investor\')">⬆️ Auf Pro upgraden</button>' : '<span style="color: var(--positive); font-size: 0.82rem; font-weight: 700;">✓ Alle Pro-Rechner aktiv</span>'}
+              ${upgradeHtml}
             </div>
           </div>
 
@@ -233,11 +245,11 @@
 
           <!-- Saved Tools -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <button class="btn-primary" style="padding: 10px; font-size: 0.85rem;" onclick="document.getElementById('cabinetModal').style.display='none'; document.getElementById('rechner').scrollIntoView();">
-              📊 Zum Rürup-Rechner
+            <button class="btn-primary" style="padding: 10px; font-size: 0.85rem;" onclick="document.getElementById('cabinetModal').style.display='none'; document.getElementById('holding-modelle').scrollIntoView();">
+              📑 Zu den Steuerspar-Modellen
             </button>
-            <button class="btn-lead" style="padding: 10px; font-size: 0.85rem;" onclick="document.getElementById('cabinetModal').style.display='none'; document.getElementById('anlageklassen').scrollIntoView();">
-              🧭 Zum Anlage-Kompass
+            <button class="btn-lead" style="padding: 10px; font-size: 0.85rem;" onclick="document.getElementById('cabinetModal').style.display='none'; window.taxEngine.openExcelVaultModal();">
+              📥 Excel-Vault öffnen
             </button>
           </div>
         </div>
@@ -256,6 +268,7 @@
       document.getElementById('authModal').style.display = 'none';
       this.updateNavState();
       this.showCabinetDashboard();
+      window.location.reload();
     }
 
     handleRegister() {
@@ -274,6 +287,7 @@
       document.getElementById('authModal').style.display = 'none';
       this.updateNavState();
       this.showCabinetDashboard();
+      window.location.reload();
     }
 
     logout() {
@@ -282,6 +296,7 @@
       document.getElementById('cabinetModal') && (document.getElementById('cabinetModal').style.display = 'none');
       this.updateNavState();
       alert('Erfolgreich abgemeldet.');
+      window.location.reload();
     }
 
     updateNavState() {
