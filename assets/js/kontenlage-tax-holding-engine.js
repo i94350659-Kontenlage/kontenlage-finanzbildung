@@ -1,27 +1,45 @@
 /**
- * Kontenlage — Advanced Tax & Holding Engine v6.2
+ * Kontenlage — Gated Tax, Holding & Executive Engine v6.3
  * 
  * Features:
- * 1. Above-the-Fold Quick Marginal Tax Estimator (Grenzsteuersatz-Schätzer)
- * 2. Salary Benchmark Matrix (Rürup, Holding, VV-GmbH nach Brutto)
- * 3. 2026–2028 Tax Reform Outlook (Grundfreibetrag, Handwerker § 35a, degressive AfA)
- * 4. Spardosen-GmbH / Holding Rechner (§ 8b KStG 1,5% vs. 26,375% privat)
- * 5. VV-Immobilien-GmbH vs. Privatkauf (15% KSt vs. 10 Jahre § 23 EStG)
- * 6. Rürup-Rente vs. Privates ETF-Depot (30 Jahre Zinseszins & Steuervergleich)
- * 7. Fünftelregelung Rechner (§ 34 EStG) bei Abfindungen
- * 8. Chef-Gehaltscheck: 100 € Bruttoerhöhung vs. Sachbezug & Kita-Zuschuss
- * 9. Photovoltaik & Balkonkraftwerk (§ 3 Nr. 72 EStG)
- * 10. Ambiguity & Inconclusive Decision Warning Radar
- * 11. Executive Excel / Sheets Template Download Vault
+ * 1. Above-the-Fold Quick Marginal Tax Estimator (Public Free)
+ * 2. Salary Benchmark Matrix (Public Free)
+ * 3. 2026–2028 Tax Reform Outlook (Public Free)
+ * 4. Holding / Spardosen-GmbH (§ 8b KStG) — Gated for Executive (29 €)
+ * 5. VV-Immobilien-GmbH vs. Privatkauf — Gated for Executive (29 €)
+ * 6. Fünftelregelung (§ 34 EStG) — Gated for Pro (9 €)
+ * 7. Chef-Gehalt vs. Sachbezug — Gated for Pro (9 €)
+ * 8. Downloadable Excel & Sheets Vault — Gated for Executive (29 €)
+ * 9. Ambiguity & Inconclusive Decision Warning Radar
  */
 
 (function () {
   'use strict';
 
-  // 1. Marginal Tax Rate Approximation (German EStG Formel 2026/2027)
+  function getCurrentUser() {
+    try {
+      return JSON.parse(localStorage.getItem('kontenlage_user') || 'null');
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function getUserPlan() {
+    const user = getCurrentUser();
+    return user ? (user.plan || 'free') : 'free';
+  }
+
+  function hasAccess(requiredTier) {
+    const plan = getUserPlan();
+    if (plan === 'private_owner') return true;
+    if (requiredTier === 'pro') return plan === 'pro_investor' || plan === 'executive_b2b';
+    if (requiredTier === 'executive') return plan === 'executive_b2b';
+    return false;
+  }
+
   function calculateMarginalTaxRate(taxableIncome, isMarried) {
     const inc = isMarried ? taxableIncome / 2 : taxableIncome;
-    const basicAllowance = 11784; // Grundfreibetrag 2026
+    const basicAllowance = 11784;
 
     if (inc <= basicAllowance) return 0;
     if (inc <= 17005) {
@@ -33,16 +51,16 @@
       return Math.round((208.85 * z + 2397) / 100);
     }
     if (inc <= 277825) {
-      return 42; // Spitzensteuersatz
+      return 42;
     }
-    return 45; // Reichensteuer
+    return 45;
   }
 
   function TaxHoldingEngine() {
     this.activeCalcTab = 'holding';
   }
 
-  // ─── ABOVE-THE-FOLD QUICK ESTIMATOR ─────────────────────────────────────────
+  // ─── 1. ABOVE-THE-FOLD QUICK ESTIMATOR (PUBLIC FREE) ────────────────────────
   TaxHoldingEngine.prototype.renderQuickEstimator = function (containerId) {
     const el = document.getElementById(containerId || 'quickEstimatorContainer');
     if (!el) return;
@@ -80,7 +98,6 @@
           </div>
         </div>
 
-        <!-- Dynamic Impact Row -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px dotted var(--line);">
           <div style="font-size: 0.82rem; color: var(--ink-soft);">
             💰 <strong>1.000 € Sonderausgaben (Rürup/Handwerker):</strong>
@@ -89,7 +106,7 @@
 
           <div style="font-size: 0.82rem; color: var(--ink-soft);">
             📈 <strong>Holding-Vorteil (bei 10.000 € Aktiengewinn):</strong>
-            <div id="quickSaveHolding" style="color: var(--positive); font-weight: 700; font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin-top: 2px;">2.487 € Steuerstundung</div>
+            <div id="quickSaveHolding" style="color: var(--positive); font-weight: 700; font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; margin-top: 2px;">2.488 € Steuerstundung p.a.</div>
           </div>
 
           <div style="font-size: 0.82rem; color: var(--ink-soft);">
@@ -106,23 +123,17 @@
   TaxHoldingEngine.prototype.recalcQuickEstimator = function () {
     const inc = parseFloat(document.getElementById('quickIncome')?.value || 75000);
     const isMarried = document.getElementById('quickMarried')?.value === 'married';
-
     const rate = calculateMarginalTaxRate(inc, isMarried);
     const save1000 = Math.round(1000 * (rate / 100));
-    
-    // Holding save on 10k gain: Private = 26.375% (2637.50€), GmbH = 1.5% (150€) -> diff = 2487.50€
-    const holdingSave = 2488;
 
     const rateEl = document.getElementById('quickRateOutput');
     const saveEl = document.getElementById('quickSave1000');
-    const holdEl = document.getElementById('quickSaveHolding');
 
     if (rateEl) rateEl.textContent = rate.toFixed(1) + ' %';
     if (saveEl) saveEl.textContent = '+' + save1000 + ' € Steuerrückerstattung';
-    if (holdEl) holdEl.textContent = holdingSave.toLocaleString('de-DE') + ' € Steuerstundung p.a.';
   };
 
-  // ─── SALARY BENCHMARK TABLE ────────────────────────────────────────────────
+  // ─── 2. BENCHMARK TABLE (PUBLIC FREE) ──────────────────────────────────────
   TaxHoldingEngine.prototype.renderBenchmarkTable = function (containerId) {
     const el = document.getElementById(containerId || 'benchmarkTableContainer');
     if (!el) return;
@@ -152,30 +163,30 @@
               <tr style="border-bottom: 1px solid var(--line);">
                 <td style="padding: 10px 14px; font-weight: 600;">35.000 € – 50.000 €</td>
                 <td style="padding: 10px 14px; font-family: 'IBM Plex Mono', monospace;">~30% – 36%</td>
-                <td style="padding: 10px 14px; color: var(--ink-soft);">Moderat (Freibetrag & ETF vorrangig)</td>
-                <td style="padding: 10px 14px; color: var(--warning);">❌ Unrentabel (Laufende Kosten zu hoch)</td>
-                <td style="padding: 10px 14px; color: var(--ink-soft);">Privatkauf überlegen (10-Jahres-Frist)</td>
+                <td style="padding: 10px 14px; color: var(--ink-soft);">Moderat (Freibetrag vorrangig)</td>
+                <td style="padding: 10px 14px; color: var(--warning);">❌ Unrentabel (Fixkosten zu hoch)</td>
+                <td style="padding: 10px 14px; color: var(--ink-soft);">Privatkauf überlegen (10 J. Frist)</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--line); background: #FAF8F3;">
                 <td style="padding: 10px 14px; font-weight: 600;">67.000 € – 100.000 €</td>
                 <td style="padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; color: var(--positive); font-weight: 700;">42,0 % (Spitzenst.)</td>
-                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Sehr hoch (420 € Ersparnis je 1.000 €)</td>
+                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Sehr hoch (420 € / 1.000 €)</td>
                 <td style="padding: 10px 14px; color: var(--ink-soft);">Ab > 150k € Depotvolumen rentabel</td>
                 <td style="padding: 10px 14px; color: var(--ink-soft);">Ab 3–4 Mehrfamilienhäusern prüfen</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--line);">
                 <td style="padding: 10px 14px; font-weight: 600;">120.000 € – 250.000 €</td>
                 <td style="padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; color: var(--positive); font-weight: 700;">42,0 % + Soli</td>
-                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Maximaler Hebel (Höchstbetrag 30.825 €)</td>
-                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Starker Zinseszins-Hebel (1,5% KSt)</td>
+                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Maximaler Hebel (Höchstbetrag)</td>
+                <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Starker Zinseszins (1,5% KSt)</td>
                 <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ 15% KSt vs. 44,3% Privatsteuer</td>
               </tr>
               <tr>
                 <td style="padding: 10px 14px; font-weight: 600;">> 277.825 €</td>
                 <td style="padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; color: var(--gold); font-weight: 800;">45,0 % (Reichenst.)</td>
                 <td style="padding: 10px 14px; color: var(--positive); font-weight: 600;">✅ Höchstbetrag voll ausschöpfen</td>
-                <td style="padding: 10px 14px; color: var(--positive); font-weight: 800;">💎 Standard-Struktur für Vermögensschutz</td>
-                <td style="padding: 10px 14px; color: var(--positive); font-weight: 800;">💎 Erweiterte Gewerbesteuerkürzung optimal</td>
+                <td style="padding: 10px 14px; color: var(--positive); font-weight: 800;">💎 Standard-Struktur Vermögensschutz</td>
+                <td style="padding: 10px 14px; color: var(--positive); font-weight: 800;">💎 Gewerbesteuerkürzung optimal</td>
               </tr>
             </tbody>
           </table>
@@ -184,7 +195,7 @@
     `;
   };
 
-  // ─── 2026–2028 TAX REFORM OUTLOOK ──────────────────────────────────────────
+  // ─── 3. REFORM OUTLOOK (PUBLIC FREE) ───────────────────────────────────────
   TaxHoldingEngine.prototype.renderReformOutlook = function (containerId) {
     const el = document.getElementById(containerId || 'reformOutlookContainer');
     if (!el) return;
@@ -228,7 +239,7 @@
     `;
   };
 
-  // ─── AMBIGUITY & INCONCLUSIVE DECISION WARNING RADAR ──────────────────────
+  // ─── 4. INCONCLUSIVE WARNING (PUBLIC FREE) ──────────────────────────────────
   TaxHoldingEngine.prototype.renderInconclusiveWarning = function (containerId) {
     const el = document.getElementById(containerId || 'inconclusiveWarningContainer');
     if (!el) return;
@@ -253,7 +264,7 @@
     `;
   };
 
-  // ─── HOLDING / SPARDOSEN-GMBH SIMULATOR ─────────────────────────────────────
+  // ─── 5. GATED ADVANCED TAX & HOLDING SIMULATOR ─────────────────────────────
   TaxHoldingEngine.prototype.renderHoldingSimulator = function (containerId) {
     const el = document.getElementById(containerId || 'holdingSimulatorContainer');
     if (!el) return;
@@ -261,10 +272,10 @@
     el.innerHTML = `
       <div class="statement" style="margin-top: 36px;">
         <div class="calc-tabs">
-          <button class="calc-tab active" onclick="window.taxEngine.switchCalcTab('holding')">1. Spardosen-GmbH (§ 8b KStG)</button>
-          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('vvgmbh')">2. VV-Immobilien-GmbH vs. Privat</button>
-          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('fuenftel')">3. Fünftelregelung (§ 34 EStG Abfindung)</button>
-          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('gehalt_chef')">4. Chef-Gehalt vs. Sachbezug</button>
+          <button class="calc-tab active" onclick="window.taxEngine.switchCalcTab('holding')">1. Spardosen-GmbH (§ 8b KStG) 📑</button>
+          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('vvgmbh')">2. VV-Immobilien-GmbH vs. Privat 🏠</button>
+          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('fuenftel')">3. Fünftelregelung (§ 34 EStG) ⚖️</button>
+          <button class="calc-tab" onclick="window.taxEngine.switchCalcTab('gehalt_chef')">4. Chef-Gehalt vs. Sachbezug 💼</button>
         </div>
 
         <div class="statement-head">
@@ -273,7 +284,7 @@
         </div>
 
         <div class="statement-body" id="advCalcBody">
-          <!-- Dynamic Content rendered below -->
+          <!-- Dynamisch mit Paywall-Overlay -->
         </div>
       </div>
     `;
@@ -298,8 +309,12 @@
     const ind = document.getElementById('advTabIndicator');
     if (!body) return;
 
+    const isExec = hasAccess('executive');
+    const isPro = hasAccess('pro');
+
     if (this.activeCalcTab === 'holding') {
-      if (ind) ind.textContent = 'Modell: Spardosen-GmbH (§ 8b KStG)';
+      if (ind) ind.textContent = 'Modell: Spardosen-GmbH (§ 8b KStG) [Executive-Plan]';
+
       body.innerHTML = `
         <div class="calc-grid">
           <div>
@@ -316,22 +331,41 @@
             </div>
           </div>
 
-          <div>
+          <div style="position: relative;">
             <h4 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Mathematischer Steuervergleich:</h4>
+            
             <div class="posten"><span class="label">Steuer Privat (26,375% Abgeltungst.):</span><span class="value" id="hTaxPriv" style="color: var(--warning);">9.231 €</span></div>
-            <div class="posten"><span class="label">Steuer GmbH (1,54% auf Aktien / 30% auf Div.):</span><span class="value" id="hTaxGmbh" style="color: var(--positive);">1.962 €</span></div>
-            <div class="posten"><span class="label">Laufende Strukturkosten GmbH:</span><span class="value" id="hGmbhCostVal">-2.200 €</span></div>
-            <div class="posten total"><span class="label">Netto-Vorteil Holding p.a. (Steuerstundung):</span><span class="value" id="hNetAdv" style="color: var(--gold);">+5.069 €</span></div>
+            
+            <!-- Gated Section -->
+            <div class="${!isExec ? 'paywall-blur-box' : ''}">
+              <div class="posten"><span class="label">Steuer GmbH (1,54% auf Aktien / 30% auf Div.):</span><span class="value" id="hTaxGmbh" style="color: var(--positive);">1.962 €</span></div>
+              <div class="posten"><span class="label">Laufende Strukturkosten GmbH:</span><span class="value" id="hGmbhCostVal">-2.200 €</span></div>
+              <div class="posten total"><span class="label">Netto-Vorteil Holding p.a. (Steuerstundung):</span><span class="value" id="hNetAdv" style="color: var(--gold);">+5.069 €</span></div>
+              
+              <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
+                💡 <strong>Fazit:</strong> Bei Aktiengewinnen greift das Schachtelprivileg (§ 8b Abs. 1 u. 2 KStG). Die Steuerstundung ermöglicht Reinvestition von 98,5% des Kapitals.
+              </p>
+            </div>
 
-            <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
-              💡 <strong>Fazit:</strong> Bei Aktiengewinnen greift das Schachtelprivileg (§ 8b Abs. 1 u. 2 KStG). Die Steuerstundung ermöglicht Reinvestition von 98,5% des Kapitals.
-            </p>
+            ${!isExec ? `
+              <div class="paywall-overlay-card">
+                <span style="font-size: 1.8rem;">🔒</span>
+                <h4 style="margin: 4px 0 2px; font-size: 1.05rem; color: var(--ink);">Holding-Tiefenanalyse gesperrt</h4>
+                <p style="font-size: 0.78rem; color: var(--ink-soft); margin: 0 0 10px; max-width: 280px; text-align: center;">
+                  Genaue Steuerstundungs-Matrix & Schachtelprivileg-Rechner sind im <strong>Executive & B2B Plan (29 €/Mo)</strong> enthalten.
+                </p>
+                <button class="btn-lead" style="padding: 8px 18px; font-size: 0.82rem; background: var(--gold); color: #FFF;" onclick="window.klCabinet.showRegisterModal('executive_b2b')">
+                  Executive freischalten (29 €/Mo) →
+                </button>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
       this.recalcHolding();
     } else if (this.activeCalcTab === 'vvgmbh') {
-      if (ind) ind.textContent = 'Modell: VV-Immobilien-GmbH vs. Privat';
+      if (ind) ind.textContent = 'Modell: VV-Immobilien-GmbH vs. Privat [Executive-Plan]';
+
       body.innerHTML = `
         <div class="calc-grid">
           <div>
@@ -348,22 +382,39 @@
             </div>
           </div>
 
-          <div>
+          <div style="position: relative;">
             <h4 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Vergleich Mietphase vs. Verkauf:</h4>
             <div class="posten"><span class="label">Steuer Privat auf Miete p.a.:</span><span class="value" id="imPrivTax" style="color: var(--warning);">15.120 €</span></div>
-            <div class="posten"><span class="label">Steuer GmbH (15,825% KSt mit GewSt-Kürzung):</span><span class="value" id="imGmbhTax" style="color: var(--positive);">5.697 €</span></div>
-            <div class="posten"><span class="label">Jährlicher Liquiditätsvorteil GmbH:</span><span class="value" id="imLiqAdv" style="color: var(--positive);">+9.423 € / Jahr</span></div>
-            <div class="posten total"><span class="label">Verkaufsgewinn nach 10 Jahren:</span><span class="value" id="imExitAdv">Privat 100% STEUERFREI!</span></div>
 
-            <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
-              ⚖️ <strong>Entscheidungskriterium:</strong> Die VV-GmbH schlägt den Privatkauf bei dauerhaftem Buy & Hold (Tilgungshebel). Wer nach 10 Jahren verkaufen will, bleibt privat steuerfrei (§ 23 EStG).
-            </p>
+            <div class="${!isExec ? 'paywall-blur-box' : ''}">
+              <div class="posten"><span class="label">Steuer GmbH (15,825% KSt mit GewSt-Kürzung):</span><span class="value" id="imGmbhTax" style="color: var(--positive);">5.697 €</span></div>
+              <div class="posten"><span class="label">Jährlicher Liquiditätsvorteil GmbH:</span><span class="value" id="imLiqAdv" style="color: var(--positive);">+9.423 € / Jahr</span></div>
+              <div class="posten total"><span class="label">Verkaufsgewinn nach 10 Jahren:</span><span class="value" id="imExitAdv">Privat 100% STEUERFREI!</span></div>
+
+              <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
+                ⚖️ <strong>Entscheidungskriterium:</strong> Die VV-GmbH schlägt den Privatkauf bei dauerhaftem Buy & Hold (Tilgungshebel). Wer nach 10 Jahren verkaufen will, bleibt privat steuerfrei (§ 23 EStG).
+              </p>
+            </div>
+
+            ${!isExec ? `
+              <div class="paywall-overlay-card">
+                <span style="font-size: 1.8rem;">🔒</span>
+                <h4 style="margin: 4px 0 2px; font-size: 1.05rem; color: var(--ink);">VV-Immobilien-GmbH Modell gesperrt</h4>
+                <p style="font-size: 0.78rem; color: var(--ink-soft); margin: 0 0 10px; max-width: 280px; text-align: center;">
+                  Erweiterte Gewerbesteuerkürzung & 30-Jahre Tilgungsvergleich im <strong>Executive & B2B Plan (29 €/Mo)</strong>.
+                </p>
+                <button class="btn-lead" style="padding: 8px 18px; font-size: 0.82rem; background: var(--gold); color: #FFF;" onclick="window.klCabinet.showRegisterModal('executive_b2b')">
+                  Executive freischalten (29 €/Mo) →
+                </button>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
       this.recalcVVGmbH();
     } else if (this.activeCalcTab === 'fuenftel') {
-      if (ind) ind.textContent = 'Modell: Fünftelregelung (§ 34 EStG)';
+      if (ind) ind.textContent = 'Modell: Fünftelregelung (§ 34 EStG) [Pro-Plan]';
+
       body.innerHTML = `
         <div class="calc-grid">
           <div>
@@ -377,21 +428,38 @@
             </div>
           </div>
 
-          <div>
+          <div style="position: relative;">
             <h4 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Progressionsmilderung nach § 34 EStG:</h4>
             <div class="posten"><span class="label">Steuer OHNE Fünftelregelung:</span><span class="value" id="fTaxWithout" style="color: var(--warning);">58.420 €</span></div>
-            <div class="posten"><span class="label">Steuer MIT Fünftelregelung:</span><span class="value" id="fTaxWith" style="color: var(--positive);">51.180 €</span></div>
-            <div class="posten total"><span class="label">Echte Steuerersparnis durch § 34:</span><span class="value" id="fTaxSaved" style="color: var(--gold);">+7.240 €</span></div>
 
-            <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
-              📌 <strong>Tipp für Gutverdiener:</strong> Die Fünftelregelung wirkt umso stärker, je geringer das sonstige Einkommen im Abfindungsjahr ist (z.B. durch Sabbatical oder Einzahlung in Rürup/bAV).
-            </p>
+            <div class="${!isPro ? 'paywall-blur-box' : ''}">
+              <div class="posten"><span class="label">Steuer MIT Fünftelregelung:</span><span class="value" id="fTaxWith" style="color: var(--positive);">51.180 €</span></div>
+              <div class="posten total"><span class="label">Echte Steuerersparnis durch § 34:</span><span class="value" id="fTaxSaved" style="color: var(--gold);">+7.240 €</span></div>
+
+              <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
+                📌 <strong>Tipp für Gutverdiener:</strong> Die Fünftelregelung wirkt umso stärker, je geringer das sonstige Einkommen im Abfindungsjahr ist (z.B. durch Sabbatical oder Einzahlung in Rürup/bAV).
+              </p>
+            </div>
+
+            ${!isPro ? `
+              <div class="paywall-overlay-card">
+                <span style="font-size: 1.8rem;">🔒</span>
+                <h4 style="margin: 4px 0 2px; font-size: 1.05rem; color: var(--ink);">Fünftelregelung Rechner gesperrt</h4>
+                <p style="font-size: 0.78rem; color: var(--ink-soft); margin: 0 0 10px; max-width: 280px; text-align: center;">
+                  Ersparnis-Kalkulation nach § 34 EStG im <strong>Pro Investor Plan (9 €/Mo)</strong> freischalten.
+                </p>
+                <button class="btn-lead" style="padding: 8px 18px; font-size: 0.82rem; background: var(--positive); color: #FFF;" onclick="window.klCabinet.showRegisterModal('pro_investor')">
+                  Pro freischalten (9 €/Mo) →
+                </button>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
       this.recalcFuenftel();
     } else if (this.activeCalcTab === 'gehalt_chef') {
-      if (ind) ind.textContent = 'Modell: Chef-Gehaltscheck & Sachbezüge';
+      if (ind) ind.textContent = 'Modell: Chef-Gehaltscheck & Sachbezüge [Pro-Plan]';
+
       body.innerHTML = `
         <div class="calc-grid">
           <div>
@@ -405,15 +473,31 @@
             </div>
           </div>
 
-          <div>
+          <div style="position: relative;">
             <h4 style="font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Was kommt netto beim Mitarbeiter an?</h4>
             <div class="posten"><span class="label">Variante A: 100 € Bruttogehaltserhöhung:</span><span class="value" id="cNetA" style="color: var(--warning);">~48,50 € Netto</span></div>
-            <div class="posten"><span class="label">Variante B: 50 € Sachbezug + 50 € Kita-Zuschuss:</span><span class="value" id="cNetB" style="color: var(--positive);">100,00 € Netto (100% steuer- & abgabenfrei)</span></div>
-            <div class="posten total"><span class="label">Netto-Mehrwert für Mitarbeiter:</span><span class="value" id="cNetAdv" style="color: var(--gold);">+51,50 € mehr Netto im Monat!</span></div>
 
-            <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
-              💼 <strong>Optimierungs-Hebel:</strong> Sachbezug nach § 8 Abs. 2 EStG (50 €/Monat) und steuerfreier Kita-Zuschuss (§ 3 Nr. 33 EStG) kosten den Chef 100 € und landen zu 100% beim Angestellten.
-            </p>
+            <div class="${!isPro ? 'paywall-blur-box' : ''}">
+              <div class="posten"><span class="label">Variante B: 50 € Sachbezug + 50 € Kita-Zuschuss:</span><span class="value" id="cNetB" style="color: var(--positive);">100,00 € Netto (100% steuer- & abgabenfrei)</span></div>
+              <div class="posten total"><span class="label">Netto-Mehrwert für Mitarbeiter:</span><span class="value" id="cNetAdv" style="color: var(--gold);">+51,50 € mehr Netto im Monat!</span></div>
+
+              <p style="font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; line-height: 1.5;">
+                💼 <strong>Optimierungs-Hebel:</strong> Sachbezug nach § 8 Abs. 2 EStG (50 €/Monat) und steuerfreier Kita-Zuschuss (§ 3 Nr. 33 EStG) kosten den Chef 100 € und landen zu 100% beim Angestellten.
+              </p>
+            </div>
+
+            ${!isPro ? `
+              <div class="paywall-overlay-card">
+                <span style="font-size: 1.8rem;">🔒</span>
+                <h4 style="margin: 4px 0 2px; font-size: 1.05rem; color: var(--ink);">Chef-Gehaltsrechner gesperrt</h4>
+                <p style="font-size: 0.78rem; color: var(--ink-soft); margin: 0 0 10px; max-width: 280px; text-align: center;">
+                  Sachbezug- & Gehaltsoptimierungs-Kalkulation im <strong>Pro Investor Plan (9 €/Mo)</strong> freischalten.
+                </p>
+                <button class="btn-lead" style="padding: 8px 18px; font-size: 0.82rem; background: var(--positive); color: #FFF;" onclick="window.klCabinet.showRegisterModal('pro_investor')">
+                  Pro freischalten (9 €/Mo) →
+                </button>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
@@ -446,7 +530,7 @@
     const rate = parseFloat(document.getElementById('imTaxRate')?.value || 42.0);
 
     const privTax = miete * (rate / 100);
-    const gmbhTax = miete * 0.15825; // 15% KSt + 5.5% Soli
+    const gmbhTax = miete * 0.15825;
     const liqAdv = privTax - gmbhTax;
 
     const elPriv = document.getElementById('imPrivTax');
@@ -477,7 +561,7 @@
 
   TaxHoldingEngine.prototype.recalcChefGehalt = function () {
     const rate = parseFloat(document.getElementById('cRate')?.value || 42.0);
-    const netA = 100 * (1 - (rate / 100) - 0.095); // abzüglich Steuer + AN-Sozialabgaben
+    const netA = 100 * (1 - (rate / 100) - 0.095);
     const netAdv = 100 - netA;
 
     const elA = document.getElementById('cNetA');
@@ -487,8 +571,10 @@
     if (elAdv) elAdv.textContent = '+' + netAdv.toFixed(2).replace('.', ',') + ' € mehr Netto im Monat!';
   };
 
-  // ─── EXECUTIVE EXCEL VAULT MODAL ───────────────────────────────────────────
+  // ─── 6. EXECUTIVE EXCEL VAULT MODAL (GATED FOR EXECUTIVE 29 €) ─────────────
   TaxHoldingEngine.prototype.openExcelVaultModal = function () {
+    const isExec = hasAccess('executive');
+
     let modal = document.getElementById('excelVaultModal');
     if (!modal) {
       modal = document.createElement('div');
@@ -497,49 +583,76 @@
       document.body.appendChild(modal);
     }
 
-    modal.innerHTML = `
-      <div class="modal-card" style="max-width: 620px;">
-        <button class="modal-close" onclick="document.getElementById('excelVaultModal').style.display='none'">×</button>
-        
-        <div style="text-align: center; margin-bottom: 20px;">
-          <span style="font-size: 2.2rem;">📑</span>
-          <h3 style="font-size: 1.4rem; color: var(--ink); margin: 6px 0 2px;">Executive Excel- & Sheets-Rechenvorlagen</h3>
-          <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Offline-Rechenmodelle für Holding, VV-GmbH, Abfindung & Immobilien.</p>
-        </div>
+    if (!isExec) {
+      modal.innerHTML = `
+        <div class="modal-card" style="max-width: 520px; text-align: center;">
+          <button class="modal-close" onclick="document.getElementById('excelVaultModal').style.display='none'">×</button>
+          
+          <span style="font-size: 2.6rem;">🔒</span>
+          <h3 style="font-size: 1.35rem; color: var(--ink); margin: 8px 0 4px;">Executive Excel & Sheets Vault gesperrt</h3>
+          <p style="font-size: 0.85rem; color: var(--ink-soft); margin: 0 auto 20px; line-height: 1.5; max-width: 400px;">
+            Die professionellen Offline-Rechenvorlagen für Holding, VV-GmbH, Abfindung & Immobilien sind exklusiv im <strong>Executive & B2B Plan (29 € / Monat)</strong> enthalten.
+          </p>
 
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-          <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <strong style="color: var(--ink); font-size: 0.88rem;">📊 Spardosen-GmbH_Master_Kalkulation_2026.xlsx</strong>
-              <div style="font-size: 0.75rem; color: var(--ink-soft);">Inkl. Schachtelprivileg, Gewerbesteuer-Kürzung & StB-Kostenvergleich</div>
+          <div style="background: #FAF8F3; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; text-align: left; margin-bottom: 20px;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Enthaltene Master-Tools:</div>
+            <div style="font-size: 0.78rem; color: var(--ink-soft); line-height: 1.6;">
+              ✓ Spardosen-GmbH_Master_Kalkulation_2026.xlsx<br>
+              ✓ VV-Immobilien-GmbH_vs_Privat_30Jahre.xlsx<br>
+              ✓ Fuenftelregelung_Abfindung_Optimierer.xlsx
             </div>
-            <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: Spardosen-GmbH_Master_Kalkulation_2026.xlsx')">Download</button>
           </div>
 
-          <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <strong style="color: var(--ink); font-size: 0.88rem;">🏠 VV-Immobilien-GmbH_vs_Privat_30Jahre.xlsx</strong>
-              <div style="font-size: 0.75rem; color: var(--ink-soft);">Inkl. AfA-Rechner, 10-Jahres Spekulationsfrist & Zinshebel</div>
-            </div>
-            <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: VV-Immobilien-GmbH_vs_Privat_30Jahre.xlsx')">Download</button>
+          <button class="btn-primary" style="width: 100%; padding: 13px; background: var(--gold); color: #FFF; font-weight: 600;" onclick="document.getElementById('excelVaultModal').style.display='none'; window.klCabinet.showRegisterModal('executive_b2b')">
+            🚀 Executive & B2B freischalten (29 € / Mo) →
+          </button>
+        </div>
+      `;
+    } else {
+      modal.innerHTML = `
+        <div class="modal-card" style="max-width: 620px;">
+          <button class="modal-close" onclick="document.getElementById('excelVaultModal').style.display='none'">×</button>
+          
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span style="font-size: 2.2rem;">📑</span>
+            <h3 style="font-size: 1.4rem; color: var(--ink); margin: 6px 0 2px;">Executive Excel- & Sheets-Rechenvorlagen</h3>
+            <p style="font-size: 0.82rem; color: var(--ink-soft); margin: 0;">Offline-Rechenmodelle für Holding, VV-GmbH, Abfindung & Immobilien.</p>
           </div>
 
-          <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <strong style="color: var(--ink); font-size: 0.88rem;">⚖️ Fuenftelregelung_Abfindung_Optimierer.xlsx</strong>
-              <div style="font-size: 0.75rem; color: var(--ink-soft);">Progressionsmilderung nach § 34 EStG mit Rürup-Kopplung</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: var(--ink); font-size: 0.88rem;">📊 Spardosen-GmbH_Master_Kalkulation_2026.xlsx</strong>
+                <div style="font-size: 0.75rem; color: var(--ink-soft);">Inkl. Schachtelprivileg, Gewerbesteuer-Kürzung & StB-Kostenvergleich</div>
+              </div>
+              <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: Spardosen-GmbH_Master_Kalkulation_2026.xlsx')">Download</button>
             </div>
-            <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: Fuenftelregelung_Abfindung_Optimierer.xlsx')">Download</button>
+
+            <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: var(--ink); font-size: 0.88rem;">🏠 VV-Immobilien-GmbH_vs_Privat_30Jahre.xlsx</strong>
+                <div style="font-size: 0.75rem; color: var(--ink-soft);">Inkl. AfA-Rechner, 10-Jahres Spekulationsfrist & Zinshebel</div>
+              </div>
+              <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: VV-Immobilien-GmbH_vs_Privat_30Jahre.xlsx')">Download</button>
+            </div>
+
+            <div style="padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: var(--ink); font-size: 0.88rem;">⚖️ Fuenftelregelung_Abfindung_Optimierer.xlsx</strong>
+                <div style="font-size: 0.75rem; color: var(--ink-soft);">Progressionsmilderung nach § 34 EStG mit Rürup-Kopplung</div>
+              </div>
+              <button class="btn-lead" style="padding: 6px 12px; font-size: 0.75rem;" onclick="alert('📥 Download gestartet: Fuenftelregelung_Abfindung_Optimierer.xlsx')">Download</button>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <span class="badge" style="background: var(--positive); color: #FFF; font-size: 0.75rem; padding: 4px 10px; border-radius: 3px;">
+              ✓ Vollzugriff aktiv (${getUserPlan().toUpperCase()})
+            </span>
           </div>
         </div>
-
-        <div style="text-align: center;">
-          <span class="badge" style="background: var(--gold); color: #FFF; font-size: 0.75rem; padding: 4px 10px; border-radius: 3px;">
-            Inklusive im Executive & Private Banking Plan (29 € / 49 €)
-          </span>
-        </div>
-      </div>
-    `;
+      `;
+    }
 
     modal.style.display = 'flex';
   };
