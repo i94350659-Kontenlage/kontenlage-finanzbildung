@@ -705,7 +705,7 @@
   // SECURITY: Verwendet den öffentlichen Anon-Key (READ-ONLY, keine Schreibrechte für User-Daten)
   // Der Anon-Key ist für Frontend-Nutzung vorgesehen und unkritisch (RLS schützt die Tabellen).
   // NIEMALS den Service-Role-Key im Frontend verwenden.
-  function logSmart Financial EngineEvent(eventType, payload = {}) {
+  function logAnalyticsEvent(eventType, payload = {}) {
     try {
       const SUPABASE_URL   = 'https://acgfcjcikjlrlfilqdyk.supabase.co';
       const SUPABASE_ANON = window.__KL_ANON_KEY__ || ''; // wird per Vercel Env als window-Variable gesetzt
@@ -792,7 +792,7 @@
         <input type="range" id="rng-miete" min="200" max="4000" value="750" step="50" style="width:100%; margin-bottom:16px; accent-color:var(--gold);" oninput="syncRange('inp-miete', 'rng-miete')">
       `;
     }
-    logSmart Financial EngineEvent('CALCULATOR_TAB_SWITCH', { tab });
+    logAnalyticsEvent('CALCULATOR_TAB_SWITCH', { tab });
     renderCalc();
   }
 
@@ -878,13 +878,13 @@
   }
 
   function exportCalculation() {
-    logSmart Financial EngineEvent('CALCULATOR_EXPORT_CLICK', { tab: currentTab });
+    logAnalyticsEvent('CALCULATOR_EXPORT_CLICK', { tab: currentTab });
     window.print();
   }
 
   // Lead Modal Controls
   function openLeadModal() {
-    logSmart Financial EngineEvent('LEAD_MODAL_OPENED');
+    logAnalyticsEvent('LEAD_MODAL_OPENED');
     document.getElementById('leadModal').style.display = 'flex';
   }
   function closeLeadModal() {
@@ -896,7 +896,7 @@
     const name = document.getElementById('leadName')?.value || '';
     const email = document.getElementById('leadEmail')?.value || '';
     
-    logSmart Financial EngineEvent('LEAD_CHECKLIST_REQUESTED', { name, email });
+    logAnalyticsEvent('LEAD_CHECKLIST_REQUESTED', { name, email });
     alert(`Vielen Dank, ${name}! Die 4-seitige PDF-Checkliste öffnet sich jetzt in einem neuen Tab.`);
     closeLeadModal();
     window.open('lead_magnet_freibetraege_2026.html', '_blank');
@@ -908,7 +908,7 @@
       'executive': 'price_1U1rXRPoNfLOPXfNUnOvBzXo'
     };
     const priceId = prices[plan] || prices['pro'];
-    logSmart Financial EngineEvent('CHECKOUT_INITIATED', { plan, priceId });
+    logAnalyticsEvent('CHECKOUT_INITIATED', { plan, priceId });
     alert(`Starte Stripe Checkout für Plan '${plan.toUpperCase()}'...\n(Sobald dein Stripe Live Key hinterlegt ist, wird die Bezahlseite sofort aufgerufen).`);
   }
 
@@ -919,5 +919,6 @@
   <script src="assets/js/kontenlage-asset-engine.js"></script>
   <script src="assets/js/kontenlage-auth-cabinet.js"></script>
   <script src="assets/js/kontenlage-tax-holding-engine.js"></script>
+  <script src="assets/js/test-account-seeder.js"></script>
 </body>
 </html>
