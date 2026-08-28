@@ -15,12 +15,19 @@
   "functions": {
     "api/stripe-webhook.js": {
       "maxDuration": 10
+    },
+    "api/create-checkout-session.js": {
+      "maxDuration": 10
     }
   },
   "rewrites": [
     {
       "source": "/api/stripe-webhook",
       "destination": "/api/stripe-webhook.js"
+    },
+    {
+      "source": "/api/create-checkout-session",
+      "destination": "/api/create-checkout-session.js"
     }
   ]
 }
