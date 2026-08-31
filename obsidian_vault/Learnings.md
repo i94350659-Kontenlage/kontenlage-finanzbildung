@@ -9,3 +9,4 @@
 - [2026-08-12] ✅ Telegram: nicht konfiguriert. AI: static-fallback. Confidence: 0.92.
 - [2026-08-17] TG:✅ X:⚠️ LI:⚠️ FB:⚠️ IG:⚠️. AI: OpenRouter (Nemotron Primary). Confidence: 0.92.
 - [2026-08-24] TG:⚠️ X:⚠️ LI:⚠️ FB:⚠️ IG:⚠️. AI: OpenRouter (Nemotron Primary). Confidence: 0.92.
+- [2026-08-31] TG:✅ X:⚠️ LI:⚠️ FB:⚠️ IG:⚠️. AI: static-fallback. Confidence: 0.92.
