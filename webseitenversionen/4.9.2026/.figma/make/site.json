@@ -1,0 +1,12 @@
+{
+  "title": "Kontenlage.de | Unabhängige Finanzbildung, Steuerrechner & Holding-Strukturierung",
+  "description": "BaFin- und WpHG-konforme Steuerrechner (Rürup, Sparerpauschbetrag, VV-GmbH, Fünftelregelung) und legale Vermögensstrukturierung für Einkommen ab 60.000 €.",
+  "language": "de",
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": true,
+    "ignoreReducedMotion": false
+  }
+}

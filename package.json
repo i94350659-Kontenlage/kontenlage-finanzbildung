@@ -1,5 +1,7 @@
 {
-  "dependencies": {
-    "@supabase/supabase-js": "^2.78.0"
+  "name": "kontenlage-web",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build --prefix webseitenversionen/4.9.2026"
   }
 }
