@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "outputDirectory": "webseitenversionen/4.9.2026/dist",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",
@@ -48,5 +48,5 @@
       "destination": "/index.html"
     }
   ],
-  "buildCommand": "npm --prefix webseitenversionen/4.9.2026 install && npm --prefix webseitenversionen/4.9.2026 run build"
+  "buildCommand": "npm run build"
 }

@@ -3,35 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kontenlage.de | Unabhängige Finanzbildung, Steuerrechner &amp; Holding-Strukturierung</title>
+    <title>Kontolage.de | Unabhängige Finanzbildung, Steuerrechner &amp; Holding-Strukturierung</title>
     <meta name="description" content="BaFin- und WpHG-konforme Steuerrechner (Rürup, Sparerpauschbetrag, VV-GmbH, Fünftelregelung) und legale Vermögensstrukturierung ohne Provisionsvertrieb." />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://kontenlage.de/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://kontolage.de/" />
+    <meta name="theme-color" content="#111827" />
+
+    <!-- Favicon & Touch Icon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
 
     <!-- OpenGraph / Social Meta -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kontenlage.de/" />
-    <meta property="og:title" content="Kontenlage.de — Unabhängige Finanzbildung &amp; Steueroptimierung" />
+    <meta property="og:url" content="https://kontolage.de/" />
+    <meta property="og:site_name" content="Kontolage.de" />
+    <meta property="og:title" content="Kontolage.de — Unabhängige Finanzbildung &amp; Steueroptimierung" />
     <meta property="og:description" content="Objektive Rechner nach EStG, KStG und GewStG. Keine Vermittlungsprovisionen. 100% faktenbasiert." />
-    <meta property="og:image" content="https://kontenlage.de/assets/og-kontenlage.png" />
+    <meta property="og:image" content="https://kontolage.de/favicon.svg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Kontolage.de — Unabhängige Finanzbildung" />
+    <meta name="twitter:description" content="BaFin- &amp; WpHG-konforme Rechner für Holding, VV-GmbH, Rürup &amp; Abfindung." />
+    <meta name="twitter:image" content="https://kontolage.de/favicon.svg" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "FinancialService",
-      "name": "Kontenlage",
-      "url": "https://kontenlage.de",
-      "logo": "https://kontenlage.de/assets/logo.png",
-      "description": "Unabhängige Plattform für Finanzbildung, mathematische Steuerrechner und Vermögensstrukturierung.",
-      "sameAs": [
-        "https://www.linkedin.com/company/kontenlage"
-      ],
-      "knowsAbout": [
-        "Rürup-Rente § 10 EStG",
-        "Sparerpauschbetrag § 20 EStG",
-        "Fünftelregelung § 34 EStG",
-        "Vermögensverwaltende GmbH § 8b KStG"
+      "@graph": [
+        {
+          "@type": "FinancialService",
+          "@id": "https://kontolage.de/#organization",
+          "name": "Kontolage",
+          "url": "https://kontolage.de",
+          "logo": "https://kontolage.de/favicon.svg",
+          "description": "Unabhängige Plattform für Finanzbildung, mathematische Steuerrechner und Vermögensstrukturierung.",
+          "knowsAbout": [
+            "Rürup-Rente § 10 EStG",
+            "Sparerpauschbetrag § 20 EStG",
+            "Fünftelregelung § 34 EStG",
+            "Vermögensverwaltende GmbH § 8b KStG",
+            "Holding-Strukturierung"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://kontolage.de/#website",
+          "url": "https://kontolage.de",
+          "name": "Kontolage.de",
+          "publisher": { "@id": "https://kontolage.de/#organization" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Bietet Kontolage.de individuelle Steuer- oder Anlageberatung?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nein. Kontolage.de ist eine reine Bildungs- und Analyseplattform. Wir bieten keine individuelle Steuerberatung gemäß StBerG und keine Anlageberatung nach § 2 Abs. 8 Nr. 10 WpHG. Alle Rechner dienen der objektiven Szenarien-Simulation auf Basis geltender Steuergesetze."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Wie finanziert sich Kontolage ohne Provisionen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Kontolage ist 100% unabhängig und provisionsfrei. Es gibt keine Kickbacks, keine Affiliate-Finanzprodukte und keinen Datenverkauf. Die Plattform finanziert sich ausschließlich über optionale Premium-Mitgliedschaften für erweiterte Rechnerszenarien und API-Zugänge."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Welche Steuergesetze werden in den Rechnern angewendet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Unsere Berechnungen basieren deterministisch auf dem Einkommensteuergesetz (EStG), dem Körperschaftsteuergesetz (KStG), dem Gewerbesteuergesetz (GewStG) und dem Investmentsteuergesetz (InvStG)."
+              }
+            }
+          ]
+        }
       ]
     }
     </script>
@@ -56,12 +108,130 @@
     transform: translateY(0);
   }
 </style>
-    <script type="module" crossorigin src="/assets/index-CjJKVdxp.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CX4kutBs.css">
+    <script type="module" crossorigin src="/assets/index-BBUp_qLg.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-UWSG-xv5.css">
   </head>
-  <body>
+  <body class="bg-[#111827] text-[#f0ece4]">
     <a class="figma-bypass-link" href="#root">Skip to content</a>
 
-    <div id="root"></div>
+    <div id="root">
+      <!-- Semantic Static Prerendered Content (Indexed immediately by Googlebot, Bingbot & Social Crawlers) -->
+      <div style="min-height: 100vh; background-color: #111827; color: #f0ece4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <!-- Header -->
+        <header style="border-bottom: 1px solid rgba(201,168,76,0.15); padding: 18px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #141E2E, #090E17); border: 1px solid rgba(201,168,76,0.4); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #c9a84c;">K</div>
+            <a href="/" style="font-size: 20px; font-weight: 700; color: #e2c27d; text-decoration: none; letter-spacing: 0.05em;">Kontolage.de</a>
+          </div>
+          <nav style="display: flex; gap: 20px; font-size: 14px;">
+            <a href="/rechner" style="color: #cdc6be; text-decoration: none;">Steuerrechner</a>
+            <a href="/holding" style="color: #cdc6be; text-decoration: none;">Holding</a>
+            <a href="/anlageformen" style="color: #cdc6be; text-decoration: none;">Anlageformen</a>
+            <a href="/artikel" style="color: #cdc6be; text-decoration: none;">Artikel</a>
+            <a href="/transparenz" style="color: #cdc6be; text-decoration: none;">Transparenz</a>
+            <a href="/abo" style="color: #c9a84c; text-decoration: none; font-weight: 600;">Pro</a>
+          </nav>
+        </header>
+
+        <!-- Main Hero -->
+        <main style="max-width: 1200px; margin: 0 auto; padding: 60px 24px;">
+          <div style="max-width: 800px; margin-bottom: 48px;">
+            <div style="display: inline-block; padding: 6px 14px; border-radius: 20px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; font-size: 12px; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.05em;">
+              ⚖️ 100 % WpHG- &amp; BaFin-konform · Unabhängige Finanzbildung
+            </div>
+            <h1 style="font-size: 42px; line-height: 1.2; font-weight: 700; color: #FAF8F4; margin-bottom: 20px;">
+              Unabhängige Finanzbildung, Steuerrechner &amp; Holding-Strukturierung
+            </h1>
+            <p style="font-size: 18px; line-height: 1.6; color: #CDC6BE; margin-bottom: 32px;">
+              Mathematische Steueroptimierung für Privatanleger und Unternehmer in Deutschland. 0 % Vermittlungsprovisionen, kein Produktverkauf. Objektive, transparente Szenarien auf Grundlage von EStG, KStG und GewStG.
+            </p>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <a href="/rechner" style="padding: 14px 28px; border-radius: 6px; background: linear-gradient(135deg, #c9a84c, #a8873a); color: #111827; font-weight: 700; font-size: 15px; text-decoration: none;">
+                Szenario berechnen →
+              </a>
+              <a href="/artikel" style="padding: 14px 28px; border-radius: 6px; border: 1px solid rgba(201,168,76,0.3); color: #e2c27d; font-weight: 500; font-size: 15px; text-decoration: none;">
+                Rechner-Guides lesen
+              </a>
+            </div>
+          </div>
+
+          <!-- Trust KPIs -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 60px;">
+            <div>
+              <div style="font-size: 26px; font-weight: 700; color: #c9a84c;">0 %</div>
+              <div style="font-size: 13px; color: #a89f94; margin-top: 4px;">Provisionen &amp; Kickbacks</div>
+            </div>
+            <div>
+              <div style="font-size: 26px; font-weight: 700; color: #c9a84c;">§§ EStG / KStG</div>
+              <div style="font-size: 13px; color: #a89f94; margin-top: 4px;">Exakte Gesetzesparagraphen</div>
+            </div>
+            <div>
+              <div style="font-size: 26px; font-weight: 700; color: #c9a84c;">100 %</div>
+              <div style="font-size: 13px; color: #a89f94; margin-top: 4px;">Werbe- &amp; Tracking-Frei</div>
+            </div>
+            <div>
+              <div style="font-size: 26px; font-weight: 700; color: #c9a84c;">DSGVO &amp; TDDDG</div>
+              <div style="font-size: 13px; color: #a89f94; margin-top: 4px;">Lokale Browser-Berechnung</div>
+            </div>
+          </div>
+
+          <!-- Rechner Overview Section -->
+          <section style="margin-bottom: 60px;">
+            <h2 style="font-size: 28px; font-weight: 700; color: #FAF8F4; margin-bottom: 12px;">
+              Wissenschaftlich fundierte Steuer- &amp; Vermögensrechner
+            </h2>
+            <p style="font-size: 15px; color: #A89F94; margin-bottom: 30px; max-width: 720px;">
+              Vergleiche objektive Steuerlasten, Zinseszins-Effekte und gesetzliche Freibeträge ohne Berater-Interessenkonflikt.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Rürup-Basisrente (§ 10 EStG)</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">Berechne den Sonderausgabenabzug bis zum Höchstbetrag (30.826 €) und den effektiven Steuervorteil im Grenzsteuersatz.</p>
+              </div>
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Sparerpauschbetrag &amp; Vorabpauschale</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">Optimierung des 1.000 € Sparerpauschbetrags (§ 20 EStG) und exakte Vorabpauschale nach Basiszins gemäß InvStG.</p>
+              </div>
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Fünftelregelung bei Abfindung (§ 34 EStG)</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">Steuerprogression bei außerordentlichen Einkünften glätten und die Netto-Auszahlung maximieren.</p>
+              </div>
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Vermögensverwaltende GmbH (§ 8b KStG)</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">Steuerbegünstigte Reinvestition von Aktien-Kursgewinnen mit 1,5 % effektiver Körperschaftsteuer und Holding-Dividenden.</p>
+              </div>
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Krypto-Haltefristen (§ 23 EStG)</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">1-Jahres-Steuerfreiheit im Privatvermögen versus Staking- und Lending-Besteuerung in gewerblichen Strukturen.</p>
+              </div>
+              <div style="background: rgba(30,41,59,0.5); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 24px;">
+                <h3 style="font-size: 18px; color: #e2c27d; margin-bottom: 8px;">Immobilien-AfA &amp; Sanierung (§ 7 EStG)</h3>
+                <p style="font-size: 14px; color: #cdc6be; line-height: 1.6;">Lineare 3% Gebäude-AfA, Handwerkerleistungen (§ 35a EStG) und Denkmalschutz-Abschreibungen sachlich simuliert.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- BaFin Disclaimer -->
+          <footer style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; margin-bottom: 40px;">
+            <h4 style="font-size: 13px; font-weight: 700; color: #c9a84c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+              Rechtlicher Hinweis &amp; Compliance (§ 2 Abs. 8 Nr. 10 WpHG / StBerG)
+            </h4>
+            <p style="font-size: 13px; color: #a89f94; line-height: 1.6; margin: 0;">
+              Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.
+            </p>
+          </footer>
+        </main>
+
+        <!-- Footer -->
+        <footer style="border-top: 1px solid rgba(255,255,255,0.08); padding: 30px 24px; text-align: center; font-size: 13px; color: #a89f94;">
+          <p>© 2026 Kontolage.de — Unabhängige Plattform für Finanzbildung &amp; Steueranalysen.</p>
+          <div style="margin-top: 8px; display: flex; justify-content: center; gap: 20px;">
+            <a href="/impressum" style="color: #a89f94; text-decoration: none;">Impressum</a>
+            <a href="/datenschutz" style="color: #a89f94; text-decoration: none;">Datenschutz</a>
+            <a href="/transparenz" style="color: #a89f94; text-decoration: none;">Transparenz</a>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>

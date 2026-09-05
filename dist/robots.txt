@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /kabinett
+
+Sitemap: https://kontolage.de/sitemap.xml
