@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
   "outputDirectory": "webseitenversionen/4.9.2026/dist",
   "headers": [
     {
@@ -42,15 +40,11 @@
   ],
   "rewrites": [
     {
-      "source": "/api/create-checkout-session",
-      "destination": "/api/create-checkout-session.js"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
-      "source": "/api/stripe-webhook",
-      "destination": "/api/stripe-webhook.js"
-    },
-    {
-      "source": "/((?!api/.*).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
