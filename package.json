@@ -1,7 +1,7 @@
 {
-  "name": "kontenlage-web",
+  "name": "kontolage-finanzbildung",
   "version": "2.0.0",
   "scripts": {
-    "build": "npm --prefix webseitenversionen/4.9.2026 run build && node -e \"const fs=require('fs'); fs.cpSync('webseitenversionen/4.9.2026/dist', 'dist', {recursive:true});\""
+    "build": "node scripts/build_vercel.js"
   }
 }
