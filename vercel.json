@@ -1,9 +1,8 @@
 {
   "version": 2,
-  "name": "kontenlage",
   "cleanUrls": true,
   "trailingSlash": false,
-  "outputDirectory": "dist",
+  "outputDirectory": "webseitenversionen/4.9.2026/dist",
   "headers": [
     {
       "source": "/(.*)",
@@ -54,5 +53,6 @@
       "source": "/((?!api/.*).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "npm --prefix webseitenversionen/4.9.2026 install && npm --prefix webseitenversionen/4.9.2026 run build"
 }
