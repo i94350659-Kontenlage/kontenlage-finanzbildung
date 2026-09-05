@@ -1,7 +1,7 @@
 {
   "name": "kontenlage-web",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "scripts": {
-    "build": "npm run build --prefix webseitenversionen/4.9.2026"
+    "build": "npm --prefix webseitenversionen/4.9.2026 run build && node -e \"const fs=require('fs'); fs.cpSync('webseitenversionen/4.9.2026/dist', 'dist', {recursive:true});\""
   }
 }

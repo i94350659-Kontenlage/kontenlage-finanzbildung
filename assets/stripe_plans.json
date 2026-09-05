@@ -1,120 +1,75 @@
 {
-  "updatedAt": "2026-08-28T10:40:47.551Z",
+  "updatedAt": "2026-09-05T13:50:00.000Z",
+  "organization": "Kontenlage",
+  "accountId": "acct_1UCHEpLtxD96WAjM",
   "live": {
-    "publishableKey": "pk_live_51TIo9fPoNfLOPXfNa2gLqSj38v48b7bTbLAtOLNYMAcJegPwlXaazB3yw2Vkl428RbEVBpvjhQ336lEK08k9XAH700Dt4DoU8w",
+    "productManagementKey": "ENV:STRIPE_SECRET_KEY",
     "prices": {
-      "kontenlage_pro_investor": {
-        "app": "kontenlage",
+      "pro_investor": {
         "planKey": "pro_investor",
-        "productId": "prod_V9gTbW7ywfL0bo",
-        "priceId": "price_1U9N64PoNfLOPXfNMout6Q2C",
-        "amount": 900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
+        "name": "Kontenlage Pro Investor",
+        "productId": "prod_VChV4b5hdJc1If",
+        "monthlyPriceId": "price_1UCI6ELtxD96WAjMyCVb1q5Z",
+        "monthlyAmount": 900,
+        "yearlyPriceId": "price_1UCI6ELtxD96WAjMShOKllto",
+        "yearlyAmount": 7900,
+        "currency": "eur"
       },
-      "kontenlage_executive_b2b": {
-        "app": "kontenlage",
+      "executive_b2b": {
         "planKey": "executive_b2b",
-        "productId": "prod_V9gT8NHld4iuOP",
-        "priceId": "price_1U9N65PoNfLOPXfNYojrGxXz",
-        "amount": 2900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
+        "name": "Kontenlage Executive B2B / Family Office",
+        "productId": "prod_VChV7EwZv5SSie",
+        "monthlyPriceId": "price_1UCI6FLtxD96WAjMgNOgPwOz",
+        "monthlyAmount": 2900,
+        "yearlyPriceId": "price_1UCI6FLtxD96WAjMJRaJKdoP",
+        "yearlyAmount": 24900,
+        "currency": "eur"
       },
-      "kontenlage_private_owner": {
-        "app": "kontenlage",
+      "private_owner": {
         "planKey": "private_owner",
-        "productId": "prod_V9gT8KLW3lrDYt",
-        "priceId": "price_1U9N66PoNfLOPXfN5WVuvS4x",
-        "amount": 4900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_explorer_pro": {
-        "app": "scratch_travel",
-        "planKey": "explorer_pro",
-        "productId": "prod_V9gTWR4hPAvz9k",
-        "priceId": "price_1U9N67PoNfLOPXfNKkdIIJxp",
-        "amount": 900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_family_club": {
-        "app": "scratch_travel",
-        "planKey": "family_club",
-        "productId": "prod_V9gTfm9w4R1zOE",
-        "priceId": "price_1U9N68PoNfLOPXfNtmTnJRG5",
-        "amount": 1900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_b2b_host": {
-        "app": "scratch_travel",
-        "planKey": "b2b_host",
-        "productId": "prod_V9gTceXNhYsr1B",
-        "priceId": "price_1U9N69PoNfLOPXfN9FzL5Bb0",
-        "amount": 2900,
-        "currency": "eur",
-        "taxCode": "txcd_10103000"
+        "name": "Kontenlage Private Owner Intelligence",
+        "productId": "prod_VChVZNy99YGWD2",
+        "monthlyPriceId": "price_1UCI6GLtxD96WAjMtFPuitiW",
+        "monthlyAmount": 4900,
+        "yearlyPriceId": "price_1UCI6GLtxD96WAjMZbaz1vtt",
+        "yearlyAmount": 39900,
+        "currency": "eur"
       }
     }
   },
   "test": {
-    "publishableKey": "pk_test_51U9N0PPpIZuQLQ35WmSIwgR4IraJEltYnoDhVehloTUAcwsVLndI8oQLSEavPUx6A9zoFHEs9ATB1fMcQYGUQZjx00nR6YJLMI",
+    "publishableKey": "pk_test_51UCHGdL9kVIkJrXZTbsKHEIyaFaU2Z9uoMnRgoHMlJWUMGbFmI5Hh0oR9Fsu8A8BcEBqCKCQoYln7UxBmpb1KrMB00QhiUmr51",
+    "secretKey": "ENV:STRIPE_TEST_SECRET_KEY",
     "prices": {
-      "kontenlage_pro_investor": {
-        "app": "kontenlage",
+      "pro_investor": {
         "planKey": "pro_investor",
-        "productId": "prod_V9gTRCk05d31yy",
-        "priceId": "price_1U9N6APpIZuQLQ350OPOIzq5",
-        "amount": 900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
+        "name": "Kontenlage Pro Investor",
+        "productId": "prod_VChVA7oZMaWpEA",
+        "monthlyPriceId": "price_1UCI6BL9kVIkJrXZLDkIpiYa",
+        "monthlyAmount": 900,
+        "yearlyPriceId": "price_1UCI6BL9kVIkJrXZHD1HPiSV",
+        "yearlyAmount": 7900,
+        "currency": "eur"
       },
-      "kontenlage_executive_b2b": {
-        "app": "kontenlage",
+      "executive_b2b": {
         "planKey": "executive_b2b",
-        "productId": "prod_V9gTEOFjOGaGA1",
-        "priceId": "price_1U9N6BPpIZuQLQ35jWggvRRb",
-        "amount": 2900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
+        "name": "Kontenlage Executive B2B / Family Office",
+        "productId": "prod_VChV43Kgj3zm0j",
+        "monthlyPriceId": "price_1UCI6CL9kVIkJrXZlq6qfXhg",
+        "monthlyAmount": 2900,
+        "yearlyPriceId": "price_1UCI6CL9kVIkJrXZUCr99Zep",
+        "yearlyAmount": 24900,
+        "currency": "eur"
       },
-      "kontenlage_private_owner": {
-        "app": "kontenlage",
+      "private_owner": {
         "planKey": "private_owner",
-        "productId": "prod_V9gTZJAiTc8MH7",
-        "priceId": "price_1U9N6CPpIZuQLQ359UsBj64V",
-        "amount": 4900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_explorer_pro": {
-        "app": "scratch_travel",
-        "planKey": "explorer_pro",
-        "productId": "prod_V9gT8N7PBlZCV8",
-        "priceId": "price_1U9N6DPpIZuQLQ35zQwrgCVf",
-        "amount": 900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_family_club": {
-        "app": "scratch_travel",
-        "planKey": "family_club",
-        "productId": "prod_V9gTZPLsEmibzt",
-        "priceId": "price_1U9N6EPpIZuQLQ352wVxFnu2",
-        "amount": 1900,
-        "currency": "eur",
-        "taxCode": "txcd_10000000"
-      },
-      "scratch_travel_b2b_host": {
-        "app": "scratch_travel",
-        "planKey": "b2b_host",
-        "productId": "prod_V9gT9VsQNQuGKt",
-        "priceId": "price_1U9N6FPpIZuQLQ35NiVXHvCt",
-        "amount": 2900,
-        "currency": "eur",
-        "taxCode": "txcd_10103000"
+        "name": "Kontenlage Private Owner Intelligence",
+        "productId": "prod_VChVKl9ngCO5EI",
+        "monthlyPriceId": "price_1UCI6DL9kVIkJrXZmtJfAA1A",
+        "monthlyAmount": 4900,
+        "yearlyPriceId": "price_1UCI6DL9kVIkJrXZClitRxwc",
+        "yearlyAmount": 39900,
+        "currency": "eur"
       }
     }
   }

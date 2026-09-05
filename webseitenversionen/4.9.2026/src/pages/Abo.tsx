@@ -40,7 +40,7 @@ const plans = [
       { text: "Prioritäts-Support (48h)", included: false },
     ],
     cta: "Pro Digital wählen (9 € / Mo)",
-    priceId: "price_kontenlage_pro_monthly",
+    priceId: "price_1UCI6ELtxD96WAjMyCVb1q5Z",
   },
   {
     id: "executive",
@@ -60,7 +60,7 @@ const plans = [
       { text: "Early Access zu neuen Steuer-Features", included: true },
     ],
     cta: "Executive wählen (29 € / Mo)",
-    priceId: "price_kontenlage_executive_monthly",
+    priceId: "price_1UCI6FLtxD96WAjMgNOgPwOz",
   },
 ];
 

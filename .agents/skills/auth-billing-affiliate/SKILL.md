@@ -1,4 +1,4 @@
----
+﻿---
 name: auth-billing-affiliate
 description: Konzipiert und implementiert Login-Systeme, Stripe-basierte Abo-/Bezahlmodelle, Affiliate-Programme und die Anbindung an Print-on-Demand-Merch-Anbieter für komplexe Web-Apps. Nutzen, sobald nach "Login", "Auth", "Registrierung", "Stripe", "Abo-System", "Subscription", "Affiliate", "Provisionslink" oder "Merch bestellen/produzieren lassen" gefragt wird.
 requires: webapp-ui-ux-frontend (Login-/Checkout-UI)
@@ -49,3 +49,44 @@ Das Fundament jeder Konto-basierten App: sicherer Login, zuverlässiges Abo-Hand
 - Sind Test- und Live-Stripe-Keys sauber getrennt?
 - Ist die Affiliate-Zuordnung nachvollziehbar dokumentiert (welcher User hat wen geworben)?
 - Ist die Merch-Bestellung so entkoppelt, dass ein Ausfall der POD-API nicht den gesamten Checkout blockiert?
+
+
+## 5. Stripe Multi-Organisations-Matrix (Hermes & Antigravity Produktmanagement)
+
+| Projekt | Organisation / Account ID | Test Publishable Key (`pk_test`) | Test Secret Key (`sk_test`) | Produktmanagement Live Key (`rk_live`) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Kontenlage** | `acct_1UCHEpLtxD96WAjM` | `pk_test_51UCHGdL9kVIkJrXZTbsKHEIyaFaU2Z9uoMnRgoHMlJWUMGbFmI5Hh0oR9Fsu8A8BcEBqCKCQoYln7UxBmpb1KrMB00QhiUmr51` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
+| **Scratch'n'Travel** | Standalone Org | `pk_test_51UCHlrPr79DRHChBdChfu5kt7ew11SJJJwdHTAIR1B2pbuLrXTbA7yFR4C00XEhroOlaMfzPUTdixCqLqY1uV7jm0009cs2KzM` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
+| **FUDI Health** | Standalone Org | `pk_test_51UCHQPL1Je2BqwvEi1XBHSQE6NctPvTpslLtvRj6JrZoHySmknV8L6Udz5NLuRYi0uqa95h7Ft0bUkxLz2lQmBHW00NT5Z7B2G` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
+
+### Aktive Live & Test Price IDs
+
+#### 1. Kontenlage (`kontolage.de` / `G:\B2B steuer Business Ideee 6.8.2026`)
+* **Pro Investor (9 €/Mo)**:
+  * Live: `price_1UCI6ELtxD96WAjMyCVb1q5Z` (Monat), `price_1UCI6ELtxD96WAjMShOKllto` (Jahr / 79 €)
+  * Test: `price_1UCI6BL9kVIkJrXZLDkIpiYa` (Monat), `price_1UCI6BL9kVIkJrXZHD1HPiSV` (Jahr / 79 €)
+* **Executive B2B (29 €/Mo)**:
+  * Live: `price_1UCI6FLtxD96WAjMgNOgPwOz` (Monat), `price_1UCI6FLtxD96WAjMJRaJKdoP` (Jahr / 249 €)
+  * Test: `price_1UCI6CL9kVIkJrXZlq6qfXhg` (Monat), `price_1UCI6CL9kVIkJrXZUCr99Zep` (Jahr / 249 €)
+* **Private Owner (49 €/Mo)**:
+  * Live: `price_1UCI6GLtxD96WAjMtFPuitiW` (Monat), `price_1UCI6GLtxD96WAjMZbaz1vtt` (Jahr / 399 €)
+  * Test: `price_1UCI6DL9kVIkJrXZmtJfAA1A` (Monat), `price_1UCI6DL9kVIkJrXZClitRxwc` (Jahr / 399 €)
+
+#### 2. Scratch'n'Travel (`G:\Scratch´nTravel`)
+* **Explorer Pro (9 €/Mo)**:
+  * Live: `price_1UCI67Q0PwiqtVjY6sN3Ha5w` (Monat), `price_1UCI68Q0PwiqtVjYMQvISeSJ` (Jahr / 79 €)
+  * Test: `price_1UCI64Pr79DRHChBudsedP4u` (Monat), `price_1UCI65Pr79DRHChBf1sWqpAX` (Jahr / 79 €)
+* **Family & Friends Club (19 €/Mo)**:
+  * Live: `price_1UCI69Q0PwiqtVjYfOqZIxrP` (Monat), `price_1UCI69Q0PwiqtVjY67EReFGE` (Jahr / 159 €)
+  * Test: `price_1UCI65Pr79DRHChBKxaPLMNO` (Monat), `price_1UCI66Pr79DRHChB72B7QWjH` (Jahr / 159 €)
+* **Local Host / Partner B2B (29 €/Mo)**:
+  * Live: `price_1UCI6AQ0PwiqtVjYRqQK6R1a` (Monat), `price_1UCI6AQ0PwiqtVjYCnY5kbii` (Jahr / 249 €)
+  * Test: `price_1UCI66Pr79DRHChBPkYxuCrq` (Monat), `price_1UCI67Pr79DRHChBxgVeA2L6` (Jahr / 249 €)
+
+#### 3. FUDI Health (`G:\FUDI`)
+* **FUDI Pro (9,99 €/Mo)**:
+  * Live: `price_1UCI6JQ2LYrFBbOpEjPOFziQ` (Monat), `price_1UCI6KQ2LYrFBbOp7BOWiGgD` (Jahr / 79,99 €)
+  * Test: `price_1UCI6HL1Je2BqwvEPRyiZ9IG` (Monat), `price_1UCI6HL1Je2BqwvE6yT7jZy4` (Jahr / 79,99 €)
+* **FUDI Family & Business (19,99 €/Mo)**:
+  * Live: `price_1UCI6KQ2LYrFBbOpwmei5lXs` (Monat), `price_1UCI6LQ2LYrFBbOp69Eb27AZ` (Jahr / 149,99 €)
+  * Test: `price_1UCI6IL1Je2BqwvEpCTevQb1` (Monat), `price_1UCI6IL1Je2BqwvEOKziP3f2` (Jahr / 149,99 €)
