@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "kontenlage",
   "cleanUrls": true,
   "trailingSlash": false,
   "outputDirectory": "dist",
