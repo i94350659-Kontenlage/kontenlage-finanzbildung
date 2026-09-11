@@ -23,6 +23,26 @@ const plans = [
     priceId: null,
   },
   {
+    id: "starter",
+    name: "Starter",
+    price: 4.9,
+    period: "/ Monat",
+    highlight: false,
+    desc: "Für Einsteiger: erweiterte Rechner & alle Wochenartikel ohne Limit.",
+    features: [
+      { text: "Unbegrenzter Artikel-Zugang", included: true },
+      { text: "Alle Basis-Rechner + Sparplan-Rechner", included: true },
+      { text: "PDF-Checkliste & Steuer-Kalender 2026", included: true },
+      { text: "Kabinett Lesebereich (ohne Download)", included: true },
+      { text: "Holding-Strukturierungsrechner", included: false },
+      { text: "Excel-Rechenmodelle (Holding, Fünftel)", included: false },
+      { text: "ELSTER-Vorlagen & Steuerformulare", included: false },
+      { text: "Prioritäts-Support", included: false },
+    ],
+    cta: "Starter wählen (4,90 € / Mo)",
+    priceId: "price_1UEZBFPoNfLOPXfNF54vTUSc",
+  },
+  {
     id: "pro",
     name: "Pro Digital",
     price: 9,
@@ -63,6 +83,7 @@ const plans = [
     priceId: "price_1UCI6FLtxD96WAjMgNOgPwOz",
   },
 ];
+
 
 const faqs = [
   { q: "Kann ich monatlich kündigen?", a: "Ja. Es gibt keine Mindestlaufzeit. Sie können jederzeit mit 1 Klick zum Ende des laufenden Monats kündigen." },
