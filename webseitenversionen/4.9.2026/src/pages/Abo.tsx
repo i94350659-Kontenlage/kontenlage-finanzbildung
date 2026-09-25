@@ -3,6 +3,28 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 
+// ── Preisquelle (P0-05, § 1 PAngV) ────────────────────────────────────────────
+// Single Source of Truth: Preise werden zuerst als NETTO geführt (so, wie Stripe
+// `tax_behavior: "exclusive"` sie erwartet) und für die Anzeige inkl. 19 % MwSt.
+// berechnet. Endpreise müssen immer mit Steuerausweis angezeigt werden (§ 1 Abs. 1
+// PAngV, § 3 UStG) — deshalb formatieren wir hier einmal zentral statt im Template.
+//
+// Achtung Betreiber: Die tatsächliche Umsatzsteuerpflicht (Regelbetrieb vs.
+// Kleinunternehmerregelung § 19 UStG) ist eine unternehmerische Entscheidung und
+// liegt im Repo nicht fest. Siehe TODOperHAND.md → P0-05. Bei § 19 UStG ist die
+// Angabe „inkl. MwSt." zu entfernen und VAT_EXEMPT auf true zu setzen.
+export const VAT_RATE = 0.19;
+export const VAT_EXEMPT = false;
+
+export const formatGross = (net: number): string =>
+  (net * (1 + (VAT_EXEMPT ? 0 : VAT_RATE))).toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+export const vatLabel = (): string =>
+  VAT_EXEMPT ? "zzgl. MwSt. gem. § 19 UStG" : "inkl. 19 % MwSt.";
+
 const plans = [
   {
     id: "basis",
@@ -41,7 +63,7 @@ const plans = [
       { text: "ELSTER-Vorlagen & Steuerformulare", included: false },
       { text: "Prioritäts-Support", included: false },
     ],
-    cta: "Starter wählen (4,90 € / Mo)",
+    cta: "Starter wählen",
     planKey: "starter",
   },
   {
@@ -61,7 +83,7 @@ const plans = [
       { text: "B2B Gehaltspaket-Analyse", included: false },
       { text: "Prioritäts-Support (48h)", included: false },
     ],
-    cta: "Pro Digital wählen (9 € / Mo)",
+    cta: "Pro Digital wählen",
     planKey: "pro",
   },
   {
@@ -81,7 +103,7 @@ const plans = [
       { text: "Prioritäts-Support (Antwort in < 24h)", included: true },
       { text: "Early Access zu neuen Steuer-Features", included: true },
     ],
-    cta: "Executive wählen (29 € / Mo)",
+    cta: "Executive wählen",
     planKey: "executive",
   },
 ];
@@ -228,12 +250,18 @@ export default function Abo() {
                     {p.desc}
                   </p>
 
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 28, paddingBottom: 20, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 6, paddingBottom: 20, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                     <span style={{ fontFamily: "var(--font-display)", fontSize: 48, fontWeight: 700, color: p.highlight ? "#c9a84c" : "#f0ece4" }}>
-                      {p.price} €
+                      {p.price === 0 ? "0,00" : formatGross(p.price)} €
                     </span>
                     <span style={{ fontSize: 13, color: "#a89f94" }}>{p.period}</span>
                   </div>
+                  {p.price > 0 && (
+                    <p style={{ fontSize: 11, color: "#7d766d", margin: "-10px 0 28px", lineHeight: 1.5 }}>
+                      {vatLabel()}
+                      {VAT_EXEMPT ? "" : <> · zzgl. {formatGross(p.price)} € netto</>}
+                    </p>
+                  )}
 
                   <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px 0", display: "flex", flexDirection: "column", gap: 14 }}>
                     {p.features.map(f => (
@@ -250,6 +278,13 @@ export default function Abo() {
                 <button
                   onClick={() => handleSubscribe(p)}
                   disabled={loadingPlan === p.id || activePlan === p.planKey}
+                  // § 312j BGB: Der Bestellbutton muss die zahlungspflichtige
+                  // Handlung und den Endpreis eindeutig ausweisen.
+                  aria-label={
+                    p.price > 0
+                      ? `${p.cta} — zahlungspflichtig, ${formatGross(p.price)} € pro Monat ${vatLabel()}`
+                      : `${p.cta} — kostenlos`
+                  }
                   style={{
                     width: "100%",
                     padding: "14px",
@@ -267,6 +302,21 @@ export default function Abo() {
                 >
                   {activePlan === p.planKey ? "Aktueller Tarif" : loadingPlan === p.id ? "Verbinde mit Stripe..." : p.cta}
                 </button>
+
+                {p.price > 0 && (
+                  <p style={{ fontSize: 11, color: "#7d766d", marginTop: 10, lineHeight: 1.6, textAlign: "center" }}>
+                    Zahlungspflichtig: {formatGross(p.price)} € / Monat {vatLabel()}. Abonnement mit
+                    monatlicher Kündigung zum Ende der Laufzeit, keine Mindestlaufzeit.
+                    <br />
+                    <Link to="/agb" style={{ color: "#a89f94" }}>AGB</Link>
+                    {" · "}
+                    <Link to="/widerruf" style={{ color: "#a89f94" }}>Widerrufshinweise</Link>
+                    {" · "}
+                    <a href="mailto:service@kontolage.de?subject=K%C3%BCndigung" style={{ color: "#a89f94" }}>
+                      Vertrag kündigen
+                    </a>
+                  </p>
+                )}
               </div>
             ))}
           </div>

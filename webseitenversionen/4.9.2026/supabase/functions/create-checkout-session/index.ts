@@ -62,7 +62,11 @@ Deno.serve(async (request) => {
       "tax_id_collection[enabled]": "true",
       "customer_update[name]": "auto",
       "customer_update[address]": "auto",
+      locale: "de",
+      allow_promotion_codes: "true",
     };
+    // Stripe Tax muss zusätzlich im Stripe-Dashboard für das Land DE aktiviert
+    // und STRIPE_AUTOMATIC_TAX=true als Supabase-Secret gesetzt sein (P0-05).
     if (Deno.env.get("STRIPE_AUTOMATIC_TAX") === "true") params["automatic_tax[enabled]"] = "true";
     const session = await stripeRequest<CheckoutSession>("/checkout/sessions", params);
     if (!session.url) return json(request, { error: "Checkout konnte nicht gestartet werden." }, 502);

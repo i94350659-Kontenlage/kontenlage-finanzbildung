@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
@@ -40,6 +40,74 @@ function planInfo(plan?: string | null) {
   return catalog.basis;
 }
 
+// Kündigungsbutton nach § 312k BGB: eindeutig benannt, mit Widerrufsfrist und
+// Bestätigung im selben Flow (kein window.confirm, weil dort die geforderten
+// Angaben und der Widerrufshinweis nicht Platz haben).
+function CancelDialog({
+  planName,
+  periodEnd,
+  busy,
+  onClose,
+  onConfirm,
+}: {
+  planName: string;
+  periodEnd: string | null;
+  busy: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !busy) onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    dialogRef.current?.focus();
+    return () => document.removeEventListener("keydown", onKey);
+  }, [busy, onClose]);
+
+  return (
+    <div
+      role="presentation"
+      onClick={(event) => { if (event.target === event.currentTarget && !busy) onClose(); }}
+      style={{ position: "fixed", inset: 0, zIndex: 60, display: "grid", placeItems: "center", padding: 20, background: "rgba(5,8,16,0.78)" }}
+    >
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cancel-title"
+        aria-describedby="cancel-desc"
+        tabIndex={-1}
+        style={{ width: "100%", maxWidth: 520, background: "#0f1626", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: 28, outline: "none" }}
+      >
+        <h2 id="cancel-title" style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: "#f0ece4", margin: "0 0 14px" }}>
+          Abonnement „{planName}" kündigen
+        </h2>
+        <p id="cancel-desc" style={{ fontSize: 14, color: "#cdc6be", lineHeight: 1.7, margin: "0 0 16px" }}>
+          Mit dieser Kündigung endet Ihr Abonnement zum Ende des aktuellen Abrechnungszeitraums
+          {periodEnd ? <> am <strong style={{ color: "#f0ece4" }}>{periodEnd}</strong></> : " zum Periodenende"}.
+          Ihr Zugang bleibt bis dahin vollständig bestehen, eine Rückzahlung ist nicht vorgesehen.
+        </p>
+        <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: "0 0 22px" }}>
+          Wir senden Ihnen anschließend eine Bestätigung per E-Mail an Ihre Registrierungsadresse.
+          Details in <Link to="/agb" style={{ color: "#e2c27d" }}>AGB</Link> und{" "}
+          <Link to="/widerruf" style={{ color: "#e2c27d" }}>Widerrufsbelehrung</Link>.
+        </p>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <button type="button" onClick={onClose} disabled={busy} style={{ ...ghostButtonStyle, padding: "12px 20px" }}>
+            Abbrechen
+          </button>
+          <button type="button" onClick={onConfirm} disabled={busy} style={{ ...dangerButtonStyle, padding: "12px 20px" }}>
+            {busy ? "Wird gekündigt…" : "Verbindlich kündigen"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function formatDate(value?: string | null) {
   if (!value) return null;
   const date = new Date(value);
@@ -71,6 +139,7 @@ export default function Account() {
   const [nextPassword, setNextPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
   const [rememberDevice, setRememberDevice] = useState(true);
   const [lastEmailChange, setLastEmailChange] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState("");
@@ -376,16 +445,22 @@ export default function Account() {
                     </button>
                   )}
                   {["active", "trialing", "past_due"].includes(status) && (
-                    <button
-                      onClick={() => { if (window.confirm("Möchten Sie Ihr Abonnement wirklich kündigen? Der Zugang bleibt bis zum Ende der bezahlten Periode bestehen.")) void invokeBilling("cancel-subscription"); }}
-                      disabled={busy === "cancel-subscription"}
-                      style={dangerButtonStyle}
-                    >
-                      {busy === "cancel-subscription" ? "Wird gekündigt…" : "Abo kündigen"}
+                    <button onClick={() => setCancelOpen(true)} style={dangerButtonStyle}>
+                      Verträge hier kündigen
                     </button>
                   )}
                 </div>
               </div>
+
+              {cancelOpen && (
+                <CancelDialog
+                  planName={planInfo(account.subscription?.plan).name}
+                  periodEnd={periodEnd}
+                  busy={busy === "cancel-subscription"}
+                  onClose={() => setCancelOpen(false)}
+                  onConfirm={() => void invokeBilling("cancel-subscription")}
+                />
+              )}
 
               <div style={cardStyle}>
                 <div style={mutedMonoStyle}>Profil</div>

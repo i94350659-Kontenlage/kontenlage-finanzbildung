@@ -30,6 +30,8 @@ export const router = createBrowserRouter([
       { path: "konto", lazy: load(() => import("./components/ProtectedAccount")) },
       { path: "impressum", lazy: load(() => import("./pages/Impressum")) },
       { path: "datenschutz", lazy: load(() => import("./pages/Datenschutz")) },
+      { path: "agb", lazy: load(() => import("./pages/Agb")) },
+      { path: "widerruf", lazy: load(() => import("./pages/Widerruf")) },
       { path: "*", lazy: load(() => import("./pages/NotFound")) },
     ],
   },
