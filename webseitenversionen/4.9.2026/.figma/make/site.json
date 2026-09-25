@@ -1,6 +1,8 @@
 {
-  "title": "Kontenlage.de | Unabhängige Finanzbildung, Steuerrechner & Holding-Strukturierung",
-  "description": "BaFin- und WpHG-konforme Steuerrechner (Rürup, Sparerpauschbetrag, VV-GmbH, Fünftelregelung) und legale Vermögensstrukturierung für Einkommen ab 60.000 €.",
+  "_hinweis": "Nur Platzhalter/Defaults. Der kanonische Inhalt kommt aus content/routes.json (siehe tools/prerender-routes.mjs). Der Figma-Plugin-Pfad schreibt diese Werte zusaetzlich in den Document-Shell; stehen hier falsche Werte, ueberschreiben sie die Seite-Meta und tauchen als Duplikate auf.",
+  "_warum_leer": "title/description bleiben bewusst LEER: Das Figma-Plugin injiziert sie sonst ein zweites Mal in den <head> und erzeugt doppelte description-/og:title-Tags (Ticket P0-01, Befund 2026-09-25). Die Meta je Route setzt der Prerender aus content/routes.json; zusätzlich entdupliziert tools/prerender-routes.msi bzw. .mjs den Head. Sprache und robots.index bleiben aktiv, da sie keine Meta-Duplikate erzeugen.",
+  "title": "",
+  "description": "",
   "language": "de",
   "robots": {
     "index": true

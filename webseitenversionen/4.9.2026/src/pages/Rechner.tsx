@@ -105,13 +105,15 @@ function SzenarioBar({
   results: Record<string, unknown>;
   session: Session | null;
 }) {
-  const { scenarios, loading, error, save, remove } = useSavedScenarios(
+  const { scenarios, loading, error, save, remove, rename } = useSavedScenarios(
     session ? supabase : null,
     calculator,
   );
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
 
   if (!session) {
     return (
@@ -136,6 +138,23 @@ function SzenarioBar({
   const onLoad = (values: Record<string, unknown>) => {
     setStatus("Szenario geladen — bitte die Regler prüfen.");
     window.dispatchEvent(new CustomEvent("kontolage:szenario", { detail: { calculator, values } }));
+  };
+
+  const startRename = (id: string, currentName: string) => {
+    setEditingId(id);
+    setEditName(currentName);
+  };
+
+  const commitRename = async (id: string) => {
+    if (!editName.trim()) {
+      setEditingId(null);
+      return;
+    }
+    setBusy(true);
+    await rename(id, editName);
+    setBusy(false);
+    setEditingId(null);
+    setStatus("Szenario umbenannt.");
   };
 
   return (
@@ -172,15 +191,40 @@ function SzenarioBar({
         <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
           {scenarios.map((s) => (
             <li key={s.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, padding: "8px 10px", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 6 }}>
-              <span style={{ fontSize: 13, color: "#f0ece4" }}>
-                {s.name}
-                <span style={{ display: "block", fontSize: 11, color: "#a89f94" }}>
-                  {new Date(s.updated_at).toLocaleDateString("de-DE")}
+              {editingId === s.id ? (
+                <input
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") void commitRename(s.id);
+                    if (e.key === "Escape") setEditingId(null);
+                  }}
+                  maxLength={60}
+                  aria-label={`Neuer Name für Szenario ${s.name}`}
+                  autoFocus
+                  style={{ background: "rgba(30,50,90,0.75)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 4, padding: "6px 10px", color: "#f0ece4", fontSize: 13, width: "100%" }}
+                />
+              ) : (
+                <span style={{ fontSize: 13, color: "#f0ece4" }}>
+                  {s.name}
+                  <span style={{ display: "block", fontSize: 11, color: "#a89f94" }}>
+                    {new Date(s.updated_at).toLocaleDateString("de-DE")}
+                  </span>
                 </span>
-              </span>
+              )}
               <span style={{ display: "flex", gap: 8 }}>
-                <button type="button" onClick={() => onLoad(s.inputs)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(201,168,76,0.4)", background: "transparent", color: "#e2c27d", fontSize: 12, cursor: "pointer" }}>Laden</button>
-                <button type="button" onClick={() => void remove(s.id)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "#a89f94", fontSize: 12, cursor: "pointer" }}>Löschen</button>
+                {editingId === s.id ? (
+                  <>
+                    <button type="button" onClick={() => void commitRename(s.id)} disabled={busy} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(201,168,76,0.4)", background: "transparent", color: "#e2c27d", fontSize: 12, cursor: busy ? "not-allowed" : "pointer" }}>Speichern</button>
+                    <button type="button" onClick={() => setEditingId(null)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "#a89f94", fontSize: 12, cursor: "pointer" }}>Abbrechen</button>
+                  </>
+                ) : (
+                  <>
+                    <button type="button" onClick={() => onLoad(s.inputs)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(201,168,76,0.4)", background: "transparent", color: "#e2c27d", fontSize: 12, cursor: "pointer" }}>Laden</button>
+                    <button type="button" onClick={() => startRename(s.id, s.name)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "#a89f94", fontSize: 12, cursor: "pointer" }}>Umbenennen</button>
+                    <button type="button" onClick={() => void remove(s.id)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "#a89f94", fontSize: 12, cursor: "pointer" }}>Löschen</button>
+                  </>
+                )}
               </span>
             </li>
           ))}

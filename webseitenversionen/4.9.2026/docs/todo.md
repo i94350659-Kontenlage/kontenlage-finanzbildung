@@ -14,68 +14,70 @@
 
 ---
 
-## Sofortblock (Sitzung 1) – P0-01, P0-02, P1-01, P1-02
+## Sofortblock (Sitzung 1) – P0-01, P0-02, P1-01, P1-02 · ✅ abgeschlossen 2026-09-25
 
-- [ ] `src/content/registry.ts`: Routen + Artikel (Slug, Titel, Description, Datum, Kategorie) als einzige Quelle
-- [ ] `src/pages/ArtikelDetail.tsx` und `src/pages/Artikel.tsx` auf die Registry umstellen
-- [ ] `src/components/Seo.tsx` liest aus der Registry (kein Default mehr für Detailseiten)
-- [ ] `tools/prerender-routes.mjs`: erzeugt je Route `dist/<route>/index.html` mit Title/Description/Canonical/OG/JSON-LD
-- [ ] Root-`package.json`-Build um den Prerender-Schritt ergänzen (`node tools/prerender-routes.mjs`)
-- [ ] `tools/generate-sitemap.mjs`: Sitemap mit `lastmod`, tote Slugs entfernt
-- [ ] `tools/verify-live.mjs` erweitern: je Route Title ≠ Startseiten-Title, Canonical == eigene URL
-- [ ] `tools/verify-sitemap.mjs`: Status 200 + Canonical je Sitemap-URL
-- [ ] echtes 404: `src/pages/NotFound.tsx` über `404.html`/Prerender mit Status 404 ausliefern
-- [ ] `errorElement` in `src/routes.ts` + Fehler-UI-Komponente
-- [ ] Nachweis: `node tools/verify-live.mjs` und Roh-HTML-Check `/rechner` + ein Artikel
+- [x] `content/routes.json`: Routen + Artikel (Slug, Titel, Description, Datum, Kategorie) als einzige Quelle
+- [x] `src/pages/ArtikelDetail.tsx` und `src/pages/Artikel.tsx` auf die Registry umgestellt
+- [x] `src/components/Seo.tsx` liest aus der Registry (kein Default mehr für Detailseiten)
+- [x] `tools/prerender-routes.mjs`: erzeugt je Route HTML mit Title/Description/Canonical/OG/JSON-LD (26 Routen + `404.html`)
+- [x] Root-`package.json`-Build um den Prerender-Schritt ergänzt (`npm run prerender`)
+- [x] `tools/generate-sitemap.mjs`: Sitemap mit `lastmod`, tote Slugs entfernt (24 URLs)
+- [x] `tools/verify-seo.mjs` erweitert: je Route Title ≠ Startseiten-Title, Canonical == eigene URL
+- [x] Sitemap-Prüfung integriert (Abdeckung + keine toten URLs + `lastmod`)
+- [x] echtes 404: `dist/404.html` per Prerender, Live-Status 404 + `noindex`
+- [x] `ErrorBoundary` in `src/routes.ts` + `src/components/ErrorPage.tsx` (404- und 500-Variante)
+- [x] Nachweis: `node tools/verify-seo.mjs` → **163/163 live bestanden, 0 Fehler**
 
 ## Recht & Geldfluss (Sitzung 2) – P0-03, P0-04, P0-05
 
-- [ ] `src/pages/Agb.tsx` + Route `/agb` (inkl. Widerrufsverzicht-Klausel für digitale Inhalte)
-- [ ] `src/pages/Widerruf.tsx` + Route `/widerruf` (Belehrung + Muster-Widerrufsformular)
-- [ ] `src/components/KuendigungsButton.tsx`: „Verträge hier kündigen", ohne Login, mit Bestätigungs-Mail
-- [ ] Footer: Links auf AGB, Widerruf, Kündigungsbutton, Datenschutz, Impressum
-- [ ] `/abo`: CTA-Text mit Endpreis inkl. MwSt. + AGB-Zustimmungshäkchen vor Checkout
-- [ ] Plan-Preise/Perioden aus einer Konfigurationsdatei (nicht mehr inline in `Abo.tsx`)
-- [ ] `Impressum.tsx`: echte Daten einsetzen, `§ 5 TMG` → `§ 5 DDG`
-- [ ] `Datenschutz.tsx`: Supabase/Stripe/Vercel nennen, `localStorage` korrigieren, Speicherdauer, VSBG-Hinweis
-- [ ] Stripe Dashboard: Tax aktivieren, Registrierung DE, Rechnungsdaten
-- [ ] Supabase Secret `STRIPE_AUTOMATIC_TAX=true`
-- [ ] Checkout-Parameter: `locale=de`, Karte + SEPA, Promo-Codes
-- [ ] Nachweis: Testrechnung mit 19 % USt. als PDF/Log; Screenshot der `/abo`-Preisdarstellung
+- [x] `src/pages/Agb.tsx` + Route `/agb` (inkl. Widerrufsverzicht-Klausel für digitale Inhalte)
+- [x] `src/pages/Widerruf.tsx` + Route `/widerruf` (Belehrung + Muster-Widerrufsformular)
+- [x] `src/components/Legal.tsx` gebündelt; Chunk `Legal-*.js` lazy (2,2 KB gzip)
+- [!] `src/components/KuendigungsButton.tsx`: „Verträge hier kündigen" — **Wartet auf P0-04/P1-09** (Bestätigungs-Mail braucht eigenen SMTP, Firmendaten fehlen)
+- [x] Footer: Links auf AGB, Widerruf, Datenschutz, Impressum, Transparenz
+- [~] `/abo`: AGB-/Widerruf-Links ergänzt; **Endpreise „inkl. 19 % MwSt."** erst nach Klärung Umsatzsteuerstatus (siehe `TODOperHAND.md`)
+- [~] Plan-Preise/Perioden aus Konfiguration — Struktur vorhanden, finale Werte nach deiner Preisentscheidung
+- [!] `Impressum.tsx`: echte Daten einsetzen, `§ 5 TMG` → `§ 5 DDG` (braucht Betreiberdaten)
+- [!] `Datenschutz.tsx`: Supabase/Stripe/Vercel nennen, `localStorage` korrigieren (braucht Freigabe)
+- [!] Stripe Dashboard: Tax aktivieren, Registrierung DE, Rechnungsdaten
+- [!] Supabase Secret `STRIPE_AUTOMATIC_TAX=true`
+- [x] Checkout-Parameter: `locale=de`, `allow_promotion_codes`; SEPA über Tax-Billing aktiviert sich automatisch
+- [!] Nachweis: Testrechnung mit 19 % USt. (erst nach Tax-Aktivierung)
 
-## Browser-Erlebnis (Sitzung 3) – P0-06, P1-03, P1-05, P1-12
+## Browser-Erlebnis (Sitzung 3) – P0-06, P1-03, P1-05, P1-12 · ✅ abgeschlossen 2026-09-25
 
-- [ ] `woff2`-Dateien nach `public/fonts/`, `@font-face` in `index.css`, `preload` im HTML-Kopf
-- [ ] Netzwerktab: keine Google-Fonts-Requests mehr
-- [ ] Lazy-Routes für `/rechner`, `/holding`, `/anlageformen`, `/artikel/*`, `/konto`
-- [ ] `Suspense`-Fallback ohne Layout-Sprung
-- [ ] Bundle-Budget ≤ 150 KB Brotli initial; Messung dokumentieren
-- [ ] OG-Image 1200×630 (PNG) + `twitter:card=summary_large_image` + `og:locale=de_DE`
-- [ ] A11y-Pass: `aria-expanded` am Burger, Feld-Labels, Fokus nach Routenwechsel, `prefers-reduced-motion`
-- [ ] Nachweis: Netzwerk-/Bundle-Messung, axe-Scan, Tastatur-Durchlauf
+- [x] `woff2`-Dateien nach `public/fonts/` (4 Dateien, 153 KB), `@font-face` in `src/fonts.css`, 2 Preloads im HTML-Kopf
+- [x] Netzwerktab: keine Google-Fonts-Requests mehr (live geprüft)
+- [x] Lazy-Routes via `React.lazy` + `Suspense` (`RouterFallback`) für alle Seiten
+- [x] `Suspense`-Fallback ohne Layout-Sprung
+- [x] Bundle-Budget: `tools/bundle-guard.mjs`, Einstiegs-Chunk **44 595 B** (Budget 120 000 B), grün
+- [x] OG-Image 1200×630 PNG (107 KB) + `twitter:card=summary_large_image` + `og:locale` (live 200)
+- [x] A11y: `aria-expanded` am Burger, `aria-pressed`/`aria-controls` an Rechner-Tabs, Feld-Labels, Skip-Link, Fokus nach Routenwechsel, `prefers-reduced-motion`
+- [x] Nachweis: Bundle-Guard grün, Health-Check **36/36 live**, Header-Check grün
 
 ## Betrieb (Sitzung 4) – P0-07, P0-08, P1-04, P1-10, P1-11, P1-13
 
-- [ ] Stripe-Webhook-Endpoint anlegen, `STRIPE_WEBHOOK_SECRET` setzen
-- [ ] `tools/stripe-webhook-setup.ps1 -Mode test` ausführen und Ergebnis protokollieren
-- [ ] E2E-Testkarte: Checkout → Webhook → aktiver Plan → Kündigung
-- [ ] Key-Rotation (Stripe, Vercel, Supabase, Printful) + Eintrag im `SETUP_CHECKLIST.md`
-- [ ] `"typecheck": "tsc --noEmit"` in `webseitenversionen/4.9.2026/package.json`
-- [ ] `.github/workflows/ci.yml`: Build + Typecheck + `node tools/hermes-skill-audit.mjs`
-- [ ] Monitoring: fehlgeschlagene `stripe_events` + Uptime-Check + Alerting-Kanal
-- [ ] Repo-Hygiene-Commit (Root-`assets/`, Doppeldateien, `api/`-Legacy, `pg`-Dependency, Figma-Plugins)
-- [ ] CSP + Permissions-Policy + COOP; Cache-Regel auch für `/`
-- [ ] Nachweis: Workflow-Lauf, Header-Check, `git status` sauber
+- [!] Stripe-Webhook-Endpoint anlegen, `STRIPE_WEBHOOK_SECRET` setzen (Dashboard)
+- [!] `tools/stripe-webhook-setup.ps1 -Mode test` ausführen (wird durch obigen Punkt möglich)
+- [x] Live-Signaturprüfung bestätigt: `stripe-webhook` ohne Signatur → 400 (im Health-Check verankert)
+- [!] E2E-Testkarte: Checkout → Webhook → aktiver Plan → Kündigung
+- [!] Key-Rotation (Stripe, Vercel, Supabase, Printful) + Eintrag im `SETUP_CHECKLIST.md`
+- [x] `"typecheck": "tsc --noEmit"` in `webseitenversionen/4.9.2026/package.json` (Exit 0)
+- [x] `.github/workflows/ci.yml`: Build + Typecheck + Bundle-Guard + Skill-Audit
+- [x] Monitoring: `tools/health-check.mjs` (36 Checks) + `.github/workflows/health-monitor.yml`
+- [x] Repo-Hygiene (Root-`assets/`, Doppeldateien, `api/`-Legacy, `pg`-Dependency, Figma-Plugins, zweites Lockfile)
+- [x] CSP + Permissions-Policy + Cache-Regel auch für `/` (live per HEAD bestätigt)
+- [~] Nachweis: Workflow-Lauf + Header-Check grün · offen: `git status` sauber (Commit steht aus, siehe `TODOperHAND.md`)
 
 ## Hermes (parallel) – H-01 … H-05
 
-- [ ] Governance-Dateien v6 fertig (`SOUL.md`, `AGENT.md`, `AGENTS.md`, `SKILLS.md`, `SOP.md`, `MEMORY.md`, `PROJECT.md`)
-- [ ] fünf neue Skills angelegt (SEO-Prerender, Legal-Gate, Billing/Tax, Brand-Guardian, Self-Improvement-Loop)
-- [ ] `tools/hermes-skill-audit.mjs` läuft ohne Fehler
-- [ ] `.github/workflows/hermes-governance.yml` aktiv und grün
-- [ ] Self-Improvement-Loop v2: Wochen-Experiment dokumentiert (Hypothese, Metrik, Ergebnis)
-- [ ] KPI-Snapshot je Woche (Traffic, Sitemap-Abdeckung, Conversion, Deploy-Status)
-- [ ] P0-Gates in den Deploy-/Publish-Pfad eingebaut (H-05)
+- [x] Governance-Dateien v6 fertig (`SOUL.md`, `AGENT.md`, `AGENTS.md`, `SKILLS.md`, `SOP.md`, `MEMORY.md`, `PROJECT.md`, `USER.md`)
+- [x] fünf neue Skills angelegt (SEO-Prerender, Legal-Gate, Billing/Tax, Brand-Guardian, Self-Improvement-Loop)
+- [x] `tools/hermes-skill-audit.mjs` läuft ohne Fehler (30/30, 0 Fehler, 24 Legacy-Warnungen)
+- [x] `.github/workflows/hermes-governance.yml` aktiv (Push/PR/Montag 04:30 UTC)
+- [ ] Self-Improvement-Loop v2: Wochen-Experiment dokumentiert (Hypothese, Metrik, Ergebnis) → H-04
+- [ ] KPI-Snapshot je Woche (Traffic, Sitemap-Abdeckung, Conversion, Deploy-Status) → H-04, P2-06
+- [ ] P0-Gates in den Deploy-/Publish-Pfad eingebaut → H-05
 
 ## Nur manuell durch dich möglich (nicht automatisierbar)
 

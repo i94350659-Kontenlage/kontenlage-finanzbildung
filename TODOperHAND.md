@@ -45,5 +45,11 @@
 ## 7. Wenn alles oben erledigt ist
 
 - [ ] `docs/kanban.md` gegenlesen und P0 auf `DONE` setzen.
-- [ ] `node tools/verify-seo.mjs` und `node tools/verify-live.mjs` laufen lassen (Ergebnis: 151/151 bzw. alle Routen 200).
+- [ ] `node tools/verify-seo.mjs` und `node tools/health-check.mjs` laufen lassen (Ergebnis aktuell: **163/163** SEO-Prüfungen und **36/36** Health-Checks, beide live grün).
 - [ ] Freigabe für den ersten echten Zahlungsvorgang erteilen.
+## 8. Optional, wenn Zeit ist
+
+- [x] ~~Git-Stand versionieren~~ → **erledigt am 2026-09-25**: 9 Commits auf main (ahead 9 / behind 6). Offen bleibt nur der **Push** — ehind 6 heißt, origin/main ist weitergegangen. Vor dem Push git pull --rebase; bei Konflikten dist/ per pm run build neu erzeugen statt blind mergen.
+- [ ] 17 Legacy-Skills auf kanonische Frontmatter heben (24 Warnungen im Skill-Audit, blockieren nichts).
+- [ ] `node tools/hermes-skill-audit.mjs --strict` einmal laufen lassen, wenn du die Legacy-Schuld abstellen willst.
+- [ ] P2-Backlog priorisieren (PDF/Excel-Export, Newsletter-Funnel, cookieless Analytics).

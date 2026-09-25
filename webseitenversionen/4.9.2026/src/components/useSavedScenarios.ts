@@ -18,6 +18,7 @@ interface UseSavedScenariosState {
   error: string | null;
   save: (name: string, inputs: Record<string, unknown>, results: Record<string, unknown>) => Promise<void>;
   remove: (id: string) => Promise<void>;
+  rename: (id: string, name: string) => Promise<void>;
 }
 
 /**
@@ -94,5 +95,23 @@ export function useSavedScenarios(
     [supabase, load],
   );
 
-  return { scenarios, loading, error, save, remove };
+  const rename = useCallback(
+    async (id: string, name: string) => {
+      const trimmed = name.trim().slice(0, 60);
+      if (!supabase || !trimmed) return;
+      setError(null);
+      const { error: updateError } = await supabase
+        .from("saved_scenarios")
+        .update({ name: trimmed, updated_at: new Date().toISOString() })
+        .eq("id", id);
+      if (updateError) {
+        setError(updateError.message);
+        return;
+      }
+      await load();
+    },
+    [supabase, load],
+  );
+
+  return { scenarios, loading, error, save, remove, rename };
 }

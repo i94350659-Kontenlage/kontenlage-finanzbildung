@@ -9,6 +9,11 @@
 -- eigenen Nutzer (auth.uid()). Einfügen läuft über die Standard-Policy
 -- (WITH CHECK auth.uid() = user_id). Kein Zugriff für anon/service_role-Bypass
 -- durch Nutzer, da ausschließlich der Client mit dem JWT des Nutzers spricht.
+--
+-- Spaltenrechte: authenticated darf nur name und updated_at aktualisieren
+-- (siehe 202609250004_saved_scenarios_rename.sql). calculator, inputs, results,
+-- user_id und created_at bleiben unveränderlich, damit ein manipulierter Client
+-- keine Szenarien einem anderen Rechner oder Nutzer zuordnen kann.
 
 create table if not exists public.saved_scenarios (
   id uuid primary key default gen_random_uuid(),
