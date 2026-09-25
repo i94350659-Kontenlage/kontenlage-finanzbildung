@@ -1,8 +1,22 @@
 node_modules/
 .env
+.env.*
+!.env.example
+!.env.*.example
 .DS_Store
 *.log
 *recovery-codes*.txt
 *.zip
-
 .vercel
+
+# Build-Ausgabe (wird beim Deploy neu erzeugt)
+dist/
+
+# Generierte Hermes-/Governance-Reports
+.agents/skills-audit.json
+.agents/hermes_skills_audit.json
+
+# Alte, nicht mehr genutzte Wurzelpfade (nach _archive/ verschoben)
+assets/
+api/
+

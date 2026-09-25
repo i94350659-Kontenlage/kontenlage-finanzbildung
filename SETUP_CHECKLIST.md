@@ -1,20 +1,72 @@
-# Kontenlage — Setup-Checkliste & Was fehlt noch
+# Kontolage — Setup-Checkliste & Was fehlt noch
 
-> Zuletzt aktualisiert: 2026-08-13 | Hermes v2.3
+> Zuletzt aktualisiert: 2026-09-25 | Hermes v6
+
+**Steuerung (Single Source of Truth):** `webseitenversionen/4.9.2026/docs/kanban.md` (Tickets P0-01 … P2-08, H-01 … H-05) ·
+`docs/implementation-plan.md` (Phasen, Abnahmekriterien, Befehle) · `docs/todo.md` (Arbeitschecklisten) ·
+`.agents/AGENTS.md` + `.agents/AGENT.md` (Hermes-Governance) · `.agents/skills-audit.json` (Skill-Audit).
+
+
+---
+
+## ✅ Produktionsstatus Kontolage.de (verifiziert am 25.09.2026)
+
+**Live-Kette geprüft und funktionsfähig:**
+
+| Baustein | Status | Nachweis |
+| --- | --- | --- |
+| Vercel-Deploy (Projekt `kontolage-finanzbildung`) | ✅ | `kontolage.de` + `www.kontolage.de` → 200; alle Routen (`/abo`, `/kabinett`, `/konto`, …) → 200 |
+| App-Bundle | ✅ | `/assets/index-*.js` enthält Kabinett-, Konto- und Abo-UI inkl. Supabase-Client-Initialisierung |
+| Supabase Edge Functions (`account`, `create-checkout-session`, `billing-portal`, `cancel-subscription`) | ✅ | alle ACTIVE, antworten ohne JWT mit `401 Unauthorized` (Auth-Schutz greift, kein 500) |
+| `stripe-webhook` (Supabase) | ✅ | unsignierter POST → `400 {"error":"Invalid signature"}` ⇒ erreichbar, Signaturprüfung aktiv |
+| Supabase Auth-Redirects + E-Mail-Templates | ✅ | `supabase config push` (site_url `https://kontolage.de`, Redirect-Allowlist, Templates) |
+| Stripe-Webhook-Ziel | ✅ | `https://tberfzrzfkwoytgqlpij.supabase.co/functions/v1/stripe-webhook` (Setup: `tools/stripe-webhook-setup.ps1`) |
+
+**Build/Deploy (Root-Verzeichnis):**
+
+```powershell
+npm run build         # App-Build -> dist/ -> Sitemap -> Prerender (24 Routen + 404.html)
+npm run prerender     # nur Sitemap + Prerender erneut ausführen (nach Registry-Änderung)
+vercel --prod --yes   # deployt dist/ nach kontolage.de
+
+node tools/verify-seo.mjs    # SEO je Route: Status, Title, Canonical, JSON-LD, robots, 404, Sitemap -> Soll: 151/151
+node tools/verify-live.mjs   # Live-Bundle, Routen und www-Variante
+node tools/brand-consistency-check.mjs   # Marken-Kanon Kontolage (--fix korrigiert Quelldateien)
+node tools/hermes-skill-audit.mjs        # Skill-Governance (Soll: 0 Fehler)
+```
+
+**Metadaten-Quelle:** `webseitenversionen/4.9.2026/content/routes.json` (Pfad, Title, Description, H1, Intro, noindex, Sitemap-Priorität, lastmod). Neue Seiten/Artikel zuerst dort eintragen, danach `npm run build` und Deploy.
+
+⚠️ **Pflichtdatei für lokale Builds:** `webseitenversionen/4.9.2026/.env` mit `VITE_SUPABASE_URL` und `VITE_SUPABASE_ANON_KEY`
+(vorlage: `.env.example`, Produktionswerte via `vercel env pull` oder `vercel env ls`).
+Ohne diese Werte wirft `src/lib/supabase.ts` beim Build-Analysieren und der Vite-8/Rolldown-Build schneidet
+die komplette React-App aus dem Bundle (Live-Seite bliebe leer). Die Datei ist gitignored und wird nicht deployt.
+
+**Hilfsskripte (Root `tools/`):**
+
+| Skript | Zweck |
+|---|---|
+| `sync-app-env.mjs` | schreibt die lokale App-`.env` aus den Supabase-Projekt-Keys |
+| `prerender-routes.mjs` | erzeugt je Route eigenes HTML (Meta, Canonical, JSON-LD, Shell) + `404.html` |
+| `generate-sitemap.mjs` | Sitemap aus `content/routes.json` (inkl. `lastmod`) |
+| `fetch-fonts.mjs` | lädt die Schriften lokal (keine Google-Requests) |
+| `verify-seo.mjs` | Route-für-Route-Prüfung von Status, Title, Canonical, JSON-LD, robots, 404, Sitemap |
+| `verify-live.mjs` | Live-Bundle, Routen, www-Variante, Gültigkeit des eingebetteten Supabase-Keys |
+| `verify-supabase-auth.mjs` | lokale `.env` ↔ Build ↔ GoTrue |
+| `brand-consistency-check.mjs` | Marken-Kanon „Kontolage" (`--fix` korrigiert) |
+| `hermes-skill-audit.mjs` | Skill-Governance (Frontmatter, Pflichtabschnitte, Secrets) |
+| `verify-stripe-endpoints.mjs` | Stripe-Webhooks auflisten (benötigt Key mit `webhook_read`) |
+| `verify-auth-redirects.ps1`, `stripe-webhook-setup.ps1`, `supabase-e2e-check.ps1`, `generate-email-templates.ps1` | PowerShell-Helfer für Auth-Redirects, Webhook-Setup, E2E-Check, Mail-Templates |
+
+
+**Noch manuell zu testen (erfordert echte Mailadresse/Karte):** Signup → Bestätigungsmail → Rücksprung auf `/konto`,
+sowie Test-Checkout → Webhook → Tarif im Konto.
 
 ---
 
 ## 🔴 SOFORT erledigen (Sicherheit)
 
-- [ ] **Stripe Live-Key rotieren** — Der alte Key `rk_live_51TI...` war hardcodiert im Code und ist in der Git-History.
-  - Stripe Dashboard → Developers → API Keys → Roll key
-  - Neuer Key als GitHub Secret: `STRIPE_SECRET_KEY` setzen
-  - URL: https://dashboard.stripe.com/apikeys
-
-- [ ] **Supabase Service-Key prüfen** — War ebenfalls im Frontend-Code sichtbar (`sb_secret_6NYQ...`)
-  - Supabase Dashboard → Settings → API → Service Role Key rotieren (falls besorgt)
-  - Supabase Anon-Key (öffentlich, für Frontend OK) als Vercel Env-Variable setzen: `KL_ANON_KEY`
-  - URL: https://supabase.com/dashboard
+- [ ] **Stripe-/Supabase-Credentials rotieren** — Alte, historisch exponierte Schlüssel aus Code und Git-History entfernen und durch neu erzeugte Secret-Store-Werte ersetzen.
 
 - [x] **OpenRouter/EdenAI/Requesty Keys** — aus Code entfernt (v2.3), jetzt nur via GitHub Secrets
 

@@ -180,6 +180,111 @@ function SteuerfBenefits() {
   );
 }
 
+
+function ThesaurierungsRechner() {
+  const [kapital, setKapital] = useState(250000);
+  const [rendite, setRendite] = useState(8);
+  const [jahre, setJahre] = useState(20);
+
+  // Privat: Steuerabzug von 26,375% auf jährliche Umschichtungen / Erträge
+  // Effektive Netto-Rendite privat (bei 100% Realisierung / Rebalancing): rendite * (1 - 0.26375)
+  // VV-GmbH: 1,54% Steuer nach § 8b KStG -> rendite * (1 - 0.0154)
+  const nettoRenditePrivat = (rendite * (1 - 0.26375)) / 100;
+  const nettoRenditeGmbH = (rendite * (1 - 0.0154)) / 100;
+
+  const endwertPrivat = Math.round(kapital * Math.pow(1 + nettoRenditePrivat, jahre));
+  const endwertGmbH = Math.round(kapital * Math.pow(1 + nettoRenditeGmbH, jahre));
+  const mehrwertGmbH = endwertGmbH - endwertPrivat;
+
+  return (
+    <div style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.65), rgba(30,41,59,0.8))", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 36 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 600, color: "#c9a84c", padding: "4px 8px", background: "rgba(201,168,76,0.1)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>§ 8b KStG · Thesaurierung</div>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "#f0ece4" }}>Holding-Thesaurierungs-Rechner</h2>
+      </div>
+      <p style={{ fontSize: 14, color: "#a89f94", lineHeight: 1.8, marginBottom: 28, maxWidth: 720 }}>
+        Vergleichen Sie den Zinseszinseffekt bei Reinvestition: Die Holding versteuert Aktiengewinne mit nur ~1,5 %, während im Privatvermögen 26,375 % Abgeltungsteuer anfallen.
+      </p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: 32 }} className="calc-inner-grid">
+        <div>
+          {[
+            { label: "Startkapital", min: 50000, max: 2000000, step: 25000, value: kapital, setter: setKapital, fmt: (v: number) => v.toLocaleString("de-DE") + " €" },
+            { label: "Angenommene Brutto-Rendite p.a.", min: 4, max: 15, step: 0.5, value: rendite, setter: setRendite, fmt: (v: number) => v.toFixed(1) + " %" },
+            { label: "Anlagehorizont", min: 5, max: 40, step: 1, value: jahre, setter: setJahre, fmt: (v: number) => v + " Jahre" },
+          ].map(s => (
+            <label key={s.label} style={{ display: "block", marginBottom: 24 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+                <span style={{ fontSize: 11, color: "#a89f94", letterSpacing: "0.08em", textTransform: "uppercase" }}>{s.label}</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 14, color: "#e2c27d", fontWeight: 600 }}>{s.fmt(s.value)}</span>
+              </div>
+              <input type="range" min={s.min} max={s.max} step={s.step} value={s.value}
+                onChange={e => s.setter(Number(e.target.value))}
+                style={{ width: "100%", accentColor: "#c9a84c" }}
+              />
+            </label>
+          ))}
+        </div>
+
+        <div>
+          <div style={{ background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 10, padding: 24, marginBottom: 16 }}>
+            <div style={{ fontSize: 11, color: "#a89f94", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Zusätzliches Holding-Vermögen (Zinseszins-Vorteil)</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#c9a84c" }}>+{mehrwertGmbH.toLocaleString("de-DE")} €</div>
+          </div>
+          {[
+            { label: "Endvermögen Privat (26,375% Steuerabzug)", value: endwertPrivat.toLocaleString("de-DE") + " €", color: "#a89f94" },
+            { label: "Endvermögen Holding (~1,5% Steuer §8b KStG)", value: endwertGmbH.toLocaleString("de-DE") + " €", color: "#e2c27d" },
+            { label: "Steuerersparnis p.a. zur freien Wiederanlage", value: "~24,8 % Ertragsunterschied", color: "#4ade80" },
+          ].map(row => (
+            <div key={row.label} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <span style={{ fontSize: 13, color: "#a89f94" }}>{row.label}</span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: row.color, fontWeight: 600 }}>{row.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Pro & Executive Gated Cashflow Matrix */}
+      <div style={{ position: "relative", marginTop: 24, borderRadius: 10, overflow: "hidden", border: "1px solid rgba(201,168,76,0.2)" }}>
+        <div style={{ filter: "blur(4px)", opacity: 0.3, pointerEvents: "none", padding: 24, background: "rgba(10,15,30,0.8)" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+            <thead>
+              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                <th style={{ textAlign: "left", padding: 8 }}>Jahr</th>
+                <th style={{ textAlign: "right", padding: 8 }}>GmbH-Bestand</th>
+                <th style={{ textAlign: "right", padding: 8 }}>Privat-Bestand</th>
+                <th style={{ textAlign: "right", padding: 8 }}>KSt & GewSt (§9 Nr. 1)</th>
+                <th style={{ textAlign: "right", padding: 8 }}>Netto-Vorteil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[1, 5, 10, 15, 20].map(yr => (
+                <tr key={yr} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                  <td style={{ padding: 8 }}>Jahr {yr}</td>
+                  <td style={{ textAlign: "right", padding: 8 }}>{(kapital * Math.pow(1.078, yr)).toFixed(0)} €</td>
+                  <td style={{ textAlign: "right", padding: 8 }}>{(kapital * Math.pow(1.058, yr)).toFixed(0)} €</td>
+                  <td style={{ textAlign: "right", padding: 8 }}>1,54 %</td>
+                  <td style={{ textAlign: "right", padding: 8, color: "#4ade80" }}>+{(kapital * 0.12 * yr).toFixed(0)} €</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(10,15,30,0.82)", backdropFilter: "blur(6px)", padding: 24, textAlign: "center" }}>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "3px 10px", borderRadius: 12, marginBottom: 8, textTransform: "uppercase" }}>PRO &amp; EXECUTIVE EXKLUSIV</div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "#f0ece4", marginBottom: 6 }}>Detaillierte Jahres-Steuerbilanz &amp; Break-Even-Matrix</div>
+          <p style={{ fontSize: 12, color: "#a89f94", maxWidth: 480, marginBottom: 14 }}>
+            Inklusive IHK-Freibetrag, laufender Steuerberatergebühren, erweiterter Gewerbesteuerkürzung bei Immobilien (§ 9 Nr. 1 Satz 2 GewStG) und CSV-Export.
+          </p>
+          <Link to="/abo" style={{ padding: "8px 20px", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontWeight: 700, borderRadius: 6, textDecoration: "none", fontSize: 12 }}>
+            Vollständige Matrix freischalten (ab 9 €) →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Holding() {
   const [activeSection, setActiveSection] = useState(0);
 
@@ -187,6 +292,7 @@ export default function Holding() {
     { label: "VV-GmbH / Holding", component: <VVGmbH /> },
     { label: "Fünftelregelung §34", component: <Fuenftelregelung /> },
     { label: "Steuerfreie Benefits", component: <SteuerfBenefits /> },
+    { label: "Thesaurierungs-Rechner", component: <ThesaurierungsRechner /> },
   ];
 
   return (

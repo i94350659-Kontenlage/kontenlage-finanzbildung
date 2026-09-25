@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router";
+import { supabase } from "../lib/supabase";
+import { useAuth } from "../context/AuthContext";
 
 const plans = [
   {
@@ -20,7 +22,7 @@ const plans = [
       { text: "Prioritäts-Support", included: false },
     ],
     cta: "Kostenlos starten",
-    priceId: null,
+    planKey: null,
   },
   {
     id: "starter",
@@ -40,7 +42,7 @@ const plans = [
       { text: "Prioritäts-Support", included: false },
     ],
     cta: "Starter wählen (4,90 € / Mo)",
-    priceId: "price_1UEZBFPoNfLOPXfNF54vTUSc",
+    planKey: "starter",
   },
   {
     id: "pro",
@@ -60,7 +62,7 @@ const plans = [
       { text: "Prioritäts-Support (48h)", included: false },
     ],
     cta: "Pro Digital wählen (9 € / Mo)",
-    priceId: "price_1UCI6ELtxD96WAjMyCVb1q5Z",
+    planKey: "pro",
   },
   {
     id: "executive",
@@ -80,7 +82,7 @@ const plans = [
       { text: "Early Access zu neuen Steuer-Features", included: true },
     ],
     cta: "Executive wählen (29 € / Mo)",
-    priceId: "price_1UCI6FLtxD96WAjMgNOgPwOz",
+    planKey: "executive",
   },
 ];
 
@@ -88,41 +90,63 @@ const plans = [
 const faqs = [
   { q: "Kann ich monatlich kündigen?", a: "Ja. Es gibt keine Mindestlaufzeit. Sie können jederzeit mit 1 Klick zum Ende des laufenden Monats kündigen." },
   { q: "Gibt es eine Testphase mit Abofalle?", a: "Nein — und das ist Firmenphilosophie. Die Basis-Version ist dauerhaft kostenlos. Kein versteckter Übergang in ein kostenpflichtiges Abo." },
-  { q: "Wie werden Zahlungen verarbeitet?", a: "Zahlungen laufen verschlüsselt über Stripe. Kreditkartendaten oder Bankdaten berühren nie unsere Server (100% PCI-DSS konform)." },
-  { q: "Erhalte ich eine ordnungsgemäße Rechnung mit USt?", a: "Ja. Sie erhalten automatisch eine formelle Rechnung mit ausgewiesener deutscher MwSt (19%) für Ihre Buchhaltung. B2B-Kunden können ihre USt-IdNr. für Reverse Charge angeben." },
+  { q: "Wie werden Zahlungen verarbeitet?", a: "Die Zahlungsabwicklung erfolgt über Stripe Checkout. Zahlungsdaten werden nicht in Kontolage-Rechnern gespeichert. Im Sandbox-Modus werden keine echten Zahlungen ausgeführt." },
+  { q: "Erhalte ich eine ordnungsgemäße Rechnung mit USt?", a: "Rechnungsstellung, USt-Ausweis und gegebenenfalls Reverse-Charge-Angaben werden vor dem produktiven Abo-Freischalten steuerlich geprüft und im Checkout transparent ausgewiesen." },
   { q: "Was ist das Kabinett?", a: "Das Kabinett ist der geschützte Bereich für Pro- und Executive-Mitglieder mit vertieften Analysen, Excel-Modelldateien und Satzungsvorlagen." },
 ];
 
 export default function Abo() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const [activePlan, setActivePlan] = useState<string | null>(null);
+  const [cancelled, setCancelled] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") === "cancelled") setCancelled(true);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    void supabase.functions
+      .invoke<{ subscription?: { plan?: string | null; status?: string | null } | null }>("account")
+      .then(({ data }) => {
+        if (!active || !data?.subscription?.plan) return;
+        const status = data.subscription.status ?? "";
+        if (["active", "trialing", "canceling", "past_due"].includes(status)) setActivePlan(data.subscription.plan);
+      })
+      .catch(() => undefined);
+    return () => { active = false; };
+  }, [user]);
 
   const handleSubscribe = async (plan: typeof plans[0]) => {
-    if (!plan.priceId) {
+    if (!plan.planKey) {
       window.location.href = "/rechner";
       return;
     }
+    if (activePlan === plan.planKey) {
+      setCheckoutError("Dieser Tarif ist bereits aktiv. Rechnungen und Kündigung verwalten Sie im Kabinett.");
+      return;
+    }
+    if (!user) {
+      navigate("/kabinett", { replace: true, state: { from: "/abo" } });
+      return;
+    }
 
+    setCheckoutError(null);
     setLoadingPlan(plan.id);
     try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          priceId: plan.priceId,
-          successUrl: `${window.location.origin}/kabinett?session_id={CHECKOUT_SESSION_ID}&success=true`,
-          cancelUrl: `${window.location.origin}/abo`
-        })
+      const { data, error } = await supabase.functions.invoke<{ url?: string }>("create-checkout-session", {
+        body: { plan: plan.planKey },
       });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        // Demo fallback to Kabinett login
-        window.location.href = `/kabinett?plan=${plan.id}`;
-      }
+      if (error || !data?.url) throw new Error(error?.message || "Checkout ist vorübergehend nicht verfügbar.");
+      window.location.assign(data.url);
     } catch (err) {
-      window.location.href = `/kabinett?plan=${plan.id}`;
+      setCheckoutError(err instanceof Error ? err.message : "Checkout ist vorübergehend nicht verfügbar.");
     } finally {
       setLoadingPlan(null);
     }
@@ -144,12 +168,30 @@ export default function Abo() {
             Monatlich kündbar. Keine versteckten Kosten. Keine Berater-Provisionen.
           </p>
           <div style={{ display: "inline-flex", gap: 12, padding: "8px 16px", borderRadius: 8, background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)" }}>
-            <span style={{ fontSize: 13, color: "#c9a84c" }}>✓ 100% BaFin- &amp; WpHG-konforme Bildung</span>
+            <span style={{ fontSize: 13, color: "#c9a84c" }}>✓ Allgemeine Finanzbildung, keine individuelle Beratung</span>
             <span style={{ fontSize: 13, color: "#a89f94" }}>·</span>
             <span style={{ fontSize: 13, color: "#e2c27d" }}>Sichere Stripe-Zahlung</span>
           </div>
         </div>
       </section>
+
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+      {cancelled && (
+        <div role="status" style={{ maxWidth: 700, margin: "0 auto 28px", padding: "14px 18px", border: "1px solid rgba(245,158,11,.45)", borderRadius: 8, background: "rgba(120,53,15,.22)", color: "#fcd34d", textAlign: "center" }}>
+          Der Zahlungsvorgang wurde abgebrochen. Es wurde nichts berechnet – Sie können Ihren Tarif jederzeit erneut wählen.
+        </div>
+      )}
+      {activePlan && (
+        <div role="status" style={{ maxWidth: 700, margin: "0 auto 28px", padding: "14px 18px", border: "1px solid rgba(201,168,76,.35)", borderRadius: 8, background: "rgba(201,168,76,.08)", color: "#e2c27d", textAlign: "center" }}>
+          Ihr Tarif ist aktiv. Rechnungen und Kündigung verwalten Sie im <Link to="/konto" style={{ color: "#e2c27d", textDecoration: "underline" }}>Kabinett</Link>.
+        </div>
+      )}
+      {!user && (
+        <div role="status" style={{ maxWidth: 700, margin: "0 auto 28px", padding: "14px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 8, background: "rgba(15,22,38,.7)", color: "#cdc6be", textAlign: "center" }}>
+          Für eine Buchung ist ein Konto nötig. <Link to="/kabinett" style={{ color: "#e2c27d", textDecoration: "underline" }}>Anmelden oder registrieren</Link> – danach kehren Sie automatisch hierher zurück.
+        </div>
+      )}
+      </div>
 
       {/* Pricing Cards */}
       <section style={{ padding: "64px 20px 88px" }}>
@@ -207,7 +249,7 @@ export default function Abo() {
 
                 <button
                   onClick={() => handleSubscribe(p)}
-                  disabled={loadingPlan === p.id}
+                  disabled={loadingPlan === p.id || activePlan === p.planKey}
                   style={{
                     width: "100%",
                     padding: "14px",
@@ -223,11 +265,17 @@ export default function Abo() {
                     boxShadow: p.highlight ? "0 4px 15px rgba(201,168,76,0.3)" : "none"
                   }}
                 >
-                  {loadingPlan === p.id ? "Verbinde mit Stripe..." : p.cta}
+                  {activePlan === p.planKey ? "Aktueller Tarif" : loadingPlan === p.id ? "Verbinde mit Stripe..." : p.cta}
                 </button>
               </div>
             ))}
           </div>
+
+          {checkoutError && (
+            <div role="alert" style={{ maxWidth: 700, margin: "0 auto 28px", padding: "14px 18px", border: "1px solid rgba(239,68,68,.45)", borderRadius: 8, background: "rgba(127,29,29,.2)", color: "#fecaca", textAlign: "center" }}>
+              {checkoutError} Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.
+            </div>
+          )}
 
           {/* FAQ Section */}
           <div style={{ marginTop: 80, maxWidth: 800, margin: "80px auto 0" }}>

@@ -49,8 +49,8 @@ export default function Datenschutz() {
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 700, color: "#f0ece4", letterSpacing: "-0.025em", marginBottom: 16 }}>
             Datenschutzerklärung
           </h1>
-          <div style={{ padding: "12px 16px", background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.15)", borderRadius: 6, display: "inline-block" }}>
-            <span style={{ fontSize: 13, color: "#a89f94" }}>Gemäß DSGVO, BDSG und TMG · Stand: September 2026</span>
+          <div style={{ marginBottom: 24, padding: "14px 16px", background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 6, color: "#e2c27d", fontSize: 13, lineHeight: 1.6 }}>
+            Hinweis: Die folgenden Anbieterangaben sind vor dem Livegang durch die tatsächlichen Unternehmens- und Registerdaten zu ersetzen und rechtlich zu prüfen.
           </div>
         </div>
       </section>

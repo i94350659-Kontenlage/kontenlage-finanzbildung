@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function PageHeader() {
   return (
@@ -233,14 +233,226 @@ function Disclaimer() {
   );
 }
 
+
+function DepotImporter() {
+  const [broker, setBroker] = useState("trade_republic");
+  const [csvText, setCsvText] = useState("");
+  const [results, setResults] = useState<{
+    dividends: number;
+    gains: number;
+    totalProfit: number;
+    pauschbetragUsed: number;
+    pauschbetragLeft: number;
+    kestPaid: number;
+    holdingTax: number;
+    holdingSavings: number;
+    vorabpauschaleEst: number;
+  } | null>(null);
+
+  // Preset sample transaction loads
+  const loadPreset = (type: string) => {
+    if (type === "standard") {
+      setCsvText("Datum;Typ;Wertpapier;Betrag_EUR;Steuer_EUR\n15.01.2026;Dividende;Apple Inc.;340,00;0,00\n22.02.2026;Dividende;MSCI World ETF;820,00;42,10\n14.04.2026;Verkauf;NVIDIA Corp.;4200,00;1107,75\n10.06.2026;Zinsen;Verrechnungskonto;180,00;47,48\n20.08.2026;Dividende;Allianz SE;650,00;171,44");
+      runAnalysis(6190, 1990);
+    } else if (type === "growth") {
+      setCsvText("Datum;Typ;Wertpapier;Betrag_EUR;Steuer_EUR\n10.03.2026;Verkauf;S&P 500 ETF;12500,00;3296,88\n18.05.2026;Verkauf;Alphabet;8400,00;2215,50\n02.07.2026;Dividende;Microsoft;450,00;118,69\n15.08.2026;Zinsen;Tagesgeld;320,00;84,40");
+      runAnalysis(21670, 770);
+    }
+  };
+
+  const runAnalysis = (gainsVal: number, divVal: number) => {
+    const totalProfit = gainsVal + divVal;
+    const pauschbetrag = 1000;
+    const pauschbetragUsed = Math.min(totalProfit, pauschbetrag);
+    const pauschbetragLeft = Math.max(0, pauschbetrag - pauschbetragUsed);
+    const taxablePersonal = Math.max(0, totalProfit - pauschbetragUsed);
+    const kestPaid = Math.round(taxablePersonal * 0.26375);
+
+    // Holding: 1.54% on stock gains (§ 8b KStG), standard KSt+GewSt (~30%) on interest/dividends under 10%
+    const holdingTaxOnGains = Math.round(gainsVal * 0.0154);
+    const holdingTaxOnDiv = Math.round(divVal * 0.30);
+    const holdingTax = holdingTaxOnGains + holdingTaxOnDiv;
+    const holdingSavings = Math.max(0, kestPaid - holdingTax);
+    const vorabpauschaleEst = Math.round(gainsVal * 0.0255 * 0.7 * 0.7 * 0.26375);
+
+    setResults({
+      dividends: divVal,
+      gains: gainsVal,
+      totalProfit,
+      pauschbetragUsed,
+      pauschbetragLeft,
+      kestPaid,
+      holdingTax,
+      holdingSavings,
+      vorabpauschaleEst
+    });
+  };
+
+  return (
+    <div style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.65), rgba(30,41,59,0.8))", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 32 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 24 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 600, color: "#c9a84c", padding: "4px 8px", background: "rgba(201,168,76,0.1)", borderRadius: 4, border: "1px solid rgba(201,168,76,0.2)" }}>
+            CSV Depot-Check · § 20 EStG
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: "#f0ece4" }}>
+            Depot- &amp; Steuer-Analyse (Trade Republic, Scalable, DKB)
+          </h2>
+        </div>
+        <span style={{ fontSize: 11, color: "#4ade80", background: "rgba(74,222,128,0.1)", padding: "4px 10px", borderRadius: 20, border: "1px solid rgba(74,222,128,0.2)" }}>
+          🔒 100% Lokal im Browser – keine Serverübertragung
+        </span>
+      </div>
+
+      <p style={{ fontSize: 14, color: "#a89f94", lineHeight: 1.8, marginBottom: 24, maxWidth: 760 }}>
+        Laden Sie Ihren CSV-Kontoauszug oder Transaktionsverlauf hoch. Die Engine prüft Ihren Sparerpauschbetrag, berechnet die gezahlte Abgeltungsteuer und zeigt den exakten Netto-Vorteil einer Holding-Struktur (§ 8b KStG).
+      </p>
+
+      {/* Preset Buttons & Broker Picker */}
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 20 }}>
+        <span style={{ fontSize: 12, color: "#a89f94", fontWeight: 600 }}>Demo-Daten laden:</span>
+        <button onClick={() => loadPreset("standard")} style={{ padding: "7px 14px", borderRadius: 6, border: "1px solid rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.1)", color: "#e2c27d", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+          📊 Gemischtes Depot (Dividenden + Gewinne)
+        </button>
+        <button onClick={() => loadPreset("growth")} style={{ padding: "7px 14px", borderRadius: 6, border: "1px solid rgba(201,168,76,0.3)", background: "rgba(201,168,76,0.1)", color: "#e2c27d", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+          🚀 Growth / Realisierte Aktiengewinne
+        </button>
+
+        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 12, color: "#a89f94" }}>Broker-Format:</span>
+          <select value={broker} onChange={e => setBroker(e.target.value)} style={{ background: "rgba(30,50,90,0.8)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 12px", color: "#f0ece4", fontSize: 12 }}>
+            <option value="trade_republic">Trade Republic (CSV)</option>
+            <option value="scalable">Scalable Capital (Baader CSV)</option>
+            <option value="dkb">DKB Brokerage</option>
+            <option value="comdirect">Comdirect</option>
+            <option value="ibkr">Interactive Brokers</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Input area */}
+      <div style={{ marginBottom: 24 }}>
+        <textarea
+          value={csvText}
+          onChange={e => setCsvText(e.target.value)}
+          placeholder="Fügen Sie hier Ihre CSV-Zeilen ein oder klicken Sie oben auf einen Demo-Datensatz..."
+          style={{ width: "100%", height: 100, background: "rgba(10,15,30,0.6)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: 12, color: "#cdc6be", fontFamily: "var(--font-mono)", fontSize: 12, resize: "none" }}
+        />
+      </div>
+
+      {/* Results View */}
+      {results && (
+        <div style={{ background: "rgba(10,15,30,0.7)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 10, padding: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginBottom: 24 }} className="calc-inner-grid">
+            <div style={{ background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, padding: 18 }}>
+              <div style={{ fontSize: 11, color: "#a89f94", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Realisierte Gesamterträge</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "#f0ece4" }}>{results.totalProfit.toLocaleString("de-DE")} €</div>
+              <div style={{ fontSize: 11, color: "#a89f94", marginTop: 4 }}>Dividenden: {results.dividends.toLocaleString("de-DE")} € · Gewinne: {results.gains.toLocaleString("de-DE")} €</div>
+            </div>
+
+            <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 8, padding: 18 }}>
+              <div style={{ fontSize: 11, color: "#fca5a5", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Gezahlte Abgeltungsteuer (Privat)</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "#f87171" }}>{results.kestPaid.toLocaleString("de-DE")} €</div>
+              <div style={{ fontSize: 11, color: "#a89f94", marginTop: 4 }}>Inkl. 5,5% SolZ nach 1.000 € Freibetrag</div>
+            </div>
+
+            <div style={{ background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.2)", borderRadius: 8, padding: 18 }}>
+              <div style={{ fontSize: 11, color: "#86efac", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Ersparnis mit Holding (§8b KStG)</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "#4ade80" }}>+{results.holdingSavings.toLocaleString("de-DE")} €</div>
+              <div style={{ fontSize: 11, color: "#a89f94", marginTop: 4 }}>Steuer in Holding nur {results.holdingTax.toLocaleString("de-DE")} € (~1,5%)</div>
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)" }} className="calc-inner-grid">
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#e2c27d", marginBottom: 8 }}>Sparerpauschbetrag-Status (§ 20 EStG)</div>
+              <p style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.6, margin: 0 }}>
+                Genutzt: <strong style={{ color: "#f0ece4" }}>{results.pauschbetragUsed.toLocaleString("de-DE")} €</strong> von 1.000 € (Single).
+                {results.pauschbetragLeft > 0 ? (
+                  <span style={{ color: "#fb923c" }}> Achtung: Noch {results.pauschbetragLeft.toLocaleString("de-DE")} € ungenutzt verschenkt!</span>
+                ) : (
+                  <span style={{ color: "#4ade80" }}> Freistellungsauftrag zu 100% optimal ausgeschöpft.</span>
+                )}
+              </p>
+            </div>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#e2c27d", marginBottom: 8 }}>Vorabpauschalen-Indikator 2026</div>
+              <p style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.6, margin: 0 }}>
+                Geschätzte Steuerlast auf thesaurierende ETF-Bestände zum Jahreswechsel: <strong style={{ color: "#f0ece4" }}>ca. {results.vorabpauschaleEst.toLocaleString("de-DE")} €</strong> (Liquidität auf Verrechnungskonto vorhalten).
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Rechner() {
   const [activeCalc, setActiveCalc] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const calcs = [
-    { label: "Rürup §10 EStG", component: <RurupRechner /> },
-    { label: "Sparerpauschbetrag", component: <SparerRechner /> },
-    { label: "Immobilien-AfA §7", component: <ImmobilienRechner /> },
+    { label: "Rürup §10 EStG", slug: "rurup", component: <RurupRechner /> },
+    { label: "Sparerpauschbetrag", slug: "sparerpauschbetrag", component: <SparerRechner /> },
+    { label: "Immobilien-AfA §7", slug: "immobilien", component: <ImmobilienRechner /> },
+    { label: "Depot- & CSV-Analyse", slug: "depot", component: <DepotImporter /> },
   ];
+
+  // Deep-Link-Sync: /rechner#sparerpauschbetrag und /rechner?c=depot öffnen den
+  // passenden Rechner direkt. Wirkt fuer geteilte Links, interne Verweise und
+  // den Browser-Verlauf. Hash hat Vorrang, damit die Teilen-Schaltfläche stabil bleibt.
+  useEffect(() => {
+    const applyFromLocation = () => {
+      const hash = window.location.hash.replace(/^#/, "").trim().toLowerCase();
+      if (hash) {
+        const byHash = calcs.findIndex((c) => c.slug === hash);
+        if (byHash >= 0) setActiveCalc(byHash);
+        return;
+      }
+      const query = new URLSearchParams(window.location.search).get("c") ?? window.location.search;
+      const raw = query.startsWith("?") ? new URLSearchParams(query.slice(1)).get("c") : query;
+      if (!raw) return;
+      const token = decodeURIComponent(raw).trim().toLowerCase().replace(/^rechner-/, "");
+      const bySlug = calcs.findIndex((c) => c.slug === token);
+      if (bySlug >= 0) { setActiveCalc(bySlug); return; }
+      const byIndex = Number.parseInt(token, 10);
+      if (String(byIndex) === token && byIndex >= 0 && byIndex < calcs.length) setActiveCalc(byIndex);
+    };
+
+    applyFromLocation();
+    window.addEventListener("hashchange", applyFromLocation);
+    window.addEventListener("popstate", applyFromLocation);
+    return () => {
+      window.removeEventListener("hashchange", applyFromLocation);
+      window.removeEventListener("popstate", applyFromLocation);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const selectCalc = (index: number) => {
+    setActiveCalc(index);
+    setCopied(false);
+    const next = "#" + calcs[index].slug;
+    // Alten ?c=-Parameter entfernen, damit Hash und Parameter nie auseinanderlaufen.
+    const base = window.location.pathname + window.location.search.replace(/([?&])c=[^&]*&?/, (m, sep) => (sep === "?" ? "" : "&")).replace(/[?&]$/, "");
+    if (window.location.hash !== next) {
+      window.history.replaceState(null, "", base + next);
+    }
+  };
+
+  // Geteilter Link bewusst als ?c=<slug> (ohne Fragment): Messaging-Dienste und
+  // Excel/CRM-Import entfernen #Fragmente, der Query-Parameter bleibt stabil.
+  const shareLink = async () => {
+    const url = `${window.location.origin}${window.location.pathname}?c=${calcs[activeCalc].slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt("Link kopieren:", url);
+    }
+  };
 
   return (
     <>
@@ -249,19 +461,42 @@ export default function Rechner() {
       <section style={{ padding: "56px 20px 88px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           {/* Selector */}
-          <div style={{ display: "flex", gap: 12, marginBottom: 40, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap", alignItems: "center" }}>
             {calcs.map((c, i) => (
-              <button key={c.label} onClick={() => setActiveCalc(i)} style={{
-                padding: "10px 20px", borderRadius: 6, border: "1px solid",
-                borderColor: activeCalc === i ? "rgba(201,168,76,0.5)" : "rgba(255,255,255,0.08)",
-                background: activeCalc === i ? "rgba(201,168,76,0.1)" : "transparent",
-                color: activeCalc === i ? "#e2c27d" : "#a89f94",
-                fontWeight: 600, fontSize: 14, cursor: "pointer", transition: "all 0.2s",
-              }}>{c.label}</button>
+              <button
+                key={c.label}
+                onClick={() => selectCalc(i)}
+                aria-pressed={activeCalc === i}
+                aria-controls="rechner-ergebnis"
+                id={"rechner-tab-" + c.slug}
+                style={{
+                  padding: "10px 20px", borderRadius: 6, border: "1px solid",
+                  borderColor: activeCalc === i ? "rgba(201,168,76,0.5)" : "rgba(255,255,255,0.08)",
+                  background: activeCalc === i ? "rgba(201,168,76,0.1)" : "transparent",
+                  color: activeCalc === i ? "#e2c27d" : "#a89f94",
+                  fontWeight: 600, fontSize: 14, cursor: "pointer", transition: "all 0.2s",
+                }}>{c.label}</button>
             ))}
+
+            <button
+              onClick={shareLink}
+              aria-label="Direktlink zu diesem Rechner kopieren"
+              style={{
+                marginLeft: "auto", padding: "9px 16px", borderRadius: 6,
+                border: "1px solid rgba(255,255,255,0.08)", background: "transparent",
+                color: copied ? "#e2c27d" : "#a89f94", fontSize: 13, fontWeight: 600, cursor: "pointer",
+              }}>{copied ? "✓ Link kopiert" : "↗ Direktlink teilen"}</button>
           </div>
 
-          {calcs[activeCalc].component}
+          <p style={{ fontSize: 12, color: "#7d766d", margin: "0 0 32px", lineHeight: 1.6 }}>
+            Jeder Rechner hat einen eigenen Direktlink — <code>/rechner?c={calcs[activeCalc].slug}</code> (auch als
+            <code> /rechner#{calcs[activeCalc].slug}</code> aufrufbar) — damit lässt sich eine bestimmte Berechnung
+            teilen oder bookmarken. Eingaben bleiben im Browser, es werden keine Daten übertragen.
+          </p>
+
+          <div id="rechner-ergebnis" role="tabpanel" aria-labelledby={"rechner-tab-" + calcs[activeCalc].slug}>
+            {calcs[activeCalc].component}
+          </div>
         </div>
       </section>
 

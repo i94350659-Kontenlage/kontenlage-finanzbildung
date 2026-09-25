@@ -15,6 +15,31 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,
+      // Budget-Gate: der Haupt-Chunk wird bei >600 KB roh als Warnung gemeldet
+      // (Wert deckt den aktuellen Stand ab, greift aber bei Regressionen).
+      chunkSizeWarningLimit: 600,
+      // Bewusst KEIN modulePreload-Filter für vendor-supabase: der Chunk wird vom
+      // Einstiegs-Chunk statisch importiert (AuthContext -> lib/supabase) und damit
+      // ohnehin sofort geladen. Ein Preload-Filter spart hier nur den Zeitpunkt der
+      // Anforderung, nicht die Bytes. Echtes Entkoppeln braucht einen lazy
+      // AuthContext/Supabase-Client (siehe P1-03 Rest in docs/kanban.md).
+      rollupOptions: {
+        output: {
+          // Framework- und Supabase-Code landet in eigenen, dauerhaft gecachten
+          // Chunks. So ändert ein Content-Update nicht den Hash des Vendor-Codes
+          // und der Browser muss bei Article-Updates nur den App-Chunk neu laden.
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return undefined
+            if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/.test(id)) {
+              return 'vendor-react'
+            }
+            if (/[\\/]node_modules[\\/](@supabase|supabase)[\\/]/.test(id)) {
+              return 'vendor-supabase'
+            }
+            return undefined
+          },
+        },
+      },
     },
     plugins: [
       react(),
@@ -26,7 +51,7 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        '@': path.resolve(import.meta.dirname, './src'),
       },
       dedupe: ['react', 'react-dom'],
     },

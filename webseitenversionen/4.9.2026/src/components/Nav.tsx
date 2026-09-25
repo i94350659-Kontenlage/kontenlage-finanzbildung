@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 const links = [
   { to: "/rechner", label: "Rechner" },
@@ -10,6 +11,7 @@ const links = [
 ];
 
 export default function Nav() {
+  const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -30,6 +32,8 @@ export default function Nav() {
     : menuOpen ? "rgba(10,15,30,0.99)"
     : "transparent";
 
+  const accountLink = user ? { to: "/konto", label: "Mein Konto" } : { to: "/kabinett", label: "Kabinett" };
+
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
@@ -40,7 +44,6 @@ export default function Nav() {
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
-          {/* Logo */}
           <NavLink to="/" style={{ display: "flex", alignItems: "center", gap: 9, textDecoration: "none", flexShrink: 0 }}>
             <div style={{
               width: 30, height: 30, borderRadius: 6,
@@ -56,8 +59,7 @@ export default function Nav() {
             </span>
           </NavLink>
 
-          {/* Desktop */}
-          <div className="nav-desktop" style={{ alignItems: "center", gap: 26 }}>
+          <div className="nav-desktop" style={{ alignItems: "center", gap: 24 }}>
             {links.map(l => (
               <NavLink key={l.to} to={l.to} style={({ isActive }) => ({
                 fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500,
@@ -68,16 +70,25 @@ export default function Nav() {
                 paddingBottom: 2,
               })}>{l.label}</NavLink>
             ))}
+            <NavLink to={accountLink.to} style={({ isActive }) => ({
+              fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500,
+              letterSpacing: "0.04em", textTransform: "uppercase",
+              color: isActive ? "#c9a84c" : "#cdc6be", textDecoration: "none",
+              transition: "color 0.2s",
+              borderBottom: isActive ? "1px solid rgba(201,168,76,0.5)" : "1px solid transparent",
+              paddingBottom: 2,
+            })}>{accountLink.label}</NavLink>
             <NavLink to="/abo" style={{ padding: "8px 18px", borderRadius: 4, background: "linear-gradient(135deg, #c9a84c, #a8873a)", color: "#111827", fontWeight: 700, fontSize: 13, letterSpacing: "0.04em", textTransform: "uppercase", textDecoration: "none", transition: "opacity 0.2s" }}
             onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
             onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
             >Abo</NavLink>
           </div>
 
-          {/* Burger */}
           <button className="nav-burger" onClick={() => setMenuOpen(o => !o)}
             style={{ background: "none", border: "none", cursor: "pointer", color: "#c9a84c", padding: 6, alignItems: "center", justifyContent: "center" }}
-            aria-label="Menü öffnen"
+            aria-label={menuOpen ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             {menuOpen
               ? <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -86,9 +97,8 @@ export default function Nav() {
           </button>
         </div>
 
-        {/* Mobile dropdown */}
         {menuOpen && (
-          <div style={{ paddingBottom: 20 }}>
+          <div id="mobile-menu" style={{ paddingBottom: 20 }}>
             {links.map(l => (
               <NavLink key={l.to} to={l.to} style={({ isActive }) => ({
                 display: "block", padding: "15px 0",
@@ -98,6 +108,11 @@ export default function Nav() {
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
               })}>{l.label}</NavLink>
             ))}
+            <NavLink to={accountLink.to} style={{
+              display: "block", padding: "15px 0",
+              fontSize: 16, fontWeight: 500, color: "#e8e2da",
+              textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.06)",
+            }}>{accountLink.label}</NavLink>
             <NavLink to="/abo" style={{
               display: "block", marginTop: 20, padding: "14px 20px",
               borderRadius: 6, textAlign: "center",

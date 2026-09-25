@@ -1,0 +1,11 @@
+api/
+webseitenversionen/4.9.2026/api/
+webseitenversionen/4.9.2026/supabase/
+webseitenversionen/4.9.2026/docs/
+webseitenversionen/4.9.2026/skills/
+webseitenversionen/4.9.2026/tmp/
+webseitenversionen/4.9.2026/.env*
+scripts/
+.agents/
+.kilo/
+obsidian_vault/

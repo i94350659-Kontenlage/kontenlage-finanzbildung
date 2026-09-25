@@ -16,9 +16,9 @@ export default function Footer() {
             <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.85, maxWidth: 260, marginBottom: 16 }}>
               Keine Provision. Keine Anlageberatung. Nur Mathematik und Paragraphen — damit Sie selbst entscheiden können.
             </p>
-            <div style={{ fontSize: 11, color: "#a89f94", lineHeight: 1.9 }}>
-              BaFin-konform · WpHG §2 Abs. 8 Nr. 10<br/>
-              MAR Art. 20 · 100 % ohne Tracking-Cookies
+              <div style={{ fontSize: 11, color: "#a89f94", lineHeight: 1.9 }}>
+              Unabhängige Finanzbildung · Keine individuelle Beratung<br/>
+              Aktualität der Inhalte und Quellen: September 2026
             </div>
           </div>
 

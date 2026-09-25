@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import './fonts.css';
 @import 'tailwindcss';
 
 @theme {
@@ -25,6 +25,49 @@
 html, body, #root {
   height: 100%;
 }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 18px;
+  background: #c9a84c;
+  color: #111827;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 0 0 6px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #e2c27d;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -125,4 +168,30 @@ body {
 
   .asset-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .asset-table-wrap table { min-width: 540px; }
+}
+
+/* ═══════════════════════════════════
+   KABINETT & KONTO
+   ═══════════════════════════════════ */
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .auth-grid { grid-template-columns: 1fr; gap: 46px; }
+  .account-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .auth-grid { gap: 34px; }
 }
