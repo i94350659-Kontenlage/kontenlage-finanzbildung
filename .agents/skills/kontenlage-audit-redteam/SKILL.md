@@ -1,9 +1,9 @@
 ---
 name: kontenlage-audit-redteam
-description: Test- und Angriffsschicht für Kontenlage. Prüft Skills, Prompts und Outputs adversarial auf Compliance-Umgehung, Fake-Präzision, Halluzination, veraltete Daten, Prompt Injection, Quellenvergiftung, inkonsistente Scores und Private/Public-Datenlecks. Darf keine Inhalte freigeben; erzeugt nur Audit-Ergebnisse.
+description: Test- und Angriffsschicht für Kontolage. Prüft Skills, Prompts und Outputs adversarial auf Compliance-Umgehung, Fake-Präzision, Halluzination, veraltete Daten, Prompt Injection, Quellenvergiftung, inkonsistente Scores und Private/Public-Datenlecks. Darf keine Inhalte freigeben; erzeugt nur Audit-Ergebnisse.
 ---
 
-# Kontenlage Audit / Red Team v5.1
+# Kontolage Audit / Red Team v5.1
 
 ## Zweck
 

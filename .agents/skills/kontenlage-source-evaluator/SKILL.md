@@ -1,9 +1,9 @@
 ---
 name: kontenlage-source-evaluator
-description: Research- und Evidence-Schicht für Kontenlage. Extrahiert überprüfbare Fakten, bewertet Quellen nach Autorität, Relevanz, Aktualität und Scope, erkennt Widersprüche und erzeugt versionierte Evidence-Pakete. Keine finalen Investmenturteile. Muss vor jeder Veröffentlichung mit wphg-guardrails und publish-gate zusammenarbeiten.
+description: Research- und Evidence-Schicht für Kontolage. Extrahiert überprüfbare Fakten, bewertet Quellen nach Autorität, Relevanz, Aktualität und Scope, erkennt Widersprüche und erzeugt versionierte Evidence-Pakete. Keine finalen Investmenturteile. Muss vor jeder Veröffentlichung mit wphg-guardrails und publish-gate zusammenarbeiten.
 ---
 
-# Kontenlage Source Evaluator v5.1
+# Kontolage Source Evaluator v5.1
 
 ## 0. Sicherheitsprinzip
 

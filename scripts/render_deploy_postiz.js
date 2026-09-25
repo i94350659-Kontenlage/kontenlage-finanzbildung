@@ -1,11 +1,11 @@
 const https = require('https');
 
-const RENDER_TOKEN = 'rnd_TcrUdYZTESIpglUxiHOWK2dElyi2';
-const OWNER_ID = 'tea-d9r46ic9v7es738gkjdg';
+const RENDER_TOKEN = (process.env.RENDER_API_TOKEN || '').trim();
+const OWNER_ID = (process.env.POSTIZ_OWNER_ID || '').trim();
 
-const DB_URL    = 'postgresql://postiz_user:SwQIhYqhztflKT9bIq0fU6A9WaoSqQUV@dpg-d9r4pefavr4c73c7ib4g-a/postiz_db_gem2';
-const REDIS_URL = 'rediss://red-d9r4pg67bikc7388e950:KxynB6LL2sTjPo4VR0y0R1JTSDHjYwJy@frankfurt-keyvalue.render.com:6379';
-const FRONTEND_URL = 'https://postiz-kontolage.onrender.com';
+const DB_URL    = (process.env.POSTIZ_DATABASE_URL || '').trim();
+const REDIS_URL = (process.env.POSTIZ_REDIS_URL || '').trim();
+const FRONTEND_URL = (process.env.POSTIZ_FRONTEND_URL || '').trim();
 const JWT_SECRET = 'kontolage2026_' + require('crypto').randomBytes(16).toString('hex');
 
 function renderReq(path, method, body) {

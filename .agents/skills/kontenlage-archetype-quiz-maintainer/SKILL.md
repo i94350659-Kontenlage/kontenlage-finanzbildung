@@ -3,7 +3,7 @@ name: kontenlage-archetype-quiz-maintainer
 description: Pflegt 4–6 feste, redaktionell definierte Archetypen und deterministische Quiz-Zuordnung. Verhindert offene KI-Eignungsinferenz und individuelle Portfolioempfehlungen. Alle Ergebnisse durch wphg-guardrails und publish-gate.
 ---
 
-# Kontenlage Archetype Quiz Maintainer v5.1
+# Kontolage Archetype Quiz Maintainer v5.1
 
 ## Zweck
 

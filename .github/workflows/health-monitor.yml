@@ -1,0 +1,40 @@
+name: Health Monitor — Kontolage Live-Kette
+
+on:
+  schedule:
+    - cron: '15 5 * * *' # täglich 05:15 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Health-Check (Routen, 404, Assets, Edge Functions, Webhook)
+        id: health
+        run: node tools/health-check.mjs
+
+      - name: SEO-Verifikation (informativ)
+        if: always()
+        continue-on-error: true
+        run: node tools/verify-seo.mjs
+
+      - name: Telegram-Alarm bei Fehlern
+        if: failure() && env.TELEGRAM_BOT_TOKEN != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHANNEL_ID}" \
+            --data-urlencode "text=⚠️ Kontolage Health-Check fehlgeschlagen (${GITHUB_RUN_ID}). Bitte Logs prüfen: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"

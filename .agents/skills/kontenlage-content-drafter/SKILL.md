@@ -3,7 +3,7 @@ name: kontenlage-content-drafter
 description: Wandelt versionierte Evidence- und Score-Pakete in neutrale, quellenbasierte Finanzbildungsinhalte um. Trennt Fakten, Modelle, Szenarien und Einschätzungen. Nutzt keine personalisierte Empfehlungssprache. Finales Publishing nur über wphg-guardrails und publish-gate.
 ---
 
-# Kontenlage Content Drafter v5.1
+# Kontolage Content Drafter v5.1
 
 ## 0. Content Contract
 

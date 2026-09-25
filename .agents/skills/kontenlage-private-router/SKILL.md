@@ -3,7 +3,7 @@ name: kontenlage-private-router
 description: Eingangs-Gate für alle persönlichen Anfragen des Owners. Prüft Authentifizierung, setzt den Private-Owner-Kontext korrekt (kein Regulierungs-Bypass), und routet an die spezifischen Private-Skills.
 ---
 
-# Kontenlage Private Router v5.1
+# Kontolage Private Router v5.1
 
 ## 0. Kernprinzip — Korrektur gegenüber früheren Entwürfen
 

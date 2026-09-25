@@ -1,9 +1,9 @@
 ---
 name: kontenlage-publish-gate
-description: Deterministische finale Veröffentlichungs-Governance für Kontenlage. Prüft Datenstatus, Compliance-Klasse, Provenance, Freshness, Jurisdiktion, Disclosure und Systemintegrität. Fail-closed. Dieses Gate ist der letzte Schritt vor jeder öffentlichen Ausgabe.
+description: Deterministische finale Veröffentlichungs-Governance für Kontolage. Prüft Datenstatus, Compliance-Klasse, Provenance, Freshness, Jurisdiktion, Disclosure und Systemintegrität. Fail-closed. Dieses Gate ist der letzte Schritt vor jeder öffentlichen Ausgabe.
 ---
 
-# Kontenlage Publish Gate v5.1
+# Kontolage Publish Gate v5.1
 
 ## Zweck
 

@@ -14,11 +14,11 @@ for p in paths:
     if "const PRINTFUL_KEY" not in content:
         content = content.replace(
             "const PRINTIFY_KEY      = (process.env.PRINTIFY_API_KEY || '').trim();",
-            "const PRINTFUL_KEY      = (process.env.PRINTFUL_API_KEY || 'J7MC8caEjrgK6IMmVOSIKNngUX6JKjWNMB2AU82b').trim();\nconst PRINTIFY_KEY      = (process.env.PRINTIFY_API_KEY || '').trim();"
+            "const PRINTFUL_KEY      = (process.env.PRINTFUL_API_KEY || '').trim();\nconst PRINTIFY_KEY      = (process.env.PRINTIFY_API_KEY || '').trim();"
         )
         content = content.replace(
             "const PRINTIFY_SHOP_ID  = (process.env.PRINTIFY_SHOP_ID || '').trim();",
-            "const PRINTIFY_SHOP_ID  = (process.env.PRINTIFY_SHOP_ID || '28647402').trim();"
+            "const PRINTIFY_SHOP_ID  = (process.env.PRINTIFY_SHOP_ID || '').trim();"
         )
     
     # 2. Add dispatchPrintfulOrder function

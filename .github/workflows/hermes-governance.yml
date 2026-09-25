@@ -1,0 +1,46 @@
+name: Hermes Governance & Skill Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.agents/**'
+      - 'tools/hermes-skill-audit.mjs'
+      - '.github/workflows/hermes-governance.yml'
+  pull_request:
+    paths:
+      - '.agents/**'
+      - 'tools/hermes-skill-audit.mjs'
+  schedule:
+    - cron: '30 4 * * 1' # Montags 04:30 UTC (nach dem Self-Reflection-Lauf)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Skill-Audit (blockierend)
+        run: node tools/hermes-skill-audit.mjs
+
+      - name: Report als Artefakt sichern
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hermes-skills-audit
+          path: .agents/skills-audit.json
+          if-no-files-found: warn
+
+      - name: Live-Gesundheit (informativ, blockiert nicht)
+        continue-on-error: true
+        run: node tools/verify-live.mjs

@@ -1,0 +1,45 @@
+name: CI — Build, Typecheck, Bundle-Guard, Governance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: App-Abhängigkeiten installieren
+        run: npm --prefix webseitenversionen/4.9.2026 ci || npm --prefix webseitenversionen/4.9.2026 install
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build (App, Sitemap, Prerender)
+        env:
+          # Ohne diese Werte entfernt Vite 8 den kompletten App-Baum (leeres Bundle).
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || 'https://ci-placeholder.supabase.co' }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || 'ci-placeholder-anon-key' }}
+        run: npm run build
+
+      - name: Bundle-Guard und Prerender-Nachweis
+        run: npm run guard
+
+      - name: Skill-Governance
+        run: node tools/hermes-skill-audit.mjs
+
+      - name: Live-Gesundheit (informativ, blockiert nicht)
+        continue-on-error: true
+        run: node tools/verify-live.mjs

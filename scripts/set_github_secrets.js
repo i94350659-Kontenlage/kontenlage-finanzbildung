@@ -10,8 +10,8 @@ const OWNER = 'i94350659-Kontenlage';
 const REPO = 'kontenlage-finanzbildung';
 
 const secretsToSet = {
-  SUPABASE_URL: process.env.SUPABASE_URL || 'https://acgfcjcikjlrlfilqdyk.supabase.co',
-  SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY || 'sb_secret_6NYQMqxr7BtjL0tHMGjtsQ_LYjxBDvY'
+  SUPABASE_URL: process.env.SUPABASE_URL || '',
+  SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY || ''
 };
 
 function githubRequest(path, method = 'GET', body = null) {
@@ -44,6 +44,11 @@ function githubRequest(path, method = 'GET', body = null) {
 }
 
 async function main() {
+  if (!GITHUB_TOKEN || !secretsToSet.SUPABASE_URL || !secretsToSet.SUPABASE_SERVICE_KEY) {
+    console.error('❌ GITHUB_TOKEN, SUPABASE_URL und SUPABASE_SERVICE_KEY müssen als Umgebungsvariablen gesetzt sein.');
+    process.exitCode = 1;
+    return;
+  }
   console.log('🔑 Hole GitHub Public Key für Repository Secrets...');
   const keyRes = await githubRequest(`/repos/${OWNER}/${REPO}/actions/secrets/public-key`);
   if (keyRes.status !== 200) {

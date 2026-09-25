@@ -3,7 +3,7 @@ name: kontenlage-analytics-growth-optimizer
 description: Überwacht und interpretiert Vercel Web Analytics & Speed Insights, erkennt Abbruchraten bei Rechnern, optimiert Conversion-Rates (CRO) für Pro (9 €) & Executive (29 €) Abos und schlägt datenbasierte A/B-Tests vor.
 ---
 
-# Kontenlage Analytics & Growth Optimizer
+# Kontolage Analytics & Growth Optimizer
 
 ## 1. Datenquellen (100% DSGVO-konform ohne Cookies)
 - **Vercel Web Analytics**: Seitenaufrufe, Top-Einstiegsseiten, Geolocation (DACH), Verweildauer.

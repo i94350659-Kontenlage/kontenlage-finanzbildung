@@ -11,7 +11,7 @@
 - **Phase**: Pre-Launch / Aufbauphase (kein Gewerbe angemeldet)
 - **Domain**: `kontolage.de` (bei Strato, 60 Cent/Jahr, bereits auf Vercel aktiv)
 - **Website**: `https://www.kontolage.de` — Live mit SSL ✅
-- **Gewerbe**: NOCH NICHT angemeldet → Preise temporär ausgeblendet
+- **Gewerbe**: NOCH NICHT angemeldet → Kaufstrecke rechtlich noch nicht freigegeben (AGB/Widerruf/Kündigungsbutton offen, Ticket P0-03)
 
 ## Technische Präferenzen
 - **Kein Serverhosting** ohne zwingenden Grund — GitHub Actions + Vercel bevorzugt
@@ -29,7 +29,7 @@
 |---|---|
 | GitHub PAT | In GitHub Secrets — repo + workflow |
 | Vercel Token | In GitHub Secrets — deployed |
-| Supabase URL | `https://acgfcjcikjlrlfilqdyk.supabase.co` |
+| Supabase URL | `https://tberfzrzfkwoytgqlpij.supabase.co` (Projekt `tberfzrzfkwoytgqlpij`, RLS aktiv, 5 Edge Functions) |
 | Supabase Anon Key | In GitHub Secrets |
 | Supabase Service Key | In GitHub Secrets |
 | Stripe Live Key | In GitHub Secrets — Produkte angelegt |
@@ -40,13 +40,18 @@
 | Telegram Bot | In GitHub Secrets (Bot live) |
 | X/Twitter | In GitHub Secrets (OAuth 1.0a, @kontolage) |
 
-## Stripe Produkte (LIVE)
-| Plan | Produkt-ID | Preis-ID | Betrag |
-|---|---|---|---|
-| Pro Digital | `prod_V1vEPrVUKmN8vo` | `price_1U1rXRPoNfLOPXfNMHK4F2yE` | 9 €/Monat |
-| Executive B2B | `prod_V1vE7YlRVJYynj` | `price_1U1rXRPoNfLOPXfNUnOvBzXo` | 29 €/Monat |
+## Stripe (Stand 2026-09-25)
 
-> ⚠️ Preise auf der Website VERSTECKT bis Gewerbeanmeldung (section id="abo" display:none)
+Testmodus aktiv. Preis-IDs liegen ausschließlich als Supabase-Secrets `STRIPE_PRICE_STARTER|PRO|EXECUTIVE` (keine IDs in Dateien).
+
+| Tarif | Preis | Status |
+|---|---|---|
+| Basis | 0 € | kostenlos, ohne Registrierung |
+| Starter | 4,90 €/Monat | auf `/abo` buchbar (Testmodus) |
+| Pro Digital | 9,00 €/Monat | auf `/abo` buchbar (Testmodus) |
+| Executive B2B | 29,00 €/Monat | auf `/abo` buchbar (Testmodus) |
+
+> ⚠️ Offen: Stripe Tax aktivieren (Ticket P0-05), Webhook-Endpoint anlegen (P0-07), Endpreise inkl. MwSt. darstellen, AGB/Widerruf/Kündigungsbutton vor Liveverkauf (P0-03).
 
 ## Content-Präferenzen
 - **Themen**: §10, §20, §21 EStG, Rürup, Sparerpauschbetrag, Gehaltsumwandlung, DeFi/Crypto Steuern

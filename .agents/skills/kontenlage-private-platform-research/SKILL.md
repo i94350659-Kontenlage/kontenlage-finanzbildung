@@ -3,7 +3,7 @@ name: kontenlage-private-platform-research
 description: Führt Live-Recherche zu konkreten Broker-, Bank- oder DeFi-Plattformen durch. Liefert aktuelle Tarife, Gebühren, KYC-Abläufe, Regulierungs-Einordnung und Schritt-für-Schritt-Anleitungen exklusiv für den Owner. Kein Regulierungs-Bypass, kein automatischer Übertrag in den öffentlichen Pfad.
 ---
 
-# Kontenlage Private Platform Research v5.1
+# Kontolage Private Platform Research v5.1
 
 ## 0. Kernprinzip
 

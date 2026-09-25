@@ -3,7 +3,7 @@ name: kontenlage-asset-classes-taxonomy
 description: Umfassende Wissensbasis, Klassifikation, Gebühren-, Steuer- und Risikomatrix für alle Anlageklassen (TradFi, Tagesgeld, Festgeld, Aktien, ETFs, Sparpläne, Anleihen, Immobilien, Gold/Rohstoffe, Krypto, CeFi und DeFi). BaFin- und WpHG-konform strukturiert für neutrale Finanzbildung.
 ---
 
-# Kontenlage Asset Classes Taxonomy & Financial Education Engine
+# Kontolage Asset Classes Taxonomy & Financial Education Engine
 
 ## 1. Zweck & Abgrenzung
 Dieser Skill liefert objektive, faktenbasierte und rechtssichere Bildungsinformationen zu allen gängigen Anlageformen im deutschsprachigen Raum (DACH). Er dient der neutralen Wissensvermittlung und Risikotransparenz nach WpHG § 2 / MAR Art. 20 (keine individuelle Anlageberatung).

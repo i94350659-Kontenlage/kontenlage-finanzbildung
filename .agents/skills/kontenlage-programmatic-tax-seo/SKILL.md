@@ -3,7 +3,7 @@ name: kontenlage-programmatic-tax-seo
 description: Programmatic SEO & Free-Tool-Strategie für hunderte deutsche Steuer- & Anlagebegriffe (EStG, KStG, Rürup, Holding, VV-GmbH, Abfindung). Skaliert organischen Traffic über exakt berechnete Szenarien-Seiten.
 ---
 
-# Kontenlage Programmatic Tax SEO Engine
+# Kontolage Programmatic Tax SEO Engine
 
 ## 1. Strategie: Free-Tool & Suchintentions-Clustering
 Nutzer suchen bei steuerlichen Fragestellungen nach konkreten Zahlen und schnellen Antworten (z.B. *„Grenzsteuersatz 80.000 € Single“*, *„Holding Kosten vs Nutzen Rechner“*, *„Fünftelregelung Rechner Abfindung 50.000 €“*).

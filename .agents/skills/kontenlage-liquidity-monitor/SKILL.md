@@ -1,9 +1,9 @@
 ---
 name: kontenlage-liquidity-monitor
-description: Autonomous DeFi Liquidity, Stablecoin De-peg, Yield and Bridge Risk Engine for Kontenlage Owner. Integrates DeFiLlama API, Uniswap/Curve pool depth monitoring, TVL momentum divergence, and Telegram emergency alerts. Strictly mathematical scoring, no LLM hallucinations.
+description: Autonomous DeFi Liquidity, Stablecoin De-peg, Yield and Bridge Risk Engine for Kontolage Owner. Integrates DeFiLlama API, Uniswap/Curve pool depth monitoring, TVL momentum divergence, and Telegram emergency alerts. Strictly mathematical scoring, no LLM hallucinations.
 ---
 
-# Kontenlage DeFi Liquidity & Risk Monitor
+# Kontolage DeFi Liquidity & Risk Monitor
 
 ## Mission & Architecture (Fail-Closed)
 Monitors on-chain liquidity pools, stablecoin peg stability (USDC, EURC, USDT, sDAI), and smart contract exploit indicators.

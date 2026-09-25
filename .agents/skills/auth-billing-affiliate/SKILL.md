@@ -55,13 +55,13 @@ Das Fundament jeder Konto-basierten App: sicherer Login, zuverlässiges Abo-Hand
 
 | Projekt | Organisation / Account ID | Test Publishable Key (`pk_test`) | Test Secret Key (`sk_test`) | Produktmanagement Live Key (`rk_live`) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Kontenlage** | `acct_1UCHEpLtxD96WAjM` | `pk_test_51UCHGdL9kVIkJrXZTbsKHEIyaFaU2Z9uoMnRgoHMlJWUMGbFmI5Hh0oR9Fsu8A8BcEBqCKCQoYln7UxBmpb1KrMB00QhiUmr51` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
+| **Kontolage** | `acct_1UCHEpLtxD96WAjM` | `pk_test_51UCHGdL9kVIkJrXZTbsKHEIyaFaU2Z9uoMnRgoHMlJWUMGbFmI5Hh0oR9Fsu8A8BcEBqCKCQoYln7UxBmpb1KrMB00QhiUmr51` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
 | **Scratch'n'Travel** | Standalone Org | `pk_test_51UCHlrPr79DRHChBdChfu5kt7ew11SJJJwdHTAIR1B2pbuLrXTbA7yFR4C00XEhroOlaMfzPUTdixCqLqY1uV7jm0009cs2KzM` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
 | **FUDI Health** | Standalone Org | `pk_test_51UCHQPL1Je2BqwvEi1XBHSQE6NctPvTpslLtvRj6JrZoHySmknV8L6Udz5NLuRYi0uqa95h7Ft0bUkxLz2lQmBHW00NT5Z7B2G` | `ENV:STRIPE_TEST_SECRET_KEY` | `ENV:STRIPE_SECRET_KEY` |
 
 ### Aktive Live & Test Price IDs
 
-#### 1. Kontenlage (`kontolage.de` / `G:\B2B steuer Business Ideee 6.8.2026`)
+#### 1. Kontolage (`kontolage.de` / `G:\B2B steuer Business Ideee 6.8.2026`)
 * **Pro Investor (9 €/Mo)**:
   * Live: `price_1UCI6ELtxD96WAjMyCVb1q5Z` (Monat), `price_1UCI6ELtxD96WAjMShOKllto` (Jahr / 79 €)
   * Test: `price_1UCI6BL9kVIkJrXZLDkIpiYa` (Monat), `price_1UCI6BL9kVIkJrXZHD1HPiSV` (Jahr / 79 €)

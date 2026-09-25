@@ -3,7 +3,7 @@ name: kontenlage-scoring-engine
 description: Erzeugt qualitative Risk-, Opportunity-, Evidence- und Freshness-Bewertungen aus versionierten Evidence-Bundles. Jeder Score besitzt vollständige Provenance, Methodenversion und Unsicherheitsstatus. Keine individuelle Eignungsbewertung. Finales Publishing nur über publish-gate und wphg-guardrails.
 ---
 
-# Kontenlage Scoring Engine v5.1
+# Kontolage Scoring Engine v5.1
 
 ## 0. Grundsatz
 

@@ -1,9 +1,9 @@
 ---
 name: kontenlage-wphg-guardrails
-description: Zentrale materielle Compliance-Klassifikation für Kontenlage. Prüft Anlageberatung nach WpHG/MiFID-II, öffentliche Investment Recommendations nach MAR, Personalisierung, konkrete Instrumente, Strategie- und Handlungssprache. Das LLM darf die endgültige Compliance-Entscheidung nicht selbst freigeben.
+description: Zentrale materielle Compliance-Klassifikation für Kontolage. Prüft Anlageberatung nach WpHG/MiFID-II, öffentliche Investment Recommendations nach MAR, Personalisierung, konkrete Instrumente, Strategie- und Handlungssprache. Das LLM darf die endgültige Compliance-Entscheidung nicht selbst freigeben.
 ---
 
-# Kontenlage WpHG / MiFID-II / MAR Guardrails v5.1
+# Kontolage WpHG / MiFID-II / MAR Guardrails v5.1
 
 ## 0. Status
 
@@ -108,7 +108,7 @@ Bei MAR-relevanten Empfehlungen zusätzlich die dann geltenden Disclosure-Anford
 
 ### 8.1 `producer` ist ein Pflichtfeld mit realer Identität, kein Platzhalter
 
-`producer` muss eine tatsächlich benennbare natürliche oder juristische Person referenzieren (z. B. den Betreiber von Kontenlage als registrierte Entität), nicht "Hermes", "Kontenlage-KI" oder ein generisches Systemlabel. Ein Output ohne aufgelöste, reale `producer`-Identität gilt als `required_disclosure_missing` (siehe §11) und wird geblockt. Diese Zuordnung erfolgt außerhalb des LLM, über eine feste Konfiguration des Betreibers.
+`producer` muss eine tatsächlich benennbare natürliche oder juristische Person referenzieren (z. B. den Betreiber von Kontolage als registrierte Entität), nicht "Hermes", "Kontolage-KI" oder ein generisches Systemlabel. Ein Output ohne aufgelöste, reale `producer`-Identität gilt als `required_disclosure_missing` (siehe §11) und wird geblockt. Diese Zuordnung erfolgt außerhalb des LLM, über eine feste Konfiguration des Betreibers.
 
 ## 9. Archetypen
 

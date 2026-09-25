@@ -6,18 +6,21 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const VERCEL_TOKEN = 'vck_5Lu9GJ6oH61xAzly08HBt4zVUGq42ZlxPhdq0z10IGaxujgPUP35bxaV';
+const VERCEL_TOKEN = (process.env.VERCEL_TOKEN || '').trim();
 const rootDir = path.join(__dirname, '..');
 
 // Helper to collect all deployment files
 function getFiles(dir, base = '') {
   let results = [];
+  const excluded = new Set(['node_modules', '.git', '.env', '.vercel', '.kilo', 'api', 'scripts', '.agents', 'obsidian_vault', 'skills']);
   const list = fs.readdirSync(dir);
   list.forEach(file => {
-    if (file === 'node_modules' || file === '.git' || file === 'scratch') return;
+    if (excluded.has(file)) return;
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     const relPath = base ? `${base}/${file}` : file;
+    if (relPath.startsWith('webseitenversionen/4.9.2026/supabase/') || relPath.startsWith('webseitenversionen/4.9.2026/docs/') || relPath.startsWith('webseitenversionen/4.9.2026/api/')) return;
+
     if (stat && stat.isDirectory()) {
       results = results.concat(getFiles(filePath, relPath));
     } else {
@@ -31,6 +34,11 @@ function getFiles(dir, base = '') {
 }
 
 async function deploy() {
+  if (!VERCEL_TOKEN) {
+    console.error('❌ VERCEL_TOKEN fehlt. Bitte lokal als Umgebungsvariable setzen.');
+    process.exitCode = 1;
+    return;
+  }
   console.log('🚀 Deploye Kontenlage zu Vercel über REST API...');
   const files = getFiles(rootDir);
   console.log(`📦 Gefundene Dateien zum Upload: ${files.length}`);
