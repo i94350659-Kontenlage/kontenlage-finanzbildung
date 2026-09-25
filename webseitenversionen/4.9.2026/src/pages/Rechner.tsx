@@ -1,4 +1,195 @@
 import { useEffect, useState } from "react";
+import { useSavedScenarios } from "../components/useSavedScenarios";
+import type { CalculatorId } from "../components/useSavedScenarios";
+import { useAuth } from "../context/AuthContext";
+import { supabase } from "../lib/supabase";
+import type { Session } from "@supabase/supabase-js";
+
+/** IDs der Rechner-Tabs; identisch mit `CalculatorId` der Szenario-Persistenz. */
+const RECHNER_IDS: CalculatorId[] = ["rurup", "sparerpauschbetrag", "immobilien", "depot"];
+
+/**
+ * Liest die URL-Parameter einmalig (tiefe Links wie /rechner?rechner=rurup&einkommen=90000).
+ * Ohne Browser (Prerender/Tests) wird ein leerer Parametersatz geliefert.
+ */
+function initialParams(): URLSearchParams {
+  if (typeof window === "undefined") return new URLSearchParams();
+  return new URLSearchParams(window.location.search);
+}
+
+/** Numerischer Parameter mit Bereichsbegrenzung; unbrauchbare Werte fallen auf den Standard zurück. */
+function numberParam(params: URLSearchParams, key: string, fallback: number, min: number, max: number): number {
+  const raw = params.get(key);
+  if (raw === null) return fallback;
+  const parsed = Number(raw.replace(",", "."));
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(max, Math.max(min, parsed));
+}
+
+/** Text-Parameter mit erlaubter Werteliste; alles Unbekannte wird verworfen. */
+function enumParam<T extends string>(params: URLSearchParams, key: string, allowed: readonly T[], fallback: T): T {
+  const raw = params.get(key);
+  return raw !== null && (allowed as readonly string[]).includes(raw) ? (raw as T) : fallback;
+}
+
+/** Aktiven Tab aus `?rechner=` ableiten (fällt auf den ersten Rechner zurück). */
+function calcFromUrl(): number {
+  const requested = initialParams().get("rechner");
+  const index = requested ? RECHNER_IDS.indexOf(requested as CalculatorId) : -1;
+  return index >= 0 ? index : 0;
+}
+
+/**
+ * Erzeugt einen teilbaren Link für die aktuelle Berechnung (Ticket P1-15).
+ * Der Wert landet in der URL und in der Zwischenablage — ohne Konto, ohne Server.
+ * Es werden ausschließlich die angegebenen Werte übertragen, keine Finanzdaten.
+ */
+function ShareLink({ calculator, values }: { calculator: CalculatorId; values: Record<string, string | number> }) {
+  const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
+
+  useEffect(() => {
+    if (state === "idle") return;
+    const timer = window.setTimeout(() => setState("idle"), 2500);
+    return () => window.clearTimeout(timer);
+  }, [state]);
+
+  const buildUrl = () => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("rechner", calculator);
+    for (const [key, value] of Object.entries(values)) params.set(key, String(value));
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  };
+
+  const onShare = async () => {
+    const url = buildUrl();
+    // URL festhalten, damit sie auch ohne Zwischenablage-Berechtigung ablesbar bleibt.
+    window.history.replaceState(null, "", url);
+    try {
+      await navigator.clipboard.writeText(url);
+      setState("copied");
+    } catch {
+      setState("failed");
+    }
+  };
+
+  return (
+    <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+      <button
+        type="button"
+        onClick={() => void onShare()}
+        style={{ padding: "9px 16px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.14)", background: "transparent", color: "#a89f94", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+      >
+        🔗 Ergebnis teilen
+      </button>
+      <span role="status" style={{ fontSize: 12, color: state === "failed" ? "#e89a8a" : "#a89f94" }}>
+        {state === "copied" && "Link in die Zwischenablage kopiert."}
+        {state === "failed" && "Link steht in der Adresszeile — bitte manuell kopieren."}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * Konto-Funktion für einen Rechner: Szenario benennen, speichern, laden, löschen.
+ * Ohne Anmeldung erklärt die Karte, dass die Speicherung ein Konto voraussetzt —
+ * der Rechner selbst bleibt vollständig ohne Login nutzbar.
+ */
+function SzenarioBar({
+  calculator,
+  inputs,
+  results,
+  session,
+}: {
+  calculator: CalculatorId;
+  inputs: Record<string, unknown>;
+  results: Record<string, unknown>;
+  session: Session | null;
+}) {
+  const { scenarios, loading, error, save, remove } = useSavedScenarios(
+    session ? supabase : null,
+    calculator,
+  );
+  const [name, setName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  if (!session) {
+    return (
+      <div style={{ marginTop: 24, padding: "16px 18px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, background: "rgba(255,255,255,0.02)" }}>
+        <p style={{ fontSize: 13, color: "#a89f94", margin: 0 }}>
+          Rechnung ohne Anmeldung nutzbar. Mit Konto lassen sich Szenarien speichern und später vergleichen.
+        </p>
+      </div>
+    );
+  }
+
+  const onSave = async () => {
+    if (!name.trim()) return;
+    setBusy(true);
+    setStatus(null);
+    await save(name, inputs, results);
+    setBusy(false);
+    setName("");
+    setStatus("Szenario gespeichert.");
+  };
+
+  const onLoad = (values: Record<string, unknown>) => {
+    setStatus("Szenario geladen — bitte die Regler prüfen.");
+    window.dispatchEvent(new CustomEvent("kontolage:szenario", { detail: { calculator, values } }));
+  };
+
+  return (
+    <div style={{ marginTop: 24, padding: 18, border: "1px solid rgba(201,168,76,0.2)", borderRadius: 8, background: "rgba(201,168,76,0.04)" }}>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 12 }}>
+        <label style={{ flex: "1 1 200px", display: "block" }}>
+          <span style={{ display: "block", fontSize: 11, color: "#a89f94", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 6 }}>Szenarioname</span>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={60}
+            placeholder="z. B. Splitting 2026"
+            style={{ background: "rgba(30,50,90,0.75)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 6, padding: "10px 12px", color: "#f0ece4", fontSize: 14, width: "100%" }}
+          />
+        </label>
+        <button
+          type="button"
+          onClick={onSave}
+          disabled={busy || !name.trim()}
+          style={{ padding: "10px 18px", borderRadius: 6, border: "1px solid rgba(201,168,76,0.5)", background: "rgba(201,168,76,0.12)", color: "#e2c27d", fontWeight: 600, fontSize: 14, cursor: busy || !name.trim() ? "not-allowed" : "pointer", opacity: busy || !name.trim() ? 0.55 : 1 }}
+        >
+          {busy ? "Speichert…" : "Szenario speichern"}
+        </button>
+      </div>
+
+      {status && <p role="status" style={{ fontSize: 12, color: "#a89f94", margin: "0 0 8px" }}>{status}</p>}
+      {error && <p role="alert" style={{ fontSize: 12, color: "#e89a8a", margin: "0 0 8px" }}>Speichern nicht möglich: {error}</p>}
+
+      {loading ? (
+        <p style={{ fontSize: 13, color: "#a89f94", margin: 0 }}>Szenarien werden geladen…</p>
+      ) : scenarios.length === 0 ? (
+        <p style={{ fontSize: 13, color: "#a89f94", margin: 0 }}>Noch keine Szenarien gespeichert.</p>
+      ) : (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+          {scenarios.map((s) => (
+            <li key={s.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, padding: "8px 10px", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 6 }}>
+              <span style={{ fontSize: 13, color: "#f0ece4" }}>
+                {s.name}
+                <span style={{ display: "block", fontSize: 11, color: "#a89f94" }}>
+                  {new Date(s.updated_at).toLocaleDateString("de-DE")}
+                </span>
+              </span>
+              <span style={{ display: "flex", gap: 8 }}>
+                <button type="button" onClick={() => onLoad(s.inputs)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(201,168,76,0.4)", background: "transparent", color: "#e2c27d", fontSize: 12, cursor: "pointer" }}>Laden</button>
+                <button type="button" onClick={() => void remove(s.id)} style={{ padding: "6px 12px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: "#a89f94", fontSize: 12, cursor: "pointer" }}>Löschen</button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 
 function PageHeader() {
   return (
@@ -24,9 +215,25 @@ function PageHeader() {
 }
 
 function RurupRechner() {
-  const [income, setIncome] = useState(65000);
-  const [taxClass, setTaxClass] = useState("1");
-  const [alter, setAlter] = useState(40);
+  const { session } = useAuth();
+  // Tiefe Links: /rechner?rechner=rurup&einkommen=90000&alter=45&steuerklasse=3
+  const [income, setIncome] = useState(() => numberParam(initialParams(), "einkommen", 65000, 20000, 200000));
+  const [taxClass, setTaxClass] = useState(() => enumParam(initialParams(), "steuerklasse", ["1", "2", "3", "4", "5", "6"], "1"));
+  const [alter, setAlter] = useState(() => numberParam(initialParams(), "alter", 40, 18, 67));
+
+  // Gespeichertes Szenario laden: Werte werden validiert und in die Regler übernommen.
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<{ calculator?: string; values?: Record<string, unknown> }>).detail;
+      if (detail?.calculator !== "rurup" || !detail.values) return;
+      const v = detail.values;
+      if (typeof v.income === "number" && v.income >= 20000 && v.income <= 200000) setIncome(v.income);
+      if (typeof v.alter === "number" && v.alter >= 18 && v.alter <= 67) setAlter(v.alter);
+      if (typeof v.taxClass === "string" && /^[1-6]$/.test(v.taxClass)) setTaxClass(v.taxClass);
+    };
+    window.addEventListener("kontolage:szenario", handler);
+    return () => window.removeEventListener("kontolage:szenario", handler);
+  }, []);
 
   const maxBeitrag = 30825.60;
   const empfohlenBeitrag = Math.min(income * 0.24, maxBeitrag);
@@ -85,15 +292,44 @@ function RurupRechner() {
           ))}
         </div>
       </div>
+
+      <SzenarioBar
+        calculator="rurup"
+        session={session}
+        inputs={{ income, taxClass, alter }}
+        results={{
+          empfohlenerBeitrag: Number(empfohlenBeitrag.toFixed(2)),
+          steuersatz: Number(steuersatz.toFixed(4)),
+          ersparnis,
+        }}
+      />
+
+      <ShareLink calculator="rurup" values={{ einkommen: income, alter, steuerklasse: taxClass }} />
+
       <style>{`@media(max-width:700px){.calc-inner-grid{grid-template-columns:1fr !important;gap:24px !important;}}`}</style>
     </div>
   );
 }
 
 function SparerRechner() {
-  const [taxClass, setTaxClass] = useState("1");
-  const [dividenden, setDividenden] = useState(800);
-  const [kursgewinne, setKursgewinne] = useState(500);
+  const { session } = useAuth();
+  const [taxClass, setTaxClass] = useState(() => enumParam(initialParams(), "steuerklasse", ["1", "3"], "1"));
+  const [dividenden, setDividenden] = useState(() => numberParam(initialParams(), "dividenden", 800, 0, 10000));
+  const [kursgewinne, setKursgewinne] = useState(() => numberParam(initialParams(), "kursgewinne", 500, 0, 20000));
+
+  // Gespeichertes Szenario laden (Werte werden vor Übernahme begrenzt).
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<{ calculator?: string; values?: Record<string, unknown> }>).detail;
+      if (detail?.calculator !== "sparerpauschbetrag" || !detail.values) return;
+      const v = detail.values;
+      if (typeof v.dividenden === "number") setDividenden(Math.min(10000, Math.max(0, v.dividenden)));
+      if (typeof v.kursgewinne === "number") setKursgewinne(Math.min(20000, Math.max(0, v.kursgewinne)));
+      if (v.taxClass === "1" || v.taxClass === "3") setTaxClass(v.taxClass);
+    };
+    window.addEventListener("kontolage:szenario", handler);
+    return () => window.removeEventListener("kontolage:szenario", handler);
+  }, []);
 
   const freibetrag = taxClass === "3" ? 2000 : 1000;
   const gesamtertrag = dividenden + kursgewinne;
@@ -153,15 +389,40 @@ function SparerRechner() {
           ))}
         </div>
       </div>
+
+      <SzenarioBar
+        calculator="sparerpauschbetrag"
+        session={session}
+        inputs={{ taxClass, dividenden, kursgewinne }}
+        results={{ freibetrag, gesamtertrag, steuerpflichtig, kest }}
+      />
+
+      <ShareLink calculator="sparerpauschbetrag" values={{ steuerklasse: taxClass, dividenden, kursgewinne }} />
     </div>
   );
 }
 
 function ImmobilienRechner() {
-  const [kaufpreis, setKaufpreis] = useState(400000);
-  const [grundanteil, setGrundanteil] = useState(30);
-  const [baujahr, setBaujahr] = useState(2024);
-  const [grenzsteuersatz, setGrenzsteuersatz] = useState(42);
+  const { session } = useAuth();
+  const [kaufpreis, setKaufpreis] = useState(() => numberParam(initialParams(), "kaufpreis", 400000, 100000, 2000000));
+  const [grundanteil, setGrundanteil] = useState(() => numberParam(initialParams(), "grundanteil", 30, 10, 60));
+  const [baujahr, setBaujahr] = useState(() => numberParam(initialParams(), "baujahr", 2024, 1900, 2026));
+  const [grenzsteuersatz, setGrenzsteuersatz] = useState(() => numberParam(initialParams(), "grenzsteuersatz", 42, 14, 45));
+
+  // Gespeichertes Szenario laden (Werte werden vor Übernahme begrenzt).
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<{ calculator?: string; values?: Record<string, unknown> }>).detail;
+      if (detail?.calculator !== "immobilien" || !detail.values) return;
+      const v = detail.values;
+      if (typeof v.kaufpreis === "number") setKaufpreis(Math.min(2000000, Math.max(100000, v.kaufpreis)));
+      if (typeof v.grundanteil === "number") setGrundanteil(Math.min(60, Math.max(10, v.grundanteil)));
+      if (typeof v.baujahr === "number") setBaujahr(Math.min(2026, Math.max(1900, v.baujahr)));
+      if (typeof v.grenzsteuersatz === "number") setGrenzsteuersatz(Math.min(45, Math.max(14, v.grenzsteuersatz)));
+    };
+    window.addEventListener("kontolage:szenario", handler);
+    return () => window.removeEventListener("kontolage:szenario", handler);
+  }, []);
 
   const gebaeudewert = kaufpreis * (1 - grundanteil / 100);
   const afaSatz = baujahr >= 2023 ? 0.03 : baujahr >= 1925 ? 0.02 : 0.025;
@@ -215,6 +476,15 @@ function ImmobilienRechner() {
           ))}
         </div>
       </div>
+
+      <SzenarioBar
+        calculator="immobilien"
+        session={session}
+        inputs={{ kaufpreis, grundanteil, baujahr, grenzsteuersatz }}
+        results={{ gebaeudewert: Math.round(gebaeudewert), afaSatz, afaBetrag: Math.round(afaBetrag), steuerersparnis }}
+      />
+
+      <ShareLink calculator="immobilien" values={{ kaufpreis, grundanteil, baujahr, grenzsteuersatz }} />
     </div>
   );
 }
@@ -390,6 +660,7 @@ function DepotImporter() {
 
 export default function Rechner() {
   const [activeCalc, setActiveCalc] = useState(0);
+
   const [copied, setCopied] = useState(false);
 
   const calcs = [
@@ -465,6 +736,7 @@ export default function Rechner() {
             {calcs.map((c, i) => (
               <button
                 key={c.label}
+                type="button"
                 onClick={() => selectCalc(i)}
                 aria-pressed={activeCalc === i}
                 aria-controls="rechner-ergebnis"

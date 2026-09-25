@@ -45,11 +45,21 @@ for (const route of registry.routes) {
   const hasJsonLd = /application\/ld\+json/.test(html)
   const hasH1 = html.includes(`<h1`)
 
+  // Duplikat-Meta: der Figma-Document-Shell-Pfad (.figma/make/site.json) kann
+  // zusaetzliche og:/twitter:-Tags einhaengen. Crawler werten dann je nach
+  // Implementierung die falsche (Startseiten-)Vorschau aus - daher hart pruefen.
+  const ogTitles = [...html.matchAll(/<meta property="og:title" content="([^"]*)"/g)].map((m) => m[1])
+  const metaDescriptions = [...html.matchAll(/<meta name="description" content="([^"]*)"/g)].map((m) => m[1])
+  const twitterTitles = [...html.matchAll(/<meta name="twitter:title" content="([^"]*)"/g)].map((m) => m[1])
+
   record(res.status === 200, `${route.path} status=200`, `status=${res.status}`)
   record(decode(title).trim() === route.title, `${route.path} title`, `ist="${decode(title).trim().slice(0, 60)}"`)
   record(canonical === expectedCanonical, `${route.path} canonical`, `ist="${canonical}"`)
   record(hasJsonLd, `${route.path} JSON-LD`)
   record(hasH1, `${route.path} h1 im HTML`)
+  record(ogTitles.length === 1 && decode(ogTitles[0]).trim() === route.title, `${route.path} og:title eindeutig`, `gefunden=${ogTitles.length} "${decode(ogTitles[0] ?? '').slice(0, 50)}"`)
+  record(metaDescriptions.length === 1, `${route.path} description eindeutig`, `gefunden=${metaDescriptions.length}`)
+  record(twitterTitles.length === 1, `${route.path} twitter:title eindeutig`, `gefunden=${twitterTitles.length}`)
   if (route.noindex) record(robots.includes('noindex'), `${route.path} robots=noindex`, `ist="${robots}"`)
   else record(!robots.includes('noindex'), `${route.path} robots=index`, `ist="${robots}"`)
 }

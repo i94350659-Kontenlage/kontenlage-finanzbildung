@@ -11,12 +11,30 @@
       "h1": "Unabhängige Finanzbildung und Steuerrechner für Deutschland",
       "intro": "Mathematische Steueroptimierung für Privatanleger und Unternehmer: Rürup (§ 10 EStG), Sparerpauschbetrag (§ 20 EStG), Fünftelregelung (§ 34 EStG), Vermögensverwaltende GmbH (§ 8b KStG) und Immobilien-AfA (§ 7 EStG) — objektiv gerechnet, ohne Vertriebsinteresse.",
       "sections": [
-        { "heading": "Rürup-Basisrente (§ 10 EStG)", "body": "Sonderausgabenabzug bis zum Höchstbetrag, Grenzsteuersatz und effektiver Steuervorteil werden nachrechenbar dargestellt." },
-        { "heading": "Sparerpauschbetrag und Vorabpauschale (§ 20 EStG)", "body": "Optimierung des Sparerpauschbetrags, Verlustverrechnung und Vorabpauschale nach Basiszins des BMF." },
-        { "heading": "Fünftelregelung bei Abfindung (§ 34 EStG)", "body": "Progression bei außerordentlichen Einkünften glätten und die Netto-Auszahlung in Euro berechnen." },
-        { "heading": "Vermögensverwaltende GmbH (§ 8b KStG)", "body": "Teilfreistellung von Aktiengewinnen, Ausschüttungsplanung und laufende Kosten einer Holding." },
-        { "heading": "Krypto-Haltefristen (§ 23 EStG)", "body": "Ein-Jahres-Haltefrist im Privatvermögen im Vergleich zu Staking- und Lending-Erträgen." },
-        { "heading": "Immobilien-AfA und Sanierung (§ 7 EStG)", "body": "Lineare und degressive Gebäude-AfA, Handwerkerleistungen nach § 35a EStG und Denkmalschutz." }
+        {
+          "heading": "Rürup-Basisrente (§ 10 EStG)",
+          "body": "Sonderausgabenabzug bis zum Höchstbetrag, Grenzsteuersatz und effektiver Steuervorteil werden nachrechenbar dargestellt."
+        },
+        {
+          "heading": "Sparerpauschbetrag und Vorabpauschale (§ 20 EStG)",
+          "body": "Optimierung des Sparerpauschbetrags, Verlustverrechnung und Vorabpauschale nach Basiszins des BMF."
+        },
+        {
+          "heading": "Fünftelregelung bei Abfindung (§ 34 EStG)",
+          "body": "Progression bei außerordentlichen Einkünften glätten und die Netto-Auszahlung in Euro berechnen."
+        },
+        {
+          "heading": "Vermögensverwaltende GmbH (§ 8b KStG)",
+          "body": "Teilfreistellung von Aktiengewinnen, Ausschüttungsplanung und laufende Kosten einer Holding."
+        },
+        {
+          "heading": "Krypto-Haltefristen (§ 23 EStG)",
+          "body": "Ein-Jahres-Haltefrist im Privatvermögen im Vergleich zu Staking- und Lending-Erträgen."
+        },
+        {
+          "heading": "Immobilien-AfA und Sanierung (§ 7 EStG)",
+          "body": "Lineare und degressive Gebäude-AfA, Handwerkerleistungen nach § 35a EStG und Denkmalschutz."
+        }
       ],
       "changefreq": "daily",
       "priority": "1.0"
@@ -120,6 +138,26 @@
       "description": "Informationen nach Art. 13 DSGVO: verarbeitete Daten, Empfänger (Supabase, Stripe, Vercel), Speicherdauer, Rechte der Betroffenen und Beschwerdeweg.",
       "h1": "Datenschutzerklärung",
       "intro": "Kontolage verarbeitet nur Daten, die für Betrieb, Vertrag und Sicherheit erforderlich sind: Konto-, Abo- und Zahlungsstatusdaten. Rechner-Eingaben bleiben im Browser.",
+      "changefreq": "yearly",
+      "priority": "0.3"
+    },
+    {
+      "path": "/agb",
+      "type": "page",
+      "title": "Allgemeine Geschäftsbedingungen | Kontolage",
+      "description": "AGB für kostenpflichtige Abonnements: Vertragsschluss, Leistungen, Laufzeit, Kündigung, Preise und Zahlung sowie Nutzungsrechte und Haftung.",
+      "h1": "Allgemeine Geschäftsbedingungen",
+      "intro": "Regeln für die Nutzung von Kontolage und den Abschluss kostenpflichtiger Abonnements (Grundlage: §§ 305 ff. BGB, § 312k BGB).",
+      "changefreq": "yearly",
+      "priority": "0.3"
+    },
+    {
+      "path": "/widerruf",
+      "type": "page",
+      "title": "Widerrufsbelehrung | Kontolage",
+      "description": "Widerrufsrecht bei digitalen Inhalten: 14-Tage-Frist, Muster-Widerrufsformular und Folgen des Widerrufs nach §§ 355, 356 BGB.",
+      "h1": "Widerrufsbelehrung",
+      "intro": "Sie haben das Recht, binnen 14 Tagen ohne Angabe von Gründen den Vertrag über ein kostenpflichtiges Abonnement zu widerrufen.",
       "changefreq": "yearly",
       "priority": "0.3"
     },

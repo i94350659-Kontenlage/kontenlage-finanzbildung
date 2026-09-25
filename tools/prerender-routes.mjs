@@ -21,10 +21,68 @@ const escapeHtml = (value) =>
 
 const navRoutes = registry.routes.filter((route) => route.type === 'page' && !route.noindex && route.path !== '/')
 
-function setTag(html, pattern, replacement, label) {
-  if (!pattern.test(html)) throw new Error(`Vorlage enthält ${label} nicht`)
-  return html.replace(pattern, replacement)
+function setTag(html, key, replacement) {
+  let found = false
+  const result = html.replace(TAG_PATTERN, (tag) => {
+    if (found || metaKey(tag) !== key) return tag
+    found = true
+    return replacement
+  })
+  if (!found) throw new Error(`Vorlage enthält ${key} nicht`)
+  return result
 }
+
+// Meta-Tags, die je Route genau einmal existieren dürfen. Build-Tools (z. B. das
+// Figma-Plugin via transformIndexHtml) injizieren sonst Duplikate, die Google als
+// widersprüchliche Meta wertet. Es gewinnt jeweils das erste Vorkommen im Head.
+const UNIQUE_META_KEYS = new Set([
+  'description', 'robots', 'og:title', 'og:description', 'og:url', 'og:image', 'og:image:width', 'og:image:height',
+  'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image',
+])
+
+const TAG_PATTERN = /<(meta|link)\b[^>]*>/gi
+const ATTR_PATTERN = /([a-zA-Z_:][\w:.-]*)\s*=\s*("([^"]*)"|'([^']*)')/g
+
+function metaKey(tag) {
+  let name = null
+  let rel = null
+  let match
+  ATTR_PATTERN.lastIndex = 0
+  while ((match = ATTR_PATTERN.exec(tag)) !== null) {
+    const [, attr, , dq, sq] = match
+    const value = dq ?? sq ?? ''
+    if (attr.toLowerCase() === 'name') name = value
+    if (attr.toLowerCase() === 'property') name = value
+    if (attr.toLowerCase() === 'rel') rel = value
+  }
+  if (rel?.split(/\s+/).includes('canonical')) return 'canonical'
+  if (rel?.split(/\s+/).includes('icon')) return null
+  return name ? name.toLowerCase() : null
+}
+
+// Der <title>-Tag trägt keinen name/property-Attributwert und wird deshalb gesondert geführt.
+function replaceTitle(html, replacement) {
+  if (!/<title>[\s\S]*?<\/title>/.test(html)) throw new Error('Vorlage enthält title nicht')
+  return html.replace(/<title>[\s\S]*?<\/title>/, replacement)
+}
+
+// Erkennt sowohl <meta name="description" …> als auch <meta content='…' name='description'>
+// und unabhängig von der Attributreihenfolge sowie der Anführungszeichen-Art.
+function dedupeMeta(html) {
+  const seen = new Set()
+  return html.replace(TAG_PATTERN, (tag) => {
+    const key = metaKey(tag)
+    if (!key || !UNIQUE_META_KEYS.has(key)) return tag
+    if (seen.has(key)) {
+      duplicates.push(key)
+      return ''
+    }
+    seen.add(key)
+    return tag
+  })
+}
+
+const duplicates = []
 
 function jsonLdFor(route, url) {
   const graph = []
@@ -100,27 +158,50 @@ function shellFor(route) {
 
 function render(route) {
   const url = route.path === '/' ? `${site}/` : `${site}${route.path}`
-  let html = template
+  // Erst die von uns gesetzten Werte schreiben, danach alle Meta-Duplikate
+  // entfernen, die Build-Tools zusätzlich in den Head injiziert haben.
+  let html = dedupeMeta(template)
 
-  html = setTag(html, /<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(route.title)}</title>`, 'title')
-  html = setTag(html, /<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${escapeHtml(route.description)}" />`, 'meta description')
-  html = setTag(html, /<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`, 'canonical')
-  html = setTag(html, /<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${url}" />`, 'og:url')
-  html = setTag(html, /<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${escapeHtml(route.title)}" />`, 'og:title')
-  html = setTag(html, /<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${escapeHtml(route.description)}" />`, 'og:description')
-  html = setTag(html, /<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${escapeHtml(route.title)}" />`, 'twitter:title')
-  html = setTag(html, /<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${escapeHtml(route.description)}" />`, 'twitter:description')
+  // <title> ist kein meta/link-Tag und braucht den eigenen Ersetzer.
+  html = replaceTitle(html, `<title>${escapeHtml(route.title)}</title>`)
+  html = setTag(html, 'description', `<meta name="description" content="${escapeHtml(route.description)}" />`)
+  html = setTag(html, 'canonical', `<link rel="canonical" href="${url}" />`)
+  html = setTag(html, 'og:url', `<meta property="og:url" content="${url}" />`)
+  html = setTag(html, 'og:title', `<meta property="og:title" content="${escapeHtml(route.title)}" />`)
+  html = setTag(html, 'og:description', `<meta property="og:description" content="${escapeHtml(route.description)}" />`)
+  html = setTag(html, 'twitter:title', `<meta name="twitter:title" content="${escapeHtml(route.title)}" />`)
+  html = setTag(html, 'twitter:description', `<meta name="twitter:description" content="${escapeHtml(route.description)}" />`)
 
   if (route.noindex) {
-    html = setTag(html, /<meta name="robots" content="[^"]*" \/>/, '<meta name="robots" content="noindex, follow" />', 'robots')
+    html = setTag(html, 'robots', '<meta name="robots" content="noindex, follow" />')
   }
 
   if (route.path !== '/') {
     // Das JSON-LD der Vorlage (FinancialService/FAQPage) gehört ausschließlich auf die Startseite.
     html = html.replace(/[ \t]*<script type="application\/ld\+json">[\s\S]*?<\/script>\r?\n?/g, '')
+  } else {
+    // Startseite: vorhandenen @graph um die routenspezifischen Knoten erweitern,
+    // damit genau ein JSON-LD-Block je Dokument ausgeliefert wird.
+    const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
+    if (match) {
+      try {
+        const existing = JSON.parse(match[1])
+        const addition = jsonLdFor(route, url)
+        const graph = Array.isArray(existing['@graph']) ? existing['@graph'] : [existing]
+        const merged = { ...addition, '@graph': [...graph, ...addition['@graph']] }
+        html = html.replace(match[0], `<script type="application/ld+json">\n${JSON.stringify(merged, null, 2)}\n    </script>`)
+        return insertShell(html, route)
+      } catch {
+        // Ungültiges JSON in der Vorlage: eigenständigen Block ergänzen (siehe unten).
+      }
+    }
   }
   html = html.replace('</head>', `    <script type="application/ld+json">\n${JSON.stringify(jsonLdFor(route, url), null, 2)}\n    </script>\n  </head>`)
 
+  return insertShell(html, route)
+}
+
+function insertShell(html, route) {
   const startMarker = '<div id="root">'
   const bodyEnd = html.indexOf('</body>')
   const start = html.indexOf(startMarker)
@@ -147,8 +228,10 @@ const notFoundHtml = render({
   h1: 'Seite nicht gefunden',
   intro: 'Diese Adresse existiert nicht oder wurde verschoben. Nutzen Sie die Navigation oder starten Sie auf der Startseite.',
   noindex: true,
-}).replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${site}/" />`)
-fs.writeFileSync(path.join(distDir, '404.html'), notFoundHtml, { encoding: 'utf8' })
+})
+// Die 404-Variante zeigt bewusst auf die Startseite, damit keine 404-Adresse indexiert wird.
+const notFoundCanonical = setTag(notFoundHtml, 'canonical', `<link rel="canonical" href="${site}/" />`)
+fs.writeFileSync(path.join(distDir, '404.html'), notFoundCanonical, { encoding: 'utf8' })
 
 console.log(`Prerender: ${written} Routen geschrieben (plus 404.html)`)
 console.log('  Beispiel: /rechner -> dist/rechner.html · /artikel/<slug> -> dist/artikel/<slug>.html')

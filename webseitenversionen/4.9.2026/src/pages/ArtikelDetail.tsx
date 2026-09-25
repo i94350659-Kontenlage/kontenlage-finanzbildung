@@ -375,11 +375,30 @@ export default function ArtikelDetail() {
             {article.title}
           </h1>
 
-          <div style={{ display: "flex", gap: 24, fontSize: 13, color: "#a89f94", marginBottom: 32, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 24, fontSize: 13, color: "#a89f94", marginBottom: 16, flexWrap: "wrap" }}>
             <span>📅 {article.date}</span>
             {article.readTime && <span>⏱ {article.readTime} Lesezeit</span>}
             {article.author && <span>✍️ {article.author}</span>}
           </div>
+
+          {/* E-E-A-T: Redaktion, Prüfstand und Reichweite der Information offenlegen
+              (P1-06). Ohne benannte Redaktion und klaren Prüfhinweis ist
+              Steuer-Content für Suchmaschinen und Nutzer nicht einordenbar. */}
+          <p
+            style={{
+              display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: 12, lineHeight: 1.7,
+              color: "#8d857a", background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.06)", borderRadius: 6,
+              padding: "10px 14px", margin: "0 0 28px",
+            }}
+          >
+            <span>Stand: {article.date}</span>
+            <span>Redaktion: {article.author}</span>
+            <span>
+              Allgemeine Information, redaktionell geprüft – keine individuelle Steuer- oder Anlageberatung.{" "}
+              <Link to="/transparenz" style={{ color: "#c9a84c" }}>Quellen und Methodik</Link>
+            </span>
+          </p>
 
           {article.intro && (
             <p style={{ fontSize: "clamp(15px, 2vw, 18px)", color: "#cdc6be", lineHeight: 1.8, fontStyle: "italic", borderLeft: "3px solid #c9a84c", paddingLeft: 20 }}>
