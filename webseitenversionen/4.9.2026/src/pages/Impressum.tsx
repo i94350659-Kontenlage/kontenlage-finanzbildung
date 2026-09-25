@@ -15,7 +15,7 @@ export default function Impressum() {
         <div style={{ maxWidth: 700, margin: "0 auto" }}>
           {[
             {
-              heading: "Angaben gemäß § 5 TMG",
+              heading: "Angaben gemäß § 5 DDG",
               content: `Kontolage GmbH (Beispiel)
 Musterstraße 12
 10115 Berlin

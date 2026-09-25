@@ -39,6 +39,8 @@ export default function Footer() {
             { label: "Rechtliches", items: [
               { to: "/impressum", label: "Impressum" },
               { to: "/datenschutz", label: "Datenschutz" },
+              { to: "/agb", label: "AGB" },
+              { to: "/widerruf", label: "Widerrufsbelehrung" },
               { to: "/transparenz", label: "Transparenz" },
               { to: "/impressum", label: "Disclaimer" },
             ]},
