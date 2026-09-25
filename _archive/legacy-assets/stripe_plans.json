@@ -1,0 +1,76 @@
+{
+  "updatedAt": "2026-09-05T13:50:00.000Z",
+  "organization": "Kontenlage",
+  "accountId": "acct_1UCHEpLtxD96WAjM",
+  "live": {
+    "productManagementKey": "ENV:STRIPE_SECRET_KEY",
+    "prices": {
+      "pro_investor": {
+        "planKey": "pro_investor",
+        "name": "Kontenlage Pro Investor",
+        "productId": "prod_VChV4b5hdJc1If",
+        "monthlyPriceId": "price_1UCI6ELtxD96WAjMyCVb1q5Z",
+        "monthlyAmount": 900,
+        "yearlyPriceId": "price_1UCI6ELtxD96WAjMShOKllto",
+        "yearlyAmount": 7900,
+        "currency": "eur"
+      },
+      "executive_b2b": {
+        "planKey": "executive_b2b",
+        "name": "Kontenlage Executive B2B / Family Office",
+        "productId": "prod_VChV7EwZv5SSie",
+        "monthlyPriceId": "price_1UCI6FLtxD96WAjMgNOgPwOz",
+        "monthlyAmount": 2900,
+        "yearlyPriceId": "price_1UCI6FLtxD96WAjMJRaJKdoP",
+        "yearlyAmount": 24900,
+        "currency": "eur"
+      },
+      "private_owner": {
+        "planKey": "private_owner",
+        "name": "Kontenlage Private Owner Intelligence",
+        "productId": "prod_VChVZNy99YGWD2",
+        "monthlyPriceId": "price_1UCI6GLtxD96WAjMtFPuitiW",
+        "monthlyAmount": 4900,
+        "yearlyPriceId": "price_1UCI6GLtxD96WAjMZbaz1vtt",
+        "yearlyAmount": 39900,
+        "currency": "eur"
+      }
+    }
+  },
+  "test": {
+    "publishableKey": "pk_test_51UCHGdL9kVIkJrXZTbsKHEIyaFaU2Z9uoMnRgoHMlJWUMGbFmI5Hh0oR9Fsu8A8BcEBqCKCQoYln7UxBmpb1KrMB00QhiUmr51",
+    "secretKey": "ENV:STRIPE_TEST_SECRET_KEY",
+    "prices": {
+      "pro_investor": {
+        "planKey": "pro_investor",
+        "name": "Kontenlage Pro Investor",
+        "productId": "prod_VChVA7oZMaWpEA",
+        "monthlyPriceId": "price_1UCI6BL9kVIkJrXZLDkIpiYa",
+        "monthlyAmount": 900,
+        "yearlyPriceId": "price_1UCI6BL9kVIkJrXZHD1HPiSV",
+        "yearlyAmount": 7900,
+        "currency": "eur"
+      },
+      "executive_b2b": {
+        "planKey": "executive_b2b",
+        "name": "Kontenlage Executive B2B / Family Office",
+        "productId": "prod_VChV43Kgj3zm0j",
+        "monthlyPriceId": "price_1UCI6CL9kVIkJrXZlq6qfXhg",
+        "monthlyAmount": 2900,
+        "yearlyPriceId": "price_1UCI6CL9kVIkJrXZUCr99Zep",
+        "yearlyAmount": 24900,
+        "currency": "eur"
+      },
+      "private_owner": {
+        "planKey": "private_owner",
+        "name": "Kontenlage Private Owner Intelligence",
+        "productId": "prod_VChVKl9ngCO5EI",
+        "monthlyPriceId": "price_1UCI6DL9kVIkJrXZmtJfAA1A",
+        "monthlyAmount": 4900,
+        "yearlyPriceId": "price_1UCI6DL9kVIkJrXZClitRxwc",
+        "yearlyAmount": 39900,
+        "currency": "eur"
+      }
+    }
+  }
+}

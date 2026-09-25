@@ -1,0 +1,10 @@
+# Verhindert dass Jekyll (GitHub Pages Standard-Builder) .agents/ Ordner verarbeitet
+exclude:
+  - scripts/
+  - .agents/
+  - obsidian_vault/
+  - node_modules/
+  - "*.js"
+  - "*.json"
+  - "*.md"
+  - ".github/"
