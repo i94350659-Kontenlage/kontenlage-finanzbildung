@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light only" />
+    <title>Neue E-Mail-Adresse bestätigen</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#0B1220;">
+    <div style="display:none;font-size:1px;color:#0B1220;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">Bitte bestätigen Sie Ihre neue E-Mail-Adresse für Kontolage.</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0B1220;padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background-color:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,0.45);">
+            <tr>
+              <td style="background-color:#111827;padding:26px 32px;border-bottom:3px solid #C9A84C;">
+                <span style="font-family:Georgia,'Times New Roman',serif;font-size:22px;letter-spacing:0.18em;text-transform:uppercase;color:#F0ECE4;">KONTO<span style="color:#C9A84C;">LAGE</span></span>
+                <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#A89F94;margin-top:8px;">Unabhängige Finanzbildung</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:36px 32px 12px 32px;">
+                <h1 style="margin:0 0 14px 0;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1.25;color:#111827;">Neue E-Mail-Adresse bestätigen</h1>
+                <p style="margin:0 0 18px 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.75;color:#334155;">Guten Tag,<br /> für Ihr Kontolage-Konto wurde eine neue E-Mail-Adresse hinterlegt. Bitte bestätigen Sie diese Änderung, damit Sie sich weiterhin anmelden können.</p>
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:26px 0 22px 0;">
+                  <tr>
+                    <td align="center" bgcolor="#C9A84C" style="border-radius:8px;">
+                      <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:15px 34px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:0.06em;text-transform:uppercase;color:#111827;text-decoration:none;">Neue Adresse bestätigen</a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin:0 0 22px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#64748B;">
+                  Falls der Button nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:<br />
+                  <a href="{{ .ConfirmationURL }}" style="color:#A8873A;word-break:break-all;">{{ .ConfirmationURL }}</a>
+                </p>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F8F6F1;border-left:3px solid #C9A84C;border-radius:6px;">
+                  <tr>
+                    <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#334155;">
+                      <strong style="color:#111827;">Hinweis:</strong> Die Änderung wird erst nach Ihrer Bestätigung wirksam. Falls Sie die Änderung nicht angefordert haben, kontaktieren Sie uns bitte umgehend.</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:26px 32px 32px 32px;">
+                <hr style="border:none;border-top:1px solid #E2E8F0;margin:0 0 18px 0;" />
+                <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.7;color:#94A3B8;">
+                  Kontolage · Unabhängige Finanzbildung<br />
+                  Diese E-Mail wurde automatisch versendet. Antworten auf diese Nachricht werden nicht gelesen.
+                </p>
+                <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.7;color:#94A3B8;">
+                  <a href="{{ .SiteURL }}/datenschutz" style="color:#A8873A;text-decoration:none;">Datenschutz</a> ·
+                  <a href="{{ .SiteURL }}/impressum" style="color:#A8873A;text-decoration:none;">Impressum</a><br />
+                  Kontolage bietet neutrale Finanzbildung und keine individuelle Steuer-, Rechts- oder Anlageberatung.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
