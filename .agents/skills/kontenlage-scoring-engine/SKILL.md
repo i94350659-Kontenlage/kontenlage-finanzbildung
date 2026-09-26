@@ -103,3 +103,13 @@ Zusätzlich offenlegen, soweit relevant: smart_contract, oracle, bridge, stablec
 ```
 
 `proposed_compliance_class` ist nur ein Vorschlag. Final entscheidet die deterministische Compliance-/Publish-Schicht.
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Aus Evidence-Bundles reproduzierbare, qualitative Bewertungen auf vier unabhängigen Achsen erzeugen.
+- **Trigger**: Research-Bundle liegt vollständig vor (`research_status: complete`) oder ein Asset wird neu bewertet.
+- **Ablauf**: 1) Facts gegen `as_of`/Decay/TTL prüfen 2) vier Achsen getrennt bewerten 3) Band zuweisen (niedrig/mittel/hoch) 4) Lineage setzen (`score → methodology_version → fact_ids → source_ids`) 5) Data-Gate GREEN/YELLOW/RED bestimmen 6) Vorschlagsklasse an die Compliance-Schicht geben.
+- **Check**: Kein Wert ohne `fact_id`; keine Scheingenauigkeit; `confidence` immer gesetzt; `methodology_version` unverändert bei gleichem Input-Hash; veraltete Daten senken mindestens Freshness.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 10 inklusive `provenance_complete` und `data_status`.
+- **Fail-Verhalten**: Widerspruch, fehlende Provenance, abgelaufene Hard-TTL oder neue Anlageklasse ohne Research-Quorum → `data_status: red`, **keine** Veröffentlichung des neuen Werts. Nie E/F selbst herabstufen, nie Suitability-/Buy-/Sell-Score erzeugen.
+- **Ticket-Kopplung**: P2-01 (Szenarien/Auswertung im Konto), P1-06 (Datumsangaben im Artikelkopf).

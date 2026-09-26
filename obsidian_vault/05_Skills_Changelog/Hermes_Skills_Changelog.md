@@ -16,3 +16,13 @@
 - [UPDATE] Marken-Kanon: neue Skills nutzen `kontolage-`; Legacy-IDs `kontenlage-*` bleiben als Alias gültig und werden im Audit als Aufräum-Schuld gelistet.
 - [UPDATE] Legacy-Befund aus dem Audit: 17 Alt-Skills ohne Frontmatter-`description` bzw. mit zu wenigen Pflichtabschnitten — Migrationsschuld, kein Blocker.
 
+## v6.4 (2026-09-25) — Skill-Vervollständigung & sauberes Audit-Signal
+- [UPDATE] 14 `kontenlage-*`-Skills um einen **Betriebsblock** ergänzt (Zweck, Trigger, Ablauf, Check, Ausgabe, Fail-Verhalten, Ticket-Kopplung). Inhalt jeweils aus dem bestehenden Skill abgeleitet, keine erfundenen Verfahren, keine Inhalte entfernt.
+- [ADD] `.agents/skills-classes.json` — dokumentiert je Fremdprojekt-Skill den Grund der Einordnung (`klasse: fremd`), damit echte Migrationsschuld von Fremdrauschen getrennt sichtbar bleibt.
+- [UPDATE] `tools/hermes-skill-audit.mjs` — dritte Klasse `foreign`, Ausgabe jetzt dreifach (Fehler / offene Warnung / Fremd-Hinweis) plus Klassen-Zeilen; der als erlaubt markierte Marken-Selbstbezug zählt als Hinweis statt Warnung.
+- [UPDATE] `SKILLS.md` — Abschnitt „Skill-Klassen und Migrationsstand" mit der Warnung, dass der Audit keine Cross-Referenzen prüft (rennen eines Legacy-Skills zieht alle Aufrufer mit).
+- [RESULT] Audit: 30 Skills · 0 Fehler · **0 offene Warnungen** · 10 Fremd-Hinweise. `--strict` meldet weiterhin 9 Fehler in den nicht migrierten Skills und bleibt damit die Endziel-Metrik.
+- [UPDATE] `tools/brand-consistency-check.mjs` schreibt jetzt atomar über Temp-Datei + `rename`; gesperrte Editor-Dateien erzeugen eine Meldung statt eines Abbruchs (P1-07).
+- [UPDATE] `webseitenversionen/4.9.2026/src/pages/ArtikelDetail.tsx`: 14 verbliebene „Kontenlage"-Vorkommen in Autorangaben auf „Kontolage" korrigiert.
+- [CHORE] Migration `202609250002_kuendigung_ohne_login.sql` → `202609250005_kuendigung_ohne_login.sql` umbenannt, damit die zeitliche Reihenfolge im Migrationslauf eindeutig bleibt.
+

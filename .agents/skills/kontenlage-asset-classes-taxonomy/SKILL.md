@@ -87,3 +87,13 @@ Dieser Skill liefert objektive, faktenbasierte und rechtssichere Bildungsinforma
 ## 5. Rechtliche Leitplanken & Disclaimers
 * Jede Ausgabe muss den gesetzlichen Hinweis tragen:
   > *„Hinweis nach § 2 Abs. 8 Nr. 10 WpHG: Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung und stellen keine Anlageberatung, Kaufempfehlung oder Steuerberatung dar. Investitionen an den Kapitalmärkten sind mit Risiken bis hin zum Totalverlust verbunden.“*
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Faktenbasierte, rechtssichere Bildungsinformationen zu allen Anlageklassen liefern (WpHG § 2 / MAR Art. 20).
+- **Trigger**: Nutzer- oder Content-Anfrage zu einer Anlageform, die in der Taxonomie geführt wird.
+- **Ablauf**: 1) Anlageklasse identifizieren 2) Mechanik, Renditechance, Risiken, Kosten und Steuerlast aus der Matrix belegen 3) Zielgruppen-Dimensionen (Anlageziel/Horizont/Risikobereitschaft) einordnen 4) Disclaimer nach § 2 Abs. 8 Nr. 10 WpHG ergänzen 5) an `wphg-guardrails` übergeben.
+- **Check**: Jede Zahl mit Stichtag und Quelle; Steuerwerte mit Paragraph und Jahr; keine Produktempfehlung, keine konkrete ISIN/WKN, keine „beste Wahl“-Sprache; Disclaimer immer mitgeführt.
+- **Ausgabe**: Strukturierter Bildungsblock je Anlageklasse (Mechanik/Renditechance/Risiken/Gebühren/Steuern) plus Disclaimer.
+- **Fail-Verhalten**: Anlageklasse nicht belegt oder Rechtsstand unklar → als „zu verifizieren“ kennzeichnen statt behaupten. Zahlen ohne Stichtag werden nicht ausgegeben. Jede Empfehlungssprache führt zur Klassen-E/F-Blockade.
+- **Ticket-Kopplung**: P1-14 (Content-Registry), P0-03 (Rechts-/Haftungstexte).

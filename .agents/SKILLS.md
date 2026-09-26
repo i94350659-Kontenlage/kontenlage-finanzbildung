@@ -91,11 +91,25 @@ Unter 0,70: keine Veröffentlichung; Fallback-Content plus Review-Ticket.
 | SKILL-18 | `kontenlage-liquidity-monitor` | Markt-Daten für DeFi-/Liquiditäts-Kontext, ohne Anlageempfehlung | P2-06 |
 | SKILL-19 | `community-posts-feedback` | Community-Beiträge moderieren und Feedback einspeisen | P2-08 |
 
+## Skill-Klassen und Migrationsstand (Stand 2026-09-25)
+
+`node tools/hermes-skill-audit.mjs` unterscheidet drei Klassen:
+
+| Klasse | Präfix/Bedingung | Bewertung |
+|---|---|---|
+| **kanonisch** | `kontolage-*` | Alle Pflichtfelder und Ticket-Kopplung. Fehler blockieren (Exit 1). |
+| **Legacy** | `kontenlage-*` | fachlich gültig und produktiv genutzt (Compliance-/Evidence-Kette). Offene Migrationsschuld: Ordner- und Frontmatter-`name` auf `kontolage-` umstellen, sobald eine inhaltliche Überarbeitung ansteht. Inhaltlich sind alle 15 Skills vollständig (Betriebsblock mit Zweck/Trigger/Ablauf/Check/Ausgabe/Fail-Verhalten). |
+| **fremd** | in `.agents/skills-classes.json` mit `grund` dokumentiert | gehören zu Fremdprojekten (Merchandise, Design-Persona, generisches Marketing). Bleiben nutzbar, erzeugen aber nur Hinweise statt offene Migration. |
+
+**Aktueller Audit-Stand:** 30 Skills · 0 Fehler · 0 offene Warnungen · 10 Fremd-Hinweise.
+
+Wichtig: Der Skill-Audit prüft Inhalte, **keine** Cross-Referenzen zwischen Skills. Beim Umbenennen eines Legacy-Skills müssen daher alle Aufrufer mitgezogen werden: `kontenlage-source-evaluator`, `kontenlage-content-drafter`, `kontenlage-wphg-guardrails`, `kontenlage-publish-gate` verweisen gegenseitig namentlich aufeinander.
+
 ## Skill-Lebenszyklus
 
 1. **Anlegen:** Datei `.agents/skills/<slug>/SKILL.md` mit Frontmatter, Zweck, Trigger, Ablauf, Checks, Ausgabeformat, Fail-Closed-Regeln.
 2. **Registrieren:** Eintrag in dieser Datei plus Ticket-Kopplung im Kanban.
-3. **Prüfen:** `node tools/hermes-skill-audit.mjs` — 0 Fehler, Report im CI-Artefakt.
+3. **Prüfen:** `node tools/hermes-skill-audit.mjs` — 0 Fehler, Report im CI-Artefakt. `--strict` behandelt alle Skills wie kanonisch (für den Endzustand ohne Legacy-Skills).
 4. **Versionieren:** Eintrag in `obsidian_vault/05_Skills_Changelog/Hermes_Skills_Changelog.md`.
 5. **Aussortieren:** Skills ohne Trigger, ohne Ticketbezug oder mit widersprüchlichen Regeln werden gelöscht (Audit meldet sie als `orphan`).
 

@@ -79,3 +79,13 @@ Bei Broker/Bank: Einzahlung → Verwahrung → Kündigung → Übertragung → A
   "scope": "PRIVATE_OWNER_ONLY"
 }
 ```
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck: aktuelle**, belegte Plattformfakten für den Owner recherchieren (Tarife, Gebühren, KYC, Regulierung, Exit).
+- **Trigger**: Owner fragt nach Plattform, Broker, Bank, Gebühren, KYC, Kontoeröffnung, Maske oder Tarif.
+- **Ablauf**: 1) Live-Recherche ausführen (keine Trainingsdaten für Konditionen) 2) Entity-Check durchlaufen (legal_entity → licensed_entity → regulator → license/scope → service_covered) 3) Konditionen mit Stand-Datum erfassen 4) Kontoeröffnung und Ein-/Auszahlung beschreiben 5) **Exit-Pfad vor der Empfehlung** darstellen 6) an den Private-Output übergeben.
+- **Check**: Konditionen tragen ein Stand-Datum; Regulierungsstatus ist `verified|unverified|mismatch`, nie behauptet; `exit_path` ist gefüllt; keine Weitergabe in Public-Skills.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 7.
+- **Fail-Verhalten**: Suchquelle nicht erreichbar oder Regulierung unklar ⇒ `service_covered: unverified` plus „zu verifizieren“-Kennzeichnung. Fehlende Owner-Angaben werden erfragt, **nicht** geraten. Ohne Exit-Pfad keine Plattform als Top-Option darstellen.
+- **Ticket-Kopplung**: nicht ticket-gebunden (Owner-Layer); Data-Firewall über `kontenlage-private-router` §4.

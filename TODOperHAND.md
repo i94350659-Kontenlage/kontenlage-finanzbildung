@@ -45,11 +45,12 @@
 ## 7. Wenn alles oben erledigt ist
 
 - [ ] `docs/kanban.md` gegenlesen und P0 auf `DONE` setzen.
-- [ ] `node tools/verify-seo.mjs` und `node tools/health-check.mjs` laufen lassen (Ergebnis aktuell: **163/163** SEO-Prüfungen und **36/36** Health-Checks, beide live grün).
+- [ ] `node tools/verify-seo.mjs` und `node tools/health-check.mjs` laufen lassen (Ergebnis aktuell: **241/241** SEO-Prüfungen und **36/36** Health-Checks, beide live grün).
 - [ ] Freigabe für den ersten echten Zahlungsvorgang erteilen.
 ## 8. Optional, wenn Zeit ist
 
-- [x] ~~Git-Stand versionieren~~ → **erledigt am 2026-09-25**: 9 Commits auf main (ahead 9 / behind 6). Offen bleibt nur der **Push** — ehind 6 heißt, origin/main ist weitergegangen. Vor dem Push git pull --rebase; bei Konflikten dist/ per pm run build neu erzeugen statt blind mergen.
-- [ ] 17 Legacy-Skills auf kanonische Frontmatter heben (24 Warnungen im Skill-Audit, blockieren nichts).
-- [ ] `node tools/hermes-skill-audit.mjs --strict` einmal laufen lassen, wenn du die Legacy-Schuld abstellen willst.
+- [x] ~~Git-Stand versionieren~~ → **Commits liegen lokal (ahead 11).** Offen bleibt nur der **Push**.
+- [ ] **Push ausführen** (Stand 2026-09-25: `ahead 11, behind 6`). Die 6 Remote-Commits stammen ausschließlich vom Hermes-Wochen-Cron (`obsidian_vault/Drafts/*`, `obsidian_vault/Learnings.md`, `HERMES_WEEKLY_REFLECTION_*`, `package-lock.json`) und berühren **keinen** App-Code. Vorgehen: `git pull --rebase origin main` → bei Konflikten in `package-lock.json` und `obsidian_vault/Learnings.md` auflösen (lokale Fassung behalten, danach `npm install`) → `npm run build` als Gegenprobe → `git push`.
+- [x] ~~17 Legacy-Skills auf kanonische Frontmatter heben~~ → **Betriebsblöcke ergänzt am 2026-09-25** (14 Skills um Zweck/Trigger/Ablauf/Check/Ausgabe/Fail-Verhalten/Ticket-Kopplung erweitert, ohne Inhaltsverlust). Audit: 30 Skills, 0 Fehler, **0 offene Warnungen**, 10 Fremd-Hinweise.
+- [ ] Optional: Ordner-Umbenennung `kontenlage-*` → `kontolage-*` (15 Skills). **Achtung:** `source-evaluator`, `content-drafter`, `wphg-guardrails` und `publish-gate` verweisen namentlich aufeinander — alle Aufrufer mitschieben. Endziel-Metrik: `node tools/hermes-skill-audit.mjs --strict` (aktuell 9 Fehler, Exit 1).
 - [ ] P2-Backlog priorisieren (PDF/Excel-Export, Newsletter-Funnel, cookieless Analytics).

@@ -65,3 +65,13 @@ Vor Output → `wphg-guardrails`. Vor Veröffentlichung → `publish-gate`. Der 
   "publish_status": "pending_gate"
 }
 ```
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Aus einem versionierten Evidence- und Score-Paket einen neutralen, quellenbasierten Bildungsinhalt erzeugen.
+- **Trigger**: Freigegebenes Research-Bundle liegt vor und ein Inhalt wird angefordert.
+- **Ablauf**: 1) Eingabepaket prüfen (Evidence, Scores, Datenstand, Methodikversion, Jurisdiktion) 2) Standardstruktur 1–10 ausfüllen 3) Fakten/Modelle/Prognosen/Szenarien kennzeichnen 4) Evidenz verlinken 5) an `wphg-guardrails` übergeben 6) erst nach `publish-gate` veröffentlichen.
+- **Check**: Jede Zahl hat Quelle und Stichtag; Score-Bänder sind qualitativ mit `rationale`; keine verbotene Sprache („sicher“, „garantiert“, „optimal“, „für dich geeignet“); `fact_ids`/`source_ids` sind gefüllt, `as_of` gesetzt.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 8 (`publish_status` bleibt `pending_gate`).
+- **Fail-Verhalten**: Fehlende Provenance, `data_status: red` oder Klasse E/F → **kein** Text, sondern Ablehnung mit Begründung. Der Drafter darf keine Compliance-Freigabe selbst erteilen.
+- **Ticket-Kopplung**: P1-14 (Content-Registry), P1-06 (Artikel-JSON-LD), P2-03 (Newsletter-Teaser).

@@ -24,3 +24,13 @@ Dieser Skill optimiert alle technischen und semantischen Metadaten der Kontolage
 - LCP (Largest Contentful Paint) < 1.2s
 - CLS (Cumulative Layout Shift) = 0
 - FID/INP (Interaction to Next Paint) < 50ms
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Metadaten, strukturierte Daten und Core Web Vitals der Kontolage-Seiten deterministisch auf Sichtbarkeit und Neutralität prüfen.
+- **Trigger**: jede Inhalts- oder Template-Änderung, jeder Deploy, oder wenn `tools/verify-seo.mjs` fehlschlägt.
+- **Ablauf**: 1) Titel/Description-Längen prüfen 2) Canonical = eigene Route 3) OpenGraph/Twitter inkl. `summary_large_image` und `og:locale` 4) JSON-LD-Typ prüfen (FAQPage, FinancialCalculator, Article, BreadcrumbList) 5) LCP/CLS/INP gegen Zielwerte messen 6) Ergebnis als `pass|warn` je Feld.
+- **Check**: Metadaten stehen im **Server-HTML** (nicht nur per JS nachgeladen), sind je Route eindeutig und enthalten keine Startseiten-Werte auf Unterseiten. `npm run verify:seo` Exit 0.
+- **Ausgabe**: Prüfprotokoll mit Route, Feld, Ist, Soll, Status — Grundlage für `tools/verify-seo.mjs`.
+- **Fail-Verhalten**: Fehlender oder fremder Canonical, doppelte Title, JSON-LD ohne `inLanguage` oder WpHG-relevante Sprache → Gate schließen, kein Publish. Bei Metrik-Ausreißer: als `warn` melden, nicht schönrechnen.
+- **Ticket-Kopplung**: P0-01 (Prerender), P0-02 (Sitemap), P1-05 (OG-Image), P1-06 (JSON-LD), P1-14 (Registry).

@@ -187,3 +187,13 @@ Score → Evidence Bundle → fact_id[] → source_id[]
 
 Menschenlesbare Forschungsausgaben → `kontenlage-wphg-guardrails`
 Finale Veröffentlichungen → `kontenlage-publish-gate`
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Überprüfbare Fakten aus Quellen extrahieren, Quellen bewerten und versionierte Evidence-Pakete erzeugen — ohne Anlageurteil.
+- **Trigger**: Research-Auftrag, neue Rechts-/Marktlage oder eine Aussage soll erstmals veröffentlicht werden.
+- **Ablauf**: 1) Quellen sammeln und einordnen (Tier 1/2/3/Discovery-only) 2) Relevanz prüfen (authority, topic_relevance, jurisdiction_match, scope_match, temporal_relevance, independence) 3) Fact-Objekte mit `as_of`, `decay_class`, `ttl_policy_ref` anlegen 4) Widersprüche klassifizieren 5) Quorum passend zum Aussagetyp bestimmen 6) Bundle-Status setzen.
+- **Check**: Jeder Fact hat `source_ids`, `jurisdiction` und `as_of`; Quellenkonflikte sind dokumentiert, nicht geglättet; Entdeckungsquellen nie alleinige Evidenz; `provenance_complete` geprüft.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 9 mit `evidence_status`, `research_status` und `next_review_due`.
+- **Fail-Verhalten**: Critical conflict, fehlende passende Primärquelle oder nicht auflösbare Jurisdiktion → `research_status: blocked` und **kein** veröffentlichbarer Wert. Keine Rechtslage ohne Stichtag generalisieren, keinen Social-Media-Befund zu einem Score machen.
+- **Ticket-Kopplung**: P1-06 (Datums-/Quellenangaben im Artikel), P0-03 (Rechts-Gate), P1-14 (Registry).

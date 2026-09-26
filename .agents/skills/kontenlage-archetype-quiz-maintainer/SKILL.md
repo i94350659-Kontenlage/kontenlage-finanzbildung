@@ -58,3 +58,13 @@ Verboten: individuelle Allokation, konkrete Sparrate, konkrete ISIN, "optimal", 
   "publish_status": "pending_gate"
 }
 ```
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Ein Antwortmuster deterministisch einem von maximal 6 redaktionell fixierten Bildungs-Archetypen zuordnen — ohne Eignungsinferenz.
+- **Trigger**: Nutzer schließt den Quiz-Lauf ab (alle Pflichtfragen beantwortet) oder Gewichte/Fragen sollen geändert werden.
+- **Ablauf**: 1) Eingaben validieren (vollständig, Wertebereich) 2) feste Gewichte anwenden 3) aggregieren 4) Archetyp-ID bestimmen 5) Ergebnisformulierung + Übersicht aller Archetypen + Methodik-Hinweis + Disclaimer ausgeben.
+- **Check**: Zuordnung ist reproduzierbar (gleiche Eingabe → gleiches Ergebnis), `logic_version` ist gesetzt, `personalized_recommendation` bleibt `false`, `all_archetypes_visible` ist `true`.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 7 (`proposed_class` = C, `publish_status` = `pending_gate`).
+- **Fail-Verhalten**: Unvollständige Eingaben, unbekannte Gewichte oder fehlende `logic_version` → **kein** Archetyp, sondern Rückfrage/Abbruch. Freitext-Auswertung durch ein LLM zu individueller Eignung ist verboten und wird als Policy-Verstoß protokolliert.
+- **Ticket-Kopplung**: P2-07 (Quiz-Funktion), Governance über `kontenlage-wphg-guardrails` und `kontenlage-publish-gate`.

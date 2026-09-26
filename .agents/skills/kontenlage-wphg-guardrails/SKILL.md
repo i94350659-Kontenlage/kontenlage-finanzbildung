@@ -135,3 +135,13 @@ if compliance_engine_error: FAIL_CLOSED
 ## 12. Fail Closed
 
 Bei Parserfehler, Policy Engine nicht erreichbar, unklarer Klassifikation, fehlender Datenherkunft, widersprüchlicher Regelversion → niemals veröffentlichen.
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Materielle Compliance-Klassifikation (A–F) und Rechtsregime-Einordnung; technische Governance, keine Rechtsberatung.
+- **Trigger**: Jeder menschenlesbare Output vor Veröffentlichung, jede neue Textvorlage, jede Policy-Änderung.
+- **Ablauf**: 1) Gate A (Datenstatus) bestimmen 2) Gate B (Aussageklasse) bestimmen 3) Gate C (Rechtsregime) bestimmen 4) `specific_instrument` + `recommendatory_context` prüfen 5) semantische Materiellprüfung (6 Fragen aus Abschnitt 4) 6) Disclosure-Contract füllen 7) an `publish-gate` übergeben.
+- **Check**: `producer` ist eine real auflösbare Identität; `as_of`, `sources`, `jurisdiction`, `scope` gesetzt; alle drei Gates protokolliert; LLM darf nur `proposed_class` liefern.
+- **Ausgabe**: `proposed_class`, `regulatory_class`, `disclosure`-Objekt, `block_reasons[]`.
+- **Fail-Verhalten**: Jeder Regelverstoß nach Abschnitt 11 führt zu BLOCK, `compliance_engine_error` zu `FAIL_CLOSED`. Das LLM darf E/F nicht herabstufen, keinen Block aufheben und keine Ausnahme erzeugen. Nie „rechtssicher“ oder „lizenzfrei“ behaupten.
+- **Ticket-Kopplung**: P0-03 (AGB/Widerruf/Haftungstexte), P0-05 (Preis-/MwSt.-Angaben), P1-06 (Autor- und Datumsangaben).

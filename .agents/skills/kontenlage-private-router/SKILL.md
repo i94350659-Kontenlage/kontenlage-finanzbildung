@@ -90,3 +90,13 @@ Kein automatischer Pfad `PRIVATE → PUBLIC`. Details und Re-Verify-Pfad: siehe 
   "session_scope": "PRIVATE_OWNER_ONLY"
 }
 ```
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Persönliche Anfragen des Owners absichern und an den passenden Private-Skill routen.
+- **Trigger**: Jede Anfrage mit Private-Owner-Bezug, die nicht in den öffentlichen Pfad gehört.
+- **Ablauf**: 1) Auth-Flag **aus** dem vertrauenswürdigen Infra-Kontext lesen (nie selbst ableiten) 2) bei `false` sofort blockieren 3) Intent klassifizieren 4) an `private-platform-research` oder `private-investment-intelligence` routen 5) Namespace-/Aufbewahrungsregeln bestätigen.
+- **Check**: `auth_source` ist `infra_token`, nie `not_llm_inferred`; `regulatory_context_note` wird immer mitgeführt; private Daten bleiben im privaten Namespace.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 5 (`routed_to`, `data_storage`, `session_scope`).
+- **Fail-Verhalten**: Flag fehlt, ist abgelaufen oder soll aus dem Gespräch abgeleitet werden ⇒ Abbruch mit „nur im Private-Owner-Modus verfügbar“. Unklarer Intent ⇒ Rückfrage, **kein** Raten. Ein privater Kontext hebt niemals regulatorische Grenzen auf.
+- **Ticket-Kopplung**: nicht ticket-gebunden (Owner-Layer); Aufsicht über SOP-007/008 in `.agents/SOP.md`.

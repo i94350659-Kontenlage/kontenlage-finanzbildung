@@ -87,3 +87,13 @@ Predictions an den Owner dürfen NIEMALS reine Fließtexte sein. Sie MÜSSEN fol
 - Ausschließlich sichtbar für den Owner (`is_private_owner == true`).
 - Keine unbegründeten "Top-Optionen".
 - Der Owner entscheidet immer eigenhändig. Keine automatische Orderausführung.
+
+## Betriebsblock (Hermes-Konvention)
+
+- **Zweck**: Quantitative Owner-Szenarien mit Konfidenzbändern statt Fließtext erzeugen und rückprüfbar halten.
+- **Trigger**: Owner fragt nach Szenario, Strategie, Risiko, konkretem Betrag oder „was würdest du tun“.
+- **Ablauf**: 1) 5-Faktoren-Regime-Modell berechnen (Realzins, Kurvenmomentum, Netto-Liquidität, Volatilitätsperzentil, On-Chain) 2) Regime benennen 3) P10/P50/P90-Szenarien mit Triggern und Impact ausgeben 4) deterministische Action-Trigger definieren 5) `review_date` und Backtest-Checkpoint setzen 6) Prediction-ID in `hermes_private_predictions` ablegen.
+- **Check**: `confidence_score` ist kalibriert und nicht gerundet-geschätzt; Szenarien sind probabilistisch, nicht als Punktprognose; Datenstand und Annahmen offen; `review_date` immer gesetzt.
+- **Ausgabe**: Das JSON-Schema aus Abschnitt 2 (`prediction_id`, `macro_regime`, `probabilistic_scenarios`, `review_date`, `backtest_checkpoint`).
+- **Fail-Verhalten**: Fehlende Marktdaten für einen der 5 Faktoren ⇒ `confidence_score` senken und Lücke ausweisen, nicht auffüllen. Scheingenauigkeit, Aktualitätsfehler oder eine als Tatsache formulierte Prognose ⇒ Output verwerfen. Keine automatische Orderausführung, kein „Top-Option“-Urteil.
+- **Ticket-Kopplung**: nicht ticket-gebunden (Owner-Layer); Review-Schleife über H-04 (Wochen-Experiment).

@@ -7,6 +7,8 @@
 //   - Skills mit Präfix "kontolage-" gelten als kanonisch: Fehler blockieren (Exit 1).
 //   - Alle anderen (Legacy "kontenlage-*", Fremdprojekte) erzeugen Warnungen,
 //     damit Aufräum-Schuld sichtbar bleibt, ohne den Lauf zu blockieren.
+//   - Skills, die in .agents/skills-classes.json als "fremd" klassifiziert sind, erzeugen
+//     nur noch Hinweise: sie bleiben nutzbar, zählen aber nicht als offene Migration.
 //   - Secret-Muster und fehlende SKILL.md blockieren immer.
 //   - "--strict" behandelt alle Skills wie kanonische.
 //
@@ -17,6 +19,7 @@ import path from 'node:path'
 const root = process.cwd()
 const skillsDir = path.join(root, '.agents', 'skills')
 const registryFiles = [path.join(root, '.agents', 'SKILLS.md'), path.join(root, '.agents', 'AGENTS.md')]
+const classesFile = path.join(root, '.agents', 'skills-classes.json')
 const reportFile = path.join(root, '.agents', 'skills-audit.json')
 const strict = process.argv.includes('--strict')
 const jsonOnly = process.argv.includes('--json')
@@ -68,18 +71,35 @@ const dirs = listSkillDirs(skillsDir)
 const registry = registryText()
 const results = []
 
+function loadClassOverrides() {
+  if (!fs.existsSync(classesFile)) return {}
+  try {
+    return JSON.parse(fs.readFileSync(classesFile, 'utf8')).klassen ?? {}
+  } catch {
+    console.log('WARNUNG: .agents/skills-classes.json ist kein gültiges JSON - Klassifizierung wird ignoriert.')
+    return {}
+  }
+}
+
+const classOverrides = loadClassOverrides()
+
 for (const dir of dirs) {
-  const canonical = dir.startsWith('kontolage-')
+  const override = classOverrides[dir]
+  const canonical = override?.klasse === 'kanonisch' || (!override && dir.startsWith('kontolage-'))
+  const foreign = override?.klasse === 'fremd' && !strict
   const file = path.join(skillsDir, dir, 'SKILL.md')
   const entry = {
     skill: dir,
     file: path.relative(root, file).replace(/\\/g, '/'),
-    class: canonical ? 'canonical' : 'legacy',
+    class: canonical ? 'canonical' : foreign ? 'foreign' : 'legacy',
+    reason: override?.grund ?? null,
     errors: [],
     warnings: [],
+    notes: [],
   }
   const flag = (message) => {
     if (canonical || strict) entry.errors.push(message)
+    else if (foreign) entry.notes.push(message)
     else entry.warnings.push(`Legacy: ${message}`)
   }
 
@@ -111,7 +131,9 @@ for (const dir of dirs) {
   const brandHits = text.match(/Kontenlage/g) ?? []
   if (brandHits.length > 0) {
     if (text.includes(BRAND_ALLOW_MARKER)) {
-      entry.warnings.push(`historische Schreibweise "Kontenlage" (${brandHits.length}×) — durch "${BRAND_ALLOW_MARKER}" ausdrücklich erlaubt`)
+      // Kein Fehler und keine Migrationsschuld: die alte Schreibweise wird hier
+      // bewusst dokumentiert (z. B. in der Ersetzungsliste des Marken-Skills).
+      entry.notes.push(`historische Schreibweise "Kontenlage" (${brandHits.length}×) — durch "${BRAND_ALLOW_MARKER}" ausdrücklich erlaubt`)
     } else {
       flag(`Marken-Kanon verletzt: ${brandHits.length}× "Kontenlage" (Kanon ist "Kontolage")`)
     }
@@ -129,6 +151,7 @@ for (const dir of dirs) {
 
 const errors = results.reduce((sum, entry) => sum + entry.errors.length, 0)
 const warnings = results.reduce((sum, entry) => sum + entry.warnings.length, 0)
+const notes = results.reduce((sum, entry) => sum + entry.notes.length, 0)
 
 const report = {
   generated_at: new Date().toISOString(),
@@ -138,8 +161,10 @@ const report = {
     skills: results.length,
     canonical: results.filter((entry) => entry.class === 'canonical').length,
     legacy: results.filter((entry) => entry.class === 'legacy').length,
+    foreign: results.filter((entry) => entry.class === 'foreign').length,
     errors,
     warnings,
+    notes,
     ok: results.filter((entry) => entry.errors.length === 0).length,
   },
   skills: results,
@@ -156,9 +181,11 @@ if (jsonOnly) {
     const mark = entry.errors.length > 0 ? 'FEHLER' : entry.warnings.length > 0 ? 'WARNUNG' : 'OK'
     console.log(`  [${mark}] (${entry.class}) ${entry.skill}${entry.errors.length ? ` — ${entry.errors.join('; ')}` : ''}`)
     if (entry.warnings.length) console.log(`          Hinweise: ${entry.warnings.join('; ')}`)
+    if (entry.notes.length) console.log(`          Notiz (fremd): ${entry.notes.join('; ')}${entry.reason ? ` — ${entry.reason}` : ''}`)
   }
-  console.log(`\nErgebnis: ${report.totals.ok}/${results.length} ohne Fehler · ${errors} Fehler · ${warnings} Warnungen`)
-  console.log('Legacy-Warnungen sind Aufräum-Schuld: Zielpräfix für Skills ist "kontolage-".')
+  console.log(`\nErgebnis: ${report.totals.ok}/${results.length} ohne Fehler · ${errors} Fehler · ${warnings} offene Warnungen · ${notes} Fremd-Hinweise`)
+  console.log(`Klassen: ${report.totals.canonical} kanonisch · ${report.totals.legacy} Legacy (offene Migrationsschuld) · ${report.totals.foreign} fremd (in .agents/skills-classes.json dokumentiert)`)
+  console.log('Zielpräfix für eigene Skills ist "kontolage-".')
 }
 
 process.exit(errors > 0 ? 1 : 0)

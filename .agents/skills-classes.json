@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hinweis": "Klassifizierung der Skills ausserhalb des Kontolage-Regelwerks. Diese Skills bleiben nutzbar, erzeugen aber keine offene Migration-Schuld im Audit. Das Zielpraefix fuer eigene Skills bleibt 'kontolage-'.",
+  "klassen": {
+    "merch-badge-design-system": { "klasse": "fremd", "grund": "Merchandise-/Print-on-Demand-Projekt, nicht Kontolage" },
+    "merch-pod-designer": { "klasse": "fremd", "grund": "Merchandise-/Print-on-Demand-Projekt, nicht Kontolage" },
+    "nous-hermes-travel-design": { "klasse": "fremd", "grund": "Design-Persona eines fremden Agenten-Projekts" },
+    "seo-content-optimierung": { "klasse": "fremd", "grund": "Generischer Marketing-Skill ohne Kontolage-Bezug" },
+    "user-cabinet-personalization": { "klasse": "fremd", "grund": "Fremdes Dashboard-Konzept, nicht Kontolage-Kabinett" },
+    "value-proposition-pitch": { "klasse": "fremd", "grund": "Generisches Pitching, nicht Kontolage" },
+    "webapp-ui-ux-frontend": { "klasse": "fremd", "grund": "Generischer Frontend-Skill ohne Kontolage-Bezug" },
+    "zielgruppenanalyse": { "klasse": "fremd", "grund": "Generische Zielgruppenmethode, nicht Kontolage" },
+    "community-posts-feedback": { "klasse": "fremd", "grund": "Community-Feature-Skill eines fremden Projekts" },
+    "auth-billing-affiliate": { "klasse": "fremd", "grund": "Generische Auth-/Billing-Blaupause; Kontolage nutzt Supabase + Stripe direkt" }
+  }
+}
