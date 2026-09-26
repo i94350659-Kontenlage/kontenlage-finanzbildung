@@ -1,0 +1,69 @@
+{
+  "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
+  "updated": "2026-09-25",
+  "disclaimer": "Alle Angaben dienen ausschließlich der allgemeinen Finanzbildung und stellen keine Anlageberatung, Kaufempfehlung oder Steuerberatung dar (Hinweis nach § 2 Abs. 8 Nr. 10 WpHG). Jede Zahl ist mit Quelle und Stichtag belegt; Werte können sich durch Gesetzes- oder Marktentwicklung ändern.",
+  "issues": [
+    {
+      "slug": "steuerreform-2026-2028-grundfreibetrag",
+      "category": "Steuerrecht",
+      "title": "Steuerreform 2026–2028: Grundfreibetrag, degressive AfA & kalte Progression",
+      "teaser": "Wirtschaftswachstums- und Steuerentlastungspaket: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen — mit Paragraph und Stichtag.",
+      "description": "Steuerreform 2026 bis 2028: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen nach § 35a EStG — Auswirkungen mit Quellenangabe.",
+      "h1": "Steuerreform 2026 / 2027 / 2028: Das Entlastungspaket im Detail",
+      "published": "2026-08-27",
+      "asOf": "2026-08-27",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "keywords": ["Steuerreform 2026", "Grundfreibetrag 2026", "degressive AfA Gebäude", "Handwerkerleistungen absetzen"],
+      "rechnerHref": "/rechner?c=immobilien",
+      "sections": [
+        {
+          "heading": "Grundfreibetrag und Tarifkurve (§ 32a EStG)",
+          "body": "Der steuerliche Grundfreibetrag steigt auf über 11.784 € für Alleinstehende. Die Tarifeckwerte werden inflationsbereinigt verschoben, um die kalte Progression bei Gehaltserhöhungen systematisch zu dämpfen."
+        },
+        {
+          "heading": "Degressive Gebäude-AfA (Wachstumschancengesetz)",
+          "body": "Für neu errichtete oder im Jahr der Fertigstellung erworbene Wohngebäude greift eine degressive Abschreibung von bis zu 5 % jährlich auf den Restbuchwert. Das beschleunigt den Steuerstundungseffekt in den ersten sechs Jahren erheblich."
+        },
+        {
+          "heading": "Handwerkerleistungen (§ 35a Abs. 3 EStG)",
+          "body": "Arbeitskosten für Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen können weiterhin mit 20 % von bis zu 6.000 € (maximal 1.200 € direkter Steuerabzug) geltend gemacht werden."
+        }
+      ],
+      "sources": [
+        { "label": "Bundesministerium der Finanzen (BMF) — Bericht zur Steuerprogression", "url": "https://www.bundesfinanzministerium.de", "jurisdiction": "DE", "asOf": "2026-08-27" },
+        { "label": "Einkommensteuergesetz (EStG) §§ 32a, 35a, 7 Abs. 5a", "url": "https://www.gesetze-im-internet.de/estg/", "jurisdiction": "DE", "asOf": "2026-08-27" },
+        { "label": "Beschlüsse des Koalitionsausschusses zur Steuerreform", "url": "https://www.bundesfinanzministerium.de", "jurisdiction": "DE", "asOf": "2026-08-27" }
+      ]
+    },
+    {
+      "slug": "holding-struktur-ab-welchem-depotvolumen",
+      "category": "Unternehmen",
+      "title": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?",
+      "teaser": "Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen.",
+      "description": "Holding und vermögensverwaltende GmbH: § 8b KStG gegen laufende Kosten. Break-even-Rechnung mit Annahmen und Quellenangabe.",
+      "h1": "Die vermögensverwaltende GmbH: Mathematik statt Berater-Mythen",
+      "published": "2026-08-26",
+      "asOf": "2026-08-26",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": ["Holding Kosten vs Nutzen", "Spardosen GmbH Rechner", "§ 8b KStG Schachtelprivileg", "Vermögensverwaltende GmbH"],
+      "rechnerHref": "/holding",
+      "sections": [
+        {
+          "heading": "Das Schachtelprivileg (§ 8b Abs. 1 und 2 KStG)",
+          "body": "Gewinne aus der Veräußerung von Aktien gelten zu 95 % als steuerfrei. Die verbleibenden 5 % werden pauschal als nicht abzugsfähige Betriebsausgabe behandelt und mit rund 30 % Ertragssteuern (KSt und GewSt) belegt. Die effektive Steuerlast liegt damit bei etwa 1,54 %."
+        },
+        {
+          "heading": "Die Kostenfalle: laufende Fixkosten",
+          "body": "Eine GmbH erfordert doppelte Buchführung, Eröffnungs- und Schlussbilanz beim Steuerberater (ca. 1.500–2.500 € pro Jahr), IHK-Beitrag (ca. 150–300 €) und Bundesanzeiger-Veröffentlichung. Der Mindestgewinn vor Steuern liegt bei etwa 12.000–15.000 € pro Jahr."
+        }
+      ],
+      "sources": [
+        { "label": "Körperschaftsteuergesetz (KStG) § 8b Abs. 1 und 2", "url": "https://www.gesetze-im-internet.de/kstg/", "jurisdiction": "DE", "asOf": "2026-08-26" },
+        { "label": "Gewerbesteuergesetz (GewStG) § 9 Nr. 1 (Erweiterte Kürzung)", "url": "https://www.gesetze-im-internet.de/gewstg/", "jurisdiction": "DE", "asOf": "2026-08-26" },
+        { "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu vermögensverwaltenden Gesellschaften", "url": "https://www.bundesfinanzhof.de", "jurisdiction": "DE", "asOf": "2026-08-26" }
+      ]
+    }
+  ]
+}

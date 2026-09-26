@@ -86,7 +86,7 @@ const duplicates = []
 
 function jsonLdFor(route, url) {
   const graph = []
-  if (route.type === 'article') {
+  if (route.type === 'article' || route.type === 'newsletter') {
     graph.push({
       '@type': 'Article',
       headline: route.h1,
@@ -98,6 +98,15 @@ function jsonLdFor(route, url) {
       author: { '@type': 'Organization', name: 'Redaktion Kontolage' },
       publisher: { '@type': 'Organization', name: 'Kontolage', url: site },
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      ...(route.sources?.length
+        ? {
+            citation: route.sources.map((entry) => ({
+              '@type': 'CreativeWork',
+              name: entry.label,
+              url: entry.url,
+            })),
+          }
+        : {}),
     })
   } else {
     graph.push({
@@ -133,8 +142,27 @@ function shellFor(route) {
   const sections = (route.sections ?? [])
     .map((section) => `<h2 style="font-size:20px;margin:30px 0 8px;color:#f0ece4">${escapeHtml(section.heading)}</h2>\n    <p style="margin:0;color:#cdc6be;line-height:1.8">${escapeHtml(section.body)}</p>`)
     .join('\n    ')
+  // Quellenblock: Teil des Server-HTML, damit Google die Belege ohne JS-Ausfuehrung sieht.
+  const sources = (route.sources ?? []).length
+    ? `<h2 style="font-size:18px;margin:34px 0 8px;color:#f0ece4">Quellen und Stichtag</h2>\n    <ul style="list-style:none;padding:0;margin:0">${route.sources
+        .map(
+          (entry) => `<li style="margin-bottom:6px"><a href="${escapeHtml(entry.url)}" style="color:#e2c27d;text-decoration:none">${escapeHtml(entry.label)}</a> — ${escapeHtml(entry.jurisdiction)}, Stand ${escapeHtml(entry.asOf)}</li>`,
+        )
+        .join('')}</ul>`
+    : ''
   const showArticles = route.type === 'article' || route.path === '/' || route.path === '/artikel'
   const list = showArticles ? `<h2 style="font-size:20px;margin:34px 0 8px;color:#f0ece4">Fachartikel</h2>\n    <ul style="list-style:none;padding:0;margin:0">${articleLinks}</ul>` : ''
+  // Interne Verlinkung: das Archiv verlinkt jede Ausgabe, damit Google die
+  // Ausgaben als zusammenhängendes Thema erfasst.
+  const issueLinks = route.path === '/newsletter'
+    ? `<h2 style="font-size:20px;margin:34px 0 8px;color:#f0ece4">Alle Ausgaben</h2>\n    <ul style="list-style:none;padding:0;margin:0">${registry.routes
+        .filter((entry) => entry.type === 'newsletter')
+        .map(
+          (entry) =>
+            `<li style="margin-bottom:6px"><a href="${entry.path}" style="color:#e2c27d;text-decoration:none">${escapeHtml(entry.h1)}</a> — ${escapeHtml(entry.updated ?? '')}</li>`,
+        )
+        .join('')}</ul>`
+    : ''
   return `<div style="min-height:100vh;background:#111827;color:#f0ece4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
   <header style="border-bottom:1px solid rgba(201,168,76,0.15);padding:18px 24px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px">
     <a href="/" style="font-size:20px;font-weight:700;color:#e2c27d;text-decoration:none;letter-spacing:0.04em">Kontolage.de</a>
@@ -144,7 +172,9 @@ function shellFor(route) {
     <h1 style="font-size:clamp(26px,4vw,42px);line-height:1.2;margin:0 0 18px;color:#faf8f4">${escapeHtml(route.h1)}</h1>
     <p style="font-size:17px;line-height:1.8;color:#cdc6be;margin:0 0 18px">${escapeHtml(route.intro)}</p>
     ${sections}
+    ${sources}
     ${list}
+    ${issueLinks}
   </main>
   <section style="max-width:900px;margin:0 auto;padding:0 24px 48px;font-size:13px;color:#a89f94;line-height:1.75">
     <p style="margin:0">${escapeHtml(registry.disclaimer ?? '')}</p>

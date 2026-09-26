@@ -9,6 +9,8 @@
     "typecheck": "npm --prefix webseitenversionen/4.9.2026 run typecheck",
     "verify:live": "node tools/verify-live.mjs",
     "verify:seo": "node tools/verify-seo.mjs",
-    "audit:skills": "node tools/hermes-skill-audit.mjs"
+    "audit:skills": "node tools/hermes-skill-audit.mjs",
+    "lint:newsletter": "node tools/newsletter-lint.mjs",
+    "scan:secrets": "node tools/secret-scan.mjs"
   }
 }

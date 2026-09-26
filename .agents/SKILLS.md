@@ -84,6 +84,7 @@ Unter 0,70: keine Veröffentlichung; Fallback-Content plus Review-Ticket.
 | SKILL-11 | `kontolage-billing-tax-guardian` | Stripe Tax, Rechnungen, Webhook-Gesundheit, Secret-Hygiene | P0-05, P0-07, P1-09, P1-10 |
 | SKILL-12 | `kontolage-brand-consistency-guardian` | „Kontolage" als Kanon durchsetzen, Tonalität prüfen | P1-07 |
 | SKILL-13 | `kontolage-self-improvement-loop` | Hypothese → Metrik → Experiment → Learnings → Rollout | H-04, P2-06 |
+| SKILL-20 | `kontolage-newsletter-editor` | Aus Evidence-Bundle eine quellenbelegte Ausgabe bauen: `free` → `content/newsletter.json` (SEO-Archiv `/newsletter`), `pro`/`executive` → Tabelle `newsletter_issues` (nur Edge Function) | P2-03, P1-14, P1-06, P0-03 |
 | SKILL-14 | `webapp-ui-ux-frontend` | UI/UX-Umsetzung im bestehenden Designsystem | P1-03, P1-12, P2-01 |
 | SKILL-15 | `user-cabinet-personalization` | Kabinett-/Konto-Personalisierung ohne Beratungscharakter | P2-01, P2-07 |
 | SKILL-16 | `kontenlage-programmatic-tax-seo` | Massen-SEO für Steuerrechner-Landeseiten (Kanon § 10 EStG, § 20 Abs. 9, § 21) | P2-04, P2-06 |

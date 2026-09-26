@@ -342,6 +342,138 @@
       "readTime": "9 Min.",
       "changefreq": "monthly",
       "priority": "0.8"
+    },
+    {
+      "path": "/newsletter",
+      "type": "page",
+      "title": "Kontolage-Ausgaben: Steuer- und Anlagethemen mit Quellen",
+      "description": "Nachrechenbare Ausgaben zu Steuern, Anlagen und Unternehmensstruktur  jede Zahl mit Quelle, Paragraph und Stichtag. Kostenlos lesbar, ohne Anmeldung.",
+      "h1": "Kontolage-Ausgaben",
+      "intro": "Regelmäßige Ausgaben zu Steuerrecht, Anlageklassen und Unternehmensstruktur. Jede Aussage mit Quellenangabe und Stichtag, getrennt nach Fakten, Modellen und Szenarien.",
+      "changefreq": "weekly",
+      "priority": "0.8",
+      "sections": [
+        {
+          "heading": "Steuerrecht  27.8.2026",
+          "body": "Steuerreform 2026–2028: Grundfreibetrag, degressive AfA & kalte Progression: Wirtschaftswachstums- und Steuerentlastungspaket: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen — mit Paragraph und Stichtag. (Stand 2026-08-27, 3 Quellen)"
+        },
+        {
+          "heading": "Unternehmen  26.8.2026",
+          "body": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?: Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen. (Stand 2026-08-26, 3 Quellen)"
+        }
+      ]
+    },
+    {
+      "path": "/newsletter/steuerreform-2026-2028-grundfreibetrag",
+      "type": "newsletter",
+      "slug": "steuerreform-2026-2028-grundfreibetrag",
+      "category": "Steuerrecht",
+      "h1": "Steuerreform 2026 / 2027 / 2028: Das Entlastungspaket im Detail",
+      "title": "Steuerreform 2026–2028: Grundfreibetrag, degressive AfA & kalte Progression",
+      "description": "Steuerreform 2026 bis 2028: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen nach § 35a EStG — Auswirkungen mit Quellenangabe.",
+      "teaser": "Wirtschaftswachstums- und Steuerentlastungspaket: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen — mit Paragraph und Stichtag.",
+      "intro": "Wirtschaftswachstums- und Steuerentlastungspaket: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen — mit Paragraph und Stichtag.",
+      "published": "2026-08-27",
+      "updated": "2026-08-27",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner?c=immobilien",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Grundfreibetrag und Tarifkurve (§ 32a EStG)",
+          "body": "Der steuerliche Grundfreibetrag steigt auf über 11.784 € für Alleinstehende. Die Tarifeckwerte werden inflationsbereinigt verschoben, um die kalte Progression bei Gehaltserhöhungen systematisch zu dämpfen."
+        },
+        {
+          "heading": "Degressive Gebäude-AfA (Wachstumschancengesetz)",
+          "body": "Für neu errichtete oder im Jahr der Fertigstellung erworbene Wohngebäude greift eine degressive Abschreibung von bis zu 5 % jährlich auf den Restbuchwert. Das beschleunigt den Steuerstundungseffekt in den ersten sechs Jahren erheblich."
+        },
+        {
+          "heading": "Handwerkerleistungen (§ 35a Abs. 3 EStG)",
+          "body": "Arbeitskosten für Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen können weiterhin mit 20 % von bis zu 6.000 € (maximal 1.200 € direkter Steuerabzug) geltend gemacht werden."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Bundesministerium der Finanzen (BMF) — Bericht zur Steuerprogression",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-27"
+        },
+        {
+          "label": "Einkommensteuergesetz (EStG) §§ 32a, 35a, 7 Abs. 5a",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-27"
+        },
+        {
+          "label": "Beschlüsse des Koalitionsausschusses zur Steuerreform",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-27"
+        }
+      ],
+      "keywords": [
+        "Steuerreform 2026",
+        "Grundfreibetrag 2026",
+        "degressive AfA Gebäude",
+        "Handwerkerleistungen absetzen"
+      ]
+    },
+    {
+      "path": "/newsletter/holding-struktur-ab-welchem-depotvolumen",
+      "type": "newsletter",
+      "slug": "holding-struktur-ab-welchem-depotvolumen",
+      "category": "Unternehmen",
+      "h1": "Die vermögensverwaltende GmbH: Mathematik statt Berater-Mythen",
+      "title": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?",
+      "description": "Holding und vermögensverwaltende GmbH: § 8b KStG gegen laufende Kosten. Break-even-Rechnung mit Annahmen und Quellenangabe.",
+      "teaser": "Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen.",
+      "intro": "Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen.",
+      "published": "2026-08-26",
+      "updated": "2026-08-26",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/holding",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Das Schachtelprivileg (§ 8b Abs. 1 und 2 KStG)",
+          "body": "Gewinne aus der Veräußerung von Aktien gelten zu 95 % als steuerfrei. Die verbleibenden 5 % werden pauschal als nicht abzugsfähige Betriebsausgabe behandelt und mit rund 30 % Ertragssteuern (KSt und GewSt) belegt. Die effektive Steuerlast liegt damit bei etwa 1,54 %."
+        },
+        {
+          "heading": "Die Kostenfalle: laufende Fixkosten",
+          "body": "Eine GmbH erfordert doppelte Buchführung, Eröffnungs- und Schlussbilanz beim Steuerberater (ca. 1.500–2.500 € pro Jahr), IHK-Beitrag (ca. 150–300 €) und Bundesanzeiger-Veröffentlichung. Der Mindestgewinn vor Steuern liegt bei etwa 12.000–15.000 € pro Jahr."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Körperschaftsteuergesetz (KStG) § 8b Abs. 1 und 2",
+          "url": "https://www.gesetze-im-internet.de/kstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        },
+        {
+          "label": "Gewerbesteuergesetz (GewStG) § 9 Nr. 1 (Erweiterte Kürzung)",
+          "url": "https://www.gesetze-im-internet.de/gewstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        },
+        {
+          "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu vermögensverwaltenden Gesellschaften",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        }
+      ],
+      "keywords": [
+        "Holding Kosten vs Nutzen",
+        "Spardosen GmbH Rechner",
+        "§ 8b KStG Schachtelprivileg",
+        "Vermögensverwaltende GmbH"
+      ]
     }
   ]
 }

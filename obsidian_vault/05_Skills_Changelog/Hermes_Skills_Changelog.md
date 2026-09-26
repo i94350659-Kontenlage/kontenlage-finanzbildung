@@ -26,3 +26,18 @@
 - [UPDATE] `webseitenversionen/4.9.2026/src/pages/ArtikelDetail.tsx`: 14 verbliebene „Kontenlage"-Vorkommen in Autorangaben auf „Kontolage" korrigiert.
 - [CHORE] Migration `202609250002_kuendigung_ohne_login.sql` → `202609250005_kuendigung_ohne_login.sql` umbenannt, damit die zeitliche Reihenfolge im Migrationslauf eindeutig bleibt.
 
+## v6.5 (2026-09-26) — Kontolage-Ausgaben (Newsletter ohne Versand) + Secret-Scan
+- [DECISION] Owner-Entscheid vom 2026-09-25: Ausgaben erscheinen **auf der Website**, kein E-Mail-Versand, keine Adresssammlung. Konsequenz: kein Mailchimp-Anschluss, keine Double-Opt-In-Pflicht, keine SMTP-Abhängigkeit.
+- [ADD] `content/newsletter.json` — Registry der freien Ausgaben als Single Source of Truth (Slug, Kategorie, Titel, Teaser, Description, Abschnitte, Quellen mit Jurisdiktion/Stichtag, Rechner-Deep-Link, Keywords).
+- [ADD] `src/pages/Newsletter.tsx` (Archiv) und `src/pages/NewsletterIssue.tsx` (Ausgabe) plus Routen `/newsletter` und `/newsletter/:slug`, Footer-Eintrag.
+- [ADD] `supabase/migrations/202609250006_newsletter.sql` — `newsletter_issues` mit `tier` (free/pro/executive), RLS über `newsletter_tier_rank()` und `newsletter_active_plan()` (SECURITY DEFINER gegen RLS-Rekursion). Kernregel im Kommentar: bezahlte Texte gehören **nicht** ins Repository.
+- [ADD] `supabase/functions/newsletter/index.ts` — GET-Liste und GET-Einzelausgabe; gesperrte Ausgaben liefern nur Vorschau + `locked`, fail-closed bei unbekanntem Tarif; Rate-Limit 20/60 min anonym, 60/60 min angemeldet.
+- [ADD] `src/components/MemberAusgaben.tsx` — Ausgaben im Kabinett (`/konto`), Aufruf der Edge Function mit Session-Token, Vorschau-Modus ohne Abo.
+- [ADD] `supabase/seed/newsletter.sql` — zwei gesperrte Beispielausgaben (pro, executive) für den Start.
+- [ADD] `tools/newsletter-lint.mjs` — blockt fehlende Quellen/Stichtage/Jurisdiktion, ungültige Stufen, fehlende Routen-Registrierung und Empfehlungssprache; **verhindert explizit, dass eine gesperrte Ausgabe in die öffentliche Registry wandert**.
+- [ADD] `tools/secret-scan.mjs` + CI-Schritt. Anlass: zwei echte Schlüssel im Klartext im öffentlichen Repo gefunden.
+- [FIX] `tools/prerender-routes.mjs` — `newsletter` gilt als `Article` (JSON-LD inkl. `citation`), Quellenblock und interne Ausgaben-Verlinkung werden ins Server-HTML geschrieben. Damit sind Text und Belege ohne JavaScript sichtbar.
+- [FIX] Security: Mailchimp-Key und Printify-Token aus `scripts/` entfernt, beide Skripte lesen jetzt ausschließlich aus der Umgebung und brechen ohne Wert ab.
+- [ADD] SKILL-20 `kontolage-newsletter-editor` — Evidence-Bundle → Ausgabe, mit Stufenregel (free ins Repo, pro/executive in die DB) und Fail-Verhalten.
+- [RESULT] Build Exit 0 · Bundle-Guard bestanden · Newsletter-Lint 0 Fehler · Secret-Scan 0 Funde · Skill-Audit 31 Skills, 0 Fehler.
+

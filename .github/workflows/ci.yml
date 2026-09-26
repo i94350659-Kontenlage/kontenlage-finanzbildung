@@ -1,4 +1,4 @@
-name: CI — Build, Typecheck, Bundle-Guard, Governance
+name: CI — Build, Typecheck, Bundle-Guard, Secret-Scan, Governance
 
 on:
   push:
@@ -36,6 +36,12 @@ jobs:
 
       - name: Bundle-Guard und Prerender-Nachweis
         run: npm run guard
+
+      - name: Secret-Scan (hart kodierte Schluessel)
+        run: npm run scan:secrets
+
+      - name: Newsletter-Lint (Quellen, Stichtag, Stufen)
+        run: npm run lint:newsletter
 
       - name: Skill-Governance
         run: node tools/hermes-skill-audit.mjs

@@ -1,16 +1,24 @@
 /**
- * Mailchimp Integration Helper for Kontenlage
+ * Mailchimp Integration Helper for Kontolage
  * Audience ID: c3728821fc (kontenlage)
  * Server Prefix: us5
+ *
+ * SICHERHEIT: Der API-Key wird ausschliesslich aus der Umgebung gelesen.
+ * Bis 2026-09-25 stand hier ein Schluessel im Klartext (Commit 4cdc80c) — dieser
+ * muss im Mailchimp-Backend widerrufen und neu erzeugt werden (siehe TODOperHAND.md).
+ * Key nie in Dateien, nie in Commits, nie in Logs.
  */
 
 const https = require('https');
 
-const MAILCHIMP_API_KEY = 'f69fba0d24c4049395fdcffff6c3b7a4-us5';
-const AUDIENCE_ID = 'c3728821fc';
-const DATACENTER = 'us5';
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY || '';
+const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID || 'c3728821fc';
+const DATACENTER = process.env.MAILCHIMP_DATACENTER || MAILCHIMP_API_KEY.split('-').pop() || '';
 
 function subscribeLead(email, firstName) {
+  if (!MAILCHIMP_API_KEY) {
+    return Promise.reject(new Error('MAILCHIMP_API_KEY ist nicht gesetzt (Umgebungsvariable fehlt).'));
+  }
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
       email_address: email,
@@ -59,7 +67,16 @@ function subscribeLead(email, firstName) {
 
 // Quick Test Execution
 if (require.main === module) {
-  subscribeLead('test.lead@kontenlage.de', 'TestUser');
+  if (!MAILCHIMP_API_KEY) {
+    console.error('Abbruch: MAILCHIMP_API_KEY fehlt. Key kommt ausschliesslich aus der Umgebung.');
+    process.exit(1);
+  }
+  const testEmail = process.env.MAILCHIMP_TEST_EMAIL || '';
+  if (!testEmail) {
+    console.error('Abbruch: MAILCHIMP_TEST_EMAIL fehlt (kein Versand an echte Adressen im Testlauf).');
+    process.exit(1);
+  }
+  subscribeLead(testEmail, process.env.MAILCHIMP_TEST_NAME || 'Test');
 }
 
 module.exports = { subscribeLead };

@@ -79,6 +79,7 @@ const plans = [
       { text: "Druckfertige Steuer-Dossiers (PDF-Export)", included: true },
       { text: "Excel-Rechenmodelle (Holding, Fünftel)", included: true },
       { text: "Kabinett Zugang (Exklusiv-Analysen)", included: true },
+      { text: "Pro-Ausgaben im Kabinett (nur hier, nicht öffentlich)", included: true },
       { text: "ELSTER Vorlagen & Steuerformulare", included: false },
       { text: "B2B Gehaltspaket-Analyse", included: false },
       { text: "Prioritäts-Support (48h)", included: false },
@@ -102,6 +103,7 @@ const plans = [
       { text: "B2B Gehaltspaket-Analyse (GGF-Gehalt)", included: true },
       { text: "Prioritäts-Support (Antwort in < 24h)", included: true },
       { text: "Early Access zu neuen Steuer-Features", included: true },
+      { text: "Executive-Ausgaben: B2B-Deep-Dives mit Quellen", included: true },
     ],
     cta: "Executive wählen",
     planKey: "executive",
@@ -114,7 +116,8 @@ const faqs = [
   { q: "Gibt es eine Testphase mit Abofalle?", a: "Nein — und das ist Firmenphilosophie. Die Basis-Version ist dauerhaft kostenlos. Kein versteckter Übergang in ein kostenpflichtiges Abo." },
   { q: "Wie werden Zahlungen verarbeitet?", a: "Die Zahlungsabwicklung erfolgt über Stripe Checkout. Zahlungsdaten werden nicht in Kontolage-Rechnern gespeichert. Im Sandbox-Modus werden keine echten Zahlungen ausgeführt." },
   { q: "Erhalte ich eine ordnungsgemäße Rechnung mit USt?", a: "Rechnungsstellung, USt-Ausweis und gegebenenfalls Reverse-Charge-Angaben werden vor dem produktiven Abo-Freischalten steuerlich geprüft und im Checkout transparent ausgewiesen." },
-  { q: "Was ist das Kabinett?", a: "Das Kabinett ist der geschützte Bereich für Pro- und Executive-Mitglieder mit vertieften Analysen, Excel-Modelldateien und Satzungsvorlagen." },
+  { q: "Was ist das Kabinett?", a: "Das Kabinett ist der geschützte Bereich für Pro- und Executive-Mitglieder mit vertieften Analysen, Excel-Modelldateien, Satzungsvorlagen und den exklusiven Kontolage-Ausgaben. Geschützte Ausgaben werden technisch nur nach Prüfung der Mitgliedschaft ausgeliefert und stehen nicht im öffentlichen Seiteninhalt." },
+  { q: "Erhalte ich die Ausgaben per E-Mail?", a: "Nein. Die Kontolage-Ausgaben erscheinen direkt auf kontolage.de unter „Ausgaben“ und — soweit sie Ihrem Tarif vorbehalten sind — in Ihrem Kabinett unter /konto. Es werden keine Ausgaben per E-Mail versendet, und für die Anmeldung wird keine E-Mail-Adresse zu Werbezwecken gespeichert." },
 ];
 
 export default function Abo() {

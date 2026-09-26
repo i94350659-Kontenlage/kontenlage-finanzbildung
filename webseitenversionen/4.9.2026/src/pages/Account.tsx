@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
+import MemberAusgaben from "../components/MemberAusgaben";
 
 type AccountResponse = {
   user: { id: string; email: string | null };
@@ -13,8 +14,8 @@ type AccountResponse = {
 const catalog = {
   basis: { name: "Basis", price: 0, tagline: "Kostenloser Einblick in Rechner und Wochenartikel.", features: ["1 Bildungsartikel pro Woche", "Basis-Rechner (Rürup, Sparerpauschbetrag)", "PDF-Checkliste Steuerjahr 2026"] },
   starter: { name: "Starter", price: 4.9, tagline: "Erweiterte Rechner und alle Artikel ohne Limit.", features: ["Unbegrenzter Artikelzugang", "Sparplan- und Basis-Rechner", "Steuer-Kalender 2026"] },
-  pro: { name: "Pro Digital", price: 9, tagline: "Vollständiger Zugang für Privatanleger.", features: ["Alle Rechner und Szenarien", "Druckfertige Steuer-Dossiers (PDF)", "Excel-Rechenmodelle (Holding, Fünftel)"] },
-  executive: { name: "Executive B2B", price: 29, tagline: "Für Selbständige, Freiberufler und Holdings.", features: ["Holding-Strukturierungsmodell (§8b KStG)", "ELSTER-Vorlagen (ESt, USt, GewSt)", "Prioritäts-Support innerhalb von 24 h"] },
+  pro: { name: "Pro Digital", price: 9, tagline: "Vollständiger Zugang für Privatanleger.", features: ["Alle Rechner und Szenarien", "Druckfertige Steuer-Dossiers (PDF)", "Excel-Rechenmodelle (Holding, Fünftel)", "Pro-Ausgaben im Kabinett"] },
+  executive: { name: "Executive B2B", price: 29, tagline: "Für Selbständige, Freiberufler und Holdings.", features: ["Holding-Strukturierungsmodell (§8b KStG)", "ELSTER-Vorlagen (ESt, USt, GewSt)", "Prioritäts-Support innerhalb von 24 h", "Pro- und Executive-Ausgaben"] },
 } as const;
 type PlanKey = keyof typeof catalog;
 
@@ -461,6 +462,17 @@ export default function Account() {
                   onConfirm={() => void invokeBilling("cancel-subscription")}
                 />
               )}
+
+              <div style={cardStyle}>
+                <div style={mutedMonoStyle}>Kontolage-Ausgaben</div>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: "#f0ece4", margin: "8px 0 6px" }}>Exklusive Ausgaben für Ihr Abo</h2>
+                <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: "0 0 20px" }}>
+                  Diese Ausgaben erscheinen ausschließlich hier im Kabinett — nicht im öffentlichen
+                  Seiteninhalt. Der Text wird erst nach Prüfung Ihrer Mitgliedschaft ausgeliefert.
+                  {activePaid ? "" : " Mit einem aktiven Abo schalten sich die exklusiven Ausgaben frei."}
+                </p>
+                <MemberAusgaben plan={activePaid ? (account?.subscription?.plan ?? "free") : "free"} />
+              </div>
 
               <div style={cardStyle}>
                 <div style={mutedMonoStyle}>Profil</div>

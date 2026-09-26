@@ -34,6 +34,7 @@ export default function Footer() {
               { to: "/abo", label: "Basis (kostenlos)" },
               { to: "/abo", label: "Pro Digital" },
               { to: "/abo", label: "Executive" },
+              { to: "/newsletter", label: "Ausgaben" },
               { to: "/kabinett", label: "Kabinett Login" },
             ]},
             { label: "Rechtliches", items: [

@@ -4,6 +4,16 @@
 > Hier stehen **ausschließlich** Dinge, die Zugänge, Unterschriften, Zahlungen oder juristische Entscheidungen brauchen.
 > Nach Erledigung: Häkchen setzen und im Kanban (`docs/kanban.md`) den Ticketstatus nachziehen.
 
+## 0. DRINGEND: Schluessel im Git widerrufen (2026-09-26)
+
+> Beim Bau des Ausgaben-Archiv hat der neue Secret-Scann zwei echte Lecks im oeffentlichen Repo gefunden.
+> Der Code ist bereinigt, aber ein Schlüssel im Git-Verlauf gilt als kompromittiert, auch wenn er entfernt wird.
+
+- [ ] **Printify-API-Token widerrufen** (lag in `scripts/test_printify_api.js`, Commit `264eb3f`): Printify-Backend -> token revoken, neu erzeugen, nur noch als `PRINTIFY_API_TOKEN` in der Umgebung ablegen. -> traegt P0-08
+- [ ] **Mailchimp-API-Key widerrufen** (lag in `scripts/mailchimp_subscribe.js`, Commit `4cdc80c`, Audience `c3728821fc`): Mailchimp -> Account -> Extras -> API keys -> alten Key loeschen, neu erzeugen, als `MAILCHIMP_API_KEY` in der Umgebung ablegen. -> traegt P0-08
+- [ ] **Git-History pruefen**: `git log -S <teil-des-schluessels>` und ggf. mit `git filter-repo` bereinigen. Vorher Backup des Repos anlegen (force-push ist nicht rueckgaengig zu machen).
+- [x] ~~Code bereinigen~~ -> erledigt am 2026-09-26: beide Skripte lesen den Schluessel nur noch aus der Umgebung und brechen ohne Wert ab; `tools/secret-scan.mjs` laeuft in CI und meldet 0 Funde. Der Scan prueft Stripe, Printify/Supabase-JWT, Mailchimp, AWS, Google und Private Keys.
+
 ## 1. Recht (höchste Priorität – blockiert jeden Verkauf)
 
 - [ ] **Firmen-/Betreiberdaten** bereitstellen für Impressum und Datenschutz: Firma oder Inhaber, Anschrift, Telefon, E-Mail, Registergericht, Registernummer, USt-IdNr., verantwortliche Person nach § 18 Abs. 2 MStV. → trägt P0-04
