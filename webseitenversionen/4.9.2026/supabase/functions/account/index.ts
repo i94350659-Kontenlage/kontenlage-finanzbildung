@@ -10,7 +10,7 @@ Deno.serve(async (request) => {
   const options = preflight(request);
   if (options) return options;
   if (!isOriginAllowed(request)) return json(request, { error: "Origin nicht erlaubt" }, 403);
-  if (request.method !== "GET") return json(request, { error: "Method Not Allowed" }, 405);
+  if (request.method !== "GET" && request.method !== "POST") return json(request, { error: "Method Not Allowed" }, 405);
   try {
     const { user } = await requireUser(request);
     const db = serviceClient();

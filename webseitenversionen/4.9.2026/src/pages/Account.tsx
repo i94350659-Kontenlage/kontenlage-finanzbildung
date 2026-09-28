@@ -147,10 +147,37 @@ export default function Account() {
   const [checkoutState, setCheckoutState] = useState<"success" | "cancelled" | null>(null);
 
   const fetchAccount = useCallback(async () => {
-    const { data, error: invokeError } = await supabase.functions.invoke<AccountResponse>("account");
-    if (invokeError) throw new Error(invokeError.message);
-    if (!data) throw new Error("Konto konnte nicht geladen werden.");
-    return data;
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke<AccountResponse>("account", { method: "GET" });
+      if (!invokeError && data) return data;
+    } catch {
+      // Edge function failed or returned non-2xx; try resilient fallback
+    }
+
+    // Robuster Fallback über direkte Supabase Auth & RLS-Tabellen:
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    if (!currentUser) throw new Error("Nicht angemeldet.");
+
+    const [profileRes, subRes] = await Promise.all([
+      supabase.from("profiles").select("id,email,display_name,created_at").eq("id", currentUser.id).maybeSingle(),
+      supabase.from("subscriptions").select("plan,status,current_period_end,updated_at,stripe_customer_id,stripe_subscription_id").eq("user_id", currentUser.id).maybeSingle(),
+    ]);
+
+    const sub = subRes.data;
+    return {
+      user: { id: currentUser.id, email: currentUser.email ?? null },
+      profile: profileRes.data ?? { id: currentUser.id, email: currentUser.email ?? null, display_name: null, created_at: null },
+      subscription: sub ? {
+        plan: sub.plan,
+        status: sub.status,
+        current_period_end: sub.current_period_end,
+        updated_at: sub.updated_at,
+      } : null,
+      billing: {
+        has_customer: !!sub?.stripe_customer_id,
+        has_subscription: !!sub?.stripe_subscription_id,
+      },
+    };
   }, []);
 
   const load = useCallback(async () => {
