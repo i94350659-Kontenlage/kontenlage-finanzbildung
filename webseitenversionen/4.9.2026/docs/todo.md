@@ -37,8 +37,8 @@
 - [x] Footer: Links auf AGB, Widerruf, Datenschutz, Impressum, Transparenz
 - [~] `/abo`: AGB-/Widerruf-Links ergänzt; **Endpreise „inkl. 19 % MwSt."** erst nach Klärung Umsatzsteuerstatus (siehe `TODOperHAND.md`)
 - [~] Plan-Preise/Perioden aus Konfiguration — Struktur vorhanden, finale Werte nach deiner Preisentscheidung
-- [!] `Impressum.tsx`: echte Daten einsetzen, `§ 5 TMG` → `§ 5 DDG` (braucht Betreiberdaten)
-- [!] `Datenschutz.tsx`: Supabase/Stripe/Vercel nennen, `localStorage` korrigieren (braucht Freigabe)
+- [~] `Impressum.tsx`: Gesetzliche Paragraphen auf `§ 5 DDG`, `§ 7 DDG` und `§ 18 Abs. 2 MStV` aktualisiert, fiktive GmbH-Daten bereinigt; offene Einsetzung der realen Betreiberdaten
+- [x] `Datenschutz.tsx`: Supabase, Stripe, Vercel AVV und `localStorage`-Nutzung transparent deklariert (2026-09-28)
 - [!] Stripe Dashboard: Tax aktivieren, Registrierung DE, Rechnungsdaten
 - [!] Supabase Secret `STRIPE_AUTOMATIC_TAX=true`
 - [x] Checkout-Parameter: `locale=de`, `allow_promotion_codes`; SEPA über Tax-Billing aktiviert sich automatisch
