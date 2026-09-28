@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { useSubscription } from "../hooks/useSubscription";
+import ExecutiveDownloads from "../components/ExecutiveDownloads";
 
 function PageHeader() {
   return (
@@ -181,7 +183,7 @@ function SteuerfBenefits() {
 }
 
 
-function ThesaurierungsRechner() {
+function ThesaurierungsRechner({ isUnlocked, planName }: { isUnlocked: boolean; planName: string }) {
   const [kapital, setKapital] = useState(250000);
   const [rendite, setRendite] = useState(8);
   const [jahre, setJahre] = useState(20);
@@ -195,6 +197,26 @@ function ThesaurierungsRechner() {
   const endwertPrivat = Math.round(kapital * Math.pow(1 + nettoRenditePrivat, jahre));
   const endwertGmbH = Math.round(kapital * Math.pow(1 + nettoRenditeGmbH, jahre));
   const mehrwertGmbH = endwertGmbH - endwertPrivat;
+
+  const downloadCashflowCsv = () => {
+    const header = "Jahr;Holding_Bestand_EUR;Privat_Bestand_EUR;Steuersatz_Holding_pct;Steuersatz_Privat_pct;Vorteil_Holding_p_a_EUR;Kumulierter_Vorteil_Holding_EUR\n";
+    const years = [1, 2, 3, 4, 5, 7, 10, 15, 20];
+    const rows = years.map(yr => {
+      const gmbh = Math.round(kapital * Math.pow(1 + nettoRenditeGmbH, yr));
+      const priv = Math.round(kapital * Math.pow(1 + nettoRenditePrivat, yr));
+      const diff = gmbh - priv;
+      return `${yr};${gmbh};${priv};1.54;26.375;${diff};${diff}`;
+    }).join("\n");
+    const blob = new Blob(["\uFEFF" + header + rows], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `kontolage-holding-matrix-${kapital}eur-${rendite}pct.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const yearsToDisplay = [1, 2, 3, 5, 10, 15, 20];
 
   return (
     <div style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.65), rgba(30,41,59,0.8))", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 36 }}>
@@ -244,55 +266,100 @@ function ThesaurierungsRechner() {
         </div>
       </div>
 
-      {/* Pro & Executive Gated Cashflow Matrix */}
-      <div style={{ position: "relative", marginTop: 24, borderRadius: 10, overflow: "hidden", border: "1px solid rgba(201,168,76,0.2)" }}>
-        <div style={{ filter: "blur(4px)", opacity: 0.3, pointerEvents: "none", padding: 24, background: "rgba(10,15,30,0.8)" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+      {/* Pro & Executive Cashflow Matrix */}
+      <div style={{ position: "relative", marginTop: 24, borderRadius: 10, overflow: "hidden", border: "1px solid rgba(201,168,76,0.25)" }}>
+        {isUnlocked && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", background: "rgba(10,18,36,0.9)", borderBottom: "1px solid rgba(201,168,76,0.2)", flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ color: "#4ade80", fontWeight: 700, fontSize: 14 }}>✓</span>
+              <span style={{ fontSize: 13, color: "#cdc6be", fontWeight: 600 }}>
+                Break-Even Matrix &amp; Bilanz freigeschaltet ({planName})
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={downloadCashflowCsv}
+              style={{
+                padding: "8px 16px",
+                borderRadius: 6,
+                background: "linear-gradient(135deg, #c9a84c, #e2c27d)",
+                color: "#0C1825",
+                fontSize: 12,
+                fontWeight: 700,
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 2px 8px rgba(201,168,76,0.3)",
+              }}
+            >
+              📊 CSV-Export für Excel herunterladen
+            </button>
+          </div>
+        )}
+
+        <div style={{
+          filter: isUnlocked ? "none" : "blur(4px)",
+          opacity: isUnlocked ? 1 : 0.3,
+          pointerEvents: isUnlocked ? "auto" : "none",
+          padding: 24,
+          background: "rgba(10,15,30,0.85)"
+        }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-                <th style={{ textAlign: "left", padding: 8 }}>Jahr</th>
-                <th style={{ textAlign: "right", padding: 8 }}>GmbH-Bestand</th>
-                <th style={{ textAlign: "right", padding: 8 }}>Privat-Bestand</th>
-                <th style={{ textAlign: "right", padding: 8 }}>KSt & GewSt (§9 Nr. 1)</th>
-                <th style={{ textAlign: "right", padding: 8 }}>Netto-Vorteil</th>
+              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.15)", color: "#c9a84c" }}>
+                <th style={{ textAlign: "left", padding: "10px 8px" }}>Jahr</th>
+                <th style={{ textAlign: "right", padding: "10px 8px" }}>GmbH-Bestand</th>
+                <th style={{ textAlign: "right", padding: "10px 8px" }}>Privat-Bestand</th>
+                <th style={{ textAlign: "right", padding: "10px 8px" }}>KSt &amp; GewSt (§9 Nr. 1)</th>
+                <th style={{ textAlign: "right", padding: "10px 8px" }}>Holding-Vorteil</th>
               </tr>
             </thead>
             <tbody>
-              {[1, 5, 10, 15, 20].map(yr => (
-                <tr key={yr} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <td style={{ padding: 8 }}>Jahr {yr}</td>
-                  <td style={{ textAlign: "right", padding: 8 }}>{(kapital * Math.pow(1.078, yr)).toFixed(0)} €</td>
-                  <td style={{ textAlign: "right", padding: 8 }}>{(kapital * Math.pow(1.058, yr)).toFixed(0)} €</td>
-                  <td style={{ textAlign: "right", padding: 8 }}>1,54 %</td>
-                  <td style={{ textAlign: "right", padding: 8, color: "#4ade80" }}>+{(kapital * 0.12 * yr).toFixed(0)} €</td>
-                </tr>
-              ))}
+              {yearsToDisplay.map(yr => {
+                const gmbh = Math.round(kapital * Math.pow(1 + nettoRenditeGmbH, yr));
+                const priv = Math.round(kapital * Math.pow(1 + nettoRenditePrivat, yr));
+                const diff = gmbh - priv;
+                return (
+                  <tr key={yr} style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                    <td style={{ padding: "10px 8px", color: "#cdc6be" }}>Jahr {yr}</td>
+                    <td style={{ textAlign: "right", padding: "10px 8px", fontFamily: "var(--font-mono)", color: "#e2c27d" }}>{gmbh.toLocaleString("de-DE")} €</td>
+                    <td style={{ textAlign: "right", padding: "10px 8px", fontFamily: "var(--font-mono)", color: "#a89f94" }}>{priv.toLocaleString("de-DE")} €</td>
+                    <td style={{ textAlign: "right", padding: "10px 8px", fontFamily: "var(--font-mono)", color: "#86efac" }}>1,54 %</td>
+                    <td style={{ textAlign: "right", padding: "10px 8px", fontFamily: "var(--font-mono)", color: "#4ade80", fontWeight: 600 }}>+{diff.toLocaleString("de-DE")} €</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
-        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(10,15,30,0.82)", backdropFilter: "blur(6px)", padding: 24, textAlign: "center" }}>
-          <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "3px 10px", borderRadius: 12, marginBottom: 8, textTransform: "uppercase" }}>PRO &amp; EXECUTIVE EXKLUSIV</div>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "#f0ece4", marginBottom: 6 }}>Detaillierte Jahres-Steuerbilanz &amp; Break-Even-Matrix</div>
-          <p style={{ fontSize: 12, color: "#a89f94", maxWidth: 480, marginBottom: 14 }}>
-            Inklusive IHK-Freibetrag, laufender Steuerberatergebühren, erweiterter Gewerbesteuerkürzung bei Immobilien (§ 9 Nr. 1 Satz 2 GewStG) und CSV-Export.
-          </p>
-          <Link to="/abo" style={{ padding: "8px 20px", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontWeight: 700, borderRadius: 6, textDecoration: "none", fontSize: 12 }}>
-            Vollständige Matrix freischalten (ab 9 €) →
-          </Link>
-        </div>
+
+        {!isUnlocked && (
+          <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(10,15,30,0.82)", backdropFilter: "blur(6px)", padding: 24, textAlign: "center" }}>
+            <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "3px 10px", borderRadius: 12, marginBottom: 8, textTransform: "uppercase" }}>PRO &amp; EXECUTIVE EXKLUSIV</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "#f0ece4", marginBottom: 6 }}>Detaillierte Jahres-Steuerbilanz &amp; Break-Even-Matrix</div>
+            <p style={{ fontSize: 12, color: "#a89f94", maxWidth: 480, marginBottom: 14 }}>
+              Inklusive IHK-Freibetrag, laufender Steuerberatergebühren, erweiterter Gewerbesteuerkürzung bei Immobilien (§ 9 Nr. 1 Satz 2 GewStG) und CSV-Export.
+            </p>
+            <Link to="/abo" style={{ padding: "8px 20px", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontWeight: 700, borderRadius: 6, textDecoration: "none", fontSize: 12 }}>
+              Vollständige Matrix freischalten (ab 9 €) →
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 export default function Holding() {
+  const { isPro, isExecutive } = useSubscription();
   const [activeSection, setActiveSection] = useState(0);
+
+  const planName = isExecutive ? "Executive B2B" : isPro ? "Pro Digital" : "";
 
   const sections = [
     { label: "VV-GmbH / Holding", component: <VVGmbH /> },
     { label: "Fünftelregelung §34", component: <Fuenftelregelung /> },
     { label: "Steuerfreie Benefits", component: <SteuerfBenefits /> },
-    { label: "Thesaurierungs-Rechner", component: <ThesaurierungsRechner /> },
+    { label: "Thesaurierungs-Rechner", component: <ThesaurierungsRechner isUnlocked={isPro || isExecutive} planName={planName} /> },
   ];
 
   return (
@@ -315,38 +382,69 @@ export default function Holding() {
 
           {sections[activeSection].component}
 
-          {/* Executive & Pro Membership Feature Gate */}
-          <div style={{ background: "linear-gradient(145deg, rgba(30,55,105,0.9), rgba(15,25,48,0.95))", border: "2px solid #c9a84c", borderRadius: 12, padding: "36px 32px", marginTop: 40, boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 20 }}>
-              <div>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "4px 12px", borderRadius: 20, textTransform: "uppercase" }}>
-                  👑 Executive B2B Modell
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, color: "#f0ece4", marginTop: 12, marginBottom: 8 }}>
-                  Holding-Vertragswerk &amp; Vollständiges Excel-Berechnungsmodell
-                </h3>
-                <p style={{ fontSize: 14, color: "#a89f94", maxWidth: 640, lineHeight: 1.7 }}>
-                  Schalten Sie das vollständige Modell frei: Inklusive notarieller Mustersatzung für die VV-GmbH,
-                  Holding-Mustervertrag nach §8b KStG, Gewinnausschüttungs-Beschluss und dynamischer Excel-Kalkulation
-                  für Steuerberater und Holding-Gründer.
-                </p>
-                <div style={{ display: "flex", gap: 16, marginTop: 16, fontSize: 13, color: "#cdc6be" }}>
-                  <span>✓ Sofortiger Excel-Download</span>
-                  <span>·</span>
-                  <span>✓ Satzung &amp; Notar-Muster</span>
-                  <span>·</span>
-                  <span>✓ Monatlich kündbar</span>
+          {/* Executive B2B Modell & Vorlagen-Hub */}
+          {isExecutive ? (
+            <div style={{ background: "linear-gradient(145deg, rgba(30,55,105,0.95), rgba(15,25,48,0.98))", border: "2px solid #c9a84c", borderRadius: 12, padding: "36px 32px", marginTop: 40, boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
+                <div>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "4px 12px", borderRadius: 20, textTransform: "uppercase" }}>
+                    👑 Executive B2B · Vollzugriff Aktiv
+                  </span>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, color: "#f0ece4", marginTop: 12, marginBottom: 8 }}>
+                    Holding-Vertragswerk &amp; B2B-Downloadtresor
+                  </h3>
+                  <p style={{ fontSize: 14, color: "#a89f94", maxWidth: 680, lineHeight: 1.7 }}>
+                    Ihr Executive B2B Abonnement ist freigeschaltet. Sie haben direkten Zugriff auf alle notariellen Mustersatzungen,
+                    Holding-Gewinnausschüttungsbeschlüsse, Excel-Rechenmodelle und ELSTER-Anleitungen.
+                  </p>
                 </div>
-              </div>
-              <div style={{ textAlign: "center", minWidth: 200 }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#c9a84c" }}>29 €</div>
-                <div style={{ fontSize: 12, color: "#a89f94", marginBottom: 14 }}>/ Monat (ohne Bindung)</div>
-                <Link to="/abo" style={{ display: "inline-block", width: "100%", padding: "12px 24px", borderRadius: 6, background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontFamily: "var(--font-display)", fontSize: 13, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 15px rgba(201,168,76,0.3)" }}>
-                  Executive freischalten →
+                <Link to="/konto" style={{ padding: "8px 18px", borderRadius: 6, border: "1px solid rgba(201,168,76,0.5)", background: "rgba(201,168,76,0.1)", color: "#e2c27d", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                  Mein Konto &amp; Rechnungen →
                 </Link>
               </div>
+
+              <ExecutiveDownloads isUnlocked={true} />
             </div>
-          </div>
+          ) : (
+            <div style={{ background: "linear-gradient(145deg, rgba(30,55,105,0.9), rgba(15,25,48,0.95))", border: "2px solid #c9a84c", borderRadius: 12, padding: "36px 32px", marginTop: 40, boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 20 }}>
+                <div>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 700, color: "#0C1825", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", padding: "4px 12px", borderRadius: 20, textTransform: "uppercase" }}>
+                    👑 Executive B2B Modell
+                  </span>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, color: "#f0ece4", marginTop: 12, marginBottom: 8 }}>
+                    Holding-Vertragswerk &amp; Vollständiges Excel-Berechnungsmodell
+                  </h3>
+                  <p style={{ fontSize: 14, color: "#a89f94", maxWidth: 640, lineHeight: 1.7 }}>
+                    Schalten Sie das vollständige Modell frei: Inklusive notarieller Mustersatzung für die VV-GmbH,
+                    Holding-Mustervertrag nach §8b KStG, Gewinnausschüttungs-Beschluss und dynamischer Excel-Kalkulation
+                    für Steuerberater und Holding-Gründer.
+                  </p>
+                  <div style={{ display: "flex", gap: 16, marginTop: 16, fontSize: 13, color: "#cdc6be" }}>
+                    <span>✓ Sofortiger Excel-Download</span>
+                    <span>·</span>
+                    <span>✓ Satzung &amp; Notar-Muster</span>
+                    <span>·</span>
+                    <span>✓ Monatlich kündbar</span>
+                  </div>
+                </div>
+                <div style={{ textAlign: "center", minWidth: 200 }}>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#c9a84c" }}>29 €</div>
+                  <div style={{ fontSize: 12, color: "#a89f94", marginBottom: 14 }}>/ Monat (ohne Bindung)</div>
+                  <Link to="/abo" style={{ display: "inline-block", width: "100%", padding: "12px 24px", borderRadius: 6, background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontFamily: "var(--font-display)", fontSize: 13, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 15px rgba(201,168,76,0.3)" }}>
+                    Executive freischalten →
+                  </Link>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 24 }}>
+                <div style={{ fontSize: 12, color: "#e2c27d", fontWeight: 600, marginBottom: 8 }}>
+                  Enthaltene B2B-Vorlagen &amp; Dokumente (Vorschau verfügbar):
+                </div>
+                <ExecutiveDownloads isUnlocked={false} />
+              </div>
+            </div>
+          )}
 
           <div style={{ marginTop: 40, padding: "24px", background: "rgba(6,9,18,0.6)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
             <div style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.8 }}>

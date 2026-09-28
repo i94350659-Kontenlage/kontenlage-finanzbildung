@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 import MemberAusgaben from "../components/MemberAusgaben";
+import ExecutiveDownloads from "../components/ExecutiveDownloads";
 
 type AccountResponse = {
   user: { id: string; email: string | null };
@@ -499,6 +500,21 @@ export default function Account() {
                   {activePaid ? "" : " Mit einem aktiven Abo schalten sich die exklusiven Ausgaben frei."}
                 </p>
                 <MemberAusgaben plan={activePaid ? (account?.subscription?.plan ?? "free") : "free"} />
+              </div>
+
+              <div style={cardStyle}>
+                <div style={mutedMonoStyle}>
+                  {account?.subscription?.plan === "executive" ? "👑 Executive B2B · Freigeschaltet" : "Executive B2B Modelle"}
+                </div>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: "#f0ece4", margin: "8px 0 6px" }}>
+                  Holding-Vertragswerk &amp; Rechenmodelle
+                </h2>
+                <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: "0 0 20px" }}>
+                  {activePaid && account?.subscription?.plan === "executive"
+                    ? "Als Executive B2B Mitglied stehen Ihnen alle notariellen Mustersatzungen, Holding-Ausschüttungsbeschlüsse, 20-Jahres-Excel-Rechenmodelle und ELSTER-Leitfäden direkt zur Verfügung."
+                    : "Notarielle Mustersatzung (§8b KStG), Holding-Ausschüttungsbeschluss, Excel-Rechenmodell und ELSTER-Anleitungen sind im Executive B2B Tarif enthalten."}
+                </p>
+                <ExecutiveDownloads isUnlocked={activePaid && account?.subscription?.plan === "executive"} />
               </div>
 
               <div style={cardStyle}>

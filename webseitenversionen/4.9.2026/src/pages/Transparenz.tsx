@@ -26,12 +26,13 @@ export default function Transparenz() {
               Wie Kontolage finanziert wird
             </h2>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 28 }} className="transp-grid">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 28 }} className="transp-grid">
               {[
                 { label: "Basis-Abo", value: "0 €/Monat", desc: "Kostenlos, keine Kreditkarte erforderlich", icon: "✓" },
-                { label: "Pro Digital", value: "9 €/Monat", desc: "Unbegrenzter Zugang, alle Inhalte", icon: "✓" },
-                { label: "Executive", value: "29 €/Monat", desc: "ELSTER-Vorlagen, B2B-Analyse", icon: "✓" },
-                { label: "Provisionen von Produktanbietern", value: "0 €", desc: "Wir erhalten keine Provision", icon: "✗" },
+                { label: "Starter", value: "4,90 €/Monat", desc: "Unbegrenzter Artikelzugang & Rechner-Exporte", icon: "✓" },
+                { label: "Pro Digital", value: "9 €/Monat", desc: "Alle Rechner, PDF-Dossiers & Excel-Modelle", icon: "✓" },
+                { label: "Executive B2B", value: "29 €/Monat", desc: "Holding-Vertragswerk, Mustersatzung & ELSTER-Vorlagen", icon: "✓" },
+                { label: "Provisionen von Anbietern", value: "0 €", desc: "100% unabhängig — keine Vermittlungsprovisionen", icon: "✗" },
               ].map(i => (
                 <div key={i.label} style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.6), rgba(30,41,59,0.75))", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "20px 22px", display: "flex", gap: 16 }}>
                   <div style={{ fontSize: 18, color: i.icon === "✓" ? "#c9a84c" : "#a89f94", flexShrink: 0, fontWeight: 700 }}>{i.icon}</div>
