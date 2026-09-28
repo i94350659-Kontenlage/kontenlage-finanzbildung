@@ -25,8 +25,8 @@
 ## 2. Stripe (Kontoaktionen)
 
 - [ ] Stripe Dashboard: **Stripe Tax aktivieren**, Registrierung Deutschland anlegen, Rechnungsprofil (Firmenname, Anschrift, USt-IdNr.) pflegen.
-- [ ] Supabase Secret **`STRIPE_AUTOMATIC_TAX=true`** setzen (Dashboard → Edge Functions → Secrets).
-- [ ] **Webhook anlegen**: `https://tberfzrzfkwoytgqlpij.supabase.co/functions/v1/stripe-webhook` mit den Events `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`. Danach `tools/stripe-webhook-setup.ps1 -Mode test` ausführen. → trägt P0-07
+- [x] ~~Supabase Secret `STRIPE_AUTOMATIC_TAX=true` setzen~~ → **erledigt am 2026-09-28**: per Supabase CLI gesetzt und verifiziert.
+- [x] ~~Webhook anlegen~~ → **erledigt am 2026-09-28**: Endpoint `we_1UJcNkL9kVIkJrXZijhHpJAW` auf Stripe aktiv verknüpft mit `https://tberfzrzfkwoytgqlpij.supabase.co/functions/v1/stripe-webhook`, `STRIPE_WEBHOOK_SECRET` und neuer API-Key in Supabase aktiv. → trägt P0-07
 - [ ] **Testkauf** mit Karte `4242 4242 4242 4242` durchspielen: Registrierung → Checkout → Tarif aktiv in `/konto` → Kündigung → Status „canceling".
 - [ ] Zahlungsarten prüfen/aktivieren (Karte, SEPA-Lastschrift) und ggf. Promo-Codes freischalten.
 
@@ -55,12 +55,12 @@
 ## 7. Wenn alles oben erledigt ist
 
 - [ ] `docs/kanban.md` gegenlesen und P0 auf `DONE` setzen.
-- [ ] `node tools/verify-seo.mjs` und `node tools/health-check.mjs` laufen lassen (Ergebnis aktuell: **241/241** SEO-Prüfungen und **36/36** Health-Checks, beide live grün).
+- [x] ~~`node tools/verify-seo.mjs` und `node tools/health-check.mjs` laufen lassen~~ → **erledigt am 2026-09-28**: **268/268** SEO-Prüfungen und **39/39** Health-Checks live auf `https://kontolage.de` grün (Exit 0).
 - [ ] Freigabe für den ersten echten Zahlungsvorgang erteilen.
 ## 8. Optional, wenn Zeit ist
 
 - [x] ~~Git-Stand versionieren~~ → **Commits liegen lokal.** Rebase mit Remote ist bereits sauber erfolgt!
-- [ ] **Push ausführen** (Stand 2026-09-28: `git pull --rebase origin main` wurde bereits erfolgreich und konfliktfrei ausgeführt, Sicherungsbranch `backup-before-rebase-2026-09-28` existiert). Es muss nur noch im Terminal mit GitHub-Rechten `git push origin main` ausgeführt werden.
+- [x] ~~Push ausführen~~ → **erledigt am 2026-09-28**: Branch `main` vollständig nach `origin/main` gepusht, Vercel Production Deploy live!
 - [x] ~~17 Legacy-Skills auf kanonische Frontmatter heben~~ → **Betriebsblöcke ergänzt am 2026-09-25** (14 Skills um Zweck/Trigger/Ablauf/Check/Ausgabe/Fail-Verhalten/Ticket-Kopplung erweitert, ohne Inhaltsverlust). Audit: 30 Skills, 0 Fehler, **0 offene Warnungen**, 10 Fremd-Hinweise.
 - [ ] Optional: Ordner-Umbenennung `kontenlage-*` → `kontolage-*` (15 Skills). **Achtung:** `source-evaluator`, `content-drafter`, `wphg-guardrails` und `publish-gate` verweisen namentlich aufeinander — alle Aufrufer mitschieben. Endziel-Metrik: `node tools/hermes-skill-audit.mjs --strict` (aktuell 9 Fehler, Exit 1).
 - [ ] P2-Backlog priorisieren (PDF/Excel-Export, Newsletter-Funnel, cookieless Analytics).
