@@ -39,7 +39,7 @@
 
 - [ ] **Supabase Pro-Tier** (25 $/Monat) mit eigener SMTP-Anbindung (Resend/Brevo) buchen — sonst laufen Bestätigungs-, Reset- und Kündigungs-Mails ungebrandet und mit Free-Tier-Limit. Templates liegen fertig in `supabase/templates/`. → trägt P1-09
 - [ ] Entscheidung zu cookieless Analytics (Vercel Web Analytics) und ob ein KPI-Zugang (Search Console) für Hermes freigegeben wird. → trägt P2-06
-- [ ] Optional: Vercel-Node-Version im Projekt auf `22.x` angleichen (`.vercel/project.json` meldet 24.x, Projekt fordert 22.x).
+- [x] ~~Vercel-Node-Version im Projekt auf `22.x` angleichen~~ → **erledigt**: `.vercel/project.json` steht auf `"nodeVersion": "22.x"` und `.nvmrc` auf `22`.
 
 ## 5. Marke
 
@@ -59,8 +59,8 @@
 - [ ] Freigabe für den ersten echten Zahlungsvorgang erteilen.
 ## 8. Optional, wenn Zeit ist
 
-- [x] ~~Git-Stand versionieren~~ → **Commits liegen lokal (ahead 11).** Offen bleibt nur der **Push**.
-- [ ] **Push ausführen** (Stand 2026-09-25: `ahead 11, behind 6`). Die 6 Remote-Commits stammen ausschließlich vom Hermes-Wochen-Cron (`obsidian_vault/Drafts/*`, `obsidian_vault/Learnings.md`, `HERMES_WEEKLY_REFLECTION_*`, `package-lock.json`) und berühren **keinen** App-Code. Vorgehen: `git pull --rebase origin main` → bei Konflikten in `package-lock.json` und `obsidian_vault/Learnings.md` auflösen (lokale Fassung behalten, danach `npm install`) → `npm run build` als Gegenprobe → `git push`.
+- [x] ~~Git-Stand versionieren~~ → **Commits liegen lokal.** Rebase mit Remote ist bereits sauber erfolgt!
+- [ ] **Push ausführen** (Stand 2026-09-28: `git pull --rebase origin main` wurde bereits erfolgreich und konfliktfrei ausgeführt, Sicherungsbranch `backup-before-rebase-2026-09-28` existiert). Es muss nur noch im Terminal mit GitHub-Rechten `git push origin main` ausgeführt werden.
 - [x] ~~17 Legacy-Skills auf kanonische Frontmatter heben~~ → **Betriebsblöcke ergänzt am 2026-09-25** (14 Skills um Zweck/Trigger/Ablauf/Check/Ausgabe/Fail-Verhalten/Ticket-Kopplung erweitert, ohne Inhaltsverlust). Audit: 30 Skills, 0 Fehler, **0 offene Warnungen**, 10 Fremd-Hinweise.
 - [ ] Optional: Ordner-Umbenennung `kontenlage-*` → `kontolage-*` (15 Skills). **Achtung:** `source-evaluator`, `content-drafter`, `wphg-guardrails` und `publish-gate` verweisen namentlich aufeinander — alle Aufrufer mitschieben. Endziel-Metrik: `node tools/hermes-skill-audit.mjs --strict` (aktuell 9 Fehler, Exit 1).
 - [ ] P2-Backlog priorisieren (PDF/Excel-Export, Newsletter-Funnel, cookieless Analytics).
