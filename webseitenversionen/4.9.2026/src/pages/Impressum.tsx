@@ -31,6 +31,10 @@ Telefon: +49 30 000 000 00 (Mo–Fr 9–17 Uhr)`,
               content: "Max Mustermann (Geschäftsführer)",
             },
             {
+              heading: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
+              content: "Max Mustermann (Geschäftsführer)\nMusterstraße 12\n10115 Berlin",
+            },
+            {
               heading: "Registereintrag",
               content: `Eingetragen im Handelsregister
 Registergericht: Amtsgericht Berlin-Charlottenburg
@@ -46,7 +50,7 @@ Registernummer: HRB 000000 B`,
             },
             {
               heading: "Haftungsausschluss für Inhalte",
-              content: "Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr. Als Diensteanbieter sind wir gemäß §7 Abs. 1 TMG für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Gemäß §§8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
+              content: "Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Gemäß §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
             },
             {
               heading: "Urheberrecht",

@@ -5,20 +5,20 @@ export default function Datenschutz() {
       body: "Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten innerhalb unseres Onlineangebotes auf. Kontolage erhebt und verarbeitet nur die Daten, die für den Betrieb der Plattform zwingend erforderlich sind.",
     },
     {
-      heading: "2. Cookies und Tracking",
-      body: "Kontolage setzt keine Tracking-Cookies, keine Drittanbieter-Analytics und keine Werbecookies ein. Technisch notwendige Session-Cookies (z.B. für den Login-Bereich) werden nur für die Dauer der Sitzung gespeichert und enthalten keine personenbezogenen Daten über den Sitzungstoken hinaus.",
+      heading: "2. Cookies, LocalStorage und Hosting",
+      body: "Kontolage setzt keine Tracking-Cookies, keine Drittanbieter-Werbenetzwerke und kein profilbildendes Verhaltens-Tracking ein. Für den Betrieb der Webanwendung nutzen wir den Hosting-Dienstleister Vercel Inc. (440 N Barranca Ave #4133, Covina, CA 91723, USA) auf Basis eines Auftragsverarbeitungsvertrags (AVV) gem. Art. 28 DSGVO mit Standardvertragsklauseln (SCC). Technisch notwendige Informationen (wie Auth-Sitzungstoken und lokal erstellte Rechner-Szenarien) werden im lokalen Speicher Ihres Browsers (LocalStorage) hinterlegt. Diese Daten verbleiben auf Ihrem Endgerät und werden nicht an Werbenetzwerke weitergegeben.",
     },
     {
-      heading: "3. Berechnungen und eingegebene Daten",
-      body: "Alle Berechnungen (Rürup-Rechner, Sparerpauschbetrag, AfA) werden ausschließlich lokal in Ihrem Browser durchgeführt. Es werden keine Eingabedaten (Einkommen, Steuerklasse, etc.) an unsere Server übertragen oder gespeichert.",
+      heading: "3. Berechnungen und Rechner-Eingaben",
+      body: "Alle Berechnungen (z. B. Rürup-Rechner, Sparerpauschbetrag, AfA, Holding-Modelle) werden primär clientseitig im Browser kalkuliert. Rechnerdaten werden nur dann serverseitig gespeichert, wenn Sie als eingeloggtes Mitglied ein Szenario explizit in Ihrem Konto sichern.",
     },
     {
-      heading: "4. Kontodaten (Mitglieder)",
-      body: "Wenn Sie ein Konto anlegen, verarbeiten wir: E-Mail-Adresse (zur Authentifizierung und Kommunikation), verschlüsseltes Passwort (niemals im Klartext gespeichert), Abonnementstatus und Zahlungshistorie (ohne Zahlungsmittelinformationen). Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).",
+      heading: "4. Mitglieder-Konto & Datenbank (Supabase)",
+      body: "Zur Bereitstellung des geschützten Mitgliederbereichs und der Datenbank nutzen wir Supabase Inc. (Singapur / Hosting im AWS-Rechenzentrum Frankfurt am Main, Deutschland, EU-Region). Gespeichert werden: E-Mail-Adresse, Authentifizierungsdaten (Passwörter nur als kryptografischer Hash), Abonnement-Status und optional von Ihnen gespeicherte Rechner-Szenarien. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).",
     },
     {
-      heading: "5. Zahlungsdaten",
-      body: "Zahlungen werden über einen zertifizierten Zahlungsdienstleister abgewickelt. Kartennummern, IBAN oder ähnliche Daten werden nie auf unseren Servern gespeichert. Wir erhalten lediglich eine Transaktionsbestätigung.",
+      heading: "5. Zahlungsabwicklung (Stripe)",
+      body: "Die Zahlungsabwicklung für kostenpflichtige Abonnements erfolgt über Stripe Payments Europe, Ltd. (1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irland). Bei einem Kauf werden die zur Vertragsabwicklung erforderlichen Zahlungs- und Rechnungsdaten direkt von Stripe erhoben und verarbeitet. Kontolage selbst erhält und speichert keine Kreditkartennummern oder Bankverbindungen, sondern lediglich Zahlungsstatus und Transaktions-IDs. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.",
     },
     {
       heading: "6. E-Mail-Kommunikation",
