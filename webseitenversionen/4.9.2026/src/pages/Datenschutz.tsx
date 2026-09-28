@@ -30,7 +30,7 @@ export default function Datenschutz() {
     },
     {
       heading: "8. Verantwortlicher",
-      body: "Kontolage GmbH · Musterstraße 12 · 10115 Berlin · datenschutz@kontolage.de\n\nBeschwerden können bei der zuständigen Datenschutzbehörde eingereicht werden: Berliner Beauftragte für Datenschutz und Informationsfreiheit, Friedrichstr. 219, 10969 Berlin.",
+      body: "Kontolage – Bildungsplattform für Finanzen & Steuern · [Inhaber / Betreiber: Vorname Nachname] · [Straße Hausnummer, PLZ Ort] · E-Mail: datenschutz@kontolage.de\n\nBeschwerden können bei der zuständigen Datenschutzbehörde eingereicht werden.",
     },
     {
       heading: "9. Aktualität",

@@ -16,33 +16,26 @@ export default function Impressum() {
           {[
             {
               heading: "Angaben gemäß § 5 DDG",
-              content: `Kontolage GmbH (Beispiel)
-Musterstraße 12
-10115 Berlin
+              content: `Kontolage – Bildungsplattform für Finanzen & Steuern
+Inhaber / Betreiber: [Vorname Nachname]
+[Straße und Hausnummer]
+[PLZ Ort]
 Deutschland`,
             },
             {
               heading: "Kontakt",
               content: `E-Mail: kontakt@kontolage.de
-Telefon: +49 30 000 000 00 (Mo–Fr 9–17 Uhr)`,
-            },
-            {
-              heading: "Vertreten durch",
-              content: "Max Mustermann (Geschäftsführer)",
+Webseite: https://kontolage.de`,
             },
             {
               heading: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
-              content: "Max Mustermann (Geschäftsführer)\nMusterstraße 12\n10115 Berlin",
+              content: `[Vorname Nachname]
+[Straße und Hausnummer]
+[PLZ Ort]`,
             },
             {
-              heading: "Registereintrag",
-              content: `Eingetragen im Handelsregister
-Registergericht: Amtsgericht Berlin-Charlottenburg
-Registernummer: HRB 000000 B`,
-            },
-            {
-              heading: "Umsatzsteuer-ID",
-              content: "Umsatzsteuer-Identifikationsnummer gemäß §27a UStG: DE000000000",
+              heading: "Umsatzsteuer",
+              content: "Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: [Wird nach Zuteilung ergänzt / Gemäß § 19 UStG wird keine Umsatzsteuer berechnet]",
             },
             {
               heading: "Aufsichtsbehörde",
