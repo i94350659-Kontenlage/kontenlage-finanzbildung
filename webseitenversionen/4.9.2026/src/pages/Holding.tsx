@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useSubscription } from "../hooks/useSubscription";
 import ExecutiveDownloads from "../components/ExecutiveDownloads";
+import VermoegensCockpit from "../components/VermoegensCockpit";
 import { generateHoldingExcelCsv, triggerCsvDownload } from "../lib/excelModelGenerator";
 
 function PageHeader() {
@@ -352,6 +353,7 @@ export default function Holding() {
     { label: "Fünftelregelung §34", component: <Fuenftelregelung /> },
     { label: "Steuerfreie Benefits", component: <SteuerfBenefits /> },
     { label: "Thesaurierungs-Rechner", component: <ThesaurierungsRechner isUnlocked={isPro || isExecutive} planName={planName} /> },
+    { label: "👑 Gesamt-Vermögens-Cockpit", component: <VermoegensCockpit isUnlocked={isExecutive} /> },
   ];
 
   return (

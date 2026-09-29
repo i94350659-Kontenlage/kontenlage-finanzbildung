@@ -21,6 +21,15 @@ export default function ExecutiveDownloads({ isUnlocked = true }: { isUnlocked?:
   const [modelRendite, setModelRendite] = useState(7.0);
   const [modelFixkosten, setModelFixkosten] = useState(1800);
 
+  // Dynamic parameters for legal templates (Stammdaten)
+  const [firmaHolding, setFirmaHolding] = useState("Alpha Beteiligungen");
+  const [sitzHolding, setSitzHolding] = useState("Frankfurt am Main");
+  const [gruenderName, setGruenderName] = useState("Max Mustermann");
+  const [stammkapital, setStammkapital] = useState(25000);
+  const [tochterFirma, setTochterFirma] = useState("Alpha Digital Operations");
+  const [ausschuettung, setAusschuettung] = useState(100000);
+  const [showConfig, setShowConfig] = useState(false);
+
   // Generate dynamic CSV content with live Excel formulas
   const dynamicCsvContent = generateHoldingExcelCsv({
     startkapital: modelKapital,
@@ -76,19 +85,32 @@ export default function ExecutiveDownloads({ isUnlocked = true }: { isUnlocked?:
       format: "Notarentwurf (.doc / .txt)",
       filename: "kontolage-vv-gmbh-mustersatzung.doc",
       description: "Rechtssicherer Gesellschaftsvertrag für die vermögensverwaltende Holding mit Schutzklauseln für die erweiterte Gewerbesteuerkürzung und Vinkulierung.",
-      content: `MUSTERSATZUNG EINER VERMÖGENSVERWALTENDEN GMBH (HOLDING)
-(Rechtlich geprüft nach GmbHG, § 8b KStG und § 9 Nr. 1 Satz 2 GewStG)
+      content: `================================================================================
+RECHTLICHER HINWEIS GEMÄSS § 2 ABS. 1 RDG & § 1 STBERG:
+Dieses Dokument ist ein redaktionelles, standardisiertes Muster und eine
+Formulierungshilfe der Kontolage-Redaktion zur Information und Vorbereitung auf
+Beratungs- und Notartermine. Es stellt ausdrücklich KEINE Rechtsberatung im Sinne
+des Rechtsdienstleistungsgesetzes (RDG) und KEINE Steuerberatung im Sinne des
+Steuerberatungsgesetzes (StBerG) dar. Es begründet kein Mandats- oder
+Beratungsverhältnis. Die Nutzung erfolgt eigenverantwortlich.
+Vor notarieller Beurkundung (§ 2 Abs. 1 GmbHG) oder formeller Beschlussfassung
+ist zwingend die Prüfung durch einen zugelassenen Notar, Steuerberater oder
+Rechtsanwalt erforderlich.
+================================================================================
+
+MUSTERSATZUNG EINER VERMÖGENSVERWALTENDEN GMBH (HOLDING)
+(Formulierungshilfe nach GmbHG, § 8b KStG und § 9 Nr. 1 Satz 2 GewStG)
 Dokumentenstand: 2026 · Kontolage Executive B2B
 
 URKUNDENROLLE-NR. [________] / 2026
 
 GESELLSCHAFTSVERTRAG
-der „[Firma] Vermögensverwaltung GmbH“
+der „${firmaHolding.trim() || "[Wunschname]"} Vermögensverwaltung GmbH“
 
 § 1 Firma, Sitz und Geschäftsjahr
 (1) Die Firma der Gesellschaft lautet:
-    [Wunschname] Vermögensverwaltung GmbH
-(2) Der Sitz der Gesellschaft ist [Stadt/Gemeinde].
+    ${firmaHolding.trim() || "[Wunschname]"} Vermögensverwaltung GmbH
+(2) Der Sitz der Gesellschaft ist ${sitzHolding.trim() || "[Stadt/Gemeinde]"}.
 (3) Das Geschäftsjahr ist das Kalenderjahr. Das erste Geschäftsjahr ist ein Rumpfgeschäftsjahr, das mit der Eintragung in das Handelsregister beginnt und am 31. Dezember des laufenden Jahres endet.
 
 § 2 Gegenstand des Unternehmens (Kernelement der erweiterten Gewerbesteuerkürzung)
@@ -97,17 +119,17 @@ der „[Firma] Vermögensverwaltung GmbH“
 (3) Die Gesellschaft darf Zweigniederlassungen im In- und Ausland errichten, soweit dadurch die Voraussetzungen der steuerlichen Vermögensverwaltung nicht beeinträchtigt werden.
 
 § 3 Stammkapital und Geschäftsanteile
-(1) Das Stammkapital der Gesellschaft beträgt EUR 25.000,00 (in Worten: Euro fünfundzwanzigtausend).
+(1) Das Stammkapital der Gesellschaft beträgt EUR ${stammkapital.toLocaleString("de-DE")},00 (in Worten: Euro ${stammkapital === 25000 ? "fünfundzwanzigtausend" : stammkapital.toLocaleString("de-DE")}).
 (2) Auf das Stammkapital übernimmt:
-    Herr/Frau [Vorname Name], geboren am [Datum], wohnhaft in [Adresse],
-    einen Geschäftsanteil mit dem Nennbetrag von EUR 25.000,00 (Geschäftsanteil Nr. 1).
+    Herr/Frau ${gruenderName.trim() || "[Vorname Name]"}, geboren am [Datum], wohnhaft in [Adresse],
+    einen Geschäftsanteil mit dem Nennbetrag von EUR ${stammkapital.toLocaleString("de-DE")},00 (Geschäftsanteil Nr. 1).
 (3) Die Stammeinlage ist in Geld zu erbringen und in voller Höhe sofort nach Errichtung der Gesellschaft auf das Gesellschaftskonto einzuzahlen.
 
 § 4 Geschäftsführung und Vertretung
 (1) Die Gesellschaft hat einen oder mehrere Geschäftsführer.
 (2) Ist nur ein Geschäftsführer bestellt, so vertritt er die Gesellschaft allein. Sind mehrere Geschäftsführer bestellt, wird die Gesellschaft durch zwei Geschäftsführer gemeinschaftlich oder durch einen Geschäftsführer zusammen mit einem Prokuristen vertreten.
 (3) Durch Beschluss der Gesellschafterversammlung kann Geschäftsführern Einzelvertretungsbefugnis und/oder Befreiung von den Beschränkungen des § 181 BGB (Selbstkontrahierungsverbot) erteilt werden.
-(4) Herr/Frau [Vorname Name] wird zum ersten Geschäftsführer bestellt. Er/Sie ist stets einzelvertretungsberechtigt und von den Beschränkungen des § 181 BGB vollumfänglich befreit.
+(4) Herr/Frau ${gruenderName.trim() || "[Vorname Name]"} wird zum ersten Geschäftsführer bestellt. Er/Sie ist stets einzelvertretungsberechtigt und von den Beschränkungen des § 181 BGB vollumfänglich befreit.
 
 § 5 Gesellschafterbeschlüsse
 (1) Gesellschafterbeschlüsse werden mit einfacher Mehrheit der abgegebenen Stimmen gefasst, soweit das Gesetz oder dieser Vertrag nicht zwingend eine größere Mehrheit vorschreibt.
@@ -132,7 +154,7 @@ der „[Firma] Vermögensverwaltung GmbH“
 Sollten einzelne Bestimmungen dieses Vertrages ganz oder teilweise unwirksam oder undurchführbar sein oder werden, so wird hierdurch die Gültigkeit der übrigen Bestimmungen nicht berührt. Anstelle der unwirksamen Bestimmung gilt diejenige Regelung als vereinbart, die dem wirtschaftlichen Zweck am nächsten kommt.
 
 Ort, Datum: ________________________
-Unterschrift des Gründers: ________________________
+Unterschrift des Gründers (${gruenderName.trim() || "[Vorname Name]"}): ________________________
 Notarielle Beglaubigung:`
     },
     {
@@ -142,17 +164,30 @@ Notarielle Beglaubigung:`
       format: "Gesellschafterbeschluss (.doc / .txt)",
       filename: "kontolage-holding-gewinnausschuettung-beschluss.doc",
       description: "Formeller Gesellschafterbeschluss der Tochtergesellschaft zur Ausschüttung an die Holding (95 % steuerfrei, 5 % Schachtelstrafe, KapESt-Freistellung).",
-      content: `GESELLSCHAFTERBESCHLUSS ÜBER GEWINNAUSSCHÜTTUNG AN DIE HOLDING-GMBH
+      content: `================================================================================
+RECHTLICHER HINWEIS GEMÄSS § 2 ABS. 1 RDG & § 1 STBERG:
+Dieses Dokument ist ein redaktionelles, standardisiertes Muster und eine
+Formulierungshilfe der Kontolage-Redaktion zur Information und Vorbereitung auf
+Beratungs- und Notartermine. Es stellt ausdrücklich KEINE Rechtsberatung im Sinne
+des Rechtsdienstleistungsgesetzes (RDG) und KEINE Steuerberatung im Sinne des
+Steuerberatungsgesetzes (StBerG) dar. Es begründet kein Mandats- oder
+Beratungsverhältnis. Die Nutzung erfolgt eigenverantwortlich.
+Vor notarieller Beurkundung (§ 2 Abs. 1 GmbHG) oder formeller Beschlussfassung
+ist zwingend die Prüfung durch einen zugelassenen Notar, Steuerberater oder
+Rechtsanwalt erforderlich.
+================================================================================
+
+GESELLSCHAFTERBESCHLUSS ÜBER GEWINNAUSSCHÜTTUNG AN DIE HOLDING-GMBH
 (Nach § 8b Abs. 1 und Abs. 5 KStG i.V.m. § 44a Abs. 4b EStG)
 Stand: 2026 · Kontolage Executive B2B
 
 PROTOKOLL DER AUSSERORDENTLICHEN GESELLSCHAFTERVERSAMMLUNG
-der [Operative Tochtergesellschaft] GmbH
+der ${tochterFirma.trim() || "[Operative Tochtergesellschaft]"} GmbH
 mit Sitz in [Ort], eingetragen im Handelsregister des AG [Ort] unter HRB [Nummer]
 
 Am heutigen Tag versammelte sich die Gesellschafterin der Gesellschaft:
-Muttergesellschaft: [Name der Holding] Vermögensverwaltung GmbH
-vertreten durch den Geschäftsführer: [Vorname Name]
+Muttergesellschaft: ${firmaHolding.trim() || "[Name der Holding]"} Vermögensverwaltung GmbH
+vertreten durch den Geschäftsführer: ${gruenderName.trim() || "[Vorname Name]"}
 – Inhaberin von 100 % der Geschäftsanteile –
 
 Der Geschäftsführer stellt fest:
@@ -167,13 +202,13 @@ TAGESORDNUNG:
 
 BESCHLUSS:
 1. Der von der Geschäftsführung aufgestellte Jahresabschluss für das abgelaufene Geschäftsjahr, der einen Bilanzgewinn in Höhe von
-   EUR [Betrag, z.B. 100.000,00]
+   EUR ${ausschuettung.toLocaleString("de-DE")},00
    ausweist, wird vollumfänglich festgestellt und genehmigt.
 
-2. Der Bilanzgewinn in Höhe von EUR [Betrag] wird wie folgt verwendet:
-   a) Ein Betrag von EUR [Ausschüttungsbetrag, z.B. 100.000,00] wird als offene Gewinnausschüttung an die Alleingesellschafterin, die [Name Holding] GmbH, ausgeschüttet.
-   b) Der Restbetrag in Höhe von EUR [Rest, z.B. 0,00] wird auf neue Rechnung vorgetragen.
-   c) Der Ausschüttungsbetrag ist am [Datum, z.B. 31. März 2026] zur Zahlung auf das Bankkonto der Holding fällig.
+2. Der Bilanzgewinn in Höhe von EUR ${ausschuettung.toLocaleString("de-DE")},00 wird wie folgt verwendet:
+   a) Ein Betrag von EUR ${ausschuettung.toLocaleString("de-DE")},00 wird als offene Gewinnausschüttung an die Alleingesellschafterin, die ${firmaHolding.trim() || "[Name Holding]"} GmbH, ausgeschüttet.
+   b) Ein etwaiger Restbetrag wird auf neue Rechnung vorgetragen.
+   c) Der Ausschüttungsbetrag ist zur Zahlung auf das Bankkonto der Holding fällig.
 
 3. Steuerliche Einordnung und Hinweis für das Finanzamt:
    - Die empfangende Muttergesellschaft hält zum Zeitpunkt der Beschlussfassung 100 % der Anteile an der ausschüttenden Gesellschaft (Beteiligung > 10 % gem. § 8b Abs. 4 KStG).
@@ -183,7 +218,7 @@ BESCHLUSS:
 
 Ort, Datum: ________________________
 Unterschrift Geschäftsführer Tochter-GmbH: ________________________
-Unterschrift Vertreter Holding-Mutter: ________________________`
+Unterschrift Vertreter Holding-Mutter (${gruenderName.trim() || "[Vorname Name]"}): ________________________`
     },
     {
       id: "rechenmodell",
@@ -282,6 +317,108 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
 
   return (
     <div style={{ marginTop: 24 }}>
+      {/* Rechtliche Absicherung & Stammdaten-Konfigurator */}
+      <div style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(10,18,34,0.75)", borderRadius: 10, border: "1px solid rgba(201,168,76,0.3)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+          <div style={{ flex: "1 1 300px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: 13, color: "#86efac" }}>🛡️</span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 700, color: "#e2c27d", textTransform: "uppercase" }}>
+                Rechtliche Absicherung (§ 2 RDG · § 1 StBerG · § 2 Abs. 8 Nr. 10 WpHG)
+              </span>
+            </div>
+            <p style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.6, margin: 0 }}>
+              Alle Dokumente, Satzungsmuster und Rechenmodelle sind standardisierte Formulierungshilfen und Bildungsinhalte zur Information und Vorbereitung auf Beratungs- und Notartermine. Sie stellen keine Rechts- oder Steuerberatung dar.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowConfig(!showConfig)}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 6,
+              background: showConfig ? "rgba(201,168,76,0.2)" : "rgba(201,168,76,0.1)",
+              border: "1px solid rgba(201,168,76,0.4)",
+              color: "#e2c27d",
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            {showConfig ? "▲ Eingabemaske schließen" : "⚙️ Vorlagen mit eigenen Stammdaten vorausfüllen"}
+          </button>
+        </div>
+
+        {showConfig && (
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "#cdc6be", marginBottom: 12 }}>
+              Eigene Unternehmens- &amp; Personendaten (ersetzen Platzhalter in Mustersatzung &amp; Beschluss):
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Holding-Firmenname</label>
+                <input
+                  type="text"
+                  value={firmaHolding}
+                  onChange={(e) => setFirmaHolding(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Sitz der Holding</label>
+                <input
+                  type="text"
+                  value={sitzHolding}
+                  onChange={(e) => setSitzHolding(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Name Gründer / Geschäftsführer</label>
+                <input
+                  type="text"
+                  value={gruenderName}
+                  onChange={(e) => setGruenderName(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Stammkapital (€)</label>
+                <input
+                  type="number"
+                  step="5000"
+                  value={stammkapital}
+                  onChange={(e) => setStammkapital(Number(e.target.value))}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Operative Tochtergesellschaft</label>
+                <input
+                  type="text"
+                  value={tochterFirma}
+                  onChange={(e) => setTochterFirma(e.target.value)}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: 11, color: "#a89f94", marginBottom: 4 }}>Gewinnausschüttung (€)</label>
+                <input
+                  type="number"
+                  step="10000"
+                  value={ausschuettung}
+                  onChange={(e) => setAusschuettung(Number(e.target.value))}
+                  style={{ width: "100%", padding: "7px 10px", background: "rgba(10,14,24,0.8)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 5, color: "#f0ece4", fontSize: 12 }}
+                />
+              </div>
+            </div>
+            <div style={{ fontSize: 11, color: "#86efac", marginTop: 10 }}>
+              ✓ Live-Aktualisierung: Alle Dokumente &amp; Downloads enthalten sofort Ihre individualisierten Stammdaten samt rechtlichem Schutzhinweis.
+            </div>
+          </div>
+        )}
+      </div>
+
       <div style={{ display: "grid", gap: 16 }}>
         {items.map((item) => (
           <div

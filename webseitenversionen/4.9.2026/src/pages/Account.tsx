@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 import MemberAusgaben from "../components/MemberAusgaben";
 import ExecutiveDownloads from "../components/ExecutiveDownloads";
+import VermoegensCockpit from "../components/VermoegensCockpit";
 
 type AccountResponse = {
   user: { id: string; email: string | null };
@@ -515,6 +516,20 @@ export default function Account() {
                     : "Notarielle Mustersatzung (§8b KStG), Holding-Ausschüttungsbeschluss, Excel-Rechenmodell und ELSTER-Anleitungen sind im Executive B2B Tarif enthalten."}
                 </p>
                 <ExecutiveDownloads isUnlocked={activePaid && account?.subscription?.plan === "executive"} />
+              </div>
+
+              <div style={cardStyle}>
+                <div style={mutedMonoStyle}>
+                  {account?.subscription?.plan === "executive" ? "👑 Executive B2B · Multi-Asset Cockpit" : "Vermögens-Simulator"}
+                </div>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: "#f0ece4", margin: "8px 0 6px" }}>
+                  Gesamt-Vermögens-Cockpit &amp; Steuer-Verbund
+                </h2>
+                <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: "0 0 20px" }}>
+                  Interaktive Multi-Asset-Architektur: Berechnen Sie die steuerliche Wechselwirkung zwischen Operativer GmbH,
+                  GGF-Gehalt, Rürup-Basisrente (§ 10 EStG), Holding-Thesaurierung (§ 8b KStG), Immobilien (§ 9 Nr. 1 GewStG) und Krypto (§ 23 EStG).
+                </p>
+                <VermoegensCockpit isUnlocked={activePaid && account?.subscription?.plan === "executive"} />
               </div>
 
               <div style={cardStyle}>
