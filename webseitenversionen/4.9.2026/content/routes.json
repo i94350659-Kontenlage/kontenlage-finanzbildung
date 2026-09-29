@@ -86,6 +86,16 @@
       "description": "Wie sich Kontolage finanziert, warum es keine Provisionen gibt und welche Unabhängigkeits- und Compliance-Grundsätze für alle Inhalte gelten.",
       "h1": "Transparenz und Unabhängigkeit",
       "intro": "Kontolage finanziert sich ausschließlich über Abonnements. Es gibt keine Vermittlungsprovisionen, keine Affiliate-Links in redaktionellen Inhalten und keine Produktempfehlungen.",
+      "sections": [
+        {
+          "heading": "Finanzierungsmodell & Abonnements",
+          "body": "Kontolage finanziert sich transparent und unabhängig ausschließlich durch Abonnements: Basis (0 €/Monat), Starter (4,90 €/Monat), Pro Digital (9 €/Monat) und Executive B2B (29 €/Monat). Provisionen oder Vermittlungshonorare von Produktanbietern betragen 0 €."
+        },
+        {
+          "heading": "Keine Anlageberatung (WpHG § 2 Abs. 8 Nr. 10)",
+          "body": "Kontolage erbringt keine Anlageberatung und keine Steuerberatung. Alle Rechner, Übersichten und Artikel sind neutrale Finanzbildung."
+        }
+      ],
       "changefreq": "monthly",
       "priority": "0.7"
     },
