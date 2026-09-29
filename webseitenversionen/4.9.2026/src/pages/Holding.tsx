@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useSubscription } from "../hooks/useSubscription";
 import ExecutiveDownloads from "../components/ExecutiveDownloads";
+import { generateHoldingExcelCsv, triggerCsvDownload } from "../lib/excelModelGenerator";
 
 function PageHeader() {
   return (
@@ -199,21 +200,12 @@ function ThesaurierungsRechner({ isUnlocked, planName }: { isUnlocked: boolean; 
   const mehrwertGmbH = endwertGmbH - endwertPrivat;
 
   const downloadCashflowCsv = () => {
-    const header = "Jahr;Holding_Bestand_EUR;Privat_Bestand_EUR;Steuersatz_Holding_pct;Steuersatz_Privat_pct;Vorteil_Holding_p_a_EUR;Kumulierter_Vorteil_Holding_EUR\n";
-    const years = [1, 2, 3, 4, 5, 7, 10, 15, 20];
-    const rows = years.map(yr => {
-      const gmbh = Math.round(kapital * Math.pow(1 + nettoRenditeGmbH, yr));
-      const priv = Math.round(kapital * Math.pow(1 + nettoRenditePrivat, yr));
-      const diff = gmbh - priv;
-      return `${yr};${gmbh};${priv};1.54;26.375;${diff};${diff}`;
-    }).join("\n");
-    const blob = new Blob(["\uFEFF" + header + rows], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `kontolage-holding-matrix-${kapital}eur-${rendite}pct.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const csvContent = generateHoldingExcelCsv({
+      startkapital: kapital,
+      rendite,
+      fixkosten: 1800,
+    });
+    triggerCsvDownload(`kontolage-holding-rechenmodell-${kapital}eur-${rendite}pct.csv`, csvContent);
   };
 
   const yearsToDisplay = [1, 2, 3, 5, 10, 15, 20];

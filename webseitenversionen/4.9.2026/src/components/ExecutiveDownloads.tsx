@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { generateHoldingExcelCsv, triggerCsvDownload } from "../lib/excelModelGenerator";
 
 interface DownloadItem {
   id: string;
@@ -15,10 +16,37 @@ export default function ExecutiveDownloads({ isUnlocked = true }: { isUnlocked?:
   const [activePreview, setActivePreview] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const downloadTextFile = (filename: string, content: string, isCsv = false) => {
-    const mimeType = isCsv ? "text/csv;charset=utf-8;" : "text/plain;charset=utf-8;";
-    const prefix = isCsv ? "\uFEFF" : "";
-    const blob = new Blob([prefix + content], { type: mimeType });
+  // Dynamic parameters for the Excel calculation model
+  const [modelKapital, setModelKapital] = useState(250000);
+  const [modelRendite, setModelRendite] = useState(7.0);
+  const [modelFixkosten, setModelFixkosten] = useState(1800);
+
+  // Generate dynamic CSV content with live Excel formulas
+  const dynamicCsvContent = generateHoldingExcelCsv({
+    startkapital: modelKapital,
+    rendite: modelRendite,
+    fixkosten: modelFixkosten,
+  });
+  const dynamicCsvFilename = `kontolage-holding-rechenmodell-${modelKapital}eur-${modelRendite}pct.csv`;
+
+  // 20-Year Preview Metrics
+  const nettoRenditePrivat = (modelRendite * (1 - 0.26375)) / 100;
+  const previewPrivat20 = Math.round(modelKapital * Math.pow(1 + nettoRenditePrivat, 20));
+  let previewHolding20 = modelKapital;
+  for (let i = 0; i < 20; i++) {
+    const ertrag = previewHolding20 * (modelRendite / 100);
+    const steuer = ertrag * 0.0154;
+    previewHolding20 = previewHolding20 + ertrag - steuer - modelFixkosten;
+  }
+  previewHolding20 = Math.round(previewHolding20);
+  const vorteil20 = previewHolding20 - previewPrivat20;
+
+  const downloadFile = (filename: string, content: string, isCsv = false) => {
+    if (isCsv) {
+      triggerCsvDownload(filename, content);
+      return;
+    }
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -35,7 +63,6 @@ export default function ExecutiveDownloads({ isUnlocked = true }: { isUnlocked?:
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2500);
     } catch {
-      // Fallback
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2500);
     }
@@ -161,32 +188,12 @@ Unterschrift Vertreter Holding-Mutter: ________________________`
     {
       id: "rechenmodell",
       title: "Dynamisches Excel-Rechenmodell: 20-Jahres-Bilanz",
-      badge: "CSV / Excel-Modell mit Formeln",
+      badge: "Mit Live-Excel-Formeln",
       format: "Excel-kompatibles CSV (.csv)",
-      filename: "kontolage-holding-rechenmodell-20-jahre.csv",
+      filename: dynamicCsvFilename,
       isCsv: true,
-      description: "Vollständige Jahresbilanz (Jahr 1–20) im direkten Vergleich: Privatdepot (26,375 % Abgeltungsteuer) vs. Holding GmbH (1,54 % KSt + SolZ). Inklusive IHK und Steuerberater.",
-      content: `Jahr;Holding_Start;Holding_Rendite_7pct;Holding_KSt_SolZ_1.54pct;Holding_Kosten_StB_IHK;Holding_Endbestand;Privat_Start;Privat_Rendite_7pct;Privat_Abgeltung_26.375pct;Privat_Endbestand;Netto_Vorteil_Holding_pa;Kumulierter_Vorteil_Holding
-1;250000;17500;270;1800;265430;250000;17500;4616;262884;2546;2546
-2;265430;18580;286;1800;281924;262884;18402;4854;276433;5491;8037
-3;281924;19735;304;1800;299555;276433;19350;5104;290680;8875;16912
-4;299555;20969;323;1800;318401;290680;20348;5367;305661;12740;29652
-5;318401;22288;343;1800;338545;305661;21396;5643;321414;17131;46783
-6;338545;23698;365;1800;360079;321414;22499;5934;337979;22099;68882
-7;360079;25206;388;1800;383096;337979;23659;6240;355397;27699;96581
-8;383096;26817;413;1800;407700;355397;24878;6562;373714;33986;130567
-9;407700;28539;439;1800;434000;373714;26160;6900;392974;41026;171593
-10;434000;30380;468;1800;462112;392974;27508;7255;413227;48885;220478
-11;462112;32348;498;1800;492161;413227;28926;7629;434524;57637;278115
-12;492161;34451;531;1800;524282;434524;30417;8022;456918;67364;345479
-13;524282;36700;565;1800;558617;456918;31984;8436;480467;78150;423629
-14;558617;39103;602;1800;595318;480467;33633;8871;505229;90089;513718
-15;595318;41672;642;1800;634549;505229;35366;9328;531267;103282;617000
-16;634549;44418;684;1800;676483;531267;37189;9809;558647;117836;734836
-17;676483;47354;729;1800;721307;558647;39105;10314;587438;133869;868705
-18;721307;50492;778;1800;769221;587438;41121;10846;617713;151508;1020213
-19;769221;53845;829;1800;820437;617713;43240;11405;649549;170889;1191101
-20;820437;57431;884;1800;875183;649549;45468;11992;683025;192158;1383259`
+      description: "Vollständige Jahresbilanz (Jahr 1–20) im direkten Vergleich: Privatdepot (26,375 % Abgeltungsteuer) vs. Holding GmbH (1,54 % KSt + SolZ). Mit dynamischen Excel-Formeln zum Selbstrechnen.",
+      content: dynamicCsvContent,
     },
     {
       id: "elster",
@@ -329,7 +336,7 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
                     cursor: "pointer",
                   }}
                 >
-                  {activePreview === item.id ? "Schließen" : "Vorschau"}
+                  {activePreview === item.id ? "Schließen" : item.id === "rechenmodell" ? "⚙️ Werte anpassen & Vorschau" : "Vorschau"}
                 </button>
 
                 {isUnlocked && (
@@ -353,7 +360,7 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
 
                     <button
                       type="button"
-                      onClick={() => downloadTextFile(item.filename, item.content, item.isCsv)}
+                      onClick={() => downloadFile(item.filename, item.content, item.isCsv)}
                       style={{
                         padding: "8px 16px",
                         borderRadius: 6,
@@ -375,6 +382,89 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
 
             {activePreview === item.id && (
               <div style={{ marginTop: 18, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 16 }}>
+                {item.id === "rechenmodell" && (
+                  <div style={{ background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, padding: "18px 20px", marginBottom: 20 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, flexWrap: "wrap", gap: 10 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: "#f0ece4" }}>
+                        ⚙️ Individuelle Parameter für den Excel-Export einstellen:
+                      </div>
+                      <span style={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "#86efac", background: "rgba(16,185,129,0.15)", padding: "2px 8px", borderRadius: 4, border: "1px solid rgba(16,185,129,0.3)" }}>
+                        ✓ Echte Excel-Formeln hinterlegt
+                      </span>
+                    </div>
+                    <p style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.6, marginBottom: 16 }}>
+                      Ihre Werte fließen direkt in den Download ein. <strong>Wichtig:</strong> Die heruntergeladene Datei enthält dynamische Excel-Zellformeln (z.B. <code>=B14*$B$7</code>). Sie können die Parameter später auch direkt in Microsoft Excel oder Google Sheets beliebig verändern — alle 20 Jahre und Zinseszinsen passen sich automatisch an!
+                    </p>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 18 }}>
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#cdc6be", marginBottom: 4 }}>
+                          <span>Startkapital</span>
+                          <span style={{ fontFamily: "var(--font-mono)", color: "#e2c27d", fontWeight: 600 }}>{modelKapital.toLocaleString("de-DE")} €</span>
+                        </div>
+                        <input
+                          type="range"
+                          min={25000}
+                          max={2000000}
+                          step={25000}
+                          value={modelKapital}
+                          onChange={e => setModelKapital(Number(e.target.value))}
+                          style={{ width: "100%", accentColor: "#c9a84c" }}
+                        />
+                      </div>
+
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#cdc6be", marginBottom: 4 }}>
+                          <span>Brutto-Rendite p.a.</span>
+                          <span style={{ fontFamily: "var(--font-mono)", color: "#e2c27d", fontWeight: 600 }}>{modelRendite.toFixed(1)} %</span>
+                        </div>
+                        <input
+                          type="range"
+                          min={3}
+                          max={15}
+                          step={0.5}
+                          value={modelRendite}
+                          onChange={e => setModelRendite(Number(e.target.value))}
+                          style={{ width: "100%", accentColor: "#c9a84c" }}
+                        />
+                      </div>
+
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#cdc6be", marginBottom: 4 }}>
+                          <span>Fixkosten Holding p.a.</span>
+                          <span style={{ fontFamily: "var(--font-mono)", color: "#e2c27d", fontWeight: 600 }}>{modelFixkosten.toLocaleString("de-DE")} €</span>
+                        </div>
+                        <input
+                          type="range"
+                          min={500}
+                          max={5000}
+                          step={100}
+                          value={modelFixkosten}
+                          onChange={e => setModelFixkosten(Number(e.target.value))}
+                          style={{ width: "100%", accentColor: "#c9a84c" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, padding: "14px 16px", background: "rgba(10,15,30,0.7)", borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div>
+                        <div style={{ fontSize: 11, color: "#a89f94" }}>Endstand Holding (20 Jahre)</div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: 15, fontWeight: 700, color: "#e2c27d", marginTop: 2 }}>{previewHolding20.toLocaleString("de-DE")} €</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 11, color: "#a89f94" }}>Endstand Privat (20 Jahre)</div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: 15, fontWeight: 700, color: "#a89f94", marginTop: 2 }}>{previewPrivat20.toLocaleString("de-DE")} €</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 11, color: "#a89f94" }}>Vorteil Holding vs. Privat</div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: 15, fontWeight: 700, color: vorteil20 > 0 ? "#4ade80" : "#fca5a5", marginTop: 2 }}>
+                          {vorteil20 > 0 ? "+" : ""}{vorteil20.toLocaleString("de-DE")} €
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#c9a84c" }}>
                     Vollständiger Dokumenttext ({item.filename})
