@@ -1,14 +1,14 @@
 # Hermes Weekly Self-Reflection & Competitor Intelligence Digest
-**Projekt**: Kontolage.de | **Datum**: 28.9.2026 | **Status**: HEALTHY
+**Projekt**: Kontolage.de | **Datum**: 5.10.2026 | **Status**: HEALTHY
 
 ---
 
 ## 1. System- & Compliance-Integritätsprüfung
 - **Google Search Console**: ⚠️ Fehlend
-- **Domain & Canonical**: ✅ `https://kontolage.de/` einheitlich aktiv
-- **Semantisches Prerendering**: ✅ 15,8 KB statischer Content für Crawler aktiv
-- **WpHG / BaFin Disclaimer**: ✅ § 2 Abs. 8 Nr. 10 WpHG konform
-- **FAQPage Rich Snippet**: ✅ Schema.org JSON-LD aktiv
+- **Domain & Canonical**: ⚠️ Unstimmigkeit
+- **Semantisches Prerendering**: ❌ Fehlt
+- **WpHG / BaFin Disclaimer**: ❌ Fehlt
+- **FAQPage Rich Snippet**: ⚠️ Fehlt
 
 ---
 

@@ -1,16 +1,16 @@
 {
   "engine": "Hermes Master Governance Kontolage Self-Reflection",
   "version": "1.0",
-  "timestamp": "2026-09-28T10:23:31.258Z",
+  "timestamp": "2026-10-05T11:04:48.198Z",
   "project": "Kontolage Finanzbildung (i94350659-Kontenlage)",
   "live_url": "https://kontolage.de",
   "system_health": {
     "seo_verification": "WARN",
-    "canonical_domain": "PASS",
-    "favicon_present": "PASS",
-    "static_prerender": "PASS",
-    "wphg_compliance": "PASS",
-    "faq_schema": "PASS",
+    "canonical_domain": "WARN",
+    "favicon_present": "WARN",
+    "static_prerender": "FAIL",
+    "wphg_compliance": "FAIL",
+    "faq_schema": "WARN",
     "overall_status": "HEALTHY"
   },
   "competitor_benchmarks": [
