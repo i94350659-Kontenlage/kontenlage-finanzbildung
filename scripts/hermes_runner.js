@@ -3,10 +3,13 @@
  *
  * Wöchentlich via GitHub Actions ausgeführt (0 € Infrastruktur, keine Kreditkarte):
  *  1. Liest Learnings & Artikel-Kontext aus Obsidian Vault
- *  2. Generiert ECHTEN 5-Kanal AI-Content via OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free)
- *     → Fallback 1: EdenAI  (google/gemma-4-31b-it)
- *     → Fallback 2: Requesty (nvidia/nemotron-3-ultra-550b-a55b)
- *     → Fallback 3: Statischer Qualitätscontent
+ *  2. Generiert ECHTEN 5-Kanal AI-Content über die Fallback-Kette:
+ *     Primär:    OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free)
+ *     Fallback:  Groq → Google Gemini → EdenAI → Requesty → Together AI →
+ *                Mistral → Custom Gateway 1 → Custom Gateway 2 (OpenAI-kompatibel)
+ *     Endpunkt:  Statischer Qualitätscontent (Knowledge Base)
+ *     Provider nur versuchen, wenn Key UND URL gesetzt sind; *_MODEL überschreibt
+ *     den Modellnamen ohne Codeänderung.
  *  3. Publiziert DIREKT:
  *     → Telegram:   Bot API (kostenlos, sofort)
  *     → X/Twitter:  OAuth 1.0a (Twitter API v2)
@@ -20,10 +23,16 @@
  * ALLE Keys kommen ausschließlich aus GitHub Secrets / Umgebungsvariablen.
  * KEINE hardcodierten Keys im Code — Verstoss gegen diese Regel = Sicherheitslücke.
  *
- * GitHub Secrets benötigt:
- *  OPENROUTER_API_KEY    — OpenRouter Primary Key
+ * GitHub Secrets für die AI-Kette (KEY = Pflicht, *_MODEL = optionaler Override):
+ *  OPENROUTER_API_KEY    — https://openrouter.ai/settings/keys (Primär)
+ *  GROQ_API_KEY          — https://console.groq.com/keys (Free Tier)
+ *  GEMINI_API_KEY        — https://aistudio.google.com/apikey (Free Tier)
  *  EDENAI_API_KEY        — EdenAI Fallback
  *  REQUESTY_API_KEY      — Requesty Fallback
+ *  TOGETHER_API_KEY      — https://api.together.xyz/settings/api-keys (Free Credit)
+ *  MISTRAL_API_KEY       — https://console.mistral.ai/api-keys (Free Tier)
+ *  GATEWAY1_NAME/_URL/_API_KEY/_MODEL — eigener OpenAI-kompatibler Gateway 1
+ *  GATEWAY2_NAME/_URL/_API_KEY/_MODEL — eigener OpenAI-kompatibler Gateway 2
  *  TELEGRAM_BOT_TOKEN    — Bot Token von @BotFather
  *  TELEGRAM_CHANNEL_ID   — z.B. @kontenlage_de oder -1001234567890
  *  X_API_KEY             — Twitter Developer App Consumer Key
@@ -46,31 +55,80 @@ const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
 
-// ─── AI Provider Konfiguration (Primär + 2 Fallbacks) ────────────────────────
-// SECURITY: Alle Keys aus Umgebungsvariablen — niemals hardcodieren
+// ─── AI Provider Konfiguration (Primär + Fallback-Kette) ──────────────────────
+// SECURITY: Alle Keys aus Umgebungsvariablen — niemals hardcodieren.
+// Reihenfolge = Priorität. Provider ohne gesetzten Key werden übersprungen.
+// Modellnamen sind per Env übersteuerbar (*_MODEL), damit Modelle ohne
+// Codeänderung migriert werden können, wenn ein Anbieter sie abschaltet.
 const AI_PROVIDERS = [
   {
     name: 'OpenRouter (Nemotron Primary)',
     url: 'https://openrouter.ai/api/v1/chat/completions',
     key: process.env.OPENROUTER_API_KEY,
-    model: 'nvidia/nemotron-3-ultra-550b-a55b:free',
+    model: process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free',
     headers: {
       'HTTP-Referer': 'https://kontenlage.de',
       'X-Title': 'Kontenlage Hermes Agent',
     },
   },
   {
-    name: 'EdenAI Fallback (Gemma 4)',
+    name: 'Groq Fallback (Llama 3.3 70B)',
+    url: 'https://api.groq.com/openai/v1/chat/completions',
+    key: process.env.GROQ_API_KEY,
+    model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+    headers: {},
+  },
+  {
+    name: 'Google Gemini Fallback (OpenAI-kompatibel)',
+    url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+    key: process.env.GEMINI_API_KEY,
+    model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+    headers: {},
+  },
+  {
+    name: 'EdenAI Fallback (Gemma)',
     url: 'https://api.edenai.run/v1/text/chat',
     key: process.env.EDENAI_API_KEY,
-    model: 'google/gemma-4-31b-it',
+    model: process.env.EDENAI_MODEL || 'google/gemma-4-31b-it',
     isEdenAI: true,
   },
   {
     name: 'Requesty Fallback (Nemotron via Requesty)',
     url: 'https://router.requesty.ai/v1/chat/completions',
     key: process.env.REQUESTY_API_KEY,
-    model: 'nvidia/nemotron-3-ultra-550b-a55b',
+    model: process.env.REQUESTY_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b',
+    headers: {},
+  },
+  {
+    name: 'Together AI Fallback (Llama 3.3 70B)',
+    url: 'https://api.together.xyz/v1/chat/completions',
+    key: process.env.TOGETHER_API_KEY,
+    model: process.env.TOGETHER_MODEL || 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
+    headers: {},
+  },
+  {
+    name: 'Mistral Fallback (Mistral Small)',
+    url: 'https://api.mistral.ai/v1/chat/completions',
+    key: process.env.MISTRAL_API_KEY,
+    model: process.env.MISTRAL_MODEL || 'mistral-small-latest',
+    headers: {},
+  },
+  // ── Generische Gateway-Slots (OpenAI-kompatibel) ──────────────────────────
+  // Für beliebige eigene Gateways (z. B. LiteLLM, Portkey, OpenRouter-Ableger,
+  // Firmen-Proxy). Eintragen reicht: URL + Key + Modell als GitHub Secrets,
+  // kein Codeeingriff nötig. Slot 1 vor Slot 2.
+  {
+    name: process.env.GATEWAY1_NAME || 'Custom Gateway 1',
+    url: process.env.GATEWAY1_URL || '',
+    key: process.env.GATEWAY1_API_KEY,
+    model: process.env.GATEWAY1_MODEL || '',
+    headers: {},
+  },
+  {
+    name: process.env.GATEWAY2_NAME || 'Custom Gateway 2',
+    url: process.env.GATEWAY2_URL || '',
+    key: process.env.GATEWAY2_API_KEY,
+    model: process.env.GATEWAY2_MODEL || '',
     headers: {},
   },
 ];
@@ -188,8 +246,8 @@ async function withRetry(fn, label, retries = 2) {
 // ─── AI Completion mit Cascade-Fallback ──────────────────────────────────────
 async function callAI(prompt, systemPrompt = '') {
   for (const provider of AI_PROVIDERS) {
-    if (!provider.key) {
-      console.warn(`  ⚠️  ${provider.name} — Key nicht konfiguriert (Env-Var fehlt), überspringe.`);
+    if (!provider.key || !provider.url) {
+      console.warn(`  ⚠️  ${provider.name} — Key oder URL nicht konfiguriert (Env-Var fehlt), überspringe.`);
       continue;
     }
     console.log(`  🤖 Versuche Provider: ${provider.name}...`);

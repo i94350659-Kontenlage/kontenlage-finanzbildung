@@ -1,41 +1,18 @@
-name: Hermes v2.3 — Content, Social (6-Kanal) & Deploy Automation
+name: Hermes v2.3 — Content, Social (6-Kanal) Automation
 
 on:
   schedule:
     # Jeden Montag um 08:00 Uhr UTC — vollautomatisch
     - cron: '0 8 * * 1'
   workflow_dispatch: # Manuelles Ausführen im GitHub Dashboard jederzeit möglich
-  push:
-    branches: [main]  # Auto-Deploy bei jedem Push auf main
 
 jobs:
-  # ── Job 1: Vercel Deploy (bei jedem Push auf main) ─────────────────────────
-  deploy-vercel:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # Hinweis: Der Production-Deploy läuft nicht mehr über diesen Workflow, sondern
+  # über die Vercel Git Integration (Projekt "kontolage-finanzbildung" ← Repo,
+  # Production-Branch: main). Jeder Push auf main baut und deployed automatisch
+  # auf https://kontolage.de. Ein eigener Deploy-Job hier würde doppelt deployen.
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
-
-      - name: Deploy to Vercel Production
-        run: |
-          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-  # ── Job 2: Hermes Content & Social Publishing (Montag 08:00) ──────────────
+  # ── Job 1: Hermes Content & Social Publishing (Montag 08:00) ──────────────
   run-hermes:
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -59,12 +36,32 @@ jobs:
 
       - name: Execute Hermes AI Automation (6 Kanäle)
         env:
-          # ── AI Provider: OpenRouter (Primary) ────────────────────────
+          # ── AI Provider-Kette (Reihenfolge = Priorität) ─────────────────
+          # Primär
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          # ── AI Provider: EdenAI (Fallback 1) ────────────────────────
+          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
+          # Fallback-Gateways (jeder nur aktiv, wenn Key gesetzt)
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: ${{ secrets.GROQ_MODEL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
           EDENAI_API_KEY: ${{ secrets.EDENAI_API_KEY }}
-          # ── AI Provider: Requesty (Fallback 2) ──────────────────────
+          EDENAI_MODEL: ${{ secrets.EDENAI_MODEL }}
           REQUESTY_API_KEY: ${{ secrets.REQUESTY_API_KEY }}
+          REQUESTY_MODEL: ${{ secrets.REQUESTY_MODEL }}
+          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
+          TOGETHER_MODEL: ${{ secrets.TOGETHER_MODEL }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          MISTRAL_MODEL: ${{ secrets.MISTRAL_MODEL }}
+          # Generische Gateway-Slots (OpenAI-kompatibel, für eigene Gateways)
+          GATEWAY1_NAME: ${{ secrets.GATEWAY1_NAME }}
+          GATEWAY1_URL: ${{ secrets.GATEWAY1_URL }}
+          GATEWAY1_API_KEY: ${{ secrets.GATEWAY1_API_KEY }}
+          GATEWAY1_MODEL: ${{ secrets.GATEWAY1_MODEL }}
+          GATEWAY2_NAME: ${{ secrets.GATEWAY2_NAME }}
+          GATEWAY2_URL: ${{ secrets.GATEWAY2_URL }}
+          GATEWAY2_API_KEY: ${{ secrets.GATEWAY2_API_KEY }}
+          GATEWAY2_MODEL: ${{ secrets.GATEWAY2_MODEL }}
           # ── Supabase (Datenbank & Logging) ───────────────────────────
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
