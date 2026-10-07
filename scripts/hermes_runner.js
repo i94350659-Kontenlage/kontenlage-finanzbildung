@@ -87,7 +87,7 @@ const AI_PROVIDERS = [
   },
   {
     name: 'EdenAI Fallback (Gemma)',
-    url: 'https://api.edenai.run/v1/text/chat',
+    url: 'https://api.edenai.run/v2/text/chat',
     key: process.env.EDENAI_API_KEY,
     model: process.env.EDENAI_MODEL || 'google/gemma-4-31b-it',
     isEdenAI: true,
@@ -245,60 +245,75 @@ async function withRetry(fn, label, retries = 2) {
 
 // ─── AI Completion mit Cascade-Fallback ──────────────────────────────────────
 async function callAI(prompt, systemPrompt = '') {
-  for (const provider of AI_PROVIDERS) {
-    if (!provider.key || !provider.url) {
-      console.warn(`  ⚠️  ${provider.name} — Key oder URL nicht konfiguriert (Env-Var fehlt), überspringe.`);
-      continue;
-    }
-    console.log(`  🤖 Versuche Provider: ${provider.name}...`);
-    try {
-      let result;
-
-      if (provider.isEdenAI) {
-        result = await httpRequest(
-          provider.url, 'POST',
-          {
-            providers: 'google',
-            text: prompt,
-            chatbot_global_action: systemPrompt || 'Du bist ein Finanz-Redakteur bei Kontenlage.',
-            previous_history: [],
-            temperature: 0.7,
-            max_tokens: 1200,
-          },
-          { Authorization: `Bearer ${provider.key}` }
-        );
-        if (result.status === 200 && result.body?.google?.generated_text) {
-          console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
-          return { text: result.body.google.generated_text, provider: provider.name };
-        }
-      } else {
-        result = await httpRequest(
-          provider.url, 'POST',
-          {
-            model: provider.model,
-            messages: [
-              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
-              { role: 'user', content: prompt },
-            ],
-            max_tokens: 1200,
-            temperature: 0.75,
-          },
-          {
-            Authorization: `Bearer ${provider.key}`,
-            ...(provider.headers || {}),
-          }
-        );
-        if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
-          console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
-          return { text: result.body.choices[0].message.content, provider: provider.name };
-        }
+  // Zwei Durchläufe: Bei transienten Fehlern (503 Provider-überlastet, 429
+  // Rate-Limit, Timeout) lohnt ein zweiter Versuch — das war beim Lauf am
+  // 2026-10-05 der einzige Grund für den statischen Fallback (OpenRouter 503).
+  let sawTransient = false;
+  for (let pass = 1; pass <= 2; pass++) {
+    for (const provider of AI_PROVIDERS) {
+      if (!provider.key || !provider.url) {
+        console.warn(`  ⚠️  ${provider.name} — Key oder URL nicht konfiguriert (Env-Var fehlt), überspringe.`);
+        continue;
       }
+      console.log(`  🤖 Versuche Provider: ${provider.name}...`);
+      try {
+        let result;
 
-      console.warn(`  ⚠️  ${provider.name} — Status ${result.status}, weiter zum nächsten Fallback.`);
-      if (result.body?.error) console.warn('     Fehler:', JSON.stringify(result.body.error).slice(0, 200));
+        if (provider.isEdenAI) {
+          result = await httpRequest(
+            provider.url, 'POST',
+            {
+              providers: ['google'],
+              text: prompt,
+              chatbot_global_action: systemPrompt || 'Du bist ein Finanz-Redakteur bei Kontolage.',
+              previous_history: [],
+              temperature: 0.7,
+              max_tokens: 1200,
+            },
+            { Authorization: `Bearer ${provider.key}` }
+          );
+          if (result.status === 200 && result.body?.google?.generated_text) {
+            console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
+            return { text: result.body.google.generated_text, provider: provider.name };
+          }
+        } else {
+          result = await httpRequest(
+            provider.url, 'POST',
+            {
+              model: provider.model,
+              messages: [
+                ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+                { role: 'user', content: prompt },
+              ],
+              max_tokens: 1200,
+              temperature: 0.75,
+            },
+            {
+              Authorization: `Bearer ${provider.key}`,
+              ...(provider.headers || {}),
+            }
+          );
+          if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
+            console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
+            return { text: result.body.choices[0].message.content, provider: provider.name };
+          }
+        }
 
-    } catch (err) {
-      console.warn(`  ⚠️  ${provider.name} — Netzwerkfehler: ${err.message}`);
+        if ([429, 503, 408].includes(result.status)) sawTransient = true;
+        console.warn(`  ⚠️  ${provider.name} — Status ${result.status}, weiter zum nächsten Fallback.`);
+        if (result.body?.error) console.warn('     Fehler:', JSON.stringify(result.body.error).slice(0, 200));
+
+      } catch (err) {
+        sawTransient = true;
+        console.warn(`  ⚠️  ${provider.name} — Netzwerkfehler: ${err.message}`);
+      }
+    }
+
+    if (pass === 1 && sawTransient) {
+      console.warn('  ⟳ Transiente Fehler erkannt (429/503/408/Netz) — zweiter Durchlauf durch die Kette in 5s...');
+      await new Promise((r) => setTimeout(r, 5000));
+    } else {
+      break;
     }
   }
 
