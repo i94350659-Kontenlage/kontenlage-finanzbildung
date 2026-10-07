@@ -46,7 +46,7 @@
  *  LINKEDIN_PERSON_URN    — z.B. urn:li:person:XXXXXXXX (oder org URN für Seite)
  *  SUPABASE_URL          — Supabase Projekt-URL
  *  SUPABASE_SERVICE_KEY  — Supabase Service Role Key
- *  SITE_URL              — https://kontenlage.de
+ *  SITE_URL              — https://kontolage.de
  */
 
 'use strict';
@@ -67,8 +67,8 @@ const AI_PROVIDERS = [
     key: process.env.OPENROUTER_API_KEY,
     model: process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free',
     headers: {
-      'HTTP-Referer': 'https://kontenlage.de',
-      'X-Title': 'Kontenlage Hermes Agent',
+      'HTTP-Referer': 'https://kontolage.de',
+      'X-Title': 'Kontolage Hermes Agent',
     },
   },
   {
@@ -138,7 +138,7 @@ const TELEGRAM_TOKEN      = process.env.TELEGRAM_BOT_TOKEN     || '';
 const TELEGRAM_CHANNEL    = process.env.TELEGRAM_CHANNEL_ID    || '';
 const SUPABASE_URL        = process.env.SUPABASE_URL           || '';
 const SUPABASE_KEY        = process.env.SUPABASE_SERVICE_KEY   || '';
-const SITE_URL            = process.env.SITE_URL               || 'https://kontenlage.de';
+const SITE_URL            = process.env.SITE_URL               || 'https://kontolage.de';
 
 // X/Twitter OAuth 1.0a
 const X_API_KEY           = process.env.X_API_KEY              || '';

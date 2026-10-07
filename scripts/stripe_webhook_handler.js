@@ -11,7 +11,7 @@
  *   SUPABASE_SERVICE_KEY    — Supabase Service Role Key
  *
  * Stripe Dashboard → Webhooks konfigurieren:
- *   URL: https://kontenlage.de/api/stripe-webhook
+ *   URL: https://tberfzrzfkwoytgqlpij.supabase.co/functions/v1/stripe-webhook
  *   Events:
  *     - checkout.session.completed
  *     - customer.subscription.deleted
