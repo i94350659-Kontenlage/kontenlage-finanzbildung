@@ -6,7 +6,7 @@ interface VermoegensCockpitProps {
   isUnlocked?: boolean;
 }
 
-export default function VermoegensCockpit({ isUnlocked = true }: VermoegensCockpitProps) {
+export default function VermoegensCockpit({ isUnlocked = false }: VermoegensCockpitProps) {
   // 1. Operative Ebene (Unternehmen)
   const [gmbhGewinn, setGmbhGewinn] = useState(250000); // Gewinn vor GGF-Gehalt und Steuern
   const [ggfGehalt, setGgfGehalt] = useState(90000); // Angemessenes Geschäftsführergehalt
@@ -115,6 +115,7 @@ export default function VermoegensCockpit({ isUnlocked = true }: VermoegensCockp
   ]);
 
   const downloadCockpitCsv = () => {
+    if (!isUnlocked) return;
     const lines = [
       `"KONTOLAGE.DE — MULTI-ASSET STEUER- & VERMÖGENSCOCKPIT 2026"`,
       `"Rechtlicher Hinweis: Mathematische Modellrechnung gem. § 2 Abs. 8 Nr. 10 WpHG. Keine Steuer- oder Anlageberatung."`,
@@ -194,8 +195,14 @@ export default function VermoegensCockpit({ isUnlocked = true }: VermoegensCockp
         )}
       </div>
 
-      {/* Regler-Grid (Ebene 1 bis 4) */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, marginBottom: 28 }}>
+      {/* Regler-Grid (Ebene 1 bis 4) — ohne Executive-Freischaltung nur Vorschau */}
+      {!isUnlocked && (
+        <p style={{ fontSize: 13, color: "#cdc6be", lineHeight: 1.7, margin: "0 0 16px", padding: "12px 16px", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, background: "rgba(201,168,76,0.06)" }}>
+          Vorschau: Die interaktiven Regler, alle Ergebniswerte und der Excel-Export sind im Tarif Executive B2B (29&nbsp;€/Monat netto, zzgl. 19&nbsp;% MwSt.) enthalten.{" "}
+          <Link to="/abo" style={{ color: "#e2c27d", fontWeight: 600 }}>Tarife vergleichen →</Link>
+        </p>
+      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, marginBottom: 28, filter: isUnlocked ? "none" : "blur(3px)", opacity: isUnlocked ? 1 : 0.45, pointerEvents: isUnlocked ? "auto" : "none" }} aria-hidden={!isUnlocked}>
         {/* Spalte 1: Unternehmen & Holding */}
         <div style={{ background: "rgba(10,15,30,0.6)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8, padding: 18 }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: "#e2c27d", marginBottom: 14 }}>

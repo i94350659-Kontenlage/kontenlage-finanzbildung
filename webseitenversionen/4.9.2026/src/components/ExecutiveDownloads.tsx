@@ -12,7 +12,7 @@ interface DownloadItem {
   isCsv?: boolean;
 }
 
-export default function ExecutiveDownloads({ isUnlocked = true }: { isUnlocked?: boolean }) {
+export default function ExecutiveDownloads({ isUnlocked = false }: { isUnlocked?: boolean }) {
   const [activePreview, setActivePreview] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -519,7 +519,7 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
 
             {activePreview === item.id && (
               <div style={{ marginTop: 18, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 16 }}>
-                {item.id === "rechenmodell" && (
+                {item.id === "rechenmodell" && isUnlocked && (
                   <div style={{ background: "rgba(201,168,76,0.06)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, padding: "18px 20px", marginBottom: 20 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, flexWrap: "wrap", gap: 10 }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: "#f0ece4" }}>
@@ -604,8 +604,9 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "#c9a84c" }}>
-                    Vollständiger Dokumenttext ({item.filename})
+                    {isUnlocked ? `Vollständiger Dokumenttext (${item.filename})` : "Vorschau — Volltext nur mit Executive B2B"}
                   </span>
+                  {isUnlocked && (
                   <button
                     type="button"
                     onClick={() => void copyToClipboard(item.id, item.content)}
@@ -620,7 +621,9 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
                   >
                     {copiedId === item.id ? "✓ In Zwischenablage kopiert" : "In Zwischenablage kopieren"}
                   </button>
+                  )}
                 </div>
+                {isUnlocked ? (
                 <pre style={{
                   background: "rgba(10,14,24,0.9)",
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -637,6 +640,12 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
                 }}>
                   {item.content}
                 </pre>
+                ) : (
+                  <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: 0 }}>
+                    {item.description} Der vollständige Dokumenttext, die Stammdaten-Personalisierung und der Download sind im Tarif Executive B2B (29&nbsp;€/Monat netto, zzgl. 19&nbsp;% MwSt.) enthalten.{" "}
+                    <a href="/abo" style={{ color: "#e2c27d", fontWeight: 600 }}>Tarife vergleichen →</a>
+                  </p>
+                )}
               </div>
             )}
           </div>
