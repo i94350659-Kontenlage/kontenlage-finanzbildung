@@ -9,6 +9,7 @@
 - [UPDATE] `.github/workflows/hermes_cron.yml` — Deploy-Job entfernt (Vercel Git Integration: Push auf `main` → Auto-Deploy Production, `kontolage-finanzbildung`, Branch `main`); env-Block um die neuen Keys ergänzt.
 - [UPDATE] Governance-Dateien auf verifizierte Fakten: `AGENTS.md` (Stand, 6 Edge Functions inkl. `newsletter`, `newsletter_issues`, Deploy-Weg), `AGENT.md` (Functions-Liste, Deploy), `SOP.md` (SOP-001 Kaskade), `MEMORY.md` (Functions, Secret-Liste), `PROJECT.md` (Stand, Tech-Stack, Datenmodell, Meilensteine). `SOUL.md` und `SKILLS.md` ohne Änderung (keine betroffenen Fakten).
 - [RESULT] Verifizierung: `node --check` ✓, `yaml-lint` ✓, `secret-scan` 0 Funde ✓; Auto-Deploy zweimal live nachgewiesen (`5s44xtg1r`, `ertuybr3z` ● Ready), CI success auf `9e955cc`.
+- [RESULT] Testlauf #45 (2026-10-08): **AI: OpenRouter (Nemotron Primary) — erster echter KI-Lauf seit Monaten, kein static-fallback mehr.** Davor in #44: OpenRouter-503 (transient, vom 2. Durchlauf abgefangen), Orcarouter-429 (Account-GitHub-Verknüpfung offen), Zenmux-402 (Guthaben > 0 $ offen), Together/Requesty/EdenAI-408 → [FIX] HTTP-Timeout 10 s → 45 s für LLM-Calls. [FIX] `SUPABASE_URL`/`SITE_URL`-Secrets mit korrekter LibSodium-Sealed-Box neu gesetzt (XOR-Variante der REST-API war beschädigt); offener Rest: `SUPABASE_SERVICE_KEY` gehört zu einem anderen Supabase-Projekt (401) — Dashboard-Refresh nötig.
 
 ## v6.2 (2026-08-27)
 - [ADD] `kontenlage-asset-classes-taxonomy` (TradFi, ETFs, Anleihen, Immo, Gold, Krypto, DeFi).
