@@ -10,7 +10,7 @@
 
 1. `Learnings.md` und letzte Drafts lesen (Anti-Shadowban, SKILL-03).
 2. Prompt bauen: Datum, Kalenderwoche, Learnings, Thema aus Themen-Pool.
-3. Provider-Kaskade ausführen: OpenRouter → EdenAI → Requesty → statischer Qualitätscontent.
+3. Provider-Kaskade ausführen (Stand 2026-10-08): OpenRouter → Orcarouter → Zenmux → Together → Requesty → EdenAI → Groq → Gemini → Mistral → Custom Gateways → statischer Qualitätscontent. Bei 429/503/408/Netzfehler: automatischer zweiter Durchlauf durch die ganze Kette nach 5 s.
 4. Kanäle bedienen: Telegram sofort; X, Facebook, Instagram, LinkedIn nur mit gesetzten Tokens, sonst Draft; TikTok als Skript-Draft.
 5. Ergebnis in Supabase protokollieren (`confidence_score`, `decision_reason`, `affected_parameters`).
 6. `Learnings.md` ergänzen, Draft committen (`auto(hermes): … [skip ci]`).

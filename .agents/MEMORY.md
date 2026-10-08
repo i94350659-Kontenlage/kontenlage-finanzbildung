@@ -10,7 +10,7 @@
 | Website | `https://kontolage.de` live auf Vercel (Region fra1, TTFB ≈ 110 ms, SSL aktiv) |
 | Bundle | 675.549 Zeichen JS (≈ 193 KB Brotli), CSS 12,6 KB — vollständig, enthält alle Routen |
 | Supabase | Projekt `tberfzrzfkwoytgqlpij`; Migrationen `202609250001`, `202609250002` angewendet |
-| Edge Functions | `account`, `create-checkout-session`, `stripe-webhook`, `billing-portal`, `cancel-subscription` — ACTIVE, ohne JWT 401 |
+| Edge Functions | `account`, `create-checkout-session`, `stripe-webhook`, `billing-portal`, `cancel-subscription`, `newsletter` — ACTIVE, ohne JWT 401 |
 | Auth | Registrierung offen, E-Mail-Bestätigung aktiv (`mailer_autoconfirm=false`) |
 | Datenbank | `profiles`, `subscriptions`, `stripe_events`, `audit_log`, `rate_limit_buckets` mit RLS; Service-Role nur serverseitig |
 | Stripe | Testmodus konfiguriert; Webhook-Endpoint offen (P0-07); `STRIPE_AUTOMATIC_TAX` nicht gesetzt |
@@ -58,7 +58,7 @@
 
 ## 6. Secret-Namen (nur Namen, niemals Werte)
 
-Repository-Secrets: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `OPENROUTER_API_KEY`, `EDENAI_API_KEY`, `REQUESTY_API_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHANNEL_ID`, `SITE_URL`, `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`, `FACEBOOK_PAGE_TOKEN`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_ACCOUNT_ID`, `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_PERSON_URN`, `META_APP_ID`, `META_APP_SECRET`.
+Repository-Secrets (AI-Kette, Stand 2026-10-08): `OPENROUTER_API_KEY`, `ORCAROUTER_API_KEY`, `ZENMUXAI_API_KEY`, `TOGETHERAI_API_KEY`, `REQUESTY_API_KEY`, `EDENAI_API_KEY`, `GROQ_API_KEY`, `GEMINI_API_KEY`, `MISTRAL_API_KEY` (optional je `*_MODEL`, `GATEWAY1/2_*`). Weiter: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHANNEL_ID`, `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`, `FACEBOOK_PAGE_TOKEN`, `INSTAGRAM_ACCESS_TOKEN`. (Nicht mehr benötigt: `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` — Deploy läuft über die Vercel Git Integration.)
 Supabase-Function-Secrets: `APP_ORIGIN`, `APP_ORIGINS`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_STARTER`, `STRIPE_PRICE_PRO`, `STRIPE_PRICE_EXECUTIVE`, `STRIPE_AUTOMATIC_TAX` (offen).
 
 ## 7. Pflege-Protokoll

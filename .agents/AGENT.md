@@ -15,7 +15,7 @@
 | Runtime | Zweck | Trigger |
 |---|---|---|
 | GitHub Actions | wöchentlicher Content-Lauf, DeFi-Ensemble, Self-Reflection, Governance-Audit | Cron + `workflow_dispatch` |
-| Supabase Edge Functions | Account, Checkout, Webhook, Portal, Kündigung | HTTP, JWT-/Signatur-geprüft |
+| Supabase Edge Functions | Account, Checkout, Webhook, Portal, Kündigung, Newsletter | HTTP, JWT-/Signatur-geprüft |
 | Lokale CLI (Windows) | Verifikation, Build, Audits, Notfallläufe | manuell |
 | Obsidian Vault | Wissens- und Lernspeicher | Dateisystem |
 
@@ -31,7 +31,7 @@
 | SEO-/Newsletter-Lauf | `scripts/hermes_daily_seo_newsletter.js` | Entwürfe, Zustellung über konfigurierte Kanäle |
 | Skill-Audit | `tools/hermes-skill-audit.mjs` | lesend, schreibt Report |
 | Live-Verifikation | `tools/verify-live.mjs`, `tools/verify-sitemap.mjs` | lesend, schreibt Report |
-| Deploy | GitHub Actions (Vercel CLI) | nur wenn Gate-Checks grün |
+| Deploy | Vercel Git Integration (Push auf `main` → Production) | nur wenn Gate-Checks grün |
 
 **Verboten:** Zahlungen auslösen, Produktdaten löschen, Secrets ausgeben, E-Mails an Kunden ohne Freigabe, Änderungen an Rechtsseiten ohne menschliche Freigabe.
 

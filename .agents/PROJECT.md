@@ -1,6 +1,6 @@
 # PROJECT.md — Kontolage Projektdokumentation
 
-> Stand: 2026-09-25 · Kanonische Kurzfassung für Kontext. Details: `docs/kanban.md`, `docs/implementation-plan.md`, `docs/todo.md`.
+> Stand: 2026-10-08 · Kanonische Kurzfassung für Kontext. Details: `docs/kanban.md`, `docs/implementation-plan.md`, `docs/todo.md`.
 
 ## Projektübersicht
 
@@ -15,9 +15,9 @@
 | Hosting | Vercel (Projekt `kontolage-finanzbildung`, Region fra1) | live |
 | Datenbank | Supabase PostgreSQL mit RLS (`tberfzrzfkwoytgqlpij`) | live |
 | Auth | Supabase Auth (E-Mail + Passwort, Bestätigung erforderlich) | live |
-| Backend-Logik | Supabase Edge Functions (Deno) | live (5 Functions) |
+| Backend-Logik | Supabase Edge Functions (Deno) | live (6 Functions, inkl. `newsletter`) |
 | Zahlungen | Stripe Checkout + Billing Portal (Abo) | Testmodus |
-| Automatisierung | GitHub Actions (Hermes-Cron, Governance) | aktiv |
+| Automatisierung | GitHub Actions (Hermes-Cron, Governance) + Vercel Git Integration (Push `main` → Auto-Deploy) | aktiv |
 | E-Mail (Produkt) | Supabase-Default (eigener SMTP blockiert am Free-Tier) | Übergangslösung |
 | Social | Telegram (direkt), übrige Kanäle als Drafts | aktiv |
 
@@ -52,6 +52,7 @@ G:\B2B steuer Business Ideee 6.8.2026\
 | `stripe_events` | Webhook-Idempotenz | keine Client-Policies; nur Service-Role |
 | `audit_log` | sicherheitsrelevante Ereignisse | RLS lesend eigener Datensatz |
 | `rate_limit_buckets` | Rate-Limits der Edge Functions | RLS; Funktion nur für `service_role` |
+| `newsletter_issues` | Kontolage-Ausgaben (free/pro/executive), Text gesperrter Ausgaben nur über Edge Function | RLS `newsletter_read_eligible`, kein INSERT/UPDATE für Clients |
 
 Zusätzlich: `consume_rate_limit(...)`, `claim_stripe_event(...)`, Trigger `handle_auth_user_change()`.
 
@@ -78,7 +79,8 @@ Preis-IDs liegen als Supabase-Secrets (`STRIPE_PRICE_STARTER|PRO|EXECUTIVE`); En
 
 - [x] Website live mit SSL, SPA-Routing und SEO-Grundgerüst
 - [x] Supabase-Projekt verknüpft, Migrationen und RLS angewendet
-- [x] Fünf Edge Functions deployed und auth-geschützt
+- [x] Sechs Edge Functions deployed und auth-geschützt (inkl. Newsletter mit Tarifprüfung)
+- [x] Auto-Deploy: Vercel Git Integration (Push auf `main` → Production `kontolage.de`)
 - [x] Auth-Flow (Registrierung, Bestätigung, Login, Reset) im Frontend
 - [x] Build-Reproduzierbarkeit (`.env` + Sync-Skript, Vite-DCE-Falle dokumentiert)
 - [x] Kanban/Implementierungsplan/Todo für P0–P2 und Hermes v6 erstellt

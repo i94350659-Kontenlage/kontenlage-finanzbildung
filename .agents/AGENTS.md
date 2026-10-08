@@ -1,7 +1,7 @@
 # AGENTS.md — Hermes Master Governance v6.0
 
 > Kanonische Governance für alle Hermes-Läufe. Ergänzend: `SOUL.md` (Werte), `AGENT.md` (Betriebsvertrag), `SOP.md` (Abläufe), `SKILLS.md` (Fähigkeiten).
-> Letzte inhaltliche Prüfung: 2026-09-25 (Basis: Live-Verifikation, Supabase-/Stripe-Stand, Projektanalyse P0–P2).
+> Letzte inhaltliche Prüfung: 2026-10-08 (Basis: Auto-Deploy via Vercel Git Integration, sechs Edge Functions, AI-Fallback-Kette v2, Paywall-Fix live).
 
 ## 1. Identität & Mission
 
@@ -71,7 +71,7 @@ Hermes arbeitet für drei Projekte, strikt getrennt: Kontolage (aktiv), Scratch'
 9. **Barrierefreiheit und Datensparsamkeit** sind Produkteigenschaften, keine Nacharbeit.
 10. **Kein Ticket gilt als fertig ohne Nachweis** (Befehl, Messwert, Log).
 
-## 5. Projektzuordnung (Stand 2026-09-25)
+## 5. Projektzuordnung (Stand 2026-10-08)
 
 ### 5.1 Kontolage.de — aktiv
 
@@ -81,13 +81,14 @@ Hermes arbeitet für drei Projekte, strikt getrennt: Kontolage (aktiv), Scratch'
 | Anwendung | `webseitenversionen/4.9.2026` (React 19 + Vite 8 + TypeScript, Supabase-Backend) |
 | Repository | `https://github.com/i94350659-Kontenlage/kontenlage-finanzbildung.git` (Projekt-Slug historisch „kontenlage") |
 | Vercel-Projekt | `kontolage-finanzbildung` (Production: `https://kontolage.de`, `https://www.kontolage.de`) |
-| Supabase-Projekt | `tberfzrzfkwoytgqlpij` (Auth, PostgreSQL/RLS, 5 Edge Functions) |
+| Supabase-Projekt | `tberfzrzfkwoytgqlpij` (Auth, PostgreSQL/RLS, 6 Edge Functions) |
+| Deploy | Vercel Git Integration: Push auf `main` → Auto-Deploy auf Production (`kontolage.de`); kein Deploy-Job mehr in GitHub Actions |
 | Domain-/Mail-Domain | `kontolage.de` |
 | Zahlungen | Stripe (Abo: Basis kostenlos, Starter 4,90 €, Pro Digital 9 €, Executive 29 €) |
 | Steuerung | `docs/kanban.md`, `docs/implementation-plan.md`, `docs/todo.md`, `SETUP_CHECKLIST.md` |
 
-**Aktive Edge Functions:** `account`, `create-checkout-session`, `stripe-webhook`, `billing-portal`, `cancel-subscription`.
-**Datenmodell:** `profiles`, `subscriptions`, `stripe_events`, `audit_log`, `rate_limit_buckets` (RLS aktiv, Service-Role nur in Edge Functions).
+**Aktive Edge Functions:** `account`, `create-checkout-session`, `stripe-webhook`, `billing-portal`, `cancel-subscription`, `newsletter`.
+**Datenmodell:** `profiles`, `subscriptions`, `stripe_events`, `audit_log`, `rate_limit_buckets`, `newsletter_issues` (RLS aktiv, Service-Role nur in Edge Functions).
 
 ### 5.2 Scratch'n'Travel — Bestand
 

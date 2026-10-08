@@ -1,5 +1,15 @@
 # Hermes Skills Changelog & Auto-Refinements
 
+## v6.6 (2026-10-08) — AI-Fallback-Kette v2 & Auto-Deploy
+- [UPDATE] `scripts/hermes_runner.js` — neue Fallback-Reihenfolge (Stand 2026-10-08): OpenRouter (Primär) → **Orcarouter** (`orcarouter/free`) → **Zenmux** (`sapiens-ai/agnes-2.5-flash`) → **Together** (`Prism-ML/Ternary-Bonsai-27B`, base `api.together.ai`) → Requesty (`gemma-4-31b-it`) → EdenAI (v3, `api.edenai.run/v3/chat/completions`, OpenAI-kompatibel) → Groq → Gemini → Mistral → Custom Gateway 1/2 → statischer Content.
+- [ADD] Drei neue Provider-Slots mit frischen Secrets: `ORCAROUTER_API_KEY`, `ZENMUXAI_API_KEY`, `TOGETHERAI_API_KEY` (Namen exakt wie in GitHub Secrets; Env `TOGETHER_API_KEY` → `TOGETHERAI_API_KEY` korrigiert).
+- [FIX] EdenAI: toter v1-Endpoint (404 im Lauf 2026-10-05) → v3 mit generischem OpenAI-Pfad; Sonderpfad `isEdenAI` entfernt (einheitlicher Codepfad für alle Provider).
+- [ADD] Zweiter Kettendurchlauf nach 5 s bei transienten Fehlern (429/503/408/Netz) — behebt den statischen-Fallback-Fall vom 2026-10-05 (OpenRouter-503, Requesty-429).
+- [FIX] Secrets korrigiert: `SUPABASE_URL` verwies auf nicht existierendes Projekt (`…ENOTFOUND` im Log) → `tberfzrzfkwoytgqlpij`; `SITE_URL` → `https://kontolage.de`; `SITE_URL`-Default, OpenRouter-Referer und Stripe-Webhook-Kommentar im Code auf `kontolage.de` korrigiert.
+- [UPDATE] `.github/workflows/hermes_cron.yml` — Deploy-Job entfernt (Vercel Git Integration: Push auf `main` → Auto-Deploy Production, `kontolage-finanzbildung`, Branch `main`); env-Block um die neuen Keys ergänzt.
+- [UPDATE] Governance-Dateien auf verifizierte Fakten: `AGENTS.md` (Stand, 6 Edge Functions inkl. `newsletter`, `newsletter_issues`, Deploy-Weg), `AGENT.md` (Functions-Liste, Deploy), `SOP.md` (SOP-001 Kaskade), `MEMORY.md` (Functions, Secret-Liste), `PROJECT.md` (Stand, Tech-Stack, Datenmodell, Meilensteine). `SOUL.md` und `SKILLS.md` ohne Änderung (keine betroffenen Fakten).
+- [RESULT] Verifizierung: `node --check` ✓, `yaml-lint` ✓, `secret-scan` 0 Funde ✓; Auto-Deploy zweimal live nachgewiesen (`5s44xtg1r`, `ertuybr3z` ● Ready), CI success auf `9e955cc`.
+
 ## v6.2 (2026-08-27)
 - [ADD] `kontenlage-asset-classes-taxonomy` (TradFi, ETFs, Anleihen, Immo, Gold, Krypto, DeFi).
 - [ADD] `kontenlage-tax-holding-engine.js` (Above-the-fold Quick Estimator, Holding § 8b, VV-GmbH, Fünftelregelung).

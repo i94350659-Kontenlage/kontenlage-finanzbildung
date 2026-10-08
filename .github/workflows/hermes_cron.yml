@@ -36,21 +36,25 @@ jobs:
 
       - name: Execute Hermes AI Automation (6 Kanäle)
         env:
-          # ── AI Provider-Kette (Reihenfolge = Priorität) ─────────────────
+          # ── AI Provider-Kette (Reihenfolge = Priorität, Stand 2026-10-08) ──
           # Primär
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
           # Fallback-Gateways (jeder nur aktiv, wenn Key gesetzt)
+          ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          ORCAROUTER_MODEL: ${{ secrets.ORCAROUTER_MODEL }}
+          ZENMUXAI_API_KEY: ${{ secrets.ZENMUXAI_API_KEY }}
+          ZENMUXAI_MODEL: ${{ secrets.ZENMUXAI_MODEL }}
+          TOGETHERAI_API_KEY: ${{ secrets.TOGETHERAI_API_KEY }}
+          TOGETHERAI_MODEL: ${{ secrets.TOGETHERAI_MODEL }}
+          REQUESTY_API_KEY: ${{ secrets.REQUESTY_API_KEY }}
+          REQUESTY_MODEL: ${{ secrets.REQUESTY_MODEL }}
+          EDENAI_API_KEY: ${{ secrets.EDENAI_API_KEY }}
+          EDENAI_MODEL: ${{ secrets.EDENAI_MODEL }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: ${{ secrets.GROQ_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
-          EDENAI_API_KEY: ${{ secrets.EDENAI_API_KEY }}
-          EDENAI_MODEL: ${{ secrets.EDENAI_MODEL }}
-          REQUESTY_API_KEY: ${{ secrets.REQUESTY_API_KEY }}
-          REQUESTY_MODEL: ${{ secrets.REQUESTY_MODEL }}
-          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
-          TOGETHER_MODEL: ${{ secrets.TOGETHER_MODEL }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           MISTRAL_MODEL: ${{ secrets.MISTRAL_MODEL }}
           # Generische Gateway-Slots (OpenAI-kompatibel, für eigene Gateways)

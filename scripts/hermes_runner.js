@@ -5,11 +5,14 @@
  *  1. Liest Learnings & Artikel-Kontext aus Obsidian Vault
  *  2. Generiert ECHTEN 5-Kanal AI-Content über die Fallback-Kette:
  *     Primär:    OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free)
- *     Fallback:  Groq → Google Gemini → EdenAI → Requesty → Together AI →
- *                Mistral → Custom Gateway 1 → Custom Gateway 2 (OpenAI-kompatibel)
+ *     Fallback:  Orcarouter (orcarouter/free) → Zenmux (sapiens-ai/agnes-2.5-flash)
+ *                → Together (Prism-ML/Ternary-Bonsai-27B) → Requesty (gemma-4-31b-it)
+ *                → EdenAI v3 (google/gemma-4-31b-it) → Groq → Gemini → Mistral
+ *                → Custom Gateway 1 → Custom Gateway 2 (OpenAI-kompatibel)
  *     Endpunkt:  Statischer Qualitätscontent (Knowledge Base)
  *     Provider nur versuchen, wenn Key UND URL gesetzt sind; *_MODEL überschreibt
- *     den Modellnamen ohne Codeänderung.
+ *     den Modellnamen ohne Codeänderung. Bei 429/503/408/Netzfehler: zweiter
+ *     Durchlauf durch die ganze Kette nach 5s.
  *  3. Publiziert DIREKT:
  *     → Telegram:   Bot API (kostenlos, sofort)
  *     → X/Twitter:  OAuth 1.0a (Twitter API v2)
@@ -25,11 +28,13 @@
  *
  * GitHub Secrets für die AI-Kette (KEY = Pflicht, *_MODEL = optionaler Override):
  *  OPENROUTER_API_KEY    — https://openrouter.ai/settings/keys (Primär)
+ *  ORCAROUTER_API_KEY    — https://api.orcarouter.ai (Fallback 1)
+ *  ZENMUXAI_API_KEY      — https://zenmux.ai (Fallback 2)
+ *  TOGETHERAI_API_KEY    — https://api.together.ai (Fallback 3)
+ *  REQUESTY_API_KEY      — Requesty Fallback
+ *  EDENAI_API_KEY        — EdenAI Fallback (v3)
  *  GROQ_API_KEY          — https://console.groq.com/keys (Free Tier)
  *  GEMINI_API_KEY        — https://aistudio.google.com/apikey (Free Tier)
- *  EDENAI_API_KEY        — EdenAI Fallback
- *  REQUESTY_API_KEY      — Requesty Fallback
- *  TOGETHER_API_KEY      — https://api.together.xyz/settings/api-keys (Free Credit)
  *  MISTRAL_API_KEY       — https://console.mistral.ai/api-keys (Free Tier)
  *  GATEWAY1_NAME/_URL/_API_KEY/_MODEL — eigener OpenAI-kompatibler Gateway 1
  *  GATEWAY2_NAME/_URL/_API_KEY/_MODEL — eigener OpenAI-kompatibler Gateway 2
@@ -57,7 +62,10 @@ const https = require('https');
 
 // ─── AI Provider Konfiguration (Primär + Fallback-Kette) ──────────────────────
 // SECURITY: Alle Keys aus Umgebungsvariablen — niemals hardcodieren.
-// Reihenfolge = Priorität. Provider ohne gesetzten Key werden übersprungen.
+// Reihenfolge = Priorität (Stand 2026-10-08, User-Umstellung):
+//   OpenRouter (Primär) → Orcarouter (free) → Zenmux → Together → Requesty
+//   → EdenAI (v3) → Groq → Gemini → Mistral → Custom Gateway 1/2
+// Provider ohne gesetzten Key werden übersprungen.
 // Modellnamen sind per Env übersteuerbar (*_MODEL), damit Modelle ohne
 // Codeänderung migriert werden können, wenn ein Anbieter sie abschaltet.
 const AI_PROVIDERS = [
@@ -72,6 +80,41 @@ const AI_PROVIDERS = [
     },
   },
   {
+    name: 'Orcarouter Fallback (free)',
+    url: 'https://api.orcarouter.ai/v1/chat/completions',
+    key: process.env.ORCAROUTER_API_KEY,
+    model: process.env.ORCAROUTER_MODEL || 'orcarouter/free',
+    headers: {},
+  },
+  {
+    name: 'Zenmux Fallback (Agnes 2.5 Flash)',
+    url: 'https://zenmux.ai/api/v1/chat/completions',
+    key: process.env.ZENMUXAI_API_KEY,
+    model: process.env.ZENMUXAI_MODEL || 'sapiens-ai/agnes-2.5-flash',
+    headers: {},
+  },
+  {
+    name: 'Together AI Fallback (Ternary-Bonsai)',
+    url: 'https://api.together.ai/v1/chat/completions',
+    key: process.env.TOGETHERAI_API_KEY,
+    model: process.env.TOGETHERAI_MODEL || 'Prism-ML/Ternary-Bonsai-27B',
+    headers: {},
+  },
+  {
+    name: 'Requesty Fallback (Gemma 4)',
+    url: 'https://router.requesty.ai/v1/chat/completions',
+    key: process.env.REQUESTY_API_KEY,
+    model: process.env.REQUESTY_MODEL || 'gemma-4-31b-it',
+    headers: {},
+  },
+  {
+    name: 'EdenAI Fallback (v3, OpenAI-kompatibel)',
+    url: 'https://api.edenai.run/v3/chat/completions',
+    key: process.env.EDENAI_API_KEY,
+    model: process.env.EDENAI_MODEL || 'google/gemma-4-31b-it',
+    headers: {},
+  },
+  {
     name: 'Groq Fallback (Llama 3.3 70B)',
     url: 'https://api.groq.com/openai/v1/chat/completions',
     key: process.env.GROQ_API_KEY,
@@ -83,27 +126,6 @@ const AI_PROVIDERS = [
     url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
     key: process.env.GEMINI_API_KEY,
     model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
-    headers: {},
-  },
-  {
-    name: 'EdenAI Fallback (Gemma)',
-    url: 'https://api.edenai.run/v2/text/chat',
-    key: process.env.EDENAI_API_KEY,
-    model: process.env.EDENAI_MODEL || 'google/gemma-4-31b-it',
-    isEdenAI: true,
-  },
-  {
-    name: 'Requesty Fallback (Nemotron via Requesty)',
-    url: 'https://router.requesty.ai/v1/chat/completions',
-    key: process.env.REQUESTY_API_KEY,
-    model: process.env.REQUESTY_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b',
-    headers: {},
-  },
-  {
-    name: 'Together AI Fallback (Llama 3.3 70B)',
-    url: 'https://api.together.xyz/v1/chat/completions',
-    key: process.env.TOGETHER_API_KEY,
-    model: process.env.TOGETHER_MODEL || 'meta-llama/Llama-3.3-70B-Instruct-Turbo',
     headers: {},
   },
   {
@@ -257,46 +279,25 @@ async function callAI(prompt, systemPrompt = '') {
       }
       console.log(`  🤖 Versuche Provider: ${provider.name}...`);
       try {
-        let result;
-
-        if (provider.isEdenAI) {
-          result = await httpRequest(
-            provider.url, 'POST',
-            {
-              providers: ['google'],
-              text: prompt,
-              chatbot_global_action: systemPrompt || 'Du bist ein Finanz-Redakteur bei Kontolage.',
-              previous_history: [],
-              temperature: 0.7,
-              max_tokens: 1200,
-            },
-            { Authorization: `Bearer ${provider.key}` }
-          );
-          if (result.status === 200 && result.body?.google?.generated_text) {
-            console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
-            return { text: result.body.google.generated_text, provider: provider.name };
+        const result = await httpRequest(
+          provider.url, 'POST',
+          {
+            model: provider.model,
+            messages: [
+              ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
+              { role: 'user', content: prompt },
+            ],
+            max_tokens: 1200,
+            temperature: 0.75,
+          },
+          {
+            Authorization: `Bearer ${provider.key}`,
+            ...(provider.headers || {}),
           }
-        } else {
-          result = await httpRequest(
-            provider.url, 'POST',
-            {
-              model: provider.model,
-              messages: [
-                ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
-                { role: 'user', content: prompt },
-              ],
-              max_tokens: 1200,
-              temperature: 0.75,
-            },
-            {
-              Authorization: `Bearer ${provider.key}`,
-              ...(provider.headers || {}),
-            }
-          );
-          if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
-            console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
-            return { text: result.body.choices[0].message.content, provider: provider.name };
-          }
+        );
+        if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
+          console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
+          return { text: result.body.choices[0].message.content, provider: provider.name };
         }
 
         if ([429, 503, 408].includes(result.status)) sawTransient = true;

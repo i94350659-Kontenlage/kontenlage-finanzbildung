@@ -68,7 +68,7 @@ sowie Test-Checkout → Webhook → Tarif im Konto.
 
 - [ ] **Stripe-/Supabase-Credentials rotieren** — Alte, historisch exponierte Schlüssel aus Code und Git-History entfernen und durch neu erzeugte Secret-Store-Werte ersetzen.
 
-- [x] **OpenRouter/EdenAI/Requesty Keys** — aus Code entfernt (v2.3), jetzt nur via GitHub Secrets
+- [x] **AI-Provider-Keys** — nur via GitHub Secrets (Stand 2026-10-08): `OPENROUTER_API_KEY`, `ORCAROUTER_API_KEY`, `ZENMUXAI_API_KEY`, `TOGETHERAI_API_KEY`, `REQUESTY_API_KEY`, `EDENAI_API_KEY` gesetzt; optional `GROQ_API_KEY`, `GEMINI_API_KEY`, `MISTRAL_API_KEY`, `GATEWAY1/2_*` (jeder Provider ohne Key wird automatisch übersprungen)
 
 ---
 
