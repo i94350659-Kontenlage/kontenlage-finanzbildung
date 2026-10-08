@@ -1,5 +1,5 @@
 # Social Media Entwürfe — 2026-10-08
-_Generiert von: static-fallback_
+_Generiert von: OpenRouter (Nemotron Primary)_
 
 ## 💼 LinkedIn
 Rürup-Rente 2026: Bis zu 30.825 € als Sonderausgaben absetzbar — 100 % (§ 10 Abs. 1 Nr. 2 EStG).
@@ -16,21 +16,14 @@ Neutrale Berechnung für Ihr Einkommensprofil: https://kontolage.de
 #Steuerrecht #Rüruprente #Finanzbildung #EStG
 
 ## 🧵 X (Twitter) Thread
-1/4 Rüruprente 2026: 30.825 € absetzbar (§10 EStG). Für Selbstständige der wirkungsvollste Steuerhebel im dt. Steuerrecht.
-
-2/4 Bei 42% Grenzsteuersatz: bis zu 12.946 € Steuerersparnis im Jahr. Verheiratete: Höchstbetrag verdoppelt auf 61.651 €.
-
-3/4 Unterschätzt: Einmalzahlung bis 31.12. zählt noch vollständig für das aktuelle Jahr. Kombination mit §3 Nr. 63 EStG möglich.
-
-4/4 Rechner ohne Provision: https://kontolage.de
+[LINKEDIN]
+§21 EStG regelt die Ermittlung der Einkünfte aus Vermietung und Verpachtung. Die AfA nach §7 Abs. 4 EStG bildet den steuerlichen Hebel: 2 % p. a. für Gebäude, die nach 1925 fertiggestellt wurden (Nutzungsdauer 50 Jahre), 2,5 % für Altbau vor 1925 (40 Jahre). Ein Beispiel: Kaufpreis 500.000 €, davon 400.000 € Gebäudeanteil. Jährliche AfA = 8.000 € (2 %) bzw. 10.000 € (2,5 %). Bei 42 % Grenzsteuersatz reduziert sich die Steuerlast um 3.360 € bzw. 4.200 € pro Jahr. Vorteil: Planbare Steuerersparnis über Jahrzehnte. Nachteil: AfA mindert die Anschaffungskosten → höherer Veräußerungsgewinn bei Verkauf (§23 EStG, Spekulationsfrist 10 Jahre). Instandhaltungskosten sind sofort abzugsfähig (§11 EStG), Modernisierungen aktivierungspflichtig. Cashflow-Rechnung: Mieteinnahmen 24.000 € p. a. abzüglich Zinsen 15.000 €, AfA 8.000 €, Bewirtschaftung 3.000 € = steuerlicher Verlust 2.000 € → Steuererstattung 840 €. Realer Cashflow: +9.000 € (Miete minus Zinsen minus Bewirtschaftung). Risiko: Leerstand, Zinsänderung, Gesetzesänderung (z. B. AfA-Abschaffung diskutiert). Keine Anlageberatung. https://kontolage.de
 
 ## 📸 Instagram Carousel
-[SLIDE 1] 30.825 € Steuerersparnis — kennen Sie diesen Hebel?
-[SLIDE 2] Die Rürup-Rente (§ 10 EStG): 100 % Ihrer Beiträge sind 2026 absetzbar
-[SLIDE 3] Beispiel: 30.000 € Beitrag × 42 % Grenzsteuersatz = 12.600 € zurück
-[SLIDE 4] Für Freiberufler & Selbstständige: kein Arbeitgeber-Zuschuss, volle Eigenverantwortung
-[SLIDE 5] Einmalzahlung bis 31.12. wirkt noch im laufenden Steuerjahr
-[CTA] Link in Bio → Kostenloser Rechner: https://kontolage.de
+[X_THREAD]
+1/4 §21 EStG: Einkünfte aus Vermietung = Einnahmen minus Werbungskosten. Kernhebel: AfA nach §7 Abs. 4 EStG. 2 % p. a. (Neubau nach 1925, 50 J. Nutzungsdauer), 2,5 % (Altbau vor 1925, 40 J.). Beispiel: 400.000 € Gebäudeanteil → 8.000 € / 10.000 € AfA p. a.
+
+2/4 Steuerwirkung: Bei 42 % Grenzlast = 3.360 € / 4.200 €
 
 ## 🎬 TikTok / Shorts (Skript für manuelle Aufnahme)
 [INTRO 0-5s] "Selbstständig und keine betriebliche Altersvorsorge? Dann kostet Sie das jedes Jahr tausende Euro Steuern."
