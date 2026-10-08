@@ -293,7 +293,10 @@ async function callAI(prompt, systemPrompt = '') {
           {
             Authorization: `Bearer ${provider.key}`,
             ...(provider.headers || {}),
-          }
+          },
+          // LLM-Generierung braucht länger als der 10s-Default — 45s, damit
+          // langsame Provider nicht unnötig als 408 (Timeout) durchfallen.
+          45000
         );
         if (result.status === 200 && result.body?.choices?.[0]?.message?.content) {
           console.log(`  ✅ ${provider.name} — Antwort erhalten.`);
