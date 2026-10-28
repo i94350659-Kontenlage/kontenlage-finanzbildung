@@ -21,11 +21,6 @@ interface RouteArticle {
   keywords?: string[];
 }
 
-interface Section {
-  heading: string;
-  body: string;
-}
-
 const { slug } = useParams<{ slug: string }>();
 
 const route = (routesData.routes as RouteArticle[]).find(
@@ -55,9 +50,42 @@ const article = {
   sources: route.sources || [],
   keywords: route.keywords || []
 };
-  "defi-lending-staking-liquidity-pools-guide": {
-    tag: "DeFi & Web3",
-    title: "DeFi-Guide 2026: Lending, Staking & Liquidity Pools – Chancen, Risiken & Steuerpraxis",
+
+/*
+
+
+  return (
+    <>
+      <section style={{ paddingTop: 120, padding: "120px 20px 48px", background: "linear-gradient(180deg, rgba(48,68,104,0.15) 0%, transparent 100%)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <Link to="/artikel" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, color: "#a89f94", textDecoration: "none", marginBottom: 28, transition: "color 0.2s" }}
+          onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+          onMouseLeave={e => (e.currentTarget.style.color = "#a89f94")}}
+          >← Alle Artikel</Link>
+
+          <span style={{ display: "inline-block", fontSize: 12, fontWeight: 600, color: "#c9a84c", padding: "4px 12px", borderRadius: 20, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", marginBottom: 20 }}>{article.tag}</span>
+
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 4vw, 42px)", fontWeight: 700, color: "#f0ece4", lineHeight: 1.15, marginBottom: 20, letterSpacing: "-0.025em" }}>
+            {article.title}
+          </h1>
+
+          <div style={{ display: "flex", gap: 24, fontSize: 13, color: "#a89f94", marginBottom: 16, flexWrap: "wrap" }}>
+            <span>📅 {article.date}</span>
+            {article.readTime && <span>⏱ {article.readTime} Lesezeit</span>}
+            {article.author && <span>✍️ {article.author}</span>}
+          </div>
+
+          {/* E-E-A-T: Redaktion, Prüfstand und Reichweite der Information offenlegen */}
+          <p
+            style={{
+              display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: 12, lineHeight: 1.7, color: "#a89f94", marginBottom: 32
+            }}
+          >
+            {article.sources.map((s: { label: string; url: string; jurisdiction: string; asOf: string }) => (
+              <span key={s.url}>{s.label} · {s.jurisdiction} · Stand {s.asOf}</span>
+            ))}
+          </p>
+
     date: "12. September 2026",
     readTime: "11 Min.",
     author: "Hermes Autonomous Engine & Redaktion Kontolage",
@@ -68,7 +96,7 @@ const article = {
         body: "Traditionelle Finanzinstitute agieren als zentraler Clearing-Partner, verlangen Gebühren und verwalten Kontobücher auf proprietären Servern. Im DeFi-Bereich (Decentralized Finance) übernehmen quelloffene Smart Contracts (primär auf Ethereum, Arbitrum, Optimism und Base) diese Aufgabe. Transaktionen, Sicherheitenquoten und Zinsmechanismen sind mathematisch im Code determiniert. Nutzer behalten die uneingeschränkte Verwahrung über ihre privaten Schlüssel (Non-Custodial / Self-Custody) via Hard- oder Web3-Wallets."
       },
       {
-        heading: "2. Die drei Kernmechanismen: Lending, Staking und Liquidity Pools",
+        
         body: "1. Lending (z.B. Aave, Compound): Einzahlung von Krypto-Assets oder Euro-/Dollar-Stablecoins in Liquiditätspools. Kreditnehmer hinterlegen Überbesicherungen (Overcollateralization, z.B. 130-150%), um Darlehen aufzunehmen. Der Einleger erhält variable Zinsen aus den Kreditgebühren.\n2. Liquiditätsbereitstellung (z.B. Uniswap v3, Curve): Anleger stellen Paare von Tokens in Automated Market Maker (AMM) Pools bereit und verdienen anteilige Transaktionsgebühren. Bei Kursdivergenzen entsteht jedoch 'Impermanent Loss'.\n3. Proof-of-Stake Staking (z.B. Ethereum Validator, Lido, Rocket Pool): Sperrung von nativen Coins zur Netzwerksicherung mit laufender Ertragsausschüttung (ca. 3-4% p.a.)."
       },
       {
@@ -84,7 +112,7 @@ const article = {
     disclaimer: "Rein neutrale Finanzbildung und steuerrechtliche Strukturierungshinweise nach § 2 Abs. 8 Nr. 10 WpHG. Keine Anlageberatung, keine Aufforderung zum Handel und keine individuelle Steuerberatung."
   },
 
-  "ezb-zinssenkungen-anleihen-tagesgeld": {
+  "": {
     tag: "Makroökonomie & EZB",
     title: "EZB-Zinssenkungen: Was die Zinswende für Tagesgeld, Festgeld und Anleihen bedeutet",
     date: "12. September 2026",
@@ -113,7 +141,7 @@ const article = {
     disclaimer: "Allgemeine volkswirtschaftliche Bildungsanalyse nach § 2 Abs. 8 Nr. 10 WpHG. Keine Anlageberatung oder individuelle Kauf-/Verkaufsempfehlung."
   },
 
-  "us-schulden-dollar-gold-portfolio": {
+  "": {
     tag: "Weltwirtschaft & Geopolitik",
     title: "US-Schuldenberg & BRICS-Dynamik: Warum Gold und Realwerte als Absicherung unverzichtbar sind",
     date: "8. September 2026",
@@ -381,21 +409,82 @@ const article = {
   }
 };
 
-const defaultArticle: ArticleData = {
+
   tag: "Allgemein",
-  title: "Artikel in Bearbeitung",
+
   date: "",
   readTime: "",
-  author: "Kontolage Redaktion",
+
   intro: "Dieser Fachartikel wird aktuell redaktionell finalisiert und steht in Kürze zur Verfügung.",
   sections: [],
-  fazit: "",
+
   disclaimer: "Alle Inhalte nach WpHG § 2 Abs. 8 Nr. 10 rein zu Bildungszwecken."
 };
 
-export default function ArtikelDetail() {
-  const { slug } = useParams<{ slug: string }>();
-  const article = slug ? (articles[slug] || defaultArticle) : defaultArticle;
+*/export default function ArtikelDetail_Live() {  return (
+    <>
+      <section style={{ paddingTop: 120, padding: "120px 20px 48px", background: "linear-gradient(180deg, rgba(48,68,104,0.15) 0%, transparent 100%)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <Link to="/artikel" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, color: "#a89f94", textDecoration: "none", marginBottom: 28, transition: "color 0.2s" }}
+          onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+          onMouseLeave={e => (e.currentTarget.style.color = "#a89f94")}}
+          >← Alle Artikel</Link>
+
+          <span style={{ display: "inline-block", fontSize: 12, fontWeight: 600, color: "#c9a84c", padding: "4px 12px", borderRadius: 20, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.2)", marginBottom: 20 }}>{article.tag}</span>
+
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 4vw, 42px)", fontWeight: 700, color: "#f0ece4", lineHeight: 1.15, marginBottom: 20, letterSpacing: "-0.025em" }}>
+            {article.title}
+          </h1>
+
+          <div style={{ display: "flex", gap: 24, fontSize: 13, color: "#a89f94", marginBottom: 16, flexWrap: "wrap" }}>
+            <span>📅 {article.date}</span>
+            {article.readTime && <span>⏱ {article.readTime} Lesezeit</span>}
+            {article.author && <span>✍️ {article.author}</span>}
+          </div>
+
+          <p
+            style={{
+              display: "flex", flexWrap: "wrap", gap: "4px 14px", fontSize: 12, lineHeight: 1.7, color: "#8d857a", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 6, padding: "10px 14px", margin: "0 0 28px",
+            }}
+          >
+            <span>Stand: {article.date}</span>
+            <span>Redaktion: {article.author}</span>
+            <span>
+              Allgemeine Information, redaktionell geprüft – keine individuelle Steuer- oder Anlageberatung.{" "}
+              <Link to="/transparenz" style={{ color: "#c9a84c" }}>Quellen und Methodik</Link>
+            </span>
+          </p>
+
+          {article.intro && (
+            <p style={{ fontSize: "clamp(15px, 2vw, 18px)", color: "#cdc6be", lineHeight: 1.8, fontStyle: "italic", borderLeft: "3px solid #c9a84c", paddingLeft: 20 }}>
+              {article.intro}
+            </p>
+          )}
+
+          {article.sections.map((s, i) => (
+            <div key={i} style={{ marginBottom: 44 }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(18px, 3vw, 24px)", fontWeight: 700, color: "#f0ece4", marginBottom: 16, lineHeight: 1.3 }}>{s.heading}</h2>
+              <p style={{ fontSize: 16, color: "#a89f94", lineHeight: 1.9 }}>{s.body}</p>
+            </div>
+          ))}
+
+          {article.fazit && (
+            <div style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.65), rgba(30,41,59,0.8))", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 12, padding: 28, marginBottom: 32 }}>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "#c9a84c", marginBottom: 10 }}>Fazit & Einordnung</div>
+              <p style={{ fontSize: 15, color: "#e2c27d", lineHeight: 1.8, margin: 0 }}>{article.fazit}</p>
+            </div>
+          )}
+
+          {article.disclaimer && (
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 20, fontSize: 12, color: "#6b7280", lineHeight: 1.6 }}>
+              <strong>Rechtlicher Hinweis:</strong> {article.disclaimer}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
+}
 
   return (
     <>
