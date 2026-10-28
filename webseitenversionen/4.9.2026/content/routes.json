@@ -185,7 +185,7 @@
       "path": "/artikel/defi-lending-staking-liquidity-pools-guide",
       "type": "article",
       "slug": "defi-lending-staking-liquidity-pools-guide",
-      "category": "DeFi & Web3",
+      "category": "Krypto & Digital Assets",
       "h1": "DeFi-Guide 2026: Lending, Staking & Liquidity Pools – Chancen, Risiken & Steuerpraxis",
       "title": "DeFi-Guide 2026: Lending, Staking & Steuern",
       "description": "Lending, Staking und Liquidity Pools erklärt: Funktionsweise von Aave, Uniswap und Curve, Smart-Contract- und Oracle-Risiken sowie die Steuerlogik nach § 23 EStG.",
@@ -193,7 +193,8 @@
       "updated": "2026-09-12",
       "readTime": "11 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Krypto & Digital Assets"
     },
     {
       "path": "/artikel/ezb-zinssenkungen-anleihen-tagesgeld",
@@ -207,7 +208,8 @@
       "updated": "2026-09-12",
       "readTime": "9 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Makroökonomie & EZB"
     },
     {
       "path": "/artikel/us-schulden-dollar-gold-portfolio",
@@ -221,7 +223,8 @@
       "updated": "2026-09-08",
       "readTime": "10 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Weltwirtschaft & Geopolitik"
     },
     {
       "path": "/artikel/etf-vorabpauschale-2026-steuern",
@@ -235,7 +238,8 @@
       "updated": "2026-09-01",
       "readTime": "7 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Kapitalerträge"
     },
     {
       "path": "/artikel/bitcoin-steuer-holding-privat-2026",
@@ -249,7 +253,8 @@
       "updated": "2026-08-25",
       "readTime": "8 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Krypto & Digital Assets"
     },
     {
       "path": "/artikel/steuersparmodelle-immobilien",
@@ -263,7 +268,8 @@
       "updated": "2026-06-15",
       "readTime": "8 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Immobilien"
     },
     {
       "path": "/artikel/ruerup-angestellte",
@@ -277,7 +283,8 @@
       "updated": "2026-05-28",
       "readTime": "11 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Altersvorsorge"
     },
     {
       "path": "/artikel/sparerpauschbetrag-2026",
@@ -291,7 +298,8 @@
       "updated": "2026-04-10",
       "readTime": "6 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Kapitalerträge"
     },
     {
       "path": "/artikel/etf-kosten-vergleich",
@@ -305,7 +313,8 @@
       "updated": "2026-03-08",
       "readTime": "7 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "ETF & Indexfonds"
     },
     {
       "path": "/artikel/home-office-pauschale-2026",
@@ -319,13 +328,14 @@
       "updated": "2026-02-01",
       "readTime": "5 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Arbeitnehmer"
     },
     {
       "path": "/artikel/fuenftelregelung-abfindung",
       "type": "article",
       "slug": "fuenftelregelung-abfindung",
-      "category": "Abfindung",
+      "category": "Arbeitnehmer",
       "h1": "Fünftelregelung: Abfindung steueroptimiert erhalten",
       "title": "Fünftelregelung: Abfindung steueroptimiert",
       "description": "Außerordentliche Einkünfte nach § 34 EStG glätten: Voraussetzungen, Rechenweg und wann die Fünftelregelung im Vergleich zur Regelbesteuerung Vorteile bringt.",
@@ -333,13 +343,14 @@
       "updated": "2026-01-15",
       "readTime": "8 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Arbeitnehmer"
     },
     {
       "path": "/artikel/kirchensteuer-optimierung",
       "type": "article",
       "slug": "kirchensteuer-optimierung",
-      "category": "Kirchensteuer",
+      "category": "Arbeitnehmer",
       "h1": "Kirchensteuerpflicht bei Kapitalerträgen: Sperrvermerk setzen",
       "title": "Kirchensteuer auf Kapitalerträge vermeiden",
       "description": "Kirchensteuer auf Kapitalerträge fällt nur bei Abfrage der Konfession an. Wie der Sperrvermerk funktioniert, welche Pflichten bleiben und was die Steuererklärung regelt.",
@@ -347,7 +358,8 @@
       "updated": "2026-01-05",
       "readTime": "4 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Arbeitnehmer"
     },
     {
       "path": "/artikel/holding-gruendung-kosten",
@@ -361,7 +373,8 @@
       "updated": "2026-03-22",
       "readTime": "9 Min.",
       "changefreq": "monthly",
-      "priority": "0.8"
+      "priority": "0.8",
+      "tag": "Holding & GmbH"
     },
     {
       "path": "/newsletter",
@@ -374,40 +387,76 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "Makroökonomie & EZB · 2026-10-25",
+          "body": "EZB-Leitzins 2026: Einlagefazilität, Realzins und Wirkung auf Anleihen: Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken. (Stand 2026-10-25, 2 Quellen)"
+        },
+        {
           "heading": "Makroökonomie & EZB · 2026-10-20",
-          "body": "EZB-Leitzins 2026: Einlagefazilität, Realzins und Wirkung auf Anleihen: Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken. (Stand 2026-10-20, 2 Quellen)"
+          "body": "Eurozone-Inflation 2026: VPI, Kernrate und Zinspfad der EZB: Verbraucherpreisindex und Kerninflation im Vergleich: Wie die Teuerung der Dienstleistungen den weiteren Zinspfad der Zentralbank bestimmt. (Stand 2026-10-20, 2 Quellen)"
+        },
+        {
+          "heading": "Weltwirtschaft & Geopolitik · 2026-10-24",
+          "body": "US-Staatsverschuldung und Zentralbank-Goldreserven: Datenlage 2026: Steigende US-Staatsschulden und anhaltende Netto-Goldkäufe globaler Notenbanken: Fakten zu Währungsreserven und Zinslast. (Stand 2026-10-24, 2 Quellen)"
         },
         {
           "heading": "Weltwirtschaft & Geopolitik · 2026-10-18",
-          "body": "US-Staatsverschuldung und Zentralbank-Goldreserven: Datenlage 2026: Steigende US-Staatsschulden und anhaltende Netto-Goldkäufe globaler Notenbanken: Fakten zu Währungsreserven und Zinslast. (Stand 2026-10-18, 2 Quellen)"
+          "body": "IWF World Economic Outlook 2026: Globale Schulden und Devisenströme: Internationale Schuldenquoten und Währungsverschiebungen: Wie sich globale Handelsbilanzen und Leitwährungsanteile entwickeln. (Stand 2026-10-18, 2 Quellen)"
         },
         {
-          "heading": "Kapitalerträge · 2026-10-14",
-          "body": "Kapitalertragsteuer 2026: Sparerpauschbetrag und Verlusttöpfe: Grundlagen der Abgeltungsteuer nach § 20 EStG: Freistellungsauftrag, Verrechnungstöpfe bei Depotüberträgen und Günstigerprüfung. (Stand 2026-10-14, 2 Quellen)"
+          "heading": "Kapitalerträge · 2026-10-22",
+          "body": "Kapitalertragsteuer 2026: Sparerpauschbetrag und Verlusttöpfe: Grundlagen der Abgeltungsteuer nach § 20 EStG: Freistellungsauftrag, Verrechnungstöpfe bei Depotüberträgen und Günstigerprüfung. (Stand 2026-10-22, 2 Quellen)"
         },
         {
-          "heading": "Krypto & Digital Assets · 2026-10-10",
-          "body": "Krypto-Steuern 2026: 1-Jahres-Haltefrist, Staking und § 23 EStG: Ertragssteuerliche Behandlung virtueller Währungen: Freigrenze nach § 23 EStG, FIFO-Verfahren und Staking-Dokumentation nach BMF-Kriterien. (Stand 2026-10-10, 2 Quellen)"
+          "heading": "Kapitalerträge · 2026-10-15",
+          "body": "Günstigerprüfung nach § 32d Abs. 6 EStG: Abgeltungsteuer senken: Wann sich die Anlage KAP in der Steuererklärung lohnt: Wenn der persönliche Steuersatz unter 25 % liegt, erstattet das Finanzamt die Differenz. (Stand 2026-10-15, 2 Quellen)"
+        },
+        {
+          "heading": "Krypto & Digital Assets · 2026-10-23",
+          "body": "Krypto-Steuern 2026: 1-Jahres-Haltefrist, Staking und § 23 EStG: Ertragssteuerliche Behandlung virtueller Währungen: Freigrenze nach § 23 EStG, FIFO-Verfahren und Staking-Dokumentation nach BMF-Kriterien. (Stand 2026-10-23, 2 Quellen)"
+        },
+        {
+          "heading": "Krypto & Digital Assets · 2026-10-16",
+          "body": "MiCA-Verordnung 2026: EU-Regeln für Stablecoins und Verwahrung: Einheitlicher Regulierungsrahmen für Krypto-Assets: Pflichten für Emittenten, Reservedeckung bei E-Geld-Token und BaFin-Lizenzierung von CASPs. (Stand 2026-10-16, 2 Quellen)"
         },
         {
           "heading": "Holding & GmbH · 2026-08-26",
           "body": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?: Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen. (Stand 2026-08-26, 3 Quellen)"
         },
         {
+          "heading": "Holding & GmbH · 2026-10-14",
+          "body": "Holding-Ausschüttungen: Abgeltungsteuer vs. Teileinkünfteverfahren: Wie Gewinne aus der GmbH steueroptimal an Gesellschafter fließen: Vergleich zwischen 25 % Abgeltungsteuer und 60 % Besteuerung nach § 3 Nr. 40 EStG. (Stand 2026-10-14, 2 Quellen)"
+        },
+        {
           "heading": "Immobilien · 2026-09-28",
           "body": "Degressive Gebäude-AfA 2026: 5 % Abschreibung und Voraussetzungen: Wachstumschancengesetz im Detail: Wann Wohngebäude degressiv mit 5 % abgeschrieben werden dürfen und welche Fristen gelten. (Stand 2026-09-28, 2 Quellen)"
+        },
+        {
+          "heading": "Immobilien · 2026-10-12",
+          "body": "Handwerkerleistungen nach § 35a EStG: Bis zu 1.200 € Steuerabzug: Direkte Steuerermäßigung für Renovierungs- und Erhaltungsarbeiten: 20 % der Arbeitskosten direkt von der Steuerschuld abziehen. (Stand 2026-10-12, 2 Quellen)"
         },
         {
           "heading": "Altersvorsorge · 2026-09-20",
           "body": "Rürup-Basisrente 2026: Höchstbetrag und Sonderausgabenabzug: Altersvorsorgeaufwendungen nach § 10 EStG: 100 % steuerlicher Abzug, Knappschaftshöchstbetrag und Versteuerung der späteren Rentenauszahlung. (Stand 2026-09-20, 2 Quellen)"
         },
         {
+          "heading": "Altersvorsorge · 2026-10-11",
+          "body": "Rentenabschläge ausgleichen nach § 187a SGB VI: Steuerlicher Hebel: Frühzeitiger Ruhestand ohne Abschläge: Wie freiwillige Sonderzahlungen an die Deutsche Rentenversicherung zu 100 % von der Steuer absetzbar sind. (Stand 2026-10-11, 2 Quellen)"
+        },
+        {
           "heading": "ETF & Indexfonds · 2026-09-15",
           "body": "ETF-Vorabpauschale 2026: Basiszins, Formel und Teilfreistellung: Investmentsteuerreform in der Praxis: Wie Depotbanken den Basisertrag ermitteln, wie die 30 % Teilfreistellung greift und was auf dem Konto liegen muss. (Stand 2026-09-15, 2 Quellen)"
         },
         {
+          "heading": "ETF & Indexfonds · 2026-10-08",
+          "body": "ETF-Kosten 2026: Gesamtkostenquote (TER) vs. Tracking Differenz: Warum eine niedrige TER nicht automatisch den günstigsten Fonds bedeutet: Wie Wertpapierleihe und Transaktionskosten die reale Abweichung bestimmen. (Stand 2026-10-08, 2 Quellen)"
+        },
+        {
           "heading": "Arbeitnehmer · 2026-09-10",
           "body": "Fünftelregelung 2026: Abfindung steueroptimiert abrechnen (§ 34 EStG): Progressionsmilderung bei außerordentlichen Einkünften: Wie das Finanzamt die Steuer auf Abfindungen berechnet und wie die Differenz ermittelt wird. (Stand 2026-09-10, 2 Quellen)"
+        },
+        {
+          "heading": "Arbeitnehmer · 2026-10-05",
+          "body": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln: Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf. (Stand 2026-10-05, 2 Quellen)"
         }
       ]
     },
@@ -421,8 +470,8 @@
       "description": "EZB-Leitzinsbeschlüsse und Einlagefazilität 2026: Wirkung auf Renditestrukturkurve, Realzins und Anleihenkurse nach offiziellen EZB-Daten.",
       "teaser": "Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken.",
       "intro": "Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken.",
-      "published": "2026-10-20",
-      "updated": "2026-10-20",
+      "published": "2026-10-25",
+      "updated": "2026-10-25",
       "readTime": "5 Min.",
       "tier": "free",
       "rechner": "/rechner",
@@ -443,13 +492,13 @@
           "label": "Europäische Zentralbank (EZB) — Zinsbeschlüsse und geldpolitische Instrumente",
           "url": "https://www.ecb.europa.eu",
           "jurisdiction": "EU",
-          "asOf": "2026-10-20"
+          "asOf": "2026-10-25"
         },
         {
           "label": "Deutsche Bundesbank — Zinsstrukturkurve und Kapitalmarktstatistik",
           "url": "https://www.bundesbank.de",
           "jurisdiction": "DE",
-          "asOf": "2026-10-20"
+          "asOf": "2026-10-25"
         }
       ],
       "keywords": [
@@ -457,7 +506,57 @@
         "Einlagefazilität EZB",
         "Anleihen Duration Zinswende",
         "Realzins Eurozone"
-      ]
+      ],
+      "tag": "Makroökonomie & EZB"
+    },
+    {
+      "path": "/newsletter/inflation-hvpi-kernrate-deutschland-2026",
+      "type": "newsletter",
+      "slug": "inflation-hvpi-kernrate-deutschland-2026",
+      "category": "Makroökonomie & EZB",
+      "h1": "Eurozone-Inflation 2026: VPI, Kernrate und Zinspfad der EZB",
+      "title": "Eurozone-Inflation 2026: VPI, Kernrate und Zinspfad der EZB",
+      "description": "Entwicklung des Verbraucherpreisindex und der Kerninflation im Euroraum 2026: Auswertung nach Destatis- und Eurostat-Daten mit Stichtag.",
+      "teaser": "Verbraucherpreisindex und Kerninflation im Vergleich: Wie die Teuerung der Dienstleistungen den weiteren Zinspfad der Zentralbank bestimmt.",
+      "intro": "Verbraucherpreisindex und Kerninflation im Vergleich: Wie die Teuerung der Dienstleistungen den weiteren Zinspfad der Zentralbank bestimmt.",
+      "published": "2026-10-20",
+      "updated": "2026-10-20",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Gesamtinflation versus Kerninflation",
+          "body": "Während die Gesamtinflation maßgeblich von schwankungsanfälligen Energie- und Nahrungsmittelpreisen geprägt wird, misst die Kerninflation den zugrundeliegenden Preisdruck der Dienstleistungs- und Industriegütersektoren. Dieser Wert dient der EZB als primärer Orientierungspunkt."
+        },
+        {
+          "heading": "Auswirkung auf Realzins und Sparvermögen",
+          "body": "Liegt der nominale Zinssatz eines Sparkontos oder einer Anleihe unterhalb der Inflationsrate, ist der Realzins negativ. Erst bei einer Differenz zugunsten des Zinses findet ein realer Kaufkrafterhalt des angelegten Kapitals statt."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Statistisches Bundesamt (Destatis) — Verbraucherpreisindex für Deutschland",
+          "url": "https://www.destatis.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-20"
+        },
+        {
+          "label": "Eurostat — Harmonisierter Verbraucherpreisindex (HVPI)",
+          "url": "https://ec.europa.eu/eurostat",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-20"
+        }
+      ],
+      "keywords": [
+        "Verbraucherpreisindex VPI",
+        "Kerninflation Eurozone",
+        "Destatis Inflationsrate",
+        "HVPI Teuerung 2026"
+      ],
+      "tag": "Makroökonomie & EZB"
     },
     {
       "path": "/newsletter/us-staatsverschuldung-gold-zentralbanken-2026",
@@ -469,8 +568,8 @@
       "description": "US-Staatsverschuldung und Zentralbank-Goldkäufe 2026: Analyse von Währungsreserven, Zinslastquoten und Notenbankbilanzen nach IWF-Daten.",
       "teaser": "Steigende US-Staatsschulden und anhaltende Netto-Goldkäufe globaler Notenbanken: Fakten zu Währungsreserven und Zinslast.",
       "intro": "Steigende US-Staatsschulden und anhaltende Netto-Goldkäufe globaler Notenbanken: Fakten zu Währungsreserven und Zinslast.",
-      "published": "2026-10-18",
-      "updated": "2026-10-18",
+      "published": "2026-10-24",
+      "updated": "2026-10-24",
       "readTime": "5 Min.",
       "tier": "free",
       "rechner": "/rechner",
@@ -491,13 +590,13 @@
           "label": "Internationaler Währungsfonds (IWF) — World Economic Outlook & COFER Data",
           "url": "https://www.imf.org",
           "jurisdiction": "EU",
-          "asOf": "2026-10-18"
+          "asOf": "2026-10-24"
         },
         {
           "label": "World Gold Council (WGC) — Central Bank Gold Demand Statistics",
           "url": "https://www.gold.org",
           "jurisdiction": "EU",
-          "asOf": "2026-10-18"
+          "asOf": "2026-10-24"
         }
       ],
       "keywords": [
@@ -505,7 +604,57 @@
         "Zentralbank Goldreserven",
         "De-Dollarisierung Währungsreserven",
         "IWF World Economic Outlook"
-      ]
+      ],
+      "tag": "Weltwirtschaft & Geopolitik"
+    },
+    {
+      "path": "/newsletter/iwf-wachstumsprognose-brics-devisen-2026",
+      "type": "newsletter",
+      "slug": "iwf-wachstumsprognose-brics-devisen-2026",
+      "category": "Weltwirtschaft & Geopolitik",
+      "h1": "IWF World Economic Outlook 2026: Globale Schulden und Devisenströme",
+      "title": "IWF World Economic Outlook 2026: Globale Schulden und Devisenströme",
+      "description": "IWF-Wachstumsprognosen 2026: Analyse der weltweiten Schuldenquoten, Währungsreserven und BRICS-Handelsströme nach offiziellen Daten.",
+      "teaser": "Internationale Schuldenquoten und Währungsverschiebungen: Wie sich globale Handelsbilanzen und Leitwährungsanteile entwickeln.",
+      "intro": "Internationale Schuldenquoten und Währungsverschiebungen: Wie sich globale Handelsbilanzen und Leitwährungsanteile entwickeln.",
+      "published": "2026-10-18",
+      "updated": "2026-10-18",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Wachstumsdifferenziale zwischen Industrie- und Schwellenländern",
+          "body": "Der aktuelle World Economic Outlook des IWF zeigt divergierende Wachstumsraten zwischen reifen Volkswirtschaften und rohstoffexportierenden Schwellenländern. Die globale Gesamtverschuldung im Verhältnis zum weltweiten Bruttoinlandsprodukt verharrt auf historisch hohem Niveau."
+        },
+        {
+          "heading": "Zusammensetzung der globalen Devisenreserven (COFER)",
+          "body": "Die IWF-Statistik zur Währungszusammensetzung der offiziellen Währungsreserven dokumentiert einen graduellen Rückgang des US-Dollar-Anteils zugunsten anderer Leitwährungen und bilateraler Abrechnungsmechanismen im internationalen Handel."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Internationaler Währungsfonds — Currency Composition of Official Foreign Exchange Reserves",
+          "url": "https://www.imf.org",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-18"
+        },
+        {
+          "label": "Organisation für wirtschaftliche Zusammenarbeit und Entwicklung (OECD) — Economic Outlook",
+          "url": "https://www.oecd.org",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-18"
+        }
+      ],
+      "keywords": [
+        "IWF Wachstumsprognose",
+        "Globale Schuldenquote",
+        "Währungsreserven COFER",
+        "BRICS Handelsströme"
+      ],
+      "tag": "Weltwirtschaft & Geopolitik"
     },
     {
       "path": "/newsletter/kapitalertragsteuer-sparerpauschbetrag-verlusttoepfe-2026",
@@ -517,8 +666,8 @@
       "description": "Kapitalertragsteuer 2026: Sparerpauschbetrag von 1.000 €, Verlustverrechnungstöpfe nach § 20 EStG und Nichtveranlagungs-Bescheinigung im Detail.",
       "teaser": "Grundlagen der Abgeltungsteuer nach § 20 EStG: Freistellungsauftrag, Verrechnungstöpfe bei Depotüberträgen und Günstigerprüfung.",
       "intro": "Grundlagen der Abgeltungsteuer nach § 20 EStG: Freistellungsauftrag, Verrechnungstöpfe bei Depotüberträgen und Günstigerprüfung.",
-      "published": "2026-10-14",
-      "updated": "2026-10-14",
+      "published": "2026-10-22",
+      "updated": "2026-10-22",
       "readTime": "4 Min.",
       "tier": "free",
       "rechner": "/rechner",
@@ -539,13 +688,13 @@
           "label": "Einkommensteuergesetz (EStG) § 20 und § 32d",
           "url": "https://www.gesetze-im-internet.de/estg/",
           "jurisdiction": "DE",
-          "asOf": "2026-10-14"
+          "asOf": "2026-10-22"
         },
         {
           "label": "Bundesfinanzministerium (BMF) — Anwendungsschreiben zur Abgeltungsteuer",
           "url": "https://www.bundesfinanzministerium.de",
           "jurisdiction": "DE",
-          "asOf": "2026-10-14"
+          "asOf": "2026-10-22"
         }
       ],
       "keywords": [
@@ -553,7 +702,57 @@
         "Sparerpauschbetrag 1000 Euro",
         "Verlustverrechnungstopf Aktien",
         "Günstigerprüfung § 32d EStG"
-      ]
+      ],
+      "tag": "Kapitalerträge"
+    },
+    {
+      "path": "/newsletter/guenstigerpruefung-kapitalertraege-32d-estg-2026",
+      "type": "newsletter",
+      "slug": "guenstigerpruefung-kapitalertraege-32d-estg-2026",
+      "category": "Kapitalerträge",
+      "h1": "Günstigerprüfung nach § 32d Abs. 6 EStG: Abgeltungsteuer senken",
+      "title": "Günstigerprüfung nach § 32d Abs. 6 EStG: Abgeltungsteuer senken",
+      "description": "Günstigerprüfung bei Kapitalerträgen 2026: Wann sich die Anlage KAP lohnt und wie das Finanzamt den persönlichen Grenzsteuersatz anwendet.",
+      "teaser": "Wann sich die Anlage KAP in der Steuererklärung lohnt: Wenn der persönliche Steuersatz unter 25 % liegt, erstattet das Finanzamt die Differenz.",
+      "intro": "Wann sich die Anlage KAP in der Steuererklärung lohnt: Wenn der persönliche Steuersatz unter 25 % liegt, erstattet das Finanzamt die Differenz.",
+      "published": "2026-10-15",
+      "updated": "2026-10-15",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Systematik der Günstigerprüfung",
+          "body": "Auf Antrag des Steuerpflichtigen werden die Kapitaleinkünfte den tariflichen Einkünften hinzugerechnet, wenn dies zu einer niedrigeren Einkommensteuer führt (§ 32d Abs. 6 EStG). Dies greift typischerweise bei einem persönlichen Grenzsteuersatz von unter 25 %."
+        },
+        {
+          "heading": "Verlustverrechnung und Veranlagungsoption",
+          "body": "Die Günstigerprüfung führt nicht dazu, dass die Abgeltungsteuer nachteilig überschritten werden kann: Ergibt die Prüfung einen höheren Steuersatz als 25 %, verbleibt es automatisch bei der abgeltenden Wirkung des Bankenabzugs."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 32d Abs. 6",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-15"
+        },
+        {
+          "label": "Bundesministerium der Finanzen — Amtliche Einkommensteuer-Tabellen",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-15"
+        }
+      ],
+      "keywords": [
+        "Günstigerprüfung § 32d EStG",
+        "Anlage KAP Steuererklärung",
+        "Abgeltungsteuer Erstattung",
+        "Grenzsteuersatz Kapitalerträge"
+      ],
+      "tag": "Kapitalerträge"
     },
     {
       "path": "/newsletter/krypto-haltefrist-23-estg-bmf-schreiben-2026",
@@ -565,8 +764,8 @@
       "description": "Krypto-Besteuerung in Deutschland 2026: 1-Jahres-Haltefrist (§ 23 EStG), Freigrenze von 1.000 € und Staking-Regeln nach dem BMF-Schreiben.",
       "teaser": "Ertragssteuerliche Behandlung virtueller Währungen: Freigrenze nach § 23 EStG, FIFO-Verfahren und Staking-Dokumentation nach BMF-Kriterien.",
       "intro": "Ertragssteuerliche Behandlung virtueller Währungen: Freigrenze nach § 23 EStG, FIFO-Verfahren und Staking-Dokumentation nach BMF-Kriterien.",
-      "published": "2026-10-10",
-      "updated": "2026-10-10",
+      "published": "2026-10-23",
+      "updated": "2026-10-23",
       "readTime": "5 Min.",
       "tier": "free",
       "rechner": "/rechner",
@@ -587,13 +786,13 @@
           "label": "Bundesministerium der Finanzen — BMF-Schreiben vom 10.05.2022 zu virtuellen Währungen",
           "url": "https://www.bundesfinanzministerium.de",
           "jurisdiction": "DE",
-          "asOf": "2026-10-10"
+          "asOf": "2026-10-23"
         },
         {
           "label": "Bundesfinanzhof (BFH) — Urteil vom 14.02.2023, Az. IX R 3/22",
           "url": "https://www.bundesfinanzhof.de",
           "jurisdiction": "DE",
-          "asOf": "2026-10-10"
+          "asOf": "2026-10-23"
         }
       ],
       "keywords": [
@@ -601,7 +800,57 @@
         "§ 23 EStG private Veräußerungsgeschäfte",
         "BMF Krypto Schreiben Staking",
         "FIFO Methode Krypto Steuer"
-      ]
+      ],
+      "tag": "Krypto & Digital Assets"
+    },
+    {
+      "path": "/newsletter/mica-regulatorik-stablecoins-krypto-eu-2026",
+      "type": "newsletter",
+      "slug": "mica-regulatorik-stablecoins-krypto-eu-2026",
+      "category": "Krypto & Digital Assets",
+      "h1": "MiCA-Verordnung 2026: EU-Regeln für Stablecoins und Verwahrung",
+      "title": "MiCA-Verordnung 2026: EU-Regeln für Stablecoins und Verwahrung",
+      "description": "Markets in Crypto-Assets (MiCA) in der Praxis: EU-Auflagen für Stablecoins, CASP-Zulassungen nach KWG und steuerliche Einordnung in Deutschland.",
+      "teaser": "Einheitlicher Regulierungsrahmen für Krypto-Assets: Pflichten für Emittenten, Reservedeckung bei E-Geld-Token und BaFin-Lizenzierung von CASPs.",
+      "intro": "Einheitlicher Regulierungsrahmen für Krypto-Assets: Pflichten für Emittenten, Reservedeckung bei E-Geld-Token und BaFin-Lizenzierung von CASPs.",
+      "published": "2026-10-16",
+      "updated": "2026-10-16",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Vorschriften für wertreferenzierte Token und E-Geld-Token",
+          "body": "Die europäische MiCA-Verordnung stellt strenge Anforderungen an die Liquiditätsreserven von Stablecoin-Emittenten. Emittenten müssen 100 % der ausgegebenen Werte in sicheren, segregierten Vermögenswerten halten und Anlegern jederzeit ein Rücktauschrecht zum Nennwert gewähren."
+        },
+        {
+          "heading": "Zulassungspflicht für Krypto-Dienstleister (CASP)",
+          "body": "Unternehmen, die Verwahrung, Umtausch oder Handel von Krypto-Assets in der EU anbieten, benötigen eine formelle Zulassung als Crypto-Asset Service Provider (CASP). In Deutschland fungiert die BaFin als primäre Aufsichtsbehörde nach dem Kreditwesengesetz (KWG)."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Europäische Union — Verordnung (EU) 2023/1114 (Markets in Crypto-Assets)",
+          "url": "https://eur-lex.europa.eu",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-16"
+        },
+        {
+          "label": "Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin) — Kryptowerteaufsicht",
+          "url": "https://www.bafin.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-16"
+        }
+      ],
+      "keywords": [
+        "MiCA Verordnung 2026",
+        "Stablecoins Regulierung EU",
+        "CASP Zulassung BaFin",
+        "Kryptoverwahrung Lizenz"
+      ],
+      "tag": "Krypto & Digital Assets"
     },
     {
       "path": "/newsletter/holding-struktur-ab-welchem-depotvolumen",
@@ -655,7 +904,57 @@
         "Spardosen GmbH Rechner",
         "§ 8b KStG Schachtelprivileg",
         "Vermögensverwaltende GmbH"
-      ]
+      ],
+      "tag": "Holding & GmbH"
+    },
+    {
+      "path": "/newsletter/holding-gewinnausschuettung-teilversteuert-gmbh-2026",
+      "type": "newsletter",
+      "slug": "holding-gewinnausschuettung-teilversteuert-gmbh-2026",
+      "category": "Holding & GmbH",
+      "h1": "Holding-Ausschüttungen: Abgeltungsteuer vs. Teileinkünfteverfahren",
+      "title": "Holding-Ausschüttungen: Abgeltungsteuer vs. Teileinkünfteverfahren",
+      "description": "Kapitalerträge aus der GmbH: Vergleich zwischen 25 % Abgeltungsteuer und Teileinkünfteverfahren nach § 3 Nr. 40 EStG für Gesellschafter.",
+      "teaser": "Wie Gewinne aus der GmbH steueroptimal an Gesellschafter fließen: Vergleich zwischen 25 % Abgeltungsteuer und 60 % Besteuerung nach § 3 Nr. 40 EStG.",
+      "intro": "Wie Gewinne aus der GmbH steueroptimal an Gesellschafter fließen: Vergleich zwischen 25 % Abgeltungsteuer und 60 % Besteuerung nach § 3 Nr. 40 EStG.",
+      "published": "2026-10-14",
+      "updated": "2026-10-14",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/holding",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Standardabzug via Abgeltungsteuer (§ 20 EStG)",
+          "body": "Schüttet eine GmbH Gewinne an eine Privatperson aus, fällt standardmäßig die 25%ige Abgeltungsteuer zuzüglich Solidaritätszuschlag an. Werbungskosten sind mit dem Sparerpauschbetrag abgegolten."
+        },
+        {
+          "heading": "Antrag auf Teileinkünfteverfahren (§ 32d Abs. 2 Nr. 3 EStG)",
+          "body": "Gesellschafter mit einer Beteiligung von mindestens 25 % (oder 1 % bei beruflicher Tätigkeit für die GmbH) können das Teileinkünfteverfahren wählen. 60 % der Ausschüttung werden mit dem persönlichen Steuersatz versteuert, während 60 % der Refinanzierungskosten steuerlich geltend gemacht werden dürfen."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 3 Nr. 40 und § 32d",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-14"
+        },
+        {
+          "label": "Körperschaftsteuergesetz (KStG) § 8b",
+          "url": "https://www.gesetze-im-internet.de/kstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-14"
+        }
+      ],
+      "keywords": [
+        "Teileinkünfteverfahren § 3 Nr. 40 EStG",
+        "GmbH Gewinnausschüttung Steuern",
+        "Abgeltungsteuer Gesellschafter",
+        "Holding Ausschüttungsplanung"
+      ],
+      "tag": "Holding & GmbH"
     },
     {
       "path": "/newsletter/degressive-gebaeude-afa-wachstumschancengesetz-2026",
@@ -703,7 +1002,57 @@
         "Wachstumschancengesetz Immobilien",
         "§ 7 Abs. 5a EStG Gebäude",
         "Abschreibung Restbuchwert"
-      ]
+      ],
+      "tag": "Immobilien"
+    },
+    {
+      "path": "/newsletter/handwerkerleistungen-35a-estg-steuerabzug-2026",
+      "type": "newsletter",
+      "slug": "handwerkerleistungen-35a-estg-steuerabzug-2026",
+      "category": "Immobilien",
+      "h1": "Handwerkerleistungen nach § 35a EStG: Bis zu 1.200 € Steuerabzug",
+      "title": "Handwerkerleistungen nach § 35a EStG: Bis zu 1.200 € Steuerabzug",
+      "description": "Handwerkerleistungen und Renovierungskosten nach § 35a Abs. 3 EStG: 20 % Steuerermäßigung auf Arbeitskosten bis 6.000 € mit Rechenbeispiel.",
+      "teaser": "Direkte Steuerermäßigung für Renovierungs- und Erhaltungsarbeiten: 20 % der Arbeitskosten direkt von der Steuerschuld abziehen.",
+      "intro": "Direkte Steuerermäßigung für Renovierungs- und Erhaltungsarbeiten: 20 % der Arbeitskosten direkt von der Steuerschuld abziehen.",
+      "published": "2026-10-12",
+      "updated": "2026-10-12",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/steuerplaner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Voraussetzungen und Höchstbetrag",
+          "body": "Für handwerkliche Tätigkeiten für Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen ermäßigt sich die tarifliche Einkommensteuer um 20 % der Aufwendungen, maximal um 1.200 € im Kalenderjahr (§ 35a Abs. 3 EStG). Dies entspricht berücksichtigungsfähigen Arbeitskosten von 6.000 €."
+        },
+        {
+          "heading": "Wichtige Ausschlusskriterien",
+          "body": "Materialkosten sind gesetzlich nicht begünstigt. Begünstigt sind ausschließlich ausgewiesene Arbeits-, Fahrt- und Maschinenkosten. Barzahlungen sind unzulässig; die Begleichung muss unbar per Banküberweisung auf das Konto des Handwerkers nachgewiesen werden."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 35a",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-12"
+        },
+        {
+          "label": "Bundesministerium der Finanzen — BMF-Schreiben zur Steuerermäßigung nach § 35a EStG",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-12"
+        }
+      ],
+      "keywords": [
+        "§ 35a EStG Handwerkerleistungen",
+        "Steuerabzug Renovierungskosten",
+        "Handwerkerkosten absetzen",
+        "Arbeitslohn Steuerermäßigung"
+      ],
+      "tag": "Immobilien"
     },
     {
       "path": "/newsletter/ruerup-rente-sonderausgabenabzug-hoechstbetrag-2026",
@@ -751,7 +1100,57 @@
         "Sonderausgabenabzug § 10 EStG",
         "Basisversorgung Altersvorsorge",
         "Nachgelagerte Rentenbesteuerung"
-      ]
+      ],
+      "tag": "Altersvorsorge"
+    },
+    {
+      "path": "/newsletter/rentenausgleichszahlung-187a-sgb-abschlaege-2026",
+      "type": "newsletter",
+      "slug": "rentenausgleichszahlung-187a-sgb-abschlaege-2026",
+      "category": "Altersvorsorge",
+      "h1": "Rentenabschläge ausgleichen nach § 187a SGB VI: Steuerlicher Hebel",
+      "title": "Rentenabschläge ausgleichen nach § 187a SGB VI: Steuerlicher Hebel",
+      "description": "Freiwillige Einzahlungen in die Rentenversicherung nach § 187a SGB VI: Ausgleich von Rentenabschlägen und 100 % Sonderausgabenabzug nach § 10 EStG.",
+      "teaser": "Frühzeitiger Ruhestand ohne Abschläge: Wie freiwillige Sonderzahlungen an die Deutsche Rentenversicherung zu 100 % von der Steuer absetzbar sind.",
+      "intro": "Frühzeitiger Ruhestand ohne Abschläge: Wie freiwillige Sonderzahlungen an die Deutsche Rentenversicherung zu 100 % von der Steuer absetzbar sind.",
+      "published": "2026-10-11",
+      "updated": "2026-10-11",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Mechanismus der Ausgleichszahlung",
+          "body": "Versicherte ab dem 50. Lebensjahr können durch freiwillige Beitragszahlungen Rentenabschläge ausgleichen, die bei einer vorzeitigen Inanspruchnahme der Altersrente entstehen würden (§ 187a SGB VI). Die Deutsche Rentenversicherung erteilt hierzu auf Antrag eine verbindliche Auskunft."
+        },
+        {
+          "heading": "Steuerlicher Abzug als Altersvorsorgeaufwand",
+          "body": "Die geleisteten Zahlungen gelten steuerlich als Beiträge zur gesetzlichen Rentenversicherung und sind im Rahmen des Höchstbetrags für Altersvorsorgeaufwendungen nach § 10 Abs. 1 Nr. 2 EStG zu 100 % als Sonderausgaben abzugsfähig. Eine Verteilung auf mehrere Steuerjahre ist zulässig."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Sozialgesetzbuch Sechstes Buch (SGB VI) § 187a",
+          "url": "https://www.gesetze-im-internet.de/sgb_6/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-11"
+        },
+        {
+          "label": "Deutsche Rentenversicherung — Auskunft über die Minderung der Altersrente",
+          "url": "https://www.deutsche-rentenversicherung.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-11"
+        }
+      ],
+      "keywords": [
+        "§ 187a SGB VI Rentenabschläge",
+        "Freiwillige Rentenbeiträge Sonderausgaben",
+        "Frührente Abschläge ausgleichen",
+        "Rentenversicherung Einzahlung Steuer"
+      ],
+      "tag": "Altersvorsorge"
     },
     {
       "path": "/newsletter/etf-vorabpauschale-basiszins-teilfreistellung-2026",
@@ -799,7 +1198,57 @@
         "Basiszins Bundesbank InvStG",
         "Teilfreistellung Aktienfonds 30 Prozent",
         "Basisertrag Formel Berechnung"
-      ]
+      ],
+      "tag": "ETF & Indexfonds"
+    },
+    {
+      "path": "/newsletter/etf-tracking-difference-ter-kosten-2026",
+      "type": "newsletter",
+      "slug": "etf-tracking-difference-ter-kosten-2026",
+      "category": "ETF & Indexfonds",
+      "h1": "ETF-Kosten 2026: Gesamtkostenquote (TER) vs. Tracking Differenz",
+      "title": "ETF-Kosten 2026: Gesamtkostenquote (TER) vs. Tracking Differenz",
+      "description": "Echte ETF-Kosten berechnen: Warum die Tracking Differenz aussagekräftiger ist als die TER und wie Wertpapierleihe die Rendite beeinflusst.",
+      "teaser": "Warum eine niedrige TER nicht automatisch den günstigsten Fonds bedeutet: Wie Wertpapierleihe und Transaktionskosten die reale Abweichung bestimmen.",
+      "intro": "Warum eine niedrige TER nicht automatisch den günstigsten Fonds bedeutet: Wie Wertpapierleihe und Transaktionskosten die reale Abweichung bestimmen.",
+      "published": "2026-10-08",
+      "updated": "2026-10-08",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Definition und Bedeutung der Tracking Differenz",
+          "body": "Die Tracking Differenz (TD) beziffert die reale Abweichung der Wertentwicklung eines ETFs gegenüber seinem Referenzindex über einen bestimmten Zeitraum. Eine negative Tracking Differenz bedeutet, dass der Fonds seinen Vergleichsindex nach Kosten übertroffen hat."
+        },
+        {
+          "heading": "Grenzen der TER (Total Expense Ratio)",
+          "body": "Die Total Expense Ratio berücksichtigt lediglich feste Verwaltungsgebühren. Interne Transaktionskosten, Steuern auf Fondsebene und Erträge aus der Wertpapierleihe (Securities Lending) sind nicht in der TER enthalten, fließen jedoch direkt in die Tracking Differenz ein."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin) — Basisinformationen über Investmentvermögen",
+          "url": "https://www.bafin.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-08"
+        },
+        {
+          "label": "European Securities and Markets Authority (ESMA) — UCITS ETF Guidelines",
+          "url": "https://www.esma.europa.eu",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-08"
+        }
+      ],
+      "keywords": [
+        "Tracking Differenz ETF",
+        "TER Gesamtkostenquote",
+        "Wertpapierleihe Erträge Fonds",
+        "Indexnachbildung Kosten"
+      ],
+      "tag": "ETF & Indexfonds"
     },
     {
       "path": "/newsletter/fuenftelregelung-abfindung-progressionsglaettung-2026",
@@ -847,13 +1296,63 @@
         "§ 34 EStG Progressionsglättung",
         "Außerordentliche Einkünfte Steuer",
         "Abfindung netto optimieren"
-      ]
+      ],
+      "tag": "Arbeitnehmer"
+    },
+    {
+      "path": "/newsletter/homeoffice-pauschale-entfernungspauschale-2026",
+      "type": "newsletter",
+      "slug": "homeoffice-pauschale-entfernungspauschale-2026",
+      "category": "Arbeitnehmer",
+      "h1": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln",
+      "title": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln",
+      "description": "Homeoffice-Pauschale von 1.260 € (§ 4 Abs. 5 EStG) und Entfernungspauschale: Rechnerische Kombination im Rahmen der Einkommensteuererklärung.",
+      "teaser": "Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf.",
+      "intro": "Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf.",
+      "published": "2026-10-05",
+      "updated": "2026-10-05",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/steuerplaner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "Tagespauschale von 6 € (§ 4 Abs. 5 Nr. 6b EStG)",
+          "body": "Für jeden Kalendertag, an dem die betriebliche oder berufliche Tätigkeit überwiegend in der häuslichen Wohnung ausgeübt wird, kann ein Betrag von 6 € geltend gemacht werden. Der Höchstbetrag liegt bei 1.260 € pro Kalenderjahr (maximal 210 Arbeitstage)."
+        },
+        {
+          "heading": "Verhältnis zur Entfernungspauschale",
+          "body": "Für Tage, an denen die Homeoffice-Pauschale geltend gemacht wird, ist der Abzug einer Entfernungspauschale für Fahrten zur ersten Tätigkeitsstätte grundsätzlich ausgeschlossen. Bei Mischtagen mit Kundenbesuchen oder Außendienstterminen gelten die gesetzlichen Sonderregelungen des § 9 EStG."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 4 Abs. 5 Nr. 6b und § 9",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-05"
+        },
+        {
+          "label": "Bundesfinanzministerium — BMF-Schreiben zur ertragsteuerlichen Behandlung der Homeoffice-Pauschale",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-05"
+        }
+      ],
+      "keywords": [
+        "Homeoffice Pauschale 1260 Euro",
+        "Entfernungspauschale Pendlerpauschale",
+        "Werbungskosten Arbeitnehmer 2026",
+        "§ 4 Abs. 5 Nr. 6b EStG"
+      ],
+      "tag": "Arbeitnehmer"
     },
     {
       "path": "/newsletter/elster-vorlagen-steuerformulare-2026",
       "type": "newsletter",
       "slug": "elster-vorlagen-steuerformulare-2026",
-      "category": "Unternehmen",
+      "category": "Holding & GmbH",
       "h1": "ELSTER-Vorlagen & Steuerformulare 2026 — welche muss ich wirklich ausfüllen?",
       "title": "ELSTER-Vorlagen & Steuerformulare: ESt, USt, GewSt im Überblick",
       "description": "Die wichtigsten Steuerformulare für Selbständige, Freiberufler und GmbH-Geschäftsführer 2026: ESt 1 A, USt 1 A, GewSt 1 A, Anlage S und G. Was ist wann fällig?",
@@ -920,13 +1419,14 @@
         "Steuerformulare ESt USt GewSt",
         "Anlage S Anlage G",
         "Selbständige Steuererklärung"
-      ]
+      ],
+      "tag": "Holding & GmbH"
     },
     {
       "path": "/newsletter/aufteilung-gewinn-privat-gmbh-2026",
       "type": "newsletter",
       "slug": "aufteilung-gewinn-privat-gmbh-2026",
-      "category": "Unternehmen",
+      "category": "Holding & GmbH",
       "h1": "Gewinnaufteilung: Privat vs. GmbH — was bleibt netto übrig?",
       "title": "Gewinnaufteilung Privat vs. GmbH: Netto-Vergleich 2026",
       "description": "Vergleich: Gewinn im Privatvermögen vs. Gewinn in der GmbH mit anschließender Ausschüttung. Was bleibt netto in der Tasche? Mit Rechenbeispielen.",
@@ -983,7 +1483,8 @@
         "Privat vs GmbH Steuern",
         "Körperschaftsteuer Einkommensteuer Vergleich",
         "Geschäftsführer Gehalt Dividende"
-      ]
+      ],
+      "tag": "Holding & GmbH"
     },
     {
       "path": "/newsletter/fuenftelregelung-abfindung-2026",
@@ -1046,7 +1547,8 @@
         "§ 34 EStG Progression",
         "Aufhebungsvertrag Steuern",
         "Abfindung netto rechner"
-      ]
+      ],
+      "tag": "Arbeitnehmer"
     }
   ]
 }

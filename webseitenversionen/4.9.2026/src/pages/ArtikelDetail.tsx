@@ -9,6 +9,7 @@ interface RouteArticle {
   h1?: string;
   intro?: string;
   sections?: Array<{ heading: string; body: string }>;
+  category?: string;
   tag?: string;
   as_of?: string;
   published_on?: string;
@@ -39,7 +40,7 @@ export default function ArtikelDetail() {
   }
 
   const article = {
-    tag: route.tag || 'Allgemein',
+    tag: route.category || route.tag || 'Allgemein',
     title: route.title || route.h1 || '',
     date: route.published_on || route.as_of || '',
     readTime: route.readTime || '5 Min.',

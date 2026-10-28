@@ -158,25 +158,49 @@
   </url>
   <url>
     <loc>https://kontolage.de/newsletter/ezb-leitzins-senkung-anleihen-2026</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/inflation-hvpi-kernrate-deutschland-2026</loc>
     <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/newsletter/us-staatsverschuldung-gold-zentralbanken-2026</loc>
+    <lastmod>2026-10-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/iwf-wachstumsprognose-brics-devisen-2026</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/newsletter/kapitalertragsteuer-sparerpauschbetrag-verlusttoepfe-2026</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/guenstigerpruefung-kapitalertraege-32d-estg-2026</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/newsletter/krypto-haltefrist-23-estg-bmf-schreiben-2026</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/mica-regulatorik-stablecoins-krypto-eu-2026</loc>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -187,8 +211,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kontolage.de/newsletter/holding-gewinnausschuettung-teilversteuert-gmbh-2026</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kontolage.de/newsletter/degressive-gebaeude-afa-wachstumschancengesetz-2026</loc>
     <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/handwerkerleistungen-35a-estg-steuerabzug-2026</loc>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -199,14 +235,32 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kontolage.de/newsletter/rentenausgleichszahlung-187a-sgb-abschlaege-2026</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kontolage.de/newsletter/etf-vorabpauschale-basiszins-teilfreistellung-2026</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kontolage.de/newsletter/etf-tracking-difference-ter-kosten-2026</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kontolage.de/newsletter/fuenftelregelung-abfindung-progressionsglaettung-2026</loc>
     <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/homeoffice-pauschale-entfernungspauschale-2026</loc>
+    <lastmod>2026-10-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
