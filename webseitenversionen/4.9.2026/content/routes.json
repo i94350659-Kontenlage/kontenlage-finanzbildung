@@ -494,6 +494,205 @@
         "§ 8b KStG Schachtelprivileg",
         "Vermögensverwaltende GmbH"
       ]
+    },
+    {
+      "path": "/newsletter/elster-vorlagen-steuerformulare-2026",
+      "type": "newsletter",
+      "slug": "elster-vorlagen-steuerformulare-2026",
+      "category": "Unternehmen",
+      "h1": "ELSTER-Vorlagen & Steuerformulare 2026 — welche muss ich wirklich ausfüllen?",
+      "title": "ELSTER-Vorlagen & Steuerformulare: ESt, USt, GewSt im Überblick",
+      "description": "Die wichtigsten Steuerformulare für Selbständige, Freiberufler und GmbH-Geschäftsführer 2026: ESt 1 A, USt 1 A, GewSt 1 A, Anlage S und G. Was ist wann fällig?",
+      "teaser": "ELSTER-Vorlagen und Steuerformulare 2026: Eine Checkliste für Selbständige, Freiberufler und Geschäftsführer mit Fristen und Quellen.",
+      "intro": "ELSTER-Vorlagen und Steuerformulare 2026: Eine Checkliste für Selbständige, Freiberufler und Geschäftsführer mit Fristen und Quellen.",
+      "published": "2026-10-27",
+      "updated": "2026-10-27",
+      "readTime": "6 Min.",
+      "tier": "executive",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "draft": true,
+      "sections": [
+        {
+          "heading": "Einkommensteuererklärung (ESt 1 A)",
+          "body": "Für alle natürlichen Personen mit Einkünften aus Gewerbebetrieb, selbständiger Arbeit, Vermietung oder Kapitalerträgen. Frist: 31. Juli des Folgejahres (oder länger mit Steuerberater)."
+        },
+        {
+          "heading": "Umsatzsteuer-Voranmeldung (USt 1 A)",
+          "body": "Monatlich oder vierteljährlich, je nach Vorjahresumsatz. Frist: 10. Tag nach Ablauf des Voranmeldungszeitraums."
+        },
+        {
+          "heading": "Gewerbesteuererklärung (GewSt 1 A)",
+          "body": "Für Gewerbetreibende. Frist: 31. Mai des Folgejahres (bei steuerberatender Vertretung länger)."
+        },
+        {
+          "heading": "Anlage S (Einkünfte aus selbständiger Arbeit)",
+          "body": "Für Freiberufler und Selbständige. Wird zur ESt 1 A eingereicht."
+        },
+        {
+          "heading": "Anlage G (Gewerbebetrieb)",
+          "body": "Für Gewerbetreibende. Wird zur ESt 1 A eingereicht."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) §§ 4, 18, 20",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Umsatzsteuergesetz (UStG) § 18",
+          "url": "https://www.gesetze-im-internet.de/ustg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Gewerbesteuergesetz (GewStG) §§ 3, 4",
+          "url": "https://www.gesetze-im-internet.de/gewstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Bundeszentralamt für Steuern (BZSt) — ELSTER",
+          "url": "https://www.elster.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        }
+      ],
+      "keywords": [
+        "ELSTER Vorlagen 2026",
+        "Steuerformulare ESt USt GewSt",
+        "Anlage S Anlage G",
+        "Selbständige Steuererklärung"
+      ]
+    },
+    {
+      "path": "/newsletter/aufteilung-gewinn-privat-gmbh-2026",
+      "type": "newsletter",
+      "slug": "aufteilung-gewinn-privat-gmbh-2026",
+      "category": "Unternehmen",
+      "h1": "Gewinnaufteilung: Privat vs. GmbH — was bleibt netto übrig?",
+      "title": "Gewinnaufteilung Privat vs. GmbH: Netto-Vergleich 2026",
+      "description": "Vergleich: Gewinn im Privatvermögen vs. Gewinn in der GmbH mit anschließender Ausschüttung. Was bleibt netto in der Tasche? Mit Rechenbeispielen.",
+      "teaser": "Was bleibt netto mehr übrig: Gewinn im Privatvermögen oder über die GmbH? Ein mathematischer Vergleich mit Steuersätzen und Sozialversicherung.",
+      "intro": "Was bleibt netto mehr übrig: Gewinn im Privatvermögen oder über die GmbH? Ein mathematischer Vergleich mit Steuersätzen und Sozialversicherung.",
+      "published": "2026-10-27",
+      "updated": "2026-10-27",
+      "readTime": "7 Min.",
+      "tier": "executive",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "draft": true,
+      "sections": [
+        {
+          "heading": "Szenario 1: Gewinn im Privatvermögen",
+          "body": "Direkte Versteuerung mit persönlichem Einkommensteuersatz (bis 45 % zzgl. Soli). Keine Sozialversicherung auf Kapitaleinkünfte."
+        },
+        {
+          "heading": "Szenario 2: Gewinn in der GmbH",
+          "body": "Körperschaftsteuer ca. 15 % + Gewerbesteuer ca. 7–17 % = ca. 22–32 % effektiv. Danach Ausschüttung an Gesellschafter mit 25 % Abgeltungsteuer + Soli."
+        },
+        {
+          "heading": "Break-Even-Rechnung",
+          "body": "Ab ca. 80.000–100.000 € Jahresgewinn lohnt sich die GmbH steuerlich, sofern der Gewinn im Unternehmen verbleibt und nicht sofort ausgeschüttet wird."
+        },
+        {
+          "heading": "Sozialversicherungsfalle",
+          "body": "Geschäftsführer-Gehalt unterliegt der Sozialversicherung. Dividenden nicht. Die richtige Mischung aus Gehalt und Ausschüttung ist entscheidend."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Körperschaftsteuergesetz (KStG) § 23",
+          "url": "https://www.gesetze-im-internet.de/kstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Einkommensteuergesetz (EStG) § 32a, § 20",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu Gewinnausschüttung",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        }
+      ],
+      "keywords": [
+        "Gewinnaufteilung GmbH",
+        "Privat vs GmbH Steuern",
+        "Körperschaftsteuer Einkommensteuer Vergleich",
+        "Geschäftsführer Gehalt Dividende"
+      ]
+    },
+    {
+      "path": "/newsletter/fuenftelregelung-abfindung-2026",
+      "type": "newsletter",
+      "slug": "fuenftelregelung-abfindung-2026",
+      "category": "Arbeitnehmer",
+      "h1": "Fünftelregelung bei Abfindung 2026: Progression vermeiden",
+      "title": "Fünftelregelung: Abfindung steueroptimiert erhalten (§ 34 EStG)",
+      "description": "Die Fünftelregelung mildernt die Progression bei außerordentlichen Einkünften wie Abfindungen. Wie funktioniert sie, wann lohnt sie sich und wie viel bleibt netto?",
+      "teaser": "Fünftelregelung bei Abfindung: So vermeiden Sie die Progressionsfalle und behalten mehr Netto in der Tasche.",
+      "intro": "Die Fünftelregelung nach § 34 EStG mildernt die Progression bei Abfindungen. Wie funktioniert sie, wann lohnt sie sich und wie viel bleibt netto?",
+      "published": "2026-10-27",
+      "updated": "2026-10-27",
+      "readTime": "5 Min.",
+      "tier": "pro",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "draft": true,
+      "sections": [
+        {
+          "heading": "Wie funktioniert die Fünftelregelung?",
+          "body": "Das Finanzamt berechnet die Steuer auf das reguläre Einkommen, addiert rechnerisch ein Fünftel der Abfindung, ermittelt die Differenzsteuer und multipliziert diese mit fünf."
+        },
+        {
+          "heading": "Wann lohnt sich die Fünftelregelung?",
+          "body": "Besonders wenn im Jahr der Abfindung hohe sonstige Einkünfte vorliegen, die den Spitzensteuersatz triggern würden. Eine Verschiebung auf das Folgejahr kann zusätzlich helfen."
+        },
+        {
+          "heading": "Rechenbeispiel: 80.000 € Abfindung",
+          "body": "Ohne Fünftelregelung: mögliche Steuerbelastung bis zu 45 % auf einen Großteil. Mit Fünftelregelung: effektiver Steuersatz deutlich niedriger, oft unter 30 %."
+        },
+        {
+          "heading": "Aufhebungsvertrag gestalten",
+          "body": "Verhandeln Sie den Auszahlungszeitpunkt (z. B. 2. Januar statt Dezember) und prüfen Sie Vorauszahlungen in die gesetzliche Rentenversicherung (§ 187a SGB VI)."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 34",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Bundesministerium der Finanzen — BMF-Schreiben zur Fünftelregelung",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        },
+        {
+          "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu außerordentlichen Einkünften",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-27"
+        }
+      ],
+      "keywords": [
+        "Fünftelregelung Abfindung 2026",
+        "§ 34 EStG Progression",
+        "Aufhebungsvertrag Steuern",
+        "Abfindung netto rechner"
+      ]
     }
   ]
 }
