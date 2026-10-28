@@ -1,7 +1,38 @@
 ﻿import { useState } from "react";
 import { Link } from "react-router";
+import routesData from "../../content/routes.json";
 
-const articles = [
+interface RouteArticle {
+  path: string;
+  type: string;
+  title: string;
+  description: string;
+  h1?: string;
+  intro?: string;
+  sections?: Array<{ heading: string; body: string }>;
+  tag?: string;
+  as_of?: string;
+  published_on?: string;
+  readTime?: string;
+  featured?: boolean;
+  draft?: boolean;
+  sources?: Array<{ label: string; url: string; jurisdiction: string; asOf: string }>;
+  keywords?: string[];
+}
+
+const allArticles = (routesData.routes as RouteArticle[])
+  .filter(r => r.type === 'article' && r.draft !== true)
+  .map(r => ({
+    slug: r.path.replace('/artikel/', ''),
+    tag: r.tag || 'Allgemein',
+    title: r.title || r.h1 || '',
+    desc: r.description || r.intro || '',
+    readTime: r.readTime || '5 Min.',
+    date: r.published_on || r.as_of || '',
+    featured: r.featured === true
+  }));
+
+const articles = allArticles;
   {
     slug: "defi-lending-staking-liquidity-pools-guide",
     tag: "DeFi & Web3",

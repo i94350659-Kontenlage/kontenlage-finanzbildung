@@ -1,23 +1,60 @@
 import { useParams, Link } from "react-router";
+import routesData from "../../content/routes.json";
+
+interface RouteArticle {
+  path: string;
+  type: string;
+  title: string;
+  description: string;
+  h1?: string;
+  intro?: string;
+  sections?: Array<{ heading: string; body: string }>;
+  tag?: string;
+  as_of?: string;
+  published_on?: string;
+  readTime?: string;
+  author?: string;
+  fazit?: string;
+  disclaimer?: string;
+  draft?: boolean;
+  sources?: Array<{ label: string; url: string; jurisdiction: string; asOf: string }>;
+  keywords?: string[];
+}
 
 interface Section {
   heading: string;
   body: string;
 }
 
-interface ArticleData {
-  tag: string;
-  title: string;
-  date: string;
-  readTime: string;
-  author: string;
-  intro: string;
-  sections: Section[];
-  fazit: string;
-  disclaimer: string;
+const { slug } = useParams<{ slug: string }>();
+
+const route = (routesData.routes as RouteArticle[]).find(
+  r => r.path === `/artikel/${slug}` && r.type === 'article' && r.draft !== true
+);
+
+if (!route) {
+  return (
+    <div style={{ padding: "56px 20px", maxWidth: 800, margin: "0 auto", color: "#f0ece4" }}>
+      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 4vw, 42px)", fontWeight: 700, marginBottom: 20 }}>Artikel nicht gefunden</h1>
+      <p style={{ color: "#a89f94", lineHeight: 1.7 }}>Der angefragte Artikel existiert nicht oder ist noch nicht veröffentlicht.</p>
+      <Link to="/artikel" style={{ color: "#c9a84c", textDecoration: "none", fontWeight: 600 }}>← Alle Artikel</Link>
+    </div>
+  );
 }
 
-const articles: Record<string, ArticleData> = {
+const article = {
+  tag: route.tag || 'Allgemein',
+  title: route.title || route.h1 || '',
+  date: route.published_on || route.as_of || '',
+  readTime: route.readTime || '5 Min.',
+  author: route.author || 'Hermes Autonomous Engine & Redaktion Kontolage',
+  intro: route.intro || route.description || '',
+  sections: (route.sections || []).map((s: { heading: string; body: string }) => ({ heading: s.heading, body: s.body })),
+  fazit: route.fazit || '',
+  disclaimer: route.disclaimer || routesData.disclaimer,
+  sources: route.sources || [],
+  keywords: route.keywords || []
+};
   "defi-lending-staking-liquidity-pools-guide": {
     tag: "DeFi & Web3",
     title: "DeFi-Guide 2026: Lending, Staking & Liquidity Pools – Chancen, Risiken & Steuerpraxis",
