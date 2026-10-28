@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 const links = [
   { to: "/rechner", label: "Rechner" },
+  { to: "/steuerplaner", label: "Steuerplaner" },
   { to: "/holding", label: "Holding & Steuern" },
   { to: "/anlageformen", label: "Anlageformen" },
   { to: "/artikel", label: "Artikel" },

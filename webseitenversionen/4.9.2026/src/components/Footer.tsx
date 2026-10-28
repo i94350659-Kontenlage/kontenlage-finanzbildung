@@ -26,6 +26,7 @@ export default function Footer() {
           {[
             { label: "Themen", items: [
               { to: "/rechner", label: "Rechner" },
+              { to: "/steuerplaner", label: "Steuerplaner" },
               { to: "/holding", label: "Holding & Steuern" },
               { to: "/anlageformen", label: "Anlageformen" },
               { to: "/artikel", label: "Artikel" },
