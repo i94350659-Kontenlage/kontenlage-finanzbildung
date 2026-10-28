@@ -2,73 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kontolage.de/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://kontolage.de/rechner</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kontolage.de/steuerplaner</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kontolage.de/holding</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kontolage.de/anlageformen</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kontolage.de/artikel</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kontolage.de/transparenz</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/abo</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/impressum</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://kontolage.de/datenschutz</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://kontolage.de/agb</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://kontolage.de/widerruf</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -152,19 +152,79 @@
   </url>
   <url>
     <loc>https://kontolage.de/newsletter</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kontolage.de/newsletter/steuerreform-2026-2028-grundfreibetrag</loc>
-    <lastmod>2026-08-27</lastmod>
+    <loc>https://kontolage.de/newsletter/ezb-leitzins-senkung-anleihen-2026</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/us-staatsverschuldung-gold-zentralbanken-2026</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/kapitalertragsteuer-sparerpauschbetrag-verlusttoepfe-2026</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/krypto-haltefrist-23-estg-bmf-schreiben-2026</loc>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kontolage.de/newsletter/holding-struktur-ab-welchem-depotvolumen</loc>
     <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/degressive-gebaeude-afa-wachstumschancengesetz-2026</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/ruerup-rente-sonderausgabenabzug-hoechstbetrag-2026</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/etf-vorabpauschale-basiszins-teilfreistellung-2026</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/fuenftelregelung-abfindung-progressionsglaettung-2026</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/elster-vorlagen-steuerformulare-2026</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/aufteilung-gewinn-privat-gmbh-2026</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kontolage.de/newsletter/fuenftelregelung-abfindung-2026</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

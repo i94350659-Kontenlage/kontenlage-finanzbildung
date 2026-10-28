@@ -1,53 +1,197 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
-  "updated": "2026-09-25",
+  "updated": "2026-10-28",
   "disclaimer": "Alle Angaben dienen ausschließlich der allgemeinen Finanzbildung und stellen keine Anlageberatung, Kaufempfehlung oder Steuerberatung dar (Hinweis nach § 2 Abs. 8 Nr. 10 WpHG). Jede Zahl ist mit Quelle und Stichtag belegt; Werte können sich durch Gesetzes- oder Marktentwicklung ändern.",
   "issues": [
     {
-      "slug": "steuerreform-2026-2028-grundfreibetrag",
-      "category": "Steuerrecht",
-      "title": "Steuerreform 2026–2028: Grundfreibetrag, degressive AfA & kalte Progression",
-      "teaser": "Wirtschaftswachstums- und Steuerentlastungspaket: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen — mit Paragraph und Stichtag.",
-      "description": "Steuerreform 2026 bis 2028: Grundfreibetrag, degressive Gebäude-AfA und Handwerkerleistungen nach § 35a EStG — Auswirkungen mit Quellenangabe.",
-      "h1": "Steuerreform 2026 / 2027 / 2028: Das Entlastungspaket im Detail",
-      "published": "2026-08-27",
-      "asOf": "2026-08-27",
-      "readTime": "4 Min.",
+      "slug": "ezb-leitzins-senkung-anleihen-2026",
+      "category": "Makroökonomie & EZB",
+      "title": "EZB-Leitzins 2026: Einlagefazilität, Realzins und Wirkung auf Anleihen",
+      "h1": "EZB-Leitzins 2026: Einlagefazilität, Realzins und Wirkung auf Anleihen",
+      "teaser": "Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken.",
+      "description": "EZB-Leitzinsbeschlüsse und Einlagefazilität 2026: Wirkung auf Renditestrukturkurve, Realzins und Anleihenkurse nach offiziellen EZB-Daten.",
+      "published": "2026-10-20",
+      "asOf": "2026-10-20",
+      "readTime": "5 Min.",
       "tier": "free",
-      "keywords": ["Steuerreform 2026", "Grundfreibetrag 2026", "degressive AfA Gebäude", "Handwerkerleistungen absetzen"],
-      "rechnerHref": "/rechner?c=immobilien",
+      "keywords": [
+        "EZB Leitzins 2026",
+        "Einlagefazilität EZB",
+        "Anleihen Duration Zinswende",
+        "Realzins Eurozone"
+      ],
+      "rechnerHref": "/rechner",
       "sections": [
         {
-          "heading": "Grundfreibetrag und Tarifkurve (§ 32a EStG)",
-          "body": "Der steuerliche Grundfreibetrag steigt auf über 11.784 € für Alleinstehende. Die Tarifeckwerte werden inflationsbereinigt verschoben, um die kalte Progression bei Gehaltserhöhungen systematisch zu dämpfen."
+          "heading": "Einlagefazilität und Hauptrefinanzierungssatz",
+          "body": "Die Europäische Zentralbank steuert die Zinslandschaft im Euroraum primär über die Einlagefazilität (Deposit Facility Rate) und den Hauptrefinanzierungssatz (MRO). Anpassungen dieser Leitsätze übertragen sich direkt auf kurzfristige Interbankensätze (€STR) und die Verzinsung liquider Guthaben auf Tages- und Festgeldkonten."
         },
         {
-          "heading": "Degressive Gebäude-AfA (Wachstumschancengesetz)",
-          "body": "Für neu errichtete oder im Jahr der Fertigstellung erworbene Wohngebäude greift eine degressive Abschreibung von bis zu 5 % jährlich auf den Restbuchwert. Das beschleunigt den Steuerstundungseffekt in den ersten sechs Jahren erheblich."
-        },
-        {
-          "heading": "Handwerkerleistungen (§ 35a Abs. 3 EStG)",
-          "body": "Arbeitskosten für Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen können weiterhin mit 20 % von bis zu 6.000 € (maximal 1.200 € direkter Steuerabzug) geltend gemacht werden."
+          "heading": "Wirkungsmechanismus auf Anleihen und Duration",
+          "body": "Sinkende Leitzinsen führen bei bestehenden Festzinsanleihen mit längerer Zinsbindung zu rechnerischen Kurssteigerungen, da deren fixer Kupon im Vergleich zu Neuausgaben attraktiver wird. Die Preissensitivität gegenüber Zinsänderungen wird über die modifizierte Duration beziffert."
         }
       ],
       "sources": [
-        { "label": "Bundesministerium der Finanzen (BMF) — Bericht zur Steuerprogression", "url": "https://www.bundesfinanzministerium.de", "jurisdiction": "DE", "asOf": "2026-08-27" },
-        { "label": "Einkommensteuergesetz (EStG) §§ 32a, 35a, 7 Abs. 5a", "url": "https://www.gesetze-im-internet.de/estg/", "jurisdiction": "DE", "asOf": "2026-08-27" },
-        { "label": "Beschlüsse des Koalitionsausschusses zur Steuerreform", "url": "https://www.bundesfinanzministerium.de", "jurisdiction": "DE", "asOf": "2026-08-27" }
+        {
+          "label": "Europäische Zentralbank (EZB) — Zinsbeschlüsse und geldpolitische Instrumente",
+          "url": "https://www.ecb.europa.eu",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-20"
+        },
+        {
+          "label": "Deutsche Bundesbank — Zinsstrukturkurve und Kapitalmarktstatistik",
+          "url": "https://www.bundesbank.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "slug": "us-staatsverschuldung-gold-zentralbanken-2026",
+      "category": "Weltwirtschaft & Geopolitik",
+      "title": "US-Staatsverschuldung und Zentralbank-Goldreserven: Datenlage 2026",
+      "h1": "US-Staatsverschuldung und Zentralbank-Goldreserven: Datenlage 2026",
+      "teaser": "Steigende US-Staatsschulden und anhaltende Netto-Goldkäufe globaler Notenbanken: Fakten zu Währungsreserven und Zinslast.",
+      "description": "US-Staatsverschuldung und Zentralbank-Goldkäufe 2026: Analyse von Währungsreserven, Zinslastquoten und Notenbankbilanzen nach IWF-Daten.",
+      "published": "2026-10-18",
+      "asOf": "2026-10-18",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": [
+        "US Staatsverschuldung 2026",
+        "Zentralbank Goldreserven",
+        "De-Dollarisierung Währungsreserven",
+        "IWF World Economic Outlook"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "US-Treasury-Schuldenstand und Zinsaufwand",
+          "body": "Die ausstehenden Verbindlichkeiten des US-Schatzamtes belaufen sich auf über 35 Billionen US-Dollar. Durch das veränderte globale Zinsniveau beansprucht der Netto-Zinsdienst einen wachsenden Anteil des US-Bundeshaushalts, was internationale Währungsreserven beeinflusst."
+        },
+        {
+          "heading": "Zentralbankkäufe und Diversifikation der Währungsreserven",
+          "body": "Notenbanken in Schwellenländern und Europa erhöhen seit mehreren Quartalen ihre physischen Goldreserven zur Diversifikation ihrer Devisenbestände (Foreign Exchange Reserves). Das World Gold Council dokumentiert diese Umschichtungen quartalsweise anhand offizieller Meldungen."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Internationaler Währungsfonds (IWF) — World Economic Outlook & COFER Data",
+          "url": "https://www.imf.org",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-18"
+        },
+        {
+          "label": "World Gold Council (WGC) — Central Bank Gold Demand Statistics",
+          "url": "https://www.gold.org",
+          "jurisdiction": "EU",
+          "asOf": "2026-10-18"
+        }
+      ]
+    },
+    {
+      "slug": "kapitalertragsteuer-sparerpauschbetrag-verlusttoepfe-2026",
+      "category": "Kapitalerträge",
+      "title": "Kapitalertragsteuer 2026: Sparerpauschbetrag und Verlusttöpfe",
+      "h1": "Kapitalertragsteuer 2026: Sparerpauschbetrag und Verlusttöpfe",
+      "teaser": "Grundlagen der Abgeltungsteuer nach § 20 EStG: Freistellungsauftrag, Verrechnungstöpfe bei Depotüberträgen und Günstigerprüfung.",
+      "description": "Kapitalertragsteuer 2026: Sparerpauschbetrag von 1.000 €, Verlustverrechnungstöpfe nach § 20 EStG und Nichtveranlagungs-Bescheinigung im Detail.",
+      "published": "2026-10-14",
+      "asOf": "2026-10-14",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "keywords": [
+        "Kapitalertragsteuer 2026",
+        "Sparerpauschbetrag 1000 Euro",
+        "Verlustverrechnungstopf Aktien",
+        "Günstigerprüfung § 32d EStG"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "Sparerpauschbetrag und Freistellungsauftrag (§ 20 Abs. 9 EStG)",
+          "body": "Der Sparerpauschbetrag beträgt 1.000 € für Alleinstehende und 2.000 € für zusammenveranlagte Ehegatten. Er kann auf mehrere Kreditinstitute aufgeteilt werden. Kapitalerträge bis zu diesem Betrag bleiben vom automatischen Steuerabzug von 25 % Abgeltungsteuer zzgl. Solidaritätszuschlag freigestellt."
+        },
+        {
+          "heading": "Getrennte Verlustverrechnungstöpfe (§ 20 Abs. 6 EStG)",
+          "body": "Verluste aus Aktienverkäufen dürfen nach gesetzlicher Vorgabe nur mit Gewinnen aus Aktienveräußerungen verrechnet werden (Aktientopf). Verluste aus Fonds, Anleihen oder Zinsen landen im allgemeinen Verlusttopf und können nicht mit Einzelaktiengewinnen saldiert werden."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 20 und § 32d",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-14"
+        },
+        {
+          "label": "Bundesfinanzministerium (BMF) — Anwendungsschreiben zur Abgeltungsteuer",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-14"
+        }
+      ]
+    },
+    {
+      "slug": "krypto-haltefrist-23-estg-bmf-schreiben-2026",
+      "category": "Krypto & Digital Assets",
+      "title": "Krypto-Steuern 2026: 1-Jahres-Haltefrist, Staking und § 23 EStG",
+      "h1": "Krypto-Steuern 2026: 1-Jahres-Haltefrist, Staking und § 23 EStG",
+      "teaser": "Ertragssteuerliche Behandlung virtueller Währungen: Freigrenze nach § 23 EStG, FIFO-Verfahren und Staking-Dokumentation nach BMF-Kriterien.",
+      "description": "Krypto-Besteuerung in Deutschland 2026: 1-Jahres-Haltefrist (§ 23 EStG), Freigrenze von 1.000 € und Staking-Regeln nach dem BMF-Schreiben.",
+      "published": "2026-10-10",
+      "asOf": "2026-10-10",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": [
+        "Krypto Haltefrist 1 Jahr",
+        "§ 23 EStG private Veräußerungsgeschäfte",
+        "BMF Krypto Schreiben Staking",
+        "FIFO Methode Krypto Steuer"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "Private Veräußerungsgeschäfte (§ 23 Abs. 1 Satz 1 Nr. 2 EStG)",
+          "body": "Kryptowährungen gelten steuerrechtlich als Wirtschaftsgüter. Bei einer Haltedauer von mehr als 365 Tagen zwischen Anschaffung und Veräußerung sind Veräußerungsgewinne im Privatvermögen vollständig steuerfrei. Bei Veräußerung innerhalb der Frist greift der persönliche Einkommensteuersatz."
+        },
+        {
+          "heading": "Freigrenze und FIFO-Verfahren",
+          "body": "Für Gewinne aus privaten Veräußerungsgeschäften gilt eine jährliche Freigrenze von 1.000 € (§ 23 Abs. 3 Satz 5 EStG). Wird dieser Wert überschritten, ist der gesamte Betrag steuerpflichtig. Zur Verbrauchsreihenfolge wird standardmäßig First-in-First-out (FIFO) angewandt."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Bundesministerium der Finanzen — BMF-Schreiben vom 10.05.2022 zu virtuellen Währungen",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-10"
+        },
+        {
+          "label": "Bundesfinanzhof (BFH) — Urteil vom 14.02.2023, Az. IX R 3/22",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-10-10"
+        }
       ]
     },
     {
       "slug": "holding-struktur-ab-welchem-depotvolumen",
-      "category": "Unternehmen",
+      "category": "Holding & GmbH",
       "title": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?",
+      "h1": "Holding-Struktur: Ab welchem Depotvolumen rentiert eine GmbH?",
       "teaser": "Schachtelprivileg nach § 8b KStG gegen laufende Fixkosten: der mathematische Break-even mit Bandbreite statt Werbeversprechen.",
       "description": "Holding und vermögensverwaltende GmbH: § 8b KStG gegen laufende Kosten. Break-even-Rechnung mit Annahmen und Quellenangabe.",
-      "h1": "Die vermögensverwaltende GmbH: Mathematik statt Berater-Mythen",
       "published": "2026-08-26",
       "asOf": "2026-08-26",
       "readTime": "5 Min.",
       "tier": "free",
-      "keywords": ["Holding Kosten vs Nutzen", "Spardosen GmbH Rechner", "§ 8b KStG Schachtelprivileg", "Vermögensverwaltende GmbH"],
+      "keywords": [
+        "Holding Kosten vs Nutzen",
+        "Spardosen GmbH Rechner",
+        "§ 8b KStG Schachtelprivileg",
+        "Vermögensverwaltende GmbH"
+      ],
       "rechnerHref": "/holding",
       "sections": [
         {
@@ -60,9 +204,196 @@
         }
       ],
       "sources": [
-        { "label": "Körperschaftsteuergesetz (KStG) § 8b Abs. 1 und 2", "url": "https://www.gesetze-im-internet.de/kstg/", "jurisdiction": "DE", "asOf": "2026-08-26" },
-        { "label": "Gewerbesteuergesetz (GewStG) § 9 Nr. 1 (Erweiterte Kürzung)", "url": "https://www.gesetze-im-internet.de/gewstg/", "jurisdiction": "DE", "asOf": "2026-08-26" },
-        { "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu vermögensverwaltenden Gesellschaften", "url": "https://www.bundesfinanzhof.de", "jurisdiction": "DE", "asOf": "2026-08-26" }
+        {
+          "label": "Körperschaftsteuergesetz (KStG) § 8b Abs. 1 und 2",
+          "url": "https://www.gesetze-im-internet.de/kstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        },
+        {
+          "label": "Gewerbesteuergesetz (GewStG) § 9 Nr. 1 (Erweiterte Kürzung)",
+          "url": "https://www.gesetze-im-internet.de/gewstg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        },
+        {
+          "label": "Bundesfinanzhof (BFH) — Rechtsprechung zu vermögensverwaltenden Gesellschaften",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-08-26"
+        }
+      ]
+    },
+    {
+      "slug": "degressive-gebaeude-afa-wachstumschancengesetz-2026",
+      "category": "Immobilien",
+      "title": "Degressive Gebäude-AfA 2026: 5 % Abschreibung und Voraussetzungen",
+      "h1": "Degressive Gebäude-AfA 2026: 5 % Abschreibung und Voraussetzungen",
+      "teaser": "Wachstumschancengesetz im Detail: Wann Wohngebäude degressiv mit 5 % abgeschrieben werden dürfen und welche Fristen gelten.",
+      "description": "Degressive Wohngebäude-AfA nach § 7 Abs. 5a EStG: 5 % Abschreibung auf den Restbuchwert, Fristen und Kaufpreisaufteilung mit Rechenbeispielen.",
+      "published": "2026-09-28",
+      "asOf": "2026-09-28",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "keywords": [
+        "Degressive AfA 5 Prozent",
+        "Wachstumschancengesetz Immobilien",
+        "§ 7 Abs. 5a EStG Gebäude",
+        "Abschreibung Restbuchwert"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "Degressive AfA nach § 7 Abs. 5a EStG",
+          "body": "Für neu errichtete Wohngebäude oder Wohnungen, deren Baubeginn nach dem 30. September 2023 und vor dem 1. Oktober 2029 liegt (oder Anschaffung im Fertigstellungsjahr), kann eine degressive Abschreibung von 5 % auf den jeweiligen Restbuchwert gewählt werden."
+        },
+        {
+          "heading": "Wechsel zur linearen AfA",
+          "body": "Sobald die lineare Abschreibung von 3 % auf die ursprünglichen Anschaffungskosten rechnerisch höher ausfällt als die degressive Abschreibung auf den Restbuchwert, ist der Übergang zur linearen Methode steuerrechtlich zulässig und rechnerisch geboten."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 7 Abs. 4 und Abs. 5a",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-28"
+        },
+        {
+          "label": "Bundesministerium der Finanzen — Wachstumschancengesetz Durchführungshinweise",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "slug": "ruerup-rente-sonderausgabenabzug-hoechstbetrag-2026",
+      "category": "Altersvorsorge",
+      "title": "Rürup-Basisrente 2026: Höchstbetrag und Sonderausgabenabzug",
+      "h1": "Rürup-Basisrente 2026: Höchstbetrag und Sonderausgabenabzug",
+      "teaser": "Altersvorsorgeaufwendungen nach § 10 EStG: 100 % steuerlicher Abzug, Knappschaftshöchstbetrag und Versteuerung der späteren Rentenauszahlung.",
+      "description": "Rürup-Rente 2026: 100 % Sonderausgabenabzug nach § 10 EStG, Höchstbeträge für Alleinstehende und Ehepaare sowie nachgelagerte Rentenbesteuerung.",
+      "published": "2026-09-20",
+      "asOf": "2026-09-20",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": [
+        "Rürup Rente Höchstbetrag 2026",
+        "Sonderausgabenabzug § 10 EStG",
+        "Basisversorgung Altersvorsorge",
+        "Nachgelagerte Rentenbesteuerung"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "Vollständiger Sonderausgabenabzug nach § 10 Abs. 1 Nr. 2 EStG",
+          "body": "Beiträge zur Basisversorgung (gesetzliche Rentenversicherung, berufsständische Versorgungswerke und zertifizierte Rürup-Verträge) sind zu 100 % als Sonderausgaben steuerlich abzugsfähig, gedeckelt durch den jeweiligen gesetzlichen Höchstbetrag der knappschaftlichen Rentenversicherung."
+        },
+        {
+          "heading": "Nachgelagerte Besteuerung und Kohortenprinzip",
+          "body": "Im Gegenzug unterliegen spätere Rentenleistungen der nachgelagerten Besteuerung nach § 22 Nr. 1 Satz 3 Buchstabe a Doppelbuchstabe aa EStG. Der Besteuerungsanteil richtet sich nach dem jeweiligen Jahr des Renteneintritts."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 10 und § 22",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-20"
+        },
+        {
+          "label": "Deutsche Rentenversicherung — Rechengrößen der Sozialversicherung",
+          "url": "https://www.deutsche-rentenversicherung.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-20"
+        }
+      ]
+    },
+    {
+      "slug": "etf-vorabpauschale-basiszins-teilfreistellung-2026",
+      "category": "ETF & Indexfonds",
+      "title": "ETF-Vorabpauschale 2026: Basiszins, Formel und Teilfreistellung",
+      "h1": "ETF-Vorabpauschale 2026: Basiszins, Formel und Teilfreistellung",
+      "teaser": "Investmentsteuerreform in der Praxis: Wie Depotbanken den Basisertrag ermitteln, wie die 30 % Teilfreistellung greift und was auf dem Konto liegen muss.",
+      "description": "Vorabpauschale bei ETFs 2026: Berechnung nach § 18 InvStG, amtlicher Basiszins der Bundesbank und Teilfreistellung für Aktienfonds nachrechenbar.",
+      "published": "2026-09-15",
+      "asOf": "2026-09-15",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": [
+        "ETF Vorabpauschale 2026",
+        "Basiszins Bundesbank InvStG",
+        "Teilfreistellung Aktienfonds 30 Prozent",
+        "Basisertrag Formel Berechnung"
+      ],
+      "rechnerHref": "/rechner",
+      "sections": [
+        {
+          "heading": "Die Berechnungsformel nach § 18 InvStG",
+          "body": "Der Basisertrag ermittelt sich aus dem Rücknahmepreis des Fondsanteils zu Beginn des Kalenderjahres multipliziert mit 70 % des Basiszinses der Deutschen Bundesbank. Die Vorabpauschale ist auf den tatsächlichen Wertzuwachs des Fonds zuzüglich Ausschüttungen gedeckelt."
+        },
+        {
+          "heading": "Teilfreistellungsquoten nach § 20 InvStG",
+          "body": "Zur Kompensation der Vorbelastung auf Fondsebene bleiben bei Privatanlegern 30 % der Erträge (Vorabpauschale und Ausschüttungen) von Aktienfonds steuerfrei. Bei Mischfonds liegt die Quote bei 15 %, bei offenen Immobilienfonds bei 60 % bzw. 80 %."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Investmentsteuergesetz (InvStG) §§ 18 und 20",
+          "url": "https://www.gesetze-im-internet.de/invstg_2018/",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-15"
+        },
+        {
+          "label": "Bundesministerium der Finanzen — Basiszins zur Berechnung der Vorabpauschale",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "slug": "fuenftelregelung-abfindung-progressionsglaettung-2026",
+      "category": "Arbeitnehmer",
+      "title": "Fünftelregelung 2026: Abfindung steueroptimiert abrechnen (§ 34 EStG)",
+      "h1": "Fünftelregelung 2026: Abfindung steueroptimiert abrechnen (§ 34 EStG)",
+      "teaser": "Progressionsmilderung bei außerordentlichen Einkünften: Wie das Finanzamt die Steuer auf Abfindungen berechnet und wie die Differenz ermittelt wird.",
+      "description": "Fünftelregelung nach § 34 EStG bei Abfindungen 2026: Rechenweg zur Progressionsglättung, Grenzsteuersätze und Aufhebungsvertrag-Gestaltung.",
+      "published": "2026-09-10",
+      "asOf": "2026-09-10",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "keywords": [
+        "Fünftelregelung Abfindung 2026",
+        "§ 34 EStG Progressionsglättung",
+        "Außerordentliche Einkünfte Steuer",
+        "Abfindung netto optimieren"
+      ],
+      "rechnerHref": "/steuerplaner",
+      "sections": [
+        {
+          "heading": "Funktionsweise der Fünftelregelung nach § 34 Abs. 1 EStG",
+          "body": "Bei einer ermäßigten Besteuerung nach der Fünftelregelung wird die tarifliche Einkommensteuer zunächst auf das reguläre zu versteuernde Einkommen berechnet. Anschließend wird ein Fünftel der Abfindung hinzugerechnet und die daraus resultierende Mehrsteuer verfünffacht."
+        },
+        {
+          "heading": "Voraussetzung: Zusammenballung von Einkünften",
+          "body": "Die Tarifermäßigung setzt eine Zusammenballung von Einkünften innerhalb eines Kalenderjahres voraus. Die Zuflüsse im Entlassungsjahr müssen höher sein als die entgehenden Einnahmen bei ungestörter Fortsetzung des Arbeitsverhältnisses."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Einkommensteuergesetz (EStG) § 34 Abs. 1 und 2",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-10"
+        },
+        {
+          "label": "Bundesfinanzhof — Urteile zur Zusammenballung bei Abfindungen",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "asOf": "2026-09-10"
+        }
       ]
     }
   ]

@@ -1,0 +1,640 @@
+{
+  "$schema": "https://kontolage.de/schemas/hermes-sources-v1.json",
+  "version": "1.0.0",
+  "updated": "2026-10-28",
+  "description": "Kanonische Primärquellen-, Rechtsgrundlagen- und Recherche-Matrix für Hermes zur Erstellung von Kontolage-Newslettern und Bildungsartikeln über alle 9 Fachkategorien.",
+  "categories": [
+    {
+      "id": "makrooekonomie-ezb",
+      "name": "Makroökonomie & EZB",
+      "shortDescription": "Geldpolitik der EZB, Leitzinsen, Einlagefazilität, Renditestrukturkurven und Eurozone-Inflation.",
+      "rechnerHref": "/rechner",
+      "decayClass": "high",
+      "decayDays": 30,
+      "primarySources": [
+        {
+          "name": "Europäische Zentralbank (EZB)",
+          "domain": "ecb.europa.eu",
+          "url": "https://www.ecb.europa.eu",
+          "jurisdiction": "EU",
+          "type": "central_bank",
+          "keyEndpoints": [
+            "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html",
+            "https://www.ecb.europa.eu/press/pr/date/2026/html/index.en.html"
+          ],
+          "indicators": ["DFR (Deposit Facility Rate)", "MRO (Main Refinancing Rate)", "MLF (Marginal Lending Facility)", "€STR"]
+        },
+        {
+          "name": "Deutsche Bundesbank",
+          "domain": "bundesbank.de",
+          "url": "https://www.bundesbank.de",
+          "jurisdiction": "DE",
+          "type": "central_bank",
+          "keyEndpoints": [
+            "https://www.bundesbank.de/de/statistiken/geld-und-kapitalmaerkte/zinssaetze-und-renditen",
+            "https://www.bundesbank.de/de/publikationen/berichte/monatsberichte"
+          ],
+          "indicators": ["Zinsstrukturkurve am deutschen Rentenmarkt", "Umlaufrendite", "Bund-Renditen 2J/10J/30J", "Geldmengenaggregate M1/M2/M3"]
+        },
+        {
+          "name": "Statistisches Bundesamt (Destatis)",
+          "domain": "destatis.de",
+          "url": "https://www.destatis.de",
+          "jurisdiction": "DE",
+          "type": "statistics_office",
+          "keyEndpoints": [
+            "https://www.destatis.de/DE/Themen/Wirtschaft/Preise/Verbraucherpreisindex-Harmonisierter-Verbraucherpreisindex/_inhalt.html"
+          ],
+          "indicators": ["Verbraucherpreisindex (VPI)", "Harmonisierter VPI (HVPI)", "Kerninflation (ohne Energie und Nahrungsmittel)"]
+        },
+        {
+          "name": "Eurostat",
+          "domain": "ec.europa.eu/eurostat",
+          "url": "https://ec.europa.eu/eurostat",
+          "jurisdiction": "EU",
+          "type": "statistics_office",
+          "keyEndpoints": [
+            "https://ec.europa.eu/eurostat/web/hicp"
+          ],
+          "indicators": ["Eurozone HICP Flash Estimate", "BIP-Wachstumsraten EU/Euroraum"]
+        }
+      ],
+      "statutoryBases": [
+        "Art. 127 AEUV (Ziele und Aufgaben des ESZB)",
+        "Statut des Europäischen Systems der Zentralbanken und der EZB",
+        "Bundesbankgesetz (BBankG)"
+      ],
+      "searchQueries": [
+        "EZB Rat Zinsentscheid Einlagefazilität Leitzins",
+        "Bundesbank Monatsbericht Zinsstrukturkurve Renditen",
+        "Destatis Verbraucherpreisindex Inflation Vorjahresmonat",
+        "Eurostat HICP inflation rate euro area"
+      ],
+      "complianceGuardrails": "Reine Makro- und Marktanalyse. Keine Zinsprolonge- oder Anlageempfehlungen (z. B. 'jetzt Festgeld sichern'). Strikte Nennung des Beschlussdatums und der genauen Basispunkte."
+    },
+    {
+      "id": "weltwirtschaft-geopolitik",
+      "name": "Weltwirtschaft & Geopolitik",
+      "shortDescription": "Globale Schuldenentwicklung, Zinsdifferenziale, Notenbank-Goldreserven, De-Dollarisierung und Handelsdynamiken.",
+      "rechnerHref": "/rechner",
+      "decayClass": "medium",
+      "decayDays": 60,
+      "primarySources": [
+        {
+          "name": "Internationaler Währungsfonds (IWF / IMF)",
+          "domain": "imf.org",
+          "url": "https://www.imf.org",
+          "jurisdiction": "EU",
+          "type": "international_organization",
+          "keyEndpoints": [
+            "https://www.imf.org/en/Publications/WEO",
+            "https://data.imf.org/?sk=E6A5F467-C14B-4AA8-9F6D-5A09EC4E62A4"
+          ],
+          "indicators": ["World Economic Outlook (WEO)", "COFER (Currency Composition of Official Foreign Exchange Reserves)", "Globale Staatsverschuldung"]
+        },
+        {
+          "name": "Organisation für wirtschaftliche Zusammenarbeit und Entwicklung (OECD)",
+          "domain": "oecd.org",
+          "url": "https://www.oecd.org",
+          "jurisdiction": "EU",
+          "type": "international_organization",
+          "keyEndpoints": [
+            "https://www.oecd.org/economic-outlook/"
+          ],
+          "indicators": ["OECD Economic Outlook", "Composite Leading Indicators (CLI)"]
+        },
+        {
+          "name": "World Gold Council (WGC)",
+          "domain": "gold.org",
+          "url": "https://www.gold.org",
+          "jurisdiction": "EU",
+          "type": "industry_association",
+          "keyEndpoints": [
+            "https://www.gold.org/goldhub/data/monthly-central-bank-statistics"
+          ],
+          "indicators": ["Zentralbank-Netto-Goldkäufe in Tonnen", "Gold Demand Trends", "Offizielle Goldreserven je Notenbank"]
+        },
+        {
+          "name": "US Department of the Treasury / TreasuryDirect",
+          "domain": "treasurydirect.gov",
+          "url": "https://www.treasurydirect.gov",
+          "jurisdiction": "EU",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.treasurydirect.gov/debt-to-the-penny/",
+            "https://home.treasury.gov/data/treasury-international-capital-tic-system"
+          ],
+          "indicators": ["Total Public Debt Outstanding", "TIC Foreign Treasury Holdings (China, Japan, UK)"]
+        },
+        {
+          "name": "Bank for International Settlements (BIZ / BIS)",
+          "domain": "bis.org",
+          "url": "https://www.bis.org",
+          "jurisdiction": "EU",
+          "type": "international_organization",
+          "keyEndpoints": [
+            "https://www.bis.org/statistics/index.htm"
+          ],
+          "indicators": ["Cross-border banking claims", "Global liquidity indicators"]
+        }
+      ],
+      "statutoryBases": [
+        "Völkerrechtliche Abkommen",
+        "Wirtschafts- und Währungsabkommen",
+        "Handelsabkommen EU-Drittstaaten"
+      ],
+      "searchQueries": [
+        "IMF World Economic Outlook GDP forecast global debt",
+        "World Gold Council central bank net gold purchases tonnes",
+        "US Treasury Total Public Debt Outstanding Penny",
+        "TIC Foreign portfolio holdings of US securities"
+      ],
+      "complianceGuardrails": "Keine geopolitischen Spekulationen oder Crash-Prognosen. Darstellung auf Basis publizierter Bilanzen, Devisenberichte und statistischer Reihen. WpHG § 2 Abs. 8 Nr. 10 Disclaimer obligatorisch."
+    },
+    {
+      "id": "kapitalertraege",
+      "name": "Kapitalerträge",
+      "shortDescription": "Besteuerung von Zinsen, Dividenden und Kursgewinnen nach § 20 EStG, Sparerpauschbetrag, Verlustverrechnung und Freistellungsauftrag.",
+      "rechnerHref": "/rechner",
+      "decayClass": "medium",
+      "decayDays": 90,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ)",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/estg/__20.html",
+            "https://www.gesetze-im-internet.de/estg/__32d.html",
+            "https://www.gesetze-im-internet.de/estg/__43.html",
+            "https://www.gesetze-im-internet.de/estg/__44a.html"
+          ],
+          "indicators": ["§ 20 EStG Einkünfte aus Kapitalvermögen", "§ 32d EStG gesonderter Steuertarif 25 %", "§ 44a EStG Freistellungsauftrag"]
+        },
+        {
+          "name": "Bundesministerium der Finanzen (BMF)",
+          "domain": "bundesfinanzministerium.de",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerarten/Abgeltungsteuer/"
+          ],
+          "indicators": ["BMF-Schreiben zur Abgeltungsteuer", "Basiszins zur Vorabpauschale gem. § 18 InvStG", "NV-Bescheinigung Grenzwerte"]
+        },
+        {
+          "name": "Bundesfinanzhof (BFH)",
+          "domain": "bundesfinanzhof.de",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "type": "supreme_court",
+          "keyEndpoints": [
+            "https://www.bundesfinanzhof.de/de/entscheidungen/entscheidungen-online/"
+          ],
+          "indicators": ["Verlustverrechnungstopf Aktien § 20 Abs. 6 EStG (Az. VIII R 11/18)", "Termingeschäfts-Verlustbegrenzung § 20 Abs. 6 Satz 5 EStG"]
+        },
+        {
+          "name": "Bundeszentralamt für Steuern (BZSt)",
+          "domain": "bzst.de",
+          "url": "https://www.bzst.de",
+          "jurisdiction": "DE",
+          "type": "tax_authority",
+          "keyEndpoints": [
+            "https://www.bzst.de/DE/Privatpersonen/Kapitalertraege/kapitalertraege_node.html"
+          ],
+          "indicators": ["Doppelbesteuerungsabkommen (DBA) Quellensteuerverrechnung", "Freistellungsauftrag-Datenabgleich (FSA-Verfahren)"]
+        }
+      ],
+      "statutoryBases": [
+        "§ 20 EStG (Einkünfte aus Kapitalvermögen)",
+        "§ 32d EStG (Gesonderter Steuertarif für Einkünfte aus Kapitalvermögen)",
+        "§ 43 ff. EStG (Kapitalertragsteuer und Steuerabzug)",
+        "§ 44a EStG (Abstandnahme vom Steuerabzug / Freistellungsauftrag)"
+      ],
+      "searchQueries": [
+        "BMF Schreiben Abgeltungsteuer Paragraf 20 EStG",
+        "Bundesfinanzhof Urteil Verlustverrechnung Aktien Paragraf 20 Abs 6",
+        "Sparerpauschbetrag 1000 Euro Freistellungsauftrag Bank",
+        "BZSt Doppelbesteuerungsabkommen ausländische Quellensteuer"
+      ],
+      "complianceGuardrails": "Keine Steuergestaltungsberatung im Einzelfall. Strikte Trennung von Tarif (25 % zzgl. 5,5 % Soli = 26,375 % zzgl. KiSt) und Rechenweg der Günstigerprüfung nach § 32d Abs. 6 EStG."
+    },
+    {
+      "id": "krypto-digital-assets",
+      "name": "Krypto & Digital Assets",
+      "shortDescription": "Ertragsbesteuerung nach § 23 EStG, 1-Jahres-Haltefrist, FIFO-Methode, Staking/Lending und MiCA-Regulierung.",
+      "rechnerHref": "/rechner",
+      "decayClass": "high",
+      "decayDays": 30,
+      "primarySources": [
+        {
+          "name": "Bundesministerium der Finanzen (BMF)",
+          "domain": "bundesfinanzministerium.de",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Einkommensteuer/2022-05-09-einzelfragen-zur-ertragsteuerlichen-behandlung-von-virtuellen-waehrungen-und-von-sonstigen-token.html"
+          ],
+          "indicators": ["BMF-Schreiben vom 10.05.2022 zu virtuellen Währungen und Token", "Fristberechnung bei Staking und Lending (keine 10-Jahres-Verlängerung nach § 23 Abs. 1 Satz 1 Nr. 2 Satz 4 EStG)", "Airdrops und Hard Forks"]
+        },
+        {
+          "name": "Gesetze im Internet (BMJ)",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/estg/__23.html",
+            "https://www.gesetze-im-internet.de/estg/__22.html"
+          ],
+          "indicators": ["§ 23 Abs. 1 Satz 1 Nr. 2 EStG (Private Veräußerungsgeschäfte)", "§ 23 Abs. 3 EStG Freigrenze 1.000 €", "§ 22 Nr. 3 EStG sonstige Einkünfte"]
+        },
+        {
+          "name": "Bundesfinanzhof (BFH)",
+          "domain": "bundesfinanzhof.de",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "type": "supreme_court",
+          "keyEndpoints": [
+            "https://www.bundesfinanzhof.de/de/entscheidung/entscheidungen-online/detail/STRE202310051/"
+          ],
+          "indicators": ["BFH Urteil vom 14.02.2023, IX R 3/22 (Kryptowerte als Wirtschaftsgüter und verfassungsgemäße Besteuerung)"]
+        },
+        {
+          "name": "Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin)",
+          "domain": "bafin.de",
+          "url": "https://www.bafin.de",
+          "jurisdiction": "DE",
+          "type": "financial_supervisory_authority",
+          "keyEndpoints": [
+            "https://www.bafin.de/DE/Aufsicht/FinTech/Kryptowerte/kryptowerte_node.html"
+          ],
+          "indicators": ["Kryptoverwahrgeschäft nach § 1 Abs. 1a Satz 2 Nr. 6 KWG", "MiCA-Übergangsfristen für CASPs (Crypto-Asset Service Providers)"]
+        },
+        {
+          "name": "EUR-Lex (Europäische Union)",
+          "domain": "eur-lex.europa.eu",
+          "url": "https://eur-lex.europa.eu",
+          "jurisdiction": "EU",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32023R1114"
+          ],
+          "indicators": ["Verordnung (EU) 2023/1114 (Markets in Crypto-Assets / MiCA)", "E-Geld-Token (EMT) und wertreferenzierte Token (ART)"]
+        }
+      ],
+      "statutoryBases": [
+        "§ 23 Abs. 1 Satz 1 Nr. 2 EStG (Private Veräußerungsgeschäfte andere Wirtschaftsgüter)",
+        "§ 23 Abs. 3 EStG (Freigrenze 1.000 €)",
+        "Verordnung (EU) 2023/1114 (MiCA)",
+        "Kreditwesengesetz (KWG) § 1 Abs. 11 (Kryptowerte)"
+      ],
+      "searchQueries": [
+        "BMF Schreiben Kryptowährungen Staking Lending 10 Mai 2022",
+        "Bundesfinanzhof IX R 3 22 Krypto Wirtschaftsgut",
+        "BaFin Kryptoverwahrung MiCA Zulassung CASP",
+        "Paragraf 23 EStG Krypto 1 Jahres Haltefrist FIFO Methode"
+      ],
+      "complianceGuardrails": "Niemals konkrete Krypto-Token oder -Projekte zum Kauf empfehlen. Klare Trennung: Privatvermögen (steuerfrei nach 365 Tagen) vs. Gewerblichkeit / GmbH (volle Körperschaft- und Gewerbesteuer ca. 30 % ohne Haltefristfreiheit)."
+    },
+    {
+      "id": "holding-gmbh",
+      "name": "Holding & GmbH",
+      "shortDescription": "Schachtelprivileg nach § 8b KStG, vermögensverwaltende GmbH, erweiterte Gewerbesteuerkürzung und laufende Unternehmenskosten.",
+      "rechnerHref": "/holding",
+      "decayClass": "medium",
+      "decayDays": 90,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ) — KStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/kstg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/kstg/__8b.html",
+            "https://www.gesetze-im-internet.de/kstg/__23.html"
+          ],
+          "indicators": ["§ 8b Abs. 1 KStG Beteiligungserträge (100% steuerfrei, 5% nicht abziehbare Betriebsausgabe)", "§ 8b Abs. 2 KStG Veräußerungsgewinne (effektiv 1,54 % Steuern)", "§ 8b Abs. 4 KStG Mindestbeteiligung 10 % für Dividendenfreistellung"]
+        },
+        {
+          "name": "Gesetze im Internet (BMJ) — GewStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/gewstg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/gewstg/__9.html"
+          ],
+          "indicators": ["§ 9 Nr. 1 Satz 2 GewStG (Erweiterte Kürzung bei reiner Grundstücksverwaltung)", "Gewerbesteuer-Hebesätze der Kommunen"]
+        },
+        {
+          "name": "Bundesfinanzhof (BFH)",
+          "domain": "bundesfinanzhof.de",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "type": "supreme_court",
+          "keyEndpoints": [
+            "https://www.bundesfinanzhof.de/de/entscheidungen/entscheidungen-online/"
+          ],
+          "indicators": ["Verdeckte Gewinnausschüttung (vGA) § 8 Abs. 3 KStG", "Gesellschafter-Geschäftsführer-Vergütung Angemessenheit", "Darlehen zwischen Holding und Tochtergesellschaft"]
+        },
+        {
+          "name": "Unternehmensregister / Bundesanzeiger",
+          "domain": "unternehmensregister.de",
+          "url": "https://www.unternehmensregister.de",
+          "jurisdiction": "DE",
+          "type": "official_register",
+          "keyEndpoints": [
+            "https://www.unternehmensregister.de/ureg/"
+          ],
+          "indicators": ["Offenlegungspflichten nach §§ 325 ff. HGB", "Größenklassen nach § 267/267a HGB (Kleinstkapitalgesellschaften)"]
+        }
+      ],
+      "statutoryBases": [
+        "Körperschaftsteuergesetz (KStG) § 8b, § 23",
+        "Gewerbesteuergesetz (GewStG) § 7, § 9 Nr. 1, § 11",
+        "Handelsgesetzbuch (HGB) §§ 238 ff., §§ 267a, 325",
+        "GmbH-Gesetz (GmbHG)"
+      ],
+      "searchQueries": [
+        "KStG 8b Schachtelprivileg Aktienveräußerung 95 Prozent",
+        "Gewerbesteuergesetz Paragraf 9 Nr 1 erweiterte Kuerzung Grundbesitz",
+        "Bundesfinanzhof Urteil verdeckte Gewinnausschuettung Geschaeftsfuehrer Gehalt",
+        "Holding Struktur laufende Fixkosten Steuerberater IHK Bundesanzeiger"
+      ],
+      "complianceGuardrails": "Mathematischer Break-even statt Verkaufsversprechen. Immer die laufenden Verwaltungs- und Steuerberaterkosten (ca. 1.500–2.500 € p.a.) gegen die Steuerstundung gegenrechnen. Keine Empfehlung zur GmbH-Gründung ohne individuellen Steuerberater."
+    },
+    {
+      "id": "immobilien",
+      "name": "Immobilien",
+      "shortDescription": "Gebäude-AfA (linear 3 % vs. degressiv 5 %), § 35a Handwerkerleistungen, Kaufpreisaufteilung und 10-Jahres-Spekulationsfrist.",
+      "rechnerHref": "/rechner",
+      "decayClass": "medium",
+      "decayDays": 90,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ) — EStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/estg/__7.html",
+            "https://www.gesetze-im-internet.de/estg/__21.html",
+            "https://www.gesetze-im-internet.de/estg/__23.html",
+            "https://www.gesetze-im-internet.de/estg/__35a.html"
+          ],
+          "indicators": ["§ 7 Abs. 4 EStG Lineare Gebäude-AfA 3 % für Fertigstellung ab 2023", "§ 7 Abs. 5a EStG Degressive AfA 5 % nach Wachstumschancengesetz", "§ 23 Abs. 1 Satz 1 Nr. 1 EStG 10-Jahres-Frist bei Immobilien", "§ 35a Abs. 3 EStG Handwerkerleistungen (20 % von max. 6.000 € = 1.200 €)"]
+        },
+        {
+          "name": "Bundesministerium der Finanzen (BMF)",
+          "domain": "bundesfinanzministerium.de",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerarten/Einkommensteuer/berechnung-aufteilung-grundstueckskaufpreis.html"
+          ],
+          "indicators": ["BMF-Arbeitshilfe zur Kaufpreisaufteilung (Gebäudeanteil vs. Bodenwert)", "BMF-Schreiben zu Anschaffungsnahen Herstellungskosten nach § 6 Abs. 1 Nr. 1a EStG"]
+        },
+        {
+          "name": "Bundesfinanzhof (BFH)",
+          "domain": "bundesfinanzhof.de",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "type": "supreme_court",
+          "keyEndpoints": [
+            "https://www.bundesfinanzhof.de/de/entscheidungen/entscheidungen-online/"
+          ],
+          "indicators": ["15 %-Grenze anschaffungsnahe Herstellungskosten innerhalb 3 Jahren", "Gebäudegutachten zur Restnutzungsdauer gem. § 7 Abs. 4 Satz 2 EStG (Az. IX R 25/21)"]
+        },
+        {
+          "name": "BORIS-D (Bodenrichtwertinformationssystem Deutschland)",
+          "domain": "bodenrichtwerte-boris.de",
+          "url": "https://www.bodenrichtwerte-boris.de",
+          "jurisdiction": "DE",
+          "type": "geoportal",
+          "keyEndpoints": [
+            "https://www.bodenrichtwerte-boris.de"
+          ],
+          "indicators": ["Bodenrichtwerte der Gutachterausschüsse je Gemeinde/Stichtag"]
+        }
+      ],
+      "statutoryBases": [
+        "Einkommensteuergesetz (EStG) § 7, § 6 Abs. 1 Nr. 1a, § 21, § 23, § 35a",
+        "Wachstumschancengesetz",
+        "Grundsteuergesetz (GrStG)",
+        "Grunderwerbsteuergesetz (GrEStG)"
+      ],
+      "searchQueries": [
+        "Wachstumschancengesetz degressive Gebaeude AfA 5 Prozent Paragraf 7 Abs 5a",
+        "BMF Arbeitshilfe Kaufpreisaufteilung Grundstueck Gebaeude",
+        "Bundesfinanzhof Urteil Restnutzungsdauer Gebaeude AfA Gutachten",
+        "Anschaffungsnahe Herstellungskosten 15 Prozent Grenze 3 Jahre Paragraf 6 EStG"
+      ],
+      "complianceGuardrails": "Reine steuerliche Bildungsrechnung. Keine Immobilienkaufberatung, keine Bewertung einzelner Liegenschaften. Bodenwert ist nicht abschreibungsfähig — immer auf Kaufpreisaufteilung hinweisen."
+    },
+    {
+      "id": "altersvorsorge",
+      "name": "Altersvorsorge",
+      "shortDescription": "Rürup-Basisrente (§ 10 EStG), Sonderausgabenabzug bis zum Höchstbetrag, nachgelagerte Besteuerung und freiwillige Rentenbeiträge (§ 187a SGB VI).",
+      "rechnerHref": "/rechner",
+      "decayClass": "low",
+      "decayDays": 180,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ) — EStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/estg/__10.html",
+            "https://www.gesetze-im-internet.de/estg/__22.html"
+          ],
+          "indicators": ["§ 10 Abs. 1 Nr. 2 EStG (Altersvorsorgeaufwendungen 100 % abzugsfähig)", "Höchstbetrag nach der knappschaftlichen Rentenversicherung", "§ 22 Nr. 1 Satz 3 Buchst. a EStG nachgelagerte Rentenbesteuerung"]
+        },
+        {
+          "name": "Deutsche Rentenversicherung (DRV)",
+          "domain": "deutsche-rentenversicherung.de",
+          "url": "https://www.deutsche-rentenversicherung.de",
+          "jurisdiction": "DE",
+          "type": "social_security_authority",
+          "keyEndpoints": [
+            "https://www.deutsche-rentenversicherung.de/DRV/DE/Ueber-uns-und-Presse/Presse/Meldungen/2026/index.html",
+            "https://www.deutsche-rentenversicherung.de/DRV/DE/Rente/Allgemeine-Informationen/Wissenswertes-zur-Rente/rechengroessen/rechengroessen_node.html"
+          ],
+          "indicators": ["Aktueller Rentenwert", "Beitragssatz Rentenversicherung 18,6 %", "Beitragsbemessungsgrenze (BBG) Rentenversicherung West/Ost", "Ausgleichszahlungen für Rentenabschläge gem. § 187a SGB VI"]
+        },
+        {
+          "name": "Bundesministerium für Arbeit und Soziales (BMAS)",
+          "domain": "bmas.de",
+          "url": "https://www.bmas.de",
+          "jurisdiction": "DE",
+          "type": "federal_ministry",
+          "keyEndpoints": [
+            "https://www.bmas.de/DE/Service/Gesetze-und-Gesetzesvorhaben/sozialversicherungs-rechengroessenverordnung-2026.html"
+          ],
+          "indicators": ["Verordnung über die Rechengrößen der Sozialversicherung 2026", "Rentenversicherungsbericht der Bundesregierung"]
+        },
+        {
+          "name": "Bundeszentralamt für Steuern (BZSt) — Zertifizierungsstelle",
+          "domain": "bzst.de",
+          "url": "https://www.bzst.de",
+          "jurisdiction": "DE",
+          "type": "tax_authority",
+          "keyEndpoints": [
+            "https://www.bzst.de/DE/Unternehmen/Altersvorsorge/Zertifizierung/zertifizierung_node.html"
+          ],
+          "indicators": ["Altersvorsorgeverträge-Zertifizierungsgesetz (AltZertG) Kriterien"]
+        }
+      ],
+      "statutoryBases": [
+        "§ 10 Abs. 1 Nr. 2, Abs. 3 EStG (Vorsorgeaufwendungen)",
+        "§ 22 Nr. 1 Satz 3 Buchstabe a EStG (Rentenbesteuerung)",
+        "Sozialgesetzbuch Sechstes Buch (SGB VI) § 187a (Ausgleich von Rentenabschlägen)",
+        "Altersvorsorgeverträge-Zertifizierungsgesetz (AltZertG)"
+      ],
+      "searchQueries": [
+        "Ruerup Rente Hoechstbetrag Sonderausgabenabzug 100 Prozent Paragraf 10 EStG",
+        "Deutsche Rentenversicherung Rechengroessen Beitragsbemessungsgrenze 2026",
+        "BMAS Sozialversicherungs Rechengroessenverordnung Rentenwert",
+        "Paragraf 187a SGB VI Ausgleichszahlung Rentenabschlag steuerlich absetzbar"
+      ],
+      "complianceGuardrails": "Keine Anlageempfehlung für bestimmte Versicherungstarife oder Anbieter. Strikte Berechnung des Sonderausgabenabzugs und Berücksichtigung der nachgelagerten Besteuerung im Rentenalter."
+    },
+    {
+      "id": "etf-indexfonds",
+      "name": "ETF & Indexfonds",
+      "shortDescription": "Investmentsteuergesetz (InvStG), Vorabpauschale mit amtlichem Basiszins (§ 18 InvStG), Teilfreistellungsquoten und OGAW/UCITS-Standards.",
+      "rechnerHref": "/rechner",
+      "decayClass": "medium",
+      "decayDays": 90,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ) — InvStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/invstg_2018/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/invstg_2018/__18.html",
+            "https://www.gesetze-im-internet.de/invstg_2018/__20.html",
+            "https://www.gesetze-im-internet.de/invstg_2018/__21.html"
+          ],
+          "indicators": ["§ 18 InvStG Vorabpauschale (Basisertrag = 70 % Basiszins × Anfangswert)", "§ 20 InvStG Teilfreistellung (30 % Aktienfonds, 15 % Mischfonds, 60/80 % Immobilienfonds)", "§ 21 InvStG Ermittlung der Fondskategorien"]
+        },
+        {
+          "name": "Bundesministerium der Finanzen (BMF)",
+          "domain": "bundesfinanzministerium.de",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerarten/Investmentsteuer/"
+          ],
+          "indicators": ["Jährliches BMF-Schreiben zum Basiszins gem. § 18 Abs. 4 InvStG", "BMF-Anwendungserlass zum InvStG 2018"]
+        },
+        {
+          "name": "Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin)",
+          "domain": "bafin.de",
+          "url": "https://www.bafin.de",
+          "jurisdiction": "DE",
+          "type": "financial_supervisory_authority",
+          "keyEndpoints": [
+            "https://www.bafin.de/DE/Aufsicht/Fonds/fonds_node.html",
+            "https://portal.mvp.bafin.de/database/FondsInfo/"
+          ],
+          "indicators": ["Zulassung von OGAW/UCITS Publikumsfonds", "PRIIPs-Basisinformationsblätter (KID)", "Gesamtkostenquote (TER)"]
+        },
+        {
+          "name": "European Securities and Markets Authority (ESMA)",
+          "domain": "esma.europa.eu",
+          "url": "https://www.esma.europa.eu",
+          "jurisdiction": "EU",
+          "type": "european_supervisory_authority",
+          "keyEndpoints": [
+            "https://www.esma.europa.eu/regulation/investment-management"
+          ],
+          "indicators": ["UCITS ETF Leitlinien", "Tracking Difference und Kontrahentenrisiken bei Swap-ETFs"]
+        }
+      ],
+      "statutoryBases": [
+        "Investmentsteuergesetz (InvStG) §§ 16–22",
+        "Kapitalanlagegesetzbuch (KAGB)",
+        "OGAW-Richtlinie (Richtlinie 2009/65/EG)",
+        "PRIIPs-Verordnung (Verordnung EU Nr. 1286/2014)"
+      ],
+      "searchQueries": [
+        "BMF Basiszins Vorabpauschale Investmentsteuergesetz Paragraf 18",
+        "Teilfreistellung Aktienfonds 30 Prozent InvStG 20",
+        "BaFin OGAW Richtlinien ETF Replikation Swap physisch",
+        "Vorabpauschale thesaurierender ETF Rechenweg Formel Deckelung"
+      ],
+      "complianceGuardrails": "Keine Nennung konkreter ISINs oder Tickersymbole im Kaufkontext. Reine Erklärung der Besteuerungsmechanik (Vorabpauschale, Deckelung auf Wertzuwachs, Teilfreistellung) und Replikationsarten."
+    },
+    {
+      "id": "arbeitnehmer",
+      "name": "Arbeitnehmer",
+      "shortDescription": "Werbungskosten, Entfernungspauschale, Homeoffice-Pauschale, Fünftelregelung bei Abfindung (§ 34 EStG) und steuerfreie Sachbezüge.",
+      "rechnerHref": "/steuerplaner",
+      "decayClass": "medium",
+      "decayDays": 90,
+      "primarySources": [
+        {
+          "name": "Gesetze im Internet (BMJ) — EStG",
+          "domain": "gesetze-im-internet.de",
+          "url": "https://www.gesetze-im-internet.de/estg/",
+          "jurisdiction": "DE",
+          "type": "law_portal",
+          "keyEndpoints": [
+            "https://www.gesetze-im-internet.de/estg/__9.html",
+            "https://www.gesetze-im-internet.de/estg/__4.html",
+            "https://www.gesetze-im-internet.de/estg/__34.html",
+            "https://www.gesetze-im-internet.de/estg/__3.html",
+            "https://www.gesetze-im-internet.de/estg/__8.html"
+          ],
+          "indicators": ["§ 9 Abs. 1 Satz 1 EStG Werbungskostenpauschbetrag (1.230 €)", "§ 9 Abs. 1 Satz 3 Nr. 4 EStG Entfernungspauschale (0,30 € / 0,38 € ab km 21)", "§ 4 Abs. 5 Nr. 6b / § 9 Abs. 5 Homeoffice-Pauschale (6 €/Tag bis 1.260 € / 210 Tage)", "§ 34 Abs. 1 EStG Fünftelregelung bei Abfindungen", "§ 8 Abs. 2 Satz 11 Sachbezugsfreigrenze (50 € monatlich)"]
+        },
+        {
+          "name": "Bundesministerium der Finanzen (BMF)",
+          "domain": "bundesfinanzministerium.de",
+          "url": "https://www.bundesfinanzministerium.de",
+          "jurisdiction": "DE",
+          "type": "finance_ministry",
+          "keyEndpoints": [
+            "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerarten/Lohnsteuer/"
+          ],
+          "indicators": ["Lohnsteuer-Richtlinien (LStR)", "BMF-Schreiben zur Fünftelregelung und ermäßigten Besteuerung", "Programmablaufpläne für den Lohnsteuerabzug"]
+        },
+        {
+          "name": "Bundesfinanzhof (BFH)",
+          "domain": "bundesfinanzhof.de",
+          "url": "https://www.bundesfinanzhof.de",
+          "jurisdiction": "DE",
+          "type": "supreme_court",
+          "keyEndpoints": [
+            "https://www.bundesfinanzhof.de/de/entscheidungen/entscheidungen-online/"
+          ],
+          "indicators": ["Zusammenballung von Einkünften bei Abfindungen (Az. IX R 14/21)", "Doppelte Haushaltsführung Voraussetzungen (§ 9 Abs. 1 Satz 3 Nr. 5 EStG)", "Fortbildungskosten als vorweggenommene Werbungskosten"]
+        }
+      ],
+      "statutoryBases": [
+        "Einkommensteuergesetz (EStG) § 9 (Werbungskosten), § 4, § 34, § 3, § 8",
+        "Lohnsteuer-Durchführungsverordnung (LStDV)",
+        "Lohnsteuer-Richtlinien (LStR)"
+      ],
+      "searchQueries": [
+        "BMF Schreiben Fuenftelregelung Abfindung Zusammenballung Paragraf 34",
+        "Homeoffice Pauschale 1260 Euro Paragraf 4 Abs 5 Nr 6b EStG",
+        "Werbungskostenpauschbetrag Entfernungspauschale 38 Cent",
+        "Bundesfinanzhof Urteil doppelte Haushaltsfuehrung eigene Wohnung"
+      ],
+      "complianceGuardrails": "Reine Steuerbildung. Keine individuelle Lohnsteuerberatung. Bei Abfindungen immer auf das Erfordernis der Zusammenballung von Einkünften und die Progressionsdifferenzrechnung hinweisen."
+    }
+  ]
+}

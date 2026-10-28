@@ -97,3 +97,24 @@ andere Beiträge.
 - Verschickt keine E-Mails und sammelt keine Adressen (Entscheid des Owners vom 2026-09-25).
 - Keine Autorenangabe „Hermes“ als Verantwortlicher — `producer` muss eine reale Person sein
   (siehe `kontenlage-wphg-guardrails` §8.1).
+
+## 8. Themen- und Quellen-Matrix (9 Fachkategorien)
+
+Hermes stützt jede Ausgabe auf die kanonische Quell-Registry unter
+`.agents/skills/kontolage-newsletter-editor/resources/themen-quellen-registry.json`
+(Abruf via CLI: `node tools/hermes-newsletter-sources.mjs --category "<Name>"`).
+
+| Kategorie | Pflicht-Primärquellen | Gesetz / Grundlage | Leit-Kennzahlen |
+|---|---|---|---|
+| **Makroökonomie & EZB** | EZB (`ecb.europa.eu`), Deutsche Bundesbank (`bundesbank.de`), Destatis (`destatis.de`), Eurostat | Art. 127 AEUV, Statut ESZB, BBankG | DFR, MRO, €STR, Bund-Renditen 2J/10J, VPI/HVPI |
+| **Weltwirtschaft & Geopolitik** | IWF (`imf.org`), OECD (`oecd.org`), World Gold Council (`gold.org`), US Treasury (`treasurydirect.gov`), BIZ (`bis.org`) | Völkerrechtl. Abkommen, IWF-Statuten | WEO-Wachstumsraten, Notenbank-Goldkäufe, TIC-Holdings |
+| **Kapitalerträge** | BMF (`bundesfinanzministerium.de`), BFH (`bundesfinanzhof.de`), Gesetze im Internet | § 20, § 32d, § 43, § 44a EStG | Sparerpauschbetrag (1.000 €/2.000 €), 26,375 % Abgeltungsteuer, Aktientopf |
+| **Krypto & Digital Assets** | BMF (BMF-Schreiben vom 10.05.2022), BFH (Az. IX R 3/22), BaFin, EUR-Lex (MiCA) | § 23 Abs. 1 S. 1 Nr. 2 EStG, MiCA (VO 2023/1114) | 1-Jahres-Haltefrist, 1.000 € Freigrenze, FIFO, Staking-Zufluss |
+| **Holding & GmbH** | Gesetze im Internet (KStG, GewStG, GmbHG), BFH, Unternehmensregister / Bundesanzeiger | § 8b KStG, § 9 Nr. 1 GewStG, § 267a HGB | 95 % Freistellung (eff. 1,54 % KSt/GewSt), 1.500–2.500 € Fixkosten, vGA |
+| **Immobilien** | Gesetze im Internet (EStG), BMF, BFH, Boris-D / Gutachterausschüsse | § 7 Abs. 4/5a, § 21, § 23, § 35a EStG | 5 % degressive AfA, 3 % linear, 15 %-Grenze § 6 Abs. 1 Nr. 1a, Bodenwert |
+| **Altersvorsorge** | Gesetze im Internet (EStG), Deutsche Rentenversicherung (`drv.de`), BMAS, BZSt | § 10 Abs. 1 Nr. 2, § 22 EStG, § 187a SGB VI | Höchstbetrag Knappschaft, 100 % Abzug, 18,6 % Beitragssatz, Kohortenanteil |
+| **ETF & Indexfonds** | Gesetze im Internet (InvStG), BMF, BaFin, ESMA | §§ 18, 20 InvStG 2018, KAGB, UCITS | Basiszins Bundesbank, 70 % Basisertrag, Teilfreistellung (30 %/15 %/60 %) |
+| **Arbeitnehmer** | Gesetze im Internet (EStG), BMF (LStR), BFH | § 9, § 4 Abs. 5 Nr. 6b, § 34, § 3 Nr. 15 EStG | Werbungskosten 1.230 €, Homeoffice 1.260 €, Fünftelregelung, Sachbezug 50 € |
+
+Jede Recherche beginnt mit der Prüfung der jeweiligen Primärquellen. Bei Abweichungen zwischen Pressemeldungen und Primärtext (Gesetzestext, BMF-Schreiben oder EZB-Statistik) gilt ausnahmslos der Primärtext.
+
