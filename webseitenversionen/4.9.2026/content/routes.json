@@ -50,6 +50,16 @@
       "priority": "0.9"
     },
     {
+      "path": "/steuerplaner",
+      "type": "page",
+      "title": "Steuerplaner Pro 2026: Was-wäre-wenn-Rechner & Posten | Kontolage",
+      "description": "Interaktiver Steuerplaner für Selbständige, Freiberufler, GmbH und Arbeitnehmer in Deutschland 2026. Was-wäre-wenn-Szenarien und absetzbare Posten.",
+      "h1": "Steuerplaner Pro — Umfassendes Was-wäre-wenn",
+      "intro": "Alle absetzbaren Posten für Privat und Gewerblich nach deutschem Steuerrecht 2026 — reine Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG.",
+      "changefreq": "weekly",
+      "priority": "0.9"
+    },
+    {
       "path": "/holding",
       "type": "page",
       "title": "Holding & Steuern verstehen | Kontolage",

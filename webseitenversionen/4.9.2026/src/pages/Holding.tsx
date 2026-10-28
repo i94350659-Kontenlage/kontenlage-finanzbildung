@@ -333,7 +333,7 @@ function ThesaurierungsRechner({ isUnlocked, planName }: { isUnlocked: boolean; 
               Inklusive IHK-Freibetrag, laufender Steuerberatergebühren, erweiterter Gewerbesteuerkürzung bei Immobilien (§ 9 Nr. 1 Satz 2 GewStG) und CSV-Export.
             </p>
             <Link to="/abo" style={{ padding: "8px 20px", background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontWeight: 700, borderRadius: 6, textDecoration: "none", fontSize: 12 }}>
-              Vollständige Matrix freischalten (ab 9 €) →
+              Vollständige Matrix freischalten (ab 10,71 €) →
             </Link>
           </div>
         )}

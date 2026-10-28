@@ -1,7 +1,8 @@
-// Steuerposten — Haupt-Export (alle Teile zusammengeführt)
-export { STEUERPOSTEN_TEIL1 } from './steuerposten-teil1';
-export { STEUERPOSTEN_TEIL2 } from './steuerposten-teil2';
-export { STEUERPOSTEN_TEIL3 } from './steuerposten-teil3';
+import { STEUERPOSTEN_TEIL1 } from './steuerposten-teil1';
+import { STEUERPOSTEN_TEIL2 } from './steuerposten-teil2';
+import { STEUERPOSTEN_TEIL3 } from './steuerposten-teil3';
+
+export { STEUERPOSTEN_TEIL1, STEUERPOSTEN_TEIL2, STEUERPOSTEN_TEIL3 };
 export type { Geschäftstyp, SteuerPosten } from './steuerposten-typen';
 
 export const ALLE_STEUERPOSTEN = [

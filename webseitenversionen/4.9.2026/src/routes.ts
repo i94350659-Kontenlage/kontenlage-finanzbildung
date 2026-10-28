@@ -20,6 +20,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "rechner", lazy: load(() => import("./pages/Rechner")) },
+      { path: "steuerplaner", lazy: load(() => import("./pages/SteuerplanerPro")) },
       { path: "holding", lazy: load(() => import("./pages/Holding")) },
       { path: "anlageformen", lazy: load(() => import("./pages/Anlageformen")) },
       { path: "artikel", lazy: load(() => import("./pages/Artikel")) },

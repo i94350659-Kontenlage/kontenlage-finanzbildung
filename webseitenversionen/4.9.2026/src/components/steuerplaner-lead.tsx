@@ -13,9 +13,9 @@ export default function SteuerplanerLead() {
         <li>ELSTER- &amp; EÜR-Vorlagen</li>
         <li>Persönliche Steuer-Szenarien mit Fristen-Erinnerung</li>
       </ul>
-      <button style={{ marginTop: 10, padding: '10px 20px', background: 'linear-gradient(135deg, #c9a84c, #e2c27d)', border: 'none', borderRadius: 6, color: '#0c1825', fontWeight: 700, cursor: 'pointer' }}>
-        Jetzt auf Pro/Executive upgraden → /abo
-      </button>
+      <a href="/abo" style={{ display: 'inline-block', textDecoration: 'none', marginTop: 10, padding: '10px 20px', background: 'linear-gradient(135deg, #c9a84c, #e2c27d)', border: 'none', borderRadius: 6, color: '#0c1825', fontWeight: 700, cursor: 'pointer' }}>
+        Jetzt auf Pro/Executive upgraden →
+      </a>
     </div>
   );
 }

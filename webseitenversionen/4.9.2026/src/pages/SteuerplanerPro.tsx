@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { ALLE_STEUERPOSTEN, KATEGORIEN_LISTE } from '../lib/steuerposten-index';
 import { berechnePlaner, type PlanerEingabe } from '../lib/steuerplaner-pro';
-import SteuerplanerKarte from '../components/steuerplaner-karte';
 import SteuerplanerPostenEingabe from '../components/steuerplaner-posten-eingabe';
 import SteuerplanerErgebnis from '../components/steuerplaner-ergebnis';
 import SteuerplanerSmart from '../components/steuerplaner-smart';
@@ -31,7 +30,7 @@ export default function SteuerplanerPro() {
     <section style={{ padding: '24px 20px', maxWidth: 1100, margin: '0 auto', fontFamily: 'system-ui, sans-serif', color: '#f0ece4' }}>
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ color: '#c9a84c', margin: 0, fontSize: 24 }}>Steuerplaner Pro — Umfassendes Was-wäre-wenn</h1>
-        <p style={{ color: '#a89f94', fontSize: 13, margin: 4px 0 0 }}>
+        <p style={{ color: '#a89f94', fontSize: 13, margin: '4px 0 0' }}>
           Alle absetzbaren Posten · Privat + Gewerblich · Deutschland 2026 · § 2 Abs. 8 Nr. 10 WpHG
         </p>
       </header>

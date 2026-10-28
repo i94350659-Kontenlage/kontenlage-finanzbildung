@@ -198,7 +198,7 @@ export default function VermoegensCockpit({ isUnlocked = false }: VermoegensCock
       {/* Regler-Grid (Ebene 1 bis 4) — ohne Executive-Freischaltung nur Vorschau */}
       {!isUnlocked && (
         <p style={{ fontSize: 13, color: "#cdc6be", lineHeight: 1.7, margin: "0 0 16px", padding: "12px 16px", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, background: "rgba(201,168,76,0.06)" }}>
-          Vorschau: Die interaktiven Regler, alle Ergebniswerte und der Excel-Export sind im Tarif Executive B2B (29&nbsp;€/Monat netto, zzgl. 19&nbsp;% MwSt.) enthalten.{" "}
+          Vorschau: Die interaktiven Regler, alle Ergebniswerte und der Excel-Export sind im Tarif Executive B2B (34,51&nbsp;€/Monat inkl. 19&nbsp;% MwSt., 29&nbsp;€ netto) enthalten.{" "}
           <Link to="/abo" style={{ color: "#e2c27d", fontWeight: 600 }}>Tarife vergleichen →</Link>
         </p>
       )}

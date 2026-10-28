@@ -10,6 +10,8 @@ export interface PlanerEingabe {
   privatEinkommen: number;
   // Ausgaben (nutzerdefiniert)
   ausgaben: { postenId: string; betrag: number; anteilProzent?: number }[];
+  itAnschaffung?: number;
+  solarAnschaffung?: number;
   // Vorsorge
   ruerup: number;
   kvBeiträge: number;

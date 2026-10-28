@@ -14,10 +14,10 @@ type AccountResponse = {
 };
 
 const catalog = {
-  basis: { name: "Basis", price: 0, tagline: "Kostenloser Einblick in Rechner und Wochenartikel.", features: ["1 Bildungsartikel pro Woche", "Basis-Rechner (Rürup, Sparerpauschbetrag)", "PDF-Checkliste Steuerjahr 2026"] },
-  starter: { name: "Starter", price: 4.9, tagline: "Erweiterte Rechner und alle Artikel ohne Limit.", features: ["Unbegrenzter Artikelzugang", "Sparplan- und Basis-Rechner", "Steuer-Kalender 2026"] },
-  pro: { name: "Pro Digital", price: 9, tagline: "Vollständiger Zugang für Privatanleger.", features: ["Alle Rechner und Szenarien", "Druckfertige Steuer-Dossiers (PDF)", "Excel-Rechenmodelle (Holding, Fünftel)", "Pro-Ausgaben im Kabinett"] },
-  executive: { name: "Executive B2B", price: 29, tagline: "Für Selbständige, Freiberufler und Holdings.", features: ["Holding-Strukturierungsmodell (§8b KStG)", "ELSTER-Vorlagen (ESt, USt, GewSt)", "Prioritäts-Support innerhalb von 24 h", "Pro- und Executive-Ausgaben"] },
+  basis: { name: "Basis", price: 0, grossPrice: "0,00 €", tagline: "Kostenloser Einblick in Rechner und Wochenartikel.", features: ["1 Bildungsartikel pro Woche", "Basis-Rechner (Rürup, Sparerpauschbetrag)", "PDF-Checkliste Steuerjahr 2026"] },
+  starter: { name: "Starter", price: 4.9, grossPrice: "5,83 €", tagline: "Erweiterte Rechner und alle Artikel ohne Limit.", features: ["Unbegrenzter Artikelzugang", "Sparplan- und Basis-Rechner", "Steuer-Kalender 2026"] },
+  pro: { name: "Pro Digital", price: 9, grossPrice: "10,71 €", tagline: "Vollständiger Zugang für Privatanleger.", features: ["Alle Rechner und Szenarien", "Druckfertige Steuer-Dossiers (PDF)", "Excel-Rechenmodelle (Holding, Fünftel)", "Pro-Ausgaben im Kabinett"] },
+  executive: { name: "Executive B2B", price: 29, grossPrice: "34,51 €", tagline: "Für Selbständige, Freiberufler und Holdings.", features: ["Holding-Strukturierungsmodell (§8b KStG)", "ELSTER-Vorlagen (ESt, USt, GewSt)", "Prioritäts-Support innerhalb von 24 h", "Pro- und Executive-Ausgaben"] },
 } as const;
 type PlanKey = keyof typeof catalog;
 
@@ -452,8 +452,8 @@ export default function Account() {
                 </div>
 
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8, margin: "22px 0 6px" }}>
-                  <span style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "#e2c27d" }}>{formatEuro(plan.price)}</span>
-                  <span style={{ fontSize: 13, color: "#a89f94" }}>/ Monat{plan.price === 0 ? " · kostenlos" : ""}</span>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "#e2c27d" }}>{plan.grossPrice}</span>
+                  <span style={{ fontSize: 13, color: "#a89f94" }}>/ Monat{plan.price === 0 ? " · kostenlos" : " inkl. 19 % MwSt."}</span>
                 </div>
                 {statusMeta.hint && <p style={{ fontSize: 12, color: "#a89f94", marginBottom: 0 }}>{statusMeta.hint}{periodEnd ? ` Nächste Abrechnung: ${periodEnd}.` : ""}</p>}
 

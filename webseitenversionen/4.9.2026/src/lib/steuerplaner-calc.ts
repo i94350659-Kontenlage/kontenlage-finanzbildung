@@ -1,5 +1,6 @@
 // Steuerplaner Logik — Teil 2: Berechnungen
-import { eStLedig, eStVerheiratet, soli, gewSt, kSt, gwg, solar, abgeltung, ruerupMax, SteuerplanerInput, SteuerplanerResult, VergleichResult } from './steuerplaner-logic';
+import { eStLedig, eStVerheiratet, soli, gewSt, kSt, gwg, solar, abgeltung, ruerupMax, type SteuerplanerInput, type SteuerplanerResult, type VergleichResult } from './steuerplaner-logic';
+export type { SteuerplanerInput, SteuerplanerResult, VergleichResult };
 export function berechneSzenario(input: SteuerplanerInput, szenario: 'einzelunternehmen' | 'gmbh'): SteuerplanerResult {
   const detail: string[] = [];
   let betrieblicheAusgaben = input.sonstigeBetriebsausgaben;

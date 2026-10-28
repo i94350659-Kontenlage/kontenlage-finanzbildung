@@ -1,26 +1,24 @@
 // Steuerplaner — Was-wäre-wenn-Rechner (Lead-Magnet Pro/Executive)
 import { useState } from 'react';
-import { berechneSzenario, vergleicheSzenarien, planeAnschaffungen, type SteuerplanerInput } from '../lib/steuerplaner-calc';
-export default function Steuerplaner() {
-  const [input, setInput] = useState<SteuerplanerInput>({
-    familienstand: 'ledig', kinder: 0, gewinnVorSteuern: 60000, gmbhGewinnVorSteuern: 60000, gggGehalt: 45000,
-    itAnschaffung: 1200, solarAnschaffung: 0, bueroMoebel: 0, sonstigeBetriebsausgaben: 5000, ruerupEinzahlung: 0, kapitalErtraege: 0,
-  });
-  const [sperre, setSperre] = useState(false);
-  const vergleich = vergleicheSzenarien(input);
-  const empfehlungen = planeAnschaffungen(input);
-  // Steuerplaner — Hauptkomponente (Lead-Magnet Pro/Executive)
-import { useState } from 'react';
 import { vergleicheSzenarien, type SteuerplanerInput } from '../lib/steuerplaner-calc';
 import SteuerplanerForm from '../components/SteuerplanerForm';
 import SteuerplanerErgebnis from '../components/SteuerplanerErgebnis';
 import SteuerplanerSmart from '../components/SteuerplanerSmart';
 import SteuerplanerLead from '../components/SteuerplanerLead';
-const fmt = (n: number) => Math.round(n).toLocaleString('de-DE');
+
 export default function Steuerplaner() {
   const [input, setInput] = useState<SteuerplanerInput>({
-    familienstand: 'ledig', kinder: 0, gewinnVorSteuern: 60000, gmbhGewinnVorSteuern: 60000, gggGehalt: 45000,
-    itAnschaffung: 1200, solarAnschaffung: 0, bueroMoebel: 0, sonstigeBetriebsausgaben: 5000, ruerupEinzahlung: 0, kapitalErtraege: 0,
+    familienstand: 'ledig',
+    kinder: 0,
+    gewinnVorSteuern: 60000,
+    gmbhGewinnVorSteuern: 60000,
+    gggGehalt: 45000,
+    itAnschaffung: 1200,
+    solarAnschaffung: 0,
+    bueroMoebel: 0,
+    sonstigeBetriebsausgaben: 5000,
+    ruerupEinzahlung: 0,
+    kapitalErtraege: 0,
   });
   const vergleich = vergleicheSzenarien(input);
   return (
