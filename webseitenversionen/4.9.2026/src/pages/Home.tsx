@@ -136,7 +136,7 @@ function QuickNav() {
     { to: "/anlageformen", icon: "📊", title: "Anlageformen", desc: "ETF, Tagesgeld, Immobilien und Rürup neutral verglichen." },
     { to: "/artikel", icon: "📄", title: "Artikel", desc: "Fundierte Analysen ohne Produktwerbung — sachlich und rechtssicher." },
     { to: "/transparenz", icon: "🔍", title: "Transparenz", desc: "Wie Kontolage finanziert wird und warum wir keine Provision nehmen." },
-    { to: "/abo", icon: "🔑", title: "Mitgliedschaft", desc: "Basis kostenlos. Pro Digital 9 €/Monat. Executive 29 €/Monat." },
+    { to: "/abo", icon: "🔑", title: "Mitgliedschaft", desc: "Basis kostenlos. Starter 5,83 €/Monat. Pro Digital 10,71 €/Monat. Executive B2B 34,51 €/Monat." },
   ];
 
   return (

@@ -256,6 +256,77 @@ export default function Kabinett() {
                 </div>
               )}
 
+              {/* OAuth: Google & Apple */}
+              <div style={{ marginTop: 18, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 16 }}>
+                <p style={{ fontSize: 12, color: "#a89f94", marginBottom: 12, textAlign: "center" }}>Oder schnell & sicher mit:</p>
+                <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setBusy(true);
+                      try {
+                        await supabase.auth.signInWithOAuth({
+                          provider: "google",
+                          options: { redirectTo: `${window.location.origin}/konto` },
+                        });
+                      } catch (e: any) {
+                        setBusy(false);
+                        setError(e.message || "Google-Anmeldung fehlgeschlagen.");
+                      }
+                    }}
+                    disabled={busy}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 6,
+                      border: "1px solid rgba(255,255,255,0.14)",
+                      background: "#fff",
+                      color: "#111827",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    <span style={{ fontSize: 16 }}>🔍</span> Google
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setBusy(true);
+                      try {
+                        await supabase.auth.signInWithOAuth({
+                          provider: "apple",
+                          options: { redirectTo: `${window.location.origin}/konto` },
+                        });
+                      } catch (e: any) {
+                        setBusy(false);
+                        setError(e.message || "Apple-Anmeldung fehlgeschlagen.");
+                      }
+                    }}
+                    disabled={busy}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px",
+                      borderRadius: 6,
+                      border: "1px solid rgba(255,255,255,0.14)",
+                      background: "#000",
+                      color: "#fff",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    <span style={{ fontSize: 16 }}></span> Apple
+                  </button>
+                </div>
+              </div>
+
               <button type="submit" disabled={busy || (mode === "register" && !passwordValid)} style={{ ...submitStyle, opacity: busy || (mode === "register" && !passwordValid) ? 0.6 : 1 }}>
                 {busy ? "Bitte warten…" : mode === "login" ? "Sicher anmelden" : "Konto erstellen"}
               </button>

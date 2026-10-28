@@ -29,9 +29,9 @@ export default function Transparenz() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 28 }} className="transp-grid">
               {[
                 { label: "Basis-Abo", value: "0 €/Monat", desc: "Kostenlos, keine Kreditkarte erforderlich", icon: "✓" },
-                { label: "Starter", value: "4,90 €/Monat", desc: "Unbegrenzter Artikelzugang & Rechner-Exporte", icon: "✓" },
-                { label: "Pro Digital", value: "9 €/Monat", desc: "Alle Rechner, PDF-Dossiers & Excel-Modelle", icon: "✓" },
-                { label: "Executive B2B", value: "29 €/Monat", desc: "Holding-Vertragswerk, Mustersatzung & ELSTER-Vorlagen", icon: "✓" },
+                { label: "Starter", value: "5,83 €/Monat", desc: "Unbegrenzter Artikelzugang & Rechner-Exporte", icon: "✓" },
+                { label: "Pro Digital", value: "10,71 €/Monat", desc: "Alle Rechner, PDF-Dossiers & Excel-Modelle", icon: "✓" },
+                { label: "Executive B2B", value: "34,51 €/Monat", desc: "Holding-Vertragswerk, Mustersatzung & ELSTER-Vorlagen", icon: "✓" },
                 { label: "Provisionen von Anbietern", value: "0 €", desc: "100% unabhängig — keine Vermittlungsprovisionen", icon: "✗" },
               ].map(i => (
                 <div key={i.label} style={{ background: "linear-gradient(145deg, rgba(30,50,90,0.6), rgba(30,41,59,0.75))", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "20px 22px", display: "flex", gap: 16 }}>

@@ -1,5 +1,5 @@
 /**
- * Hermes AI Runner — Kontenlage Automatisierungskern v2.3
+ * Hermes AI Runner — Kontenlage Automatisierungskern v2.4
  *
  * Wöchentlich via GitHub Actions ausgeführt (0 € Infrastruktur, keine Kreditkarte):
  *  1. Liest Learnings & Artikel-Kontext aus Obsidian Vault

@@ -423,8 +423,8 @@ export default function Holding() {
                   </div>
                 </div>
                 <div style={{ textAlign: "center", minWidth: 200 }}>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#c9a84c" }}>29 €</div>
-                  <div style={{ fontSize: 12, color: "#a89f94", marginBottom: 14 }}>/ Monat (ohne Bindung)</div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "#c9a84c" }}>34,51 €</div>
+                  <div style={{ fontSize: 12, color: "#a89f94", marginBottom: 14 }}>/ Monat inkl. 19 % MwSt. (ohne Bindung)</div>
                   <Link to="/abo" style={{ display: "inline-block", width: "100%", padding: "12px 24px", borderRadius: 6, background: "linear-gradient(135deg, #c9a84c, #e2c27d)", color: "#0C1825", fontFamily: "var(--font-display)", fontSize: 13, fontWeight: 700, textDecoration: "none", boxShadow: "0 4px 15px rgba(201,168,76,0.3)" }}>
                     Executive freischalten →
                   </Link>
