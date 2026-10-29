@@ -12,6 +12,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import https from "node:https";
+import crypto from "node:crypto";
+import { fileURLToPath } from "node:url";
 
 const ROOT_DIR = process.cwd();
 const NEWSLETTER_PATH = path.join(ROOT_DIR, "webseitenversionen", "4.9.2026", "content", "newsletter.json");
@@ -623,6 +625,170 @@ function syncRoutes(newsletterIssues) {
   console.log(`✓ routes.json synchronisiert (${newNewsletterRoutes.length} Newsletter-Routen).`);
 }
 
+// ─── Social Media Helper Functions ───────────────────────────────────────────
+const TELEGRAM_TOKEN   = process.env.TELEGRAM_BOT_TOKEN     || "";
+const TELEGRAM_CHANNEL = process.env.TELEGRAM_CHANNEL_ID    || "";
+const SITE_URL         = process.env.SITE_URL               || "https://kontolage.de";
+
+const X_API_KEY        = process.env.X_API_KEY              || "";
+const X_API_SECRET     = process.env.X_API_SECRET           || "";
+const X_ACC_TOKEN      = process.env.X_ACCESS_TOKEN         || "";
+const X_ACC_SECRET     = process.env.X_ACCESS_SECRET        || "";
+
+const FB_PAGE_TOKEN    = process.env.FACEBOOK_PAGE_TOKEN    || "";
+const LI_ACCESS_TOKEN  = process.env.LINKEDIN_ACCESS_TOKEN  || "";
+const LI_PERSON_URN    = process.env.LINKEDIN_PERSON_URN    || "";
+
+async function sendToTelegram(text) {
+  if (!TELEGRAM_TOKEN || !TELEGRAM_CHANNEL) {
+    console.warn("  ℹ Telegram nicht konfiguriert (TELEGRAM_BOT_TOKEN / TELEGRAM_CHANNEL_ID fehlt).");
+    return null;
+  }
+  const res = await httpRequest(
+    `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,
+    "POST",
+    { chat_id: TELEGRAM_CHANNEL, text, parse_mode: "Markdown", disable_web_page_preview: false }
+  );
+  if (res.status === 200 && res.body?.ok) {
+    console.log(`  ✅ Telegram: Post gesendet (ID: ${res.body.result?.message_id})`);
+    return res.body.result;
+  }
+  console.warn(`  ⚠ Telegram Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
+
+function xOAuthSign(method, url, params) {
+  const sorted = Object.keys(params).sort()
+    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+    .join("&");
+  const base = method.toUpperCase() + "&" + encodeURIComponent(url) + "&" + encodeURIComponent(sorted);
+  const sigKey = encodeURIComponent(X_API_SECRET) + "&" + encodeURIComponent(X_ACC_SECRET);
+  return crypto.createHmac("sha1", sigKey).update(base).digest("base64");
+}
+
+function xAuthHeader(method, url) {
+  const nonce = crypto.randomBytes(16).toString("hex");
+  const ts = Math.floor(Date.now() / 1000).toString();
+  const op = {
+    oauth_consumer_key: X_API_KEY,
+    oauth_nonce: nonce,
+    oauth_signature_method: "HMAC-SHA1",
+    oauth_timestamp: ts,
+    oauth_token: X_ACC_TOKEN,
+    oauth_version: "1.0",
+  };
+  op.oauth_signature = xOAuthSign(method, url, op);
+  return "OAuth " + Object.keys(op).map((k) => encodeURIComponent(k) + '="' + encodeURIComponent(op[k]) + '"').join(", ");
+}
+
+async function postToX(text) {
+  if (!X_API_KEY || !X_ACC_TOKEN) {
+    console.warn("  ℹ X/Twitter nicht konfiguriert (X_API_KEY / X_ACCESS_TOKEN fehlt).");
+    return null;
+  }
+  const url = "https://api.twitter.com/2/tweets";
+  const auth = xAuthHeader("POST", url);
+  const res = await httpRequest(url, "POST", { text }, { Authorization: auth });
+  if (res.status === 201 && res.body?.data?.id) {
+    console.log(`  ✅ X/Twitter: Tweet gesendet (ID: ${res.body.data.id})`);
+    return res.body.data;
+  }
+  console.warn(`  ⚠ X/Twitter Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
+
+async function postToFacebook(text) {
+  if (!FB_PAGE_TOKEN) {
+    console.warn("  ℹ Facebook nicht konfiguriert (FACEBOOK_PAGE_TOKEN fehlt).");
+    return null;
+  }
+  const url = "https://graph.facebook.com/v19.0/me/feed";
+  const res = await httpRequest(url, "POST", { message: text, access_token: FB_PAGE_TOKEN });
+  if (res.status === 200 && res.body?.id) {
+    console.log(`  ✅ Facebook: Post gesendet (ID: ${res.body.id})`);
+    return res.body;
+  }
+  console.warn(`  ⚠ Facebook Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
+
+async function postToLinkedIn(text) {
+  if (!LI_ACCESS_TOKEN || !LI_PERSON_URN) {
+    console.warn("  ℹ LinkedIn nicht konfiguriert (LINKEDIN_ACCESS_TOKEN / LINKEDIN_PERSON_URN fehlt).");
+    return null;
+  }
+  const ugcPost = {
+    author: LI_PERSON_URN,
+    lifecycleState: "PUBLISHED",
+    specificContent: {
+      "com.linkedin.ugc.ShareContent": {
+        shareCommentary: { text },
+        shareMediaCategory: "NONE",
+      },
+    },
+    visibility: {
+      "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
+    },
+  };
+  const res = await httpRequest(
+    "https://api.linkedin.com/v2/ugcPosts",
+    "POST",
+    ugcPost,
+    {
+      Authorization: `Bearer ${LI_ACCESS_TOKEN}`,
+      "X-Restli-Protocol-Version": "2.0.0",
+      "LinkedIn-Version": "202401",
+    }
+  );
+  if (res.status === 201) {
+    console.log(`  ✅ LinkedIn: Post erfolgreich publiziert.`);
+    return res.body || { status: "published" };
+  }
+  console.warn(`  ⚠ LinkedIn Fehler (${res.status}):`, JSON.stringify(res.body).slice(0, 200));
+  return null;
+}
+
+function buildSocialPosts(issue) {
+  const url = `${SITE_URL}/newsletter/${issue.slug}`;
+  const catTag = issue.category.replace(/[&\s\-_]+/g, "");
+
+  const sec1 = issue.sections?.[0]?.heading ? `• ${issue.sections[0].heading}: ${issue.sections[0].body.slice(0, 150)}...` : "";
+  const sec2 = issue.sections?.[1]?.heading ? `• ${issue.sections[1].heading}: ${issue.sections[1].body.slice(0, 150)}...` : "";
+
+  const linkedin = `${issue.title}
+
+${issue.teaser}
+
+Die wichtigsten Punkte im Überblick:
+${sec1}
+${sec2}
+
+Vollständige Analyse, Rechtsgrundlagen und neutrale Rechner:
+→ ${url}
+
+#Finanzbildung #Steuern #${catTag} #Vermögensaufbau #EStG #Kontolage`;
+
+  const xTweet = `${issue.title}
+
+${issue.teaser}
+
+Rechtliche Grundlagen & Szenarien-Rechner:
+${url}
+
+#Steuern #${catTag} #Finanzen`;
+
+  const telegram = `📌 *Kontolage — ${issue.category}*\n\n*${issue.title}*\n\n${issue.teaser}\n\n${issue.sections?.[0]?.heading ? `• *${issue.sections[0].heading}*` : ""}\n${issue.sections?.[1]?.heading ? `• *${issue.sections[1].heading}*` : ""}\n\n→ *Vollständige Ausgabe lesen:* ${url}`;
+
+  const facebook = `${issue.title}
+
+${issue.teaser}
+
+Neutrale Berechnungen & Rechtsquellen:
+${url}`;
+
+  return { linkedin, xTweet, telegram, facebook, url };
+}
+
 // ─── Main Execution ──────────────────────────────────────────────────────────
 export async function runDailyNewsletterCron() {
   console.log("══════════════════════════════════════════════════════════════════════");
@@ -672,13 +838,30 @@ export async function runDailyNewsletterCron() {
   console.log(`   Kategorie:   ${newIssue.category}`);
   console.log(`   Quellen:     ${newIssue.sources.length}`);
 
+  // 6. Social Media Posts vorbereiten
+  const socialPosts = buildSocialPosts(newIssue);
+
+  // Drafts offline in obsidian_vault sichern
+  const draftsDir = path.join(ROOT_DIR, "obsidian_vault", "Drafts");
+  if (!fs.existsSync(draftsDir)) fs.mkdirSync(draftsDir, { recursive: true });
+  const draftFile = path.join(draftsDir, `${newIssue.published}-${newIssue.slug}-social.md`);
+  fs.writeFileSync(draftFile, [
+    `# Social Media Posts — ${newIssue.title}`,
+    `_Datum: ${newIssue.published} · Kategorie: ${newIssue.category}_\n`,
+    `## 💼 LinkedIn Post\n${socialPosts.linkedin}\n`,
+    `## 🧵 X (Twitter) Tweet\n${socialPosts.xTweet}\n`,
+    `## 📢 Telegram Bulletin\n${socialPosts.telegram}\n`,
+    `## 👥 Facebook Post\n${socialPosts.facebook}\n`,
+    `---\n_Erstellt von Hermes v2.4 Daily Engine_`,
+  ].join("\n"), "utf8");
+  console.log(`📁 Social Drafts offline gesichert: obsidian_vault/Drafts/${path.basename(draftFile)}`);
+
   if (isDryRun) {
-    console.log("\n[DRY RUN] Keine Schreiboperationen durchgeführt.");
-    return { success: true, dryRun: true, issue: newIssue };
+    console.log("\n[DRY RUN] Keine Schreiboperationen oder Social-Postings durchgeführt.");
+    return { success: true, dryRun: true, issue: newIssue, socialPosts };
   }
 
-  // 6. In newsletter.json einfügen (an Position 0 = neueste)
-  // Vorher prüfen, ob Slug bereits existiert
+  // 7. In newsletter.json einfügen (an Position 0 = neueste)
   if (existingIssues.some(i => i.slug === newIssue.slug)) {
     newIssue.slug = `${newIssue.slug}-${Date.now().toString().slice(-4)}`;
   }
@@ -688,17 +871,30 @@ export async function runDailyNewsletterCron() {
   fs.writeFileSync(NEWSLETTER_PATH, JSON.stringify(newsletterData, null, 2) + "\n", "utf8");
   console.log(`\n💾 In content/newsletter.json gespeichert (Neu: ${newsletterData.issues.length} Ausgaben).`);
 
-  // 7. routes.json synchronisieren
+  // 8. routes.json synchronisieren
   syncRoutes(newsletterData.issues);
 
+  // 9. Multi-Kanal Social Media Distribution
+  console.log("\n📢 Starte Multi-Kanal Social Media Distribution...");
+  const [tgRes, xRes, liRes, fbRes] = await Promise.allSettled([
+    sendToTelegram(socialPosts.telegram),
+    postToX(socialPosts.xTweet),
+    postToLinkedIn(socialPosts.linkedin),
+    postToFacebook(socialPosts.facebook),
+  ]);
+
+  console.log("   📊 Social-Media-Ergebnisse:");
+  console.log(`      Telegram:  ${tgRes.status === "fulfilled" && tgRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
+  console.log(`      X/Twitter: ${xRes.status === "fulfilled" && xRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
+  console.log(`      LinkedIn:  ${liRes.status === "fulfilled" && liRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
+  console.log(`      Facebook:  ${fbRes.status === "fulfilled" && fbRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
+
   console.log("══════════════════════════════════════════════════════════════════════");
-  console.log("✅ Hermes Daily Newsletter Engine — Erfolgreich beendet");
+  console.log("✅ Hermes Daily Newsletter & Social Engine — Erfolgreich beendet");
   console.log("══════════════════════════════════════════════════════════════════════");
 
-  return { success: true, issue: newIssue };
+  return { success: true, issue: newIssue, socialPosts };
 }
-
-import { fileURLToPath } from "node:url";
 
 // Direkte CLI-Ausführung
 const isMain = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);

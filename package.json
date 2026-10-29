@@ -12,6 +12,7 @@
     "audit:skills": "node tools/hermes-skill-audit.mjs",
     "lint:newsletter": "node tools/newsletter-lint.mjs",
     "cron:newsletter": "node scripts/hermes_daily_newsletter_cron.mjs",
+    "social:audience": "node tools/hermes-social-audience.mjs",
     "scan:secrets": "node tools/secret-scan.mjs"
   }
 }

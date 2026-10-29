@@ -73,8 +73,16 @@ jobs:
           # ── Supabase & Alerts ─────────────────────────────────────────────
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # ── Multi-Kanal Social Media Secrets ──────────────────────────────
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          FACEBOOK_PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_TOKEN }}
           SITE_URL: 'https://kontolage.de'
 
           # ── Run Options ───────────────────────────────────────────────────
@@ -96,6 +104,7 @@ jobs:
           git add webseitenversionen/4.9.2026/content/newsletter.json
           git add webseitenversionen/4.9.2026/content/routes.json
           git add webseitenversionen/4.9.2026/public/sitemap.xml
+          git add obsidian_vault/Drafts/ 2>/dev/null || true
           git add dist/sitemap.xml 2>/dev/null || true
           if ! git diff-index --quiet HEAD; then
             git commit -m "auto(hermes): publish daily financial education newsletter issue [skip ci]"
