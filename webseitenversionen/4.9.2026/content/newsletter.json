@@ -1,8 +1,52 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "disclaimer": "Alle Angaben dienen ausschließlich der allgemeinen Finanzbildung und stellen keine Anlageberatung, Kaufempfehlung oder Steuerberatung dar (Hinweis nach § 2 Abs. 8 Nr. 10 WpHG). Jede Zahl ist mit Quelle und Stichtag belegt; Werte können sich durch Gesetzes- oder Marktentwicklung ändern.",
   "issues": [
+    {
+      "slug": "ezb-leitzins-ausblick-liquiditaet-2026-10-29-4582",
+      "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
+      "category": "Makroökonomie & EZB",
+      "description": "Analyse der aktuellen EZB-Einlagefazilität: Wie Zentralbank-Entscheidungen die Umlaufrendite von Bundesanleihen und Tagesgeldzinsen 2026 steuern.",
+      "teaser": "Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV.",
+      "published": "2026-10-29",
+      "asOf": "2026-10-29",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "author": "Hermes Redaktion",
+      "sections": [
+        {
+          "heading": "1. Zinsstrukturkurve am deutschen Rentenmarkt",
+          "body": "Die Umlaufrendite inländischer Inhaberschuldverschreibungen spiegelt die Markterwartungen an das Zinsplateau der Europäischen Zentralbank wider. Privatanleger und vermögensverwaltende Einheiten sollten Zinsänderungsrisiken bei längeren Laufzeiten mathematisch über die Duration steuern."
+        },
+        {
+          "heading": "2. Einlagefazilität vs. Realkapital-Thesaurierung",
+          "body": "Während Tagesgeldkonten nach Abzug von 26,375 % Abgeltungsteuer und Inflation häufig eine negative Realrendite aufweisen, bieten kurzlaufende Bundesanleihen oder indexierte Geldmarktinstrumente transparente Vergleichsmaßstäbe ohne Emittenten-Klumpenrisiko."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Europäische Zentralbank (EZB) — Key ECB Interest Rates",
+          "url": "https://www.ecb.europa.eu",
+          "asOf": "2026-10-29",
+          "jurisdiction": "EU"
+        },
+        {
+          "label": "Deutsche Bundesbank — Zinsstrukturkurve und Umlaufrenditen",
+          "url": "https://www.bundesbank.de",
+          "asOf": "2026-10-29",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "EZB Zinsen 2026",
+        "Einlagefazilität",
+        "Umlaufrendite",
+        "Geldpolitik Eurozone",
+        "Zinsstruktur"
+      ],
+      "rechnerHref": "/rechner"
+    },
     {
       "slug": "ezb-leitzins-senkung-anleihen-2026",
       "category": "Makroökonomie & EZB",

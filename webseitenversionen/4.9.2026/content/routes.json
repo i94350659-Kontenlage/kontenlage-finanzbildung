@@ -1,6 +1,6 @@
 {
   "site": "https://kontolage.de",
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "disclaimer": "Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.",
   "routes": [
     {
@@ -387,6 +387,10 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "Makroökonomie & EZB · 2026-10-29",
+          "body": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026: Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV. (Stand 2026-10-29, 2 Quellen)"
+        },
+        {
           "heading": "Makroökonomie & EZB · 2026-10-25",
           "body": "EZB-Leitzins 2026: Einlagefazilität, Realzins und Wirkung auf Anleihen: Die Europäische Zentralbank justiert den Einlagensatz. Wie sich veränderte Leitzinsen auf Geldmarktfonds, Tagesgeld und Rentenpapiere auswirken. (Stand 2026-10-25, 2 Quellen)"
         },
@@ -461,6 +465,55 @@
       ]
     },
     {
+      "path": "/newsletter/ezb-leitzins-ausblick-liquiditaet-2026-10-29-4582",
+      "type": "newsletter",
+      "slug": "ezb-leitzins-ausblick-liquiditaet-2026-10-29-4582",
+      "category": "Makroökonomie & EZB",
+      "h1": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
+      "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
+      "description": "Analyse der aktuellen EZB-Einlagefazilität: Wie Zentralbank-Entscheidungen die Umlaufrendite von Bundesanleihen und Tagesgeldzinsen 2026 steuern.",
+      "teaser": "Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV.",
+      "intro": "Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV.",
+      "published": "2026-10-29",
+      "updated": "2026-10-29",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "1. Zinsstrukturkurve am deutschen Rentenmarkt",
+          "body": "Die Umlaufrendite inländischer Inhaberschuldverschreibungen spiegelt die Markterwartungen an das Zinsplateau der Europäischen Zentralbank wider. Privatanleger und vermögensverwaltende Einheiten sollten Zinsänderungsrisiken bei längeren Laufzeiten mathematisch über die Duration steuern."
+        },
+        {
+          "heading": "2. Einlagefazilität vs. Realkapital-Thesaurierung",
+          "body": "Während Tagesgeldkonten nach Abzug von 26,375 % Abgeltungsteuer und Inflation häufig eine negative Realrendite aufweisen, bieten kurzlaufende Bundesanleihen oder indexierte Geldmarktinstrumente transparente Vergleichsmaßstäbe ohne Emittenten-Klumpenrisiko."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Europäische Zentralbank (EZB) — Key ECB Interest Rates",
+          "url": "https://www.ecb.europa.eu",
+          "asOf": "2026-10-29",
+          "jurisdiction": "EU"
+        },
+        {
+          "label": "Deutsche Bundesbank — Zinsstrukturkurve und Umlaufrenditen",
+          "url": "https://www.bundesbank.de",
+          "asOf": "2026-10-29",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "EZB Zinsen 2026",
+        "Einlagefazilität",
+        "Umlaufrendite",
+        "Geldpolitik Eurozone",
+        "Zinsstruktur"
+      ]
+    },
+    {
       "path": "/newsletter/ezb-leitzins-senkung-anleihen-2026",
       "type": "newsletter",
       "slug": "ezb-leitzins-senkung-anleihen-2026",
@@ -506,8 +559,7 @@
         "Einlagefazilität EZB",
         "Anleihen Duration Zinswende",
         "Realzins Eurozone"
-      ],
-      "tag": "Makroökonomie & EZB"
+      ]
     },
     {
       "path": "/newsletter/inflation-hvpi-kernrate-deutschland-2026",
@@ -555,8 +607,7 @@
         "Kerninflation Eurozone",
         "Destatis Inflationsrate",
         "HVPI Teuerung 2026"
-      ],
-      "tag": "Makroökonomie & EZB"
+      ]
     },
     {
       "path": "/newsletter/us-staatsverschuldung-gold-zentralbanken-2026",
@@ -604,8 +655,7 @@
         "Zentralbank Goldreserven",
         "De-Dollarisierung Währungsreserven",
         "IWF World Economic Outlook"
-      ],
-      "tag": "Weltwirtschaft & Geopolitik"
+      ]
     },
     {
       "path": "/newsletter/iwf-wachstumsprognose-brics-devisen-2026",
@@ -653,8 +703,7 @@
         "Globale Schuldenquote",
         "Währungsreserven COFER",
         "BRICS Handelsströme"
-      ],
-      "tag": "Weltwirtschaft & Geopolitik"
+      ]
     },
     {
       "path": "/newsletter/kapitalertragsteuer-sparerpauschbetrag-verlusttoepfe-2026",
@@ -702,8 +751,7 @@
         "Sparerpauschbetrag 1000 Euro",
         "Verlustverrechnungstopf Aktien",
         "Günstigerprüfung § 32d EStG"
-      ],
-      "tag": "Kapitalerträge"
+      ]
     },
     {
       "path": "/newsletter/guenstigerpruefung-kapitalertraege-32d-estg-2026",
@@ -751,8 +799,7 @@
         "Anlage KAP Steuererklärung",
         "Abgeltungsteuer Erstattung",
         "Grenzsteuersatz Kapitalerträge"
-      ],
-      "tag": "Kapitalerträge"
+      ]
     },
     {
       "path": "/newsletter/krypto-haltefrist-23-estg-bmf-schreiben-2026",
@@ -800,8 +847,7 @@
         "§ 23 EStG private Veräußerungsgeschäfte",
         "BMF Krypto Schreiben Staking",
         "FIFO Methode Krypto Steuer"
-      ],
-      "tag": "Krypto & Digital Assets"
+      ]
     },
     {
       "path": "/newsletter/mica-regulatorik-stablecoins-krypto-eu-2026",
@@ -849,8 +895,7 @@
         "Stablecoins Regulierung EU",
         "CASP Zulassung BaFin",
         "Kryptoverwahrung Lizenz"
-      ],
-      "tag": "Krypto & Digital Assets"
+      ]
     },
     {
       "path": "/newsletter/holding-struktur-ab-welchem-depotvolumen",
@@ -904,8 +949,7 @@
         "Spardosen GmbH Rechner",
         "§ 8b KStG Schachtelprivileg",
         "Vermögensverwaltende GmbH"
-      ],
-      "tag": "Holding & GmbH"
+      ]
     },
     {
       "path": "/newsletter/holding-gewinnausschuettung-teilversteuert-gmbh-2026",
@@ -953,8 +997,7 @@
         "GmbH Gewinnausschüttung Steuern",
         "Abgeltungsteuer Gesellschafter",
         "Holding Ausschüttungsplanung"
-      ],
-      "tag": "Holding & GmbH"
+      ]
     },
     {
       "path": "/newsletter/degressive-gebaeude-afa-wachstumschancengesetz-2026",
@@ -1002,8 +1045,7 @@
         "Wachstumschancengesetz Immobilien",
         "§ 7 Abs. 5a EStG Gebäude",
         "Abschreibung Restbuchwert"
-      ],
-      "tag": "Immobilien"
+      ]
     },
     {
       "path": "/newsletter/handwerkerleistungen-35a-estg-steuerabzug-2026",
@@ -1051,8 +1093,7 @@
         "Steuerabzug Renovierungskosten",
         "Handwerkerkosten absetzen",
         "Arbeitslohn Steuerermäßigung"
-      ],
-      "tag": "Immobilien"
+      ]
     },
     {
       "path": "/newsletter/ruerup-rente-sonderausgabenabzug-hoechstbetrag-2026",
@@ -1100,8 +1141,7 @@
         "Sonderausgabenabzug § 10 EStG",
         "Basisversorgung Altersvorsorge",
         "Nachgelagerte Rentenbesteuerung"
-      ],
-      "tag": "Altersvorsorge"
+      ]
     },
     {
       "path": "/newsletter/rentenausgleichszahlung-187a-sgb-abschlaege-2026",
@@ -1149,8 +1189,7 @@
         "Freiwillige Rentenbeiträge Sonderausgaben",
         "Frührente Abschläge ausgleichen",
         "Rentenversicherung Einzahlung Steuer"
-      ],
-      "tag": "Altersvorsorge"
+      ]
     },
     {
       "path": "/newsletter/etf-vorabpauschale-basiszins-teilfreistellung-2026",
@@ -1198,8 +1237,7 @@
         "Basiszins Bundesbank InvStG",
         "Teilfreistellung Aktienfonds 30 Prozent",
         "Basisertrag Formel Berechnung"
-      ],
-      "tag": "ETF & Indexfonds"
+      ]
     },
     {
       "path": "/newsletter/etf-tracking-difference-ter-kosten-2026",
@@ -1247,8 +1285,7 @@
         "TER Gesamtkostenquote",
         "Wertpapierleihe Erträge Fonds",
         "Indexnachbildung Kosten"
-      ],
-      "tag": "ETF & Indexfonds"
+      ]
     },
     {
       "path": "/newsletter/fuenftelregelung-abfindung-progressionsglaettung-2026",
@@ -1296,8 +1333,7 @@
         "§ 34 EStG Progressionsglättung",
         "Außerordentliche Einkünfte Steuer",
         "Abfindung netto optimieren"
-      ],
-      "tag": "Arbeitnehmer"
+      ]
     },
     {
       "path": "/newsletter/homeoffice-pauschale-entfernungspauschale-2026",
@@ -1345,8 +1381,7 @@
         "Entfernungspauschale Pendlerpauschale",
         "Werbungskosten Arbeitnehmer 2026",
         "§ 4 Abs. 5 Nr. 6b EStG"
-      ],
-      "tag": "Arbeitnehmer"
+      ]
     },
     {
       "path": "/newsletter/elster-vorlagen-steuerformulare-2026",

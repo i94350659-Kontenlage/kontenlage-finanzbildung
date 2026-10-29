@@ -62,15 +62,24 @@ const https = require('https');
 
 // ─── AI Provider Konfiguration (Primär + Fallback-Kette) ──────────────────────
 // SECURITY: Alle Keys aus Umgebungsvariablen — niemals hardcodieren.
-// Reihenfolge = Priorität (Stand 2026-10-08, User-Umstellung):
-//   OpenRouter (Primär) → Orcarouter (free) → Zenmux → Together → Requesty
-//   → EdenAI (v3) → Groq → Gemini → Mistral → Custom Gateway 1/2
+// Reihenfolge = Priorität (Stand 2026-10-29):
+//   NVIDIA NIM Gateway (Primär) → OpenRouter → Orcarouter (free) → Zenmux → Together
+//   → Requesty → EdenAI (v3) → Groq → Gemini → Mistral → Custom Gateway 1/2
 // Provider ohne gesetzten Key werden übersprungen.
 // Modellnamen sind per Env übersteuerbar (*_MODEL), damit Modelle ohne
 // Codeänderung migriert werden können, wenn ein Anbieter sie abschaltet.
 const AI_PROVIDERS = [
   {
-    name: 'OpenRouter (Nemotron Primary)',
+    name: 'NVIDIA NIM Gateway (Nemotron Primary)',
+    url: 'https://integrate.api.nvidia.com/v1/chat/completions',
+    key: process.env.NVIDIA_API_KEY,
+    model: process.env.NVIDIA_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b',
+    headers: {
+      'User-Agent': 'HermesAgent/2.4 Kontolage',
+    },
+  },
+  {
+    name: 'OpenRouter (Nemotron Secondary)',
     url: 'https://openrouter.ai/api/v1/chat/completions',
     key: process.env.OPENROUTER_API_KEY,
     model: process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free',

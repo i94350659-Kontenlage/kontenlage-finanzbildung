@@ -36,8 +36,11 @@ jobs:
 
       - name: Execute Hermes AI Automation (6 Kanäle)
         env:
-          # ── AI Provider-Kette (Reihenfolge = Priorität, Stand 2026-10-08) ──
-          # Primär
+          # ── AI Provider-Kette (Reihenfolge = Priorität, Stand 2026-10-29) ──
+          # Primär (NVIDIA NIM Gateway)
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}
+          # Sekundär (OpenRouter)
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
           # Fallback-Gateways (jeder nur aktiv, wenn Key gesetzt)

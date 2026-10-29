@@ -22,6 +22,12 @@ export const formatGross = (net: number): string =>
     maximumFractionDigits: 2,
   });
 
+export const formatNet = (net: number): string =>
+  net.toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
 export const vatLabel = (): string =>
   VAT_EXEMPT ? "zzgl. MwSt. gem. § 19 UStG" : "inkl. 19 % MwSt.";
 
@@ -262,7 +268,7 @@ export default function Abo() {
                   {p.price > 0 && (
                     <p style={{ fontSize: 11, color: "#7d766d", margin: "-10px 0 28px", lineHeight: 1.5 }}>
                       {vatLabel()}
-                      {VAT_EXEMPT ? "" : <> · zzgl. {formatGross(p.price)} € netto</>}
+                      {VAT_EXEMPT ? "" : <> ({formatNet(p.price)} € netto)</>}
                     </p>
                   )}
 

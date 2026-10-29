@@ -11,6 +11,7 @@
     "verify:seo": "node tools/verify-seo.mjs",
     "audit:skills": "node tools/hermes-skill-audit.mjs",
     "lint:newsletter": "node tools/newsletter-lint.mjs",
+    "cron:newsletter": "node scripts/hermes_daily_newsletter_cron.mjs",
     "scan:secrets": "node tools/secret-scan.mjs"
   }
 }

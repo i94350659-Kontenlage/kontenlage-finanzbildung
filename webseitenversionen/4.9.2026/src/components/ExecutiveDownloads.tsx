@@ -642,7 +642,7 @@ Folgende Gehaltsbestandteile mindern als Betriebsausgabe den GmbH-Gewinn, sind a
                 </pre>
                 ) : (
                   <p style={{ fontSize: 13, color: "#a89f94", lineHeight: 1.7, margin: 0 }}>
-                    {item.description} Der vollständige Dokumenttext, die Stammdaten-Personalisierung und der Download sind im Tarif Executive B2B (29&nbsp;€/Monat netto, zzgl. 19&nbsp;% MwSt.) enthalten.{" "}
+                    {item.description} Der vollständige Dokumenttext, die Stammdaten-Personalisierung und der Download sind im Tarif Executive B2B (34,51&nbsp;€/Monat inkl. 19&nbsp;% MwSt., 29&nbsp;€ netto) enthalten.{" "}
                     <a href="/abo" style={{ color: "#e2c27d", fontWeight: 600 }}>Tarife vergleichen →</a>
                   </p>
                 )}
