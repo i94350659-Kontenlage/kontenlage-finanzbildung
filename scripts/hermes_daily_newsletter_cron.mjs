@@ -889,6 +889,14 @@ export async function runDailyNewsletterCron() {
   console.log(`      LinkedIn:  ${liRes.status === "fulfilled" && liRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
   console.log(`      Facebook:  ${fbRes.status === "fulfilled" && fbRes.value ? "✅ Gesendet" : "ℹ Übersprungen / Keine Secrets"}`);
 
+  // 10. Vollautomatische Zielgruppen-Interaktion (Streng limitiert: max. 1–2 Leads/Tag)
+  try {
+    const { runAudienceInteraction } = await import("./hermes_social_audience_worker.mjs");
+    await runAudienceInteraction(isDryRun);
+  } catch (audienceErr) {
+    console.warn("  ℹ Safe-Mode Audience Worker Notiz:", audienceErr.message);
+  }
+
   console.log("══════════════════════════════════════════════════════════════════════");
   console.log("✅ Hermes Daily Newsletter & Social Engine — Erfolgreich beendet");
   console.log("══════════════════════════════════════════════════════════════════════");
