@@ -1,6 +1,6 @@
 {
   "site": "https://kontolage.de",
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "disclaimer": "Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.",
   "routes": [
     {
@@ -387,6 +387,10 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "Makroökonomie & EZB · 2026-10-30",
+          "body": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026: Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV. (Stand 2026-10-30, 2 Quellen)"
+        },
+        {
           "heading": "Makroökonomie & EZB · 2026-10-29",
           "body": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026: Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV. (Stand 2026-10-29, 2 Quellen)"
         },
@@ -462,6 +466,55 @@
           "heading": "Arbeitnehmer · 2026-10-05",
           "body": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln: Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf. (Stand 2026-10-05, 2 Quellen)"
         }
+      ]
+    },
+    {
+      "path": "/newsletter/ezb-leitzins-ausblick-liquiditaet-2026-10-30-9352",
+      "type": "newsletter",
+      "slug": "ezb-leitzins-ausblick-liquiditaet-2026-10-30-9352",
+      "category": "Makroökonomie & EZB",
+      "h1": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
+      "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
+      "description": "Analyse der aktuellen EZB-Einlagefazilität: Wie Zentralbank-Entscheidungen die Umlaufrendite von Bundesanleihen und Tagesgeldzinsen 2026 steuern.",
+      "teaser": "Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV.",
+      "intro": "Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV.",
+      "published": "2026-10-30",
+      "updated": "2026-10-30",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "1. Zinsstrukturkurve am deutschen Rentenmarkt",
+          "body": "Die Umlaufrendite inländischer Inhaberschuldverschreibungen spiegelt die Markterwartungen an das Zinsplateau der Europäischen Zentralbank wider. Privatanleger und vermögensverwaltende Einheiten sollten Zinsänderungsrisiken bei längeren Laufzeiten mathematisch über die Duration steuern."
+        },
+        {
+          "heading": "2. Einlagefazilität vs. Realkapital-Thesaurierung",
+          "body": "Während Tagesgeldkonten nach Abzug von 26,375 % Abgeltungsteuer und Inflation häufig eine negative Realrendite aufweisen, bieten kurzlaufende Bundesanleihen oder indexierte Geldmarktinstrumente transparente Vergleichsmaßstäbe ohne Emittenten-Klumpenrisiko."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Europäische Zentralbank (EZB) — Key ECB Interest Rates",
+          "url": "https://www.ecb.europa.eu",
+          "asOf": "2026-10-30",
+          "jurisdiction": "EU"
+        },
+        {
+          "label": "Deutsche Bundesbank — Zinsstrukturkurve und Umlaufrenditen",
+          "url": "https://www.bundesbank.de",
+          "asOf": "2026-10-30",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "EZB Zinsen 2026",
+        "Einlagefazilität",
+        "Umlaufrendite",
+        "Geldpolitik Eurozone",
+        "Zinsstruktur"
       ]
     },
     {
