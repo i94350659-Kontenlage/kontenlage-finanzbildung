@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import registry from "../../content/newsletter.json";
+import FinanzbildungHinweis from "../components/FinanzbildungHinweis";
 
 type Section = { heading: string; body: string };
 type Source = { label: string; url: string; jurisdiction: string; asOf: string };
@@ -103,7 +104,7 @@ export default function NewsletterIssue() {
                 </li>
               ))}
             </ul>
-            <p style={{ fontSize: 12, color: "#7d766c", lineHeight: 1.7, margin: "16px 0 0" }}>{registry.disclaimer}</p>
+            <FinanzbildungHinweis style={{ marginTop: 20, marginBottom: 0 }} />
           </section>
         </div>
       </article>

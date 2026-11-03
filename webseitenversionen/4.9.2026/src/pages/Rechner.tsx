@@ -537,10 +537,8 @@ function Disclaimer() {
   return (
     <div style={{ padding: "32px 20px", background: "rgba(6,9,18,0.8)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <p style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.8, maxWidth: 800 }}>
-          <strong style={{ color: "#cdc6be" }}>Haftungsausschluss:</strong> Alle Berechnungen sind rein indikativ und dienen ausschließlich der allgemeinen Information.
-          Sie stellen keine Anlageberatung, Steuerberatung oder sonstige Finanzdienstleistung i.S.d. WpHG §2 Abs. 8 dar.
-          Konsultieren Sie für individuelle Steuergestaltungen einen Steuerberater. BaFin-konform · MAR Art. 20 Abs. 1.
+        <p style={{ fontSize: 13, color: "#cdc6be", lineHeight: 1.8, maxWidth: 900, margin: 0 }}>
+          <strong style={{ color: "#e2c27d" }}>Hinweis zur Finanzbildung (§ 2 Abs. 8 Nr. 10 WpHG):</strong> Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar. Alle Modellrechnungen sind indikativ und unverbindlich.
         </p>
       </div>
     </div>

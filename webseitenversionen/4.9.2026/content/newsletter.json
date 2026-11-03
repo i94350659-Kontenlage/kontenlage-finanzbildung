@@ -1,7 +1,7 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
   "updated": "2026-11-03",
-  "disclaimer": "Alle Angaben dienen ausschließlich der allgemeinen Finanzbildung und stellen keine Anlageberatung, Kaufempfehlung oder Steuerberatung dar (Hinweis nach § 2 Abs. 8 Nr. 10 WpHG). Jede Zahl ist mit Quelle und Stichtag belegt; Werte können sich durch Gesetzes- oder Marktentwicklung ändern.",
+  "disclaimer": "Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.",
   "issues": [
     {
       "slug": "ezb-leitzins-ausblick-liquiditaet-2026-11-03-4817",

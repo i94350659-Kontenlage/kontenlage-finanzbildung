@@ -43,8 +43,9 @@ export default function Footer() {
               { to: "/datenschutz", label: "Datenschutz" },
               { to: "/agb", label: "AGB" },
               { to: "/widerruf", label: "Widerrufsbelehrung" },
+              { to: "/toms", label: "TOMs" },
+              { to: "/avv", label: "AVV" },
               { to: "/transparenz", label: "Transparenz" },
-              { to: "/impressum", label: "Disclaimer" },
             ]},
           ].map(col => (
             <div key={col.label}>
@@ -61,7 +62,7 @@ export default function Footer() {
 
         <div className="footer-bottom" style={{ paddingTop: 24, borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
           <div style={{ fontSize: 12, color: "#a89f94" }}>© 2026 Kontolage · Alle Rechte vorbehalten</div>
-          <div style={{ fontSize: 11, color: "#a89f94" }}>Kein Angebot einer Anlageberatung i.S.d. WpHG</div>
+          <div style={{ fontSize: 11, color: "#a89f94" }}>Allgemeine Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG · Keine individuelle Beratung</div>
         </div>
       </div>
     </footer>

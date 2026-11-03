@@ -441,9 +441,8 @@ export default function Holding() {
           )}
 
           <div style={{ marginTop: 40, padding: "24px", background: "rgba(6,9,18,0.6)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
-            <div style={{ fontSize: 12, color: "#a89f94", lineHeight: 1.8 }}>
-              <strong style={{ color: "#cdc6be" }}>Haftungsausschluss:</strong> Alle Inhalte sind allgemeine steuerrechtliche Informationen ohne Anspruch auf Vollständigkeit.
-              Keine Steuerberatung i.S.d. StBerG. Bitte konsultieren Sie einen zugelassenen Steuerberater für Ihre individuelle Situation.{" "}
+            <div style={{ fontSize: 13, color: "#cdc6be", lineHeight: 1.8 }}>
+              <strong style={{ color: "#e2c27d" }}>Hinweis zur Finanzbildung (§ 2 Abs. 8 Nr. 10 WpHG):</strong> Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar. Bitte konsultieren Sie für Ihre persönliche Lebenslage eine Steuerberaterin oder einen Steuerberater.{" "}
               <Link to="/transparenz" style={{ color: "#c9a84c", textDecoration: "none" }}>Mehr zur Transparenz →</Link>
             </div>
           </div>

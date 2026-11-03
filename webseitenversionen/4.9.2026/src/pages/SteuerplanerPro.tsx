@@ -480,8 +480,8 @@ export default function SteuerplanerPro() {
           )}
 
           {/* Rechtlicher Hinweis (WpHG & StBerG) */}
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 48, paddingTop: 24, fontSize: 12, color: '#64748b', lineHeight: 1.6 }}>
-            <strong>Rechtlicher Hinweis (§ 2 Abs. 8 Nr. 10 WpHG):</strong> Die bereitgestellten Berechnungen, Tabellen und Simulationen dienen ausschließlich der neutralen Finanzbildung und veranschaulichen das deutsche Steuerrecht 2026. Sie stellen keine individuelle steuerliche Beratung i.S.d. Steuerberatungsgesetzes (StBerG) und keine Anlageberatung dar. Für verbindliche steuerliche Erklärungen und Abschlüsse wenden Sie sich bitte an eine Steuerberaterin oder einen Steuerberater.
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 48, paddingTop: 24, fontSize: 13, color: '#cdc6be', lineHeight: 1.7 }}>
+            <strong style={{ color: '#e2c27d' }}>Rechtlicher Hinweis (§ 2 Abs. 8 Nr. 10 WpHG):</strong> Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.
           </div>
 
         </div>

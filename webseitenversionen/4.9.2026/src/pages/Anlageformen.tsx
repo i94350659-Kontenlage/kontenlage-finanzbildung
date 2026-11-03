@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import FinanzbildungHinweis from "../components/FinanzbildungHinweis";
 
 const assetClasses = [
   { id: "etf", name: "ETF (MSCI World)", rendite: "7–9 % p.a.", renditeNum: 8, kosten: "0,07–0,20 % TER", kostenNum: 0.14, liquiditaet: "T+2", steuer: "§20 EStG", risiko: "mittel", horizont: "10–15+ J.", score: 90, detail: "Passiv verwaltete Indexfonds bilden einen breiten Marktindex ab. Niedrigste Kosten, maximale Diversifikation. Geeignet für langfristigen Vermögensaufbau." },
@@ -204,6 +205,7 @@ export default function Anlageformen() {
               </div>
             ))}
           </div>
+          <FinanzbildungHinweis />
           <style>{`@media(max-width:700px){.principles-grid{grid-template-columns:1fr !important;}}`}</style>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import registry from "../../content/newsletter.json";
+import FinanzbildungHinweis from "../components/FinanzbildungHinweis";
 
 type Section = { heading: string; body: string };
 type Source = { label: string; url: string; jurisdiction: string; asOf: string };
@@ -355,6 +356,8 @@ export default function Newsletter() {
               Tarife & Mitgliedschaften ansehen
             </Link>
           </div>
+
+          <FinanzbildungHinweis />
         </div>
       </section>
     </>

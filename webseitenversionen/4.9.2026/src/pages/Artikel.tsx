@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import routesData from "../../content/routes.json";
+import FinanzbildungHinweis from "../components/FinanzbildungHinweis";
 
 interface RouteArticle {
   path: string;
@@ -332,6 +333,8 @@ export default function Artikel() {
               </div>
             )}
           </div>
+
+          <FinanzbildungHinweis />
         </div>
       </section>
     </>

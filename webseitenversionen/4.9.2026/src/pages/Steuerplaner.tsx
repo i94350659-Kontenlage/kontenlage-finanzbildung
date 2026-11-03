@@ -31,8 +31,8 @@ export default function Steuerplaner() {
       <SteuerplanerErgebnis vergleich={vergleich} />
       <SteuerplanerSmart input={input} />
       <SteuerplanerLead />
-      <p style={{ fontSize: 11, color: '#64748B', marginTop: 24, lineHeight: 1.5 }}>
-        § 2 Abs. 8 Nr. 10 WpHG: Dies ist reine Finanzbildung ohne individuelle Empfehlung. Für verbindliche Steuerentscheidungen konsultiere einen Steuerberater.
+      <p style={{ fontSize: 12, color: '#a89f94', marginTop: 24, lineHeight: 1.6, padding: '12px 16px', background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 6 }}>
+        <strong>Rechtlicher Hinweis:</strong> Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.
       </p>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router";
 import routesData from "../../content/routes.json";
+import FinanzbildungHinweis from "../components/FinanzbildungHinweis";
 
 interface RouteArticle {
   path: string;
@@ -95,11 +96,7 @@ export default function ArtikelDetail() {
             </div>
           )}
 
-          {article.disclaimer && (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 20, fontSize: 12, color: "#6b7280", lineHeight: 1.6 }}>
-              <strong>Rechtlicher Hinweis:</strong> {article.disclaimer}
-            </div>
-          )}
+          <FinanzbildungHinweis />
         </div>
       </section>
     </>
