@@ -84,7 +84,7 @@ Hermes arbeitet für drei Projekte, strikt getrennt: Kontolage (aktiv), Scratch'
 | Supabase-Projekt | `tberfzrzfkwoytgqlpij` (Auth, PostgreSQL/RLS, 6 Edge Functions) |
 | Deploy | Vercel Git Integration: Push auf `main` → Auto-Deploy auf Production (`kontolage.de`); kein Deploy-Job mehr in GitHub Actions |
 | Domain-/Mail-Domain | `kontolage.de` |
-| Zahlungen | Stripe (Abo: Basis kostenlos, Starter 4,90 €, Pro Digital 9 €, Executive 29 €) |
+| Zahlungen | Stripe (Abo: Basis kostenlos, Starter 5,83 €/Monat [4,90 € netto], Pro Digital 10,71 €/Monat [9,00 € netto], Executive B2B 34,51 €/Monat [29,00 € netto] brutto inkl. 19 % MwSt. gem. PAngV) |
 | Steuerung | `docs/kanban.md`, `docs/implementation-plan.md`, `docs/todo.md`, `SETUP_CHECKLIST.md` |
 
 **Aktive Edge Functions:** `account`, `create-checkout-session`, `stripe-webhook`, `billing-portal`, `cancel-subscription`, `newsletter`.

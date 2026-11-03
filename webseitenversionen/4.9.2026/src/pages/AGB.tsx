@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { PRICING_PLANS, vatLabel } from "../data/pricing";
 
 export default function AGB() {
   return (
@@ -129,9 +130,15 @@ export default function AGB() {
           (2) <strong>Kostenpflichtige Abonnements:</strong> Für erweiterte Funktionen stehen folgende monatliche Mitgliedschaften zur Auswahl:
         </p>
         <ul style={{ fontSize: 14, color: "#a89f94", paddingLeft: 20, margin: "0 0 12px" }}>
-          <li>Starter: 4,90 € pro Monat brutto</li>
-          <li>Pro Digital: 9,00 € pro Monat brutto</li>
-          <li>Executive: 29,00 € pro Monat brutto</li>
+          <li>
+            <strong>{PRICING_PLANS.starter.name}:</strong> {PRICING_PLANS.starter.grossPriceFormatted} pro Monat brutto {vatLabel()} ({PRICING_PLANS.starter.netPriceFormatted} netto)
+          </li>
+          <li>
+            <strong>{PRICING_PLANS.pro.name}:</strong> {PRICING_PLANS.pro.grossPriceFormatted} pro Monat brutto {vatLabel()} ({PRICING_PLANS.pro.netPriceFormatted} netto)
+          </li>
+          <li>
+            <strong>{PRICING_PLANS.executive.name}:</strong> {PRICING_PLANS.executive.grossPriceFormatted} pro Monat brutto {vatLabel()} ({PRICING_PLANS.executive.netPriceFormatted} netto)
+          </li>
         </ul>
         <p style={{ fontSize: 14, color: "#a89f94", margin: 0 }}>
           (3) <strong>Button-Lösung (§ 312j Abs. 3 BGB):</strong> Die Präsentation der Tarife stellt eine Aufforderung zur Abgabe eines Angebots dar. Durch Klicken auf die Schaltfläche „Zahlungspflichtig bestellen“ (oder eine entsprechend eindeutige Formulierung) gibt der Kunde ein verbindliches Angebot zum Abschluss eines Abonnements ab. Der Vertrag kommt mit der Autorisierung der Zahlung durch den Zahlungsdienstleister Stripe und der Freischaltung des Zugangs zustande. Der Kunde erhält unverzüglich eine Vertragsbestätigung per E-Mail.

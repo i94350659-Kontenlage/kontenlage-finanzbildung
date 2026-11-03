@@ -44,14 +44,14 @@
 
 Testmodus aktiv. Preis-IDs liegen ausschließlich als Supabase-Secrets `STRIPE_PRICE_STARTER|PRO|EXECUTIVE` (keine IDs in Dateien).
 
-| Tarif | Preis | Status |
-|---|---|---|
-| Basis | 0 € | kostenlos, ohne Registrierung |
-| Starter | 4,90 €/Monat | auf `/abo` buchbar (Testmodus) |
-| Pro Digital | 9,00 €/Monat | auf `/abo` buchbar (Testmodus) |
-| Executive B2B | 29,00 €/Monat | auf `/abo` buchbar (Testmodus) |
+| Tarif | Endpreis (brutto inkl. 19 % MwSt.) | Netto (Stripe Netto) | Status |
+|---|---|---|---|
+| Basis | 0,00 € | 0,00 € | kostenlos, ohne Registrierung |
+| Starter | 5,83 €/Monat | 4,90 €/Monat | auf `/abo` buchbar |
+| Pro Digital | 10,71 €/Monat | 9,00 €/Monat | auf `/abo` buchbar |
+| Executive B2B | 34,51 €/Monat | 29,00 €/Monat | auf `/abo` buchbar |
 
-> ⚠️ Offen: Stripe Tax aktivieren (Ticket P0-05), Webhook-Endpoint anlegen (P0-07), Endpreise inkl. MwSt. darstellen, AGB/Widerruf/Kündigungsbutton vor Liveverkauf (P0-03).
+> Hinweis: Endpreise inkl. 19 % MwSt. gem. § 1 PAngV sind live. Stripe tax_behavior ist exclusive (Nettobasis). SSOT: `src/data/pricing.ts`.
 
 ## Content-Präferenzen
 - **Themen**: §10, §20, §21 EStG, Rürup, Sparerpauschbetrag, Gehaltsumwandlung, DeFi/Crypto Steuern

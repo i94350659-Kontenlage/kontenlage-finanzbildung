@@ -58,14 +58,14 @@ Zusätzlich: `consume_rate_limit(...)`, `claim_stripe_event(...)`, Trigger `hand
 
 ## Abo-Modell
 
-| Tarif | Preis | Inhalt (Kurzfassung) |
-|---|---|---|
-| Basis | kostenlos | Basis-Rechner, Wochenartikel, PDF-Checkliste |
-| Starter | 4,90 €/Monat | alle Artikel, Kabinett-Lesebereich |
-| Pro Digital | 9,00 €/Monat | alle Rechner, Excel-Modelle, PDF-Export, Kabinett |
-| Executive B2B | 29,00 €/Monat | Holding-/VV-GmbH-Modelle, ELSTER-Vorlagen, B2B-Analyse, Prio-Support |
+| Tarif | Endpreis (brutto inkl. 19 % MwSt.) | Netto (Stripe Netto) | Inhalt (Kurzfassung) |
+|---|---|---|---|
+| Basis | 0,00 € (kostenlos) | 0,00 € | Basis-Rechner, Wochenartikel, PDF-Checkliste |
+| Starter | 5,83 €/Monat | 4,90 €/Monat | alle Artikel, Kabinett-Lesebereich |
+| Pro Digital | 10,71 €/Monat | 9,00 €/Monat | alle Rechner, Excel-Modelle, PDF-Export, Kabinett |
+| Executive B2B | 34,51 €/Monat | 29,00 €/Monat | Holding-/VV-GmbH-Modelle, ELSTER-Vorlagen, B2B-Analyse, Prio-Support |
 
-Preis-IDs liegen als Supabase-Secrets (`STRIPE_PRICE_STARTER|PRO|EXECUTIVE`); Endpreise inkl. MwSt. sind Ticket P0-05.
+Preis-IDs liegen als Supabase-Secrets (`STRIPE_PRICE_STARTER|PRO|EXECUTIVE`). Stripe arbeitet mit Netto-Preisen (`tax_behavior: exclusive`); Verbraucher-Endpreise werden gemäß § 1 PAngV immer brutto inkl. 19 % MwSt. ausgewiesen. SSOT-Modul: `src/data/pricing.ts`.
 
 ## Wichtige URLs
 

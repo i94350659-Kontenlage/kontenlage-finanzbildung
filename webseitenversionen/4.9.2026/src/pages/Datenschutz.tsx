@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { LEGAL_PRICING_SUMMARY } from "../data/pricing";
 
 export default function Datenschutz() {
   return (
@@ -204,7 +205,7 @@ export default function Datenschutz() {
           6. Zahlungsabwicklung via Stripe
         </h2>
         <p style={{ fontSize: 14, color: "#a89f94", margin: "0 0 12px" }}>
-          Die Zahlungsabwicklung für kostenpflichtige Abonnements (Starter 4,90 €, Pro Digital 9,00 €, Executive 29,00 €) erfolgt über den zertifizierten Zahlungsdienstleister Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irland.
+          Die Zahlungsabwicklung für kostenpflichtige Abonnements ({LEGAL_PRICING_SUMMARY.combined}) erfolgt über den zertifizierten Zahlungsdienstleister Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irland.
         </p>
         <p style={{ fontSize: 14, color: "#a89f94", margin: "0 0 12px" }}>
           Im Rahmen des Bezahlvorgangs werden die für die Transaktion erforderlichen Zahlungs- und Rechnungsdaten (z. B. Name, Adresse, Kreditkartendaten, IBAN) über gesicherte, verschlüsselte Verbindungen direkt von Stripe erhoben und nach dem höchsten Sicherheitsstandard (PCI-DSS Level 1) verarbeitet. Kontolage selbst erhält und speichert zu keinem Zeitpunkt vollständige Kreditkartennummern oder Bankdaten, sondern lediglich Transaktions-Referenzen, Zahlungsstatus und den Abrechnungszeitraum.

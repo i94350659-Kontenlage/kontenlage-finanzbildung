@@ -3,118 +3,19 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
 
-// ── Preisquelle (P0-05, § 1 PAngV) ────────────────────────────────────────────
-// Single Source of Truth: Preise werden zuerst als NETTO geführt (so, wie Stripe
-// `tax_behavior: "exclusive"` sie erwartet) und für die Anzeige inkl. 19 % MwSt.
-// berechnet. Endpreise müssen immer mit Steuerausweis angezeigt werden (§ 1 Abs. 1
-// PAngV, § 3 UStG) — deshalb formatieren wir hier einmal zentral statt im Template.
-//
-// Achtung Betreiber: Die tatsächliche Umsatzsteuerpflicht (Regelbetrieb vs.
-// Kleinunternehmerregelung § 19 UStG) ist eine unternehmerische Entscheidung und
-// liegt im Repo nicht fest. Siehe TODOperHAND.md → P0-05. Bei § 19 UStG ist die
-// Angabe „inkl. MwSt." zu entfernen und VAT_EXEMPT auf true zu setzen.
-export const VAT_RATE = 0.19;
-export const VAT_EXEMPT = false;
+import {
+  VAT_RATE,
+  VAT_EXEMPT,
+  formatGross,
+  formatNet,
+  vatLabel,
+  PRICING_PLANS_LIST,
+} from "../data/pricing";
 
-export const formatGross = (net: number): string =>
-  (net * (1 + (VAT_EXEMPT ? 0 : VAT_RATE))).toLocaleString("de-DE", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+export { VAT_RATE, VAT_EXEMPT, formatGross, formatNet, vatLabel };
 
-export const formatNet = (net: number): string =>
-  net.toLocaleString("de-DE", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+const plans = PRICING_PLANS_LIST;
 
-export const vatLabel = (): string =>
-  VAT_EXEMPT ? "zzgl. MwSt. gem. § 19 UStG" : "inkl. 19 % MwSt.";
-
-const plans = [
-  {
-    id: "basis",
-    name: "Basis",
-    price: 0,
-    period: "/ Monat",
-    highlight: false,
-    desc: "Freier Einblick in grundlegende Steuerrechner & Wochenartikel.",
-    features: [
-      { text: "1 Bildungsartikel pro Woche", included: true },
-      { text: "Basis-Rechner (Rürup §10, Sparerpauschbetrag §20)", included: true },
-      { text: "PDF-Checkliste Steuerjahr 2026", included: true },
-      { text: "100% Kostenlos ohne Registrierung", included: true },
-      { text: "Holding-Strukturierungsrechner", included: false },
-      { text: "Excel-Modelle & ELSTER-Vorlagen", included: false },
-      { text: "Kabinett Exklusivbereich", included: false },
-      { text: "Prioritäts-Support", included: false },
-    ],
-    cta: "Kostenlos starten",
-    planKey: null,
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    price: 4.9,
-    period: "/ Monat",
-    highlight: false,
-    desc: "Für Einsteiger: erweiterte Rechner & alle Wochenartikel ohne Limit.",
-    features: [
-      { text: "Unbegrenzter Artikel-Zugang", included: true },
-      { text: "Alle Basis-Rechner + Sparplan-Rechner", included: true },
-      { text: "PDF-Checkliste & Steuer-Kalender 2026", included: true },
-      { text: "Kabinett Lesebereich (ohne Download)", included: true },
-      { text: "Holding-Strukturierungsrechner", included: false },
-      { text: "Excel-Rechenmodelle (Holding, Fünftel)", included: false },
-      { text: "ELSTER-Vorlagen & Steuerformulare", included: false },
-      { text: "Prioritäts-Support", included: false },
-    ],
-    cta: "Starter wählen",
-    planKey: "starter",
-  },
-  {
-    id: "pro",
-    name: "Pro Digital",
-    price: 9,
-    period: "/ Monat",
-    highlight: true,
-    desc: "Vollständiger Zugang für Privatanleger & Vermögensaufbau.",
-    features: [
-      { text: "Unbegrenzter Artikel- & Analysenzugang", included: true },
-      { text: "Alle Rechner & Szenarien (AfA, Tilgung)", included: true },
-      { text: "Druckfertige Steuer-Dossiers (PDF-Export)", included: true },
-      { text: "Excel-Rechenmodelle (Holding, Fünftel)", included: true },
-      { text: "Kabinett Zugang (Exklusiv-Analysen)", included: true },
-      { text: "Pro-Ausgaben im Kabinett (nur hier, nicht öffentlich)", included: true },
-      { text: "ELSTER Vorlagen & Steuerformulare", included: false },
-      { text: "B2B Gehaltspaket-Analyse", included: false },
-      { text: "Prioritäts-Support (48h)", included: false },
-    ],
-    cta: "Pro Digital wählen",
-    planKey: "pro",
-  },
-  {
-    id: "executive",
-    name: "Executive B2B",
-    price: 29,
-    period: "/ Monat",
-    highlight: false,
-    desc: "Für Selbständige, Freiberufler, Geschäftsführer & Holdings.",
-    features: [
-      { text: "Alles aus Pro Digital enthalten", included: true },
-      { text: "Holding-Strukturierungsmodell (§8b KStG)", included: true },
-      { text: "VV-GmbH Excel-Rechenmodell & Satzungsvorlage", included: true },
-      { text: "Fünftelregelung Abfindungs-Planer (§34 EStG)", included: true },
-      { text: "ELSTER-Vorlagen (ESt, USt, GewSt)", included: true },
-      { text: "B2B Gehaltspaket-Analyse (GGF-Gehalt)", included: true },
-      { text: "Prioritäts-Support (Antwort in < 24h)", included: true },
-      { text: "Early Access zu neuen Steuer-Features", included: true },
-      { text: "Executive-Ausgaben: B2B-Deep-Dives mit Quellen", included: true },
-    ],
-    cta: "Executive wählen",
-    planKey: "executive",
-  },
-];
 
 
 const faqs = [
