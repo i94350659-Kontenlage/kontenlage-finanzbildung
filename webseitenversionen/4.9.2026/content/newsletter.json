@@ -1,8 +1,51 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
-  "updated": "2026-11-03",
+  "updated": "2026-11-04",
   "disclaimer": "Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.",
   "issues": [
+    {
+      "slug": "ezb-lagarde-ruecktritt-lohnwachstum-ki-fragmentierung-2026",
+      "title": "EZB-Ratsentscheidungen: Lagarde-Nachfolge, Lohnspirale 2027 und KI-Produktivität",
+      "category": "Makroökonomie & EZB",
+      "description": "Analyse der aktuellen EZB-Signale: Vorgezogener Lagarde-Rücktritt, Lohnwachstumsdaten für 2027, Lane zur KI-Adoption und Vujčić zur geopolitischen Resilienz.",
+      "teaser": "Christine Lagarde kündigt überraschend ihren Rücktritt für Februar 2027 an. Gleichzeitig signalisiert der EZB-Lohn-Tracker anhaltenden Inflationsdruck, während der Rat über KI und Fragmentierung berät.",
+      "published": "2026-11-04",
+      "asOf": "2026-11-04",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "author": "Hermes Redaktion",
+      "sections": [
+        {
+          "heading": "1. Personalie Lagarde und geldpolitische Kontinuität im Rat",
+          "body": "Der vorzeitige Rücktritt von EZB-Präsidentin Christine Lagarde im Februar 2027 – gut ein Jahr vor regulärem Amtsende – wirft Fragen zur personellen Kontinuität im Direktorium auf. Gemäß Art. 283 AEUV wird der Nachfolger durch den Europäischen Rat mit qualifizierter Mehrheit ernannt, wobei der EZB-Rat konsultiert wird. Die Märkte preisen derzeit keine unmittelbare Zinswende ein, da die geldpolitische Strategie („Strategy Review“) und der aktuelle Leitzinspfad vom gesamten Rat getragen werden. Die am 4. November 2026 veröffentlichten „Decisions taken by the Governing Council“ (non-monetary policy) zeigen indes eine Fokussierung auf operationale Resilienz: Anpassungen bei den Mindestreserveanforderungen und der Sicherheitenrahmen (Guideline EU 2024/1245) wurden beschlossen, um die Liquiditätsversorgung im Zuge der Bilanzverkleinerung (QT) stabil zu halten. Rechtlich basiert die Unabhängigkeit der EZB auf Art. 130 AEUV; ein Personalwechsel ändert nichts am Mandat der Preisniveaustabilität (§ 12 BBankG i.V.m. EZB-Statut)."
+        },
+        {
+          "heading": "2. Lohnwachstum 2027, KI-Produktivität und geopolitische Fragmentierung",
+          "body": "Der EZB-Wage-Tracker (Q3/2026 Datenbasis) projiziert für die ersten drei Quartale 2027 ein leicht höheres verhandeltes Lohnwachstum als für das Gesamtjahr 2026. Dies impliziert eine verzögerte Weitergabe vergangener Inflation in die Lohnstückkosten (Unit Labour Costs), was die EZB-Prognose für die Kerninflation (HICP ex Energy/Food) nach oben revidieren könnte. Philip R. Lane betonte in seiner Rede zur KI-Adoption, dass Europa bei der Diffusion generativer KI hinter den USA zurückbleibt; produktivitätssteigernde Effekte würden sich erst mittelfristig in der gesamtfaktoriellen Produktivität (TFP) niederschlagen. Boris Vujčić warnte vor „Fragmentierung“: Lieferkettenrisiken und handelspolitische Barrieren erhöhen die Volatilität des Output-Gaps. Für die steuerliche Bemessungsgrundlage in Deutschland (§ 2 Abs. 1 EStG) bedeutet anhaltendes Nominallohnwachstum kalte Progression (Tarifzoneneffekt), sofern der Gesetzgeber nicht gegensteuert (§ 32a EStG Anpassung). Die EZB-Ratsentscheidungen vom November 2026 (u.a. Klima-Risiken im Sicherheitenrahmen) zeigen, dass nicht-geldpolitische Mandate (Art. 127 Abs. 1 AEUV i.V.m. Art. 3 Abs. 3 EUV) operativ an Gewicht gewinnen."
+        }
+      ],
+      "sources": [
+        {
+          "label": "EZB – Decisions taken by the Governing Council (Non-monetary policy), November 2026",
+          "url": "https://www.ecb.europa.eu/press/govcdec/otherdecisions/html/index.en.html",
+          "asOf": "2026-11-04",
+          "jurisdiction": "EU"
+        },
+        {
+          "label": "Tagesschau – EZB-Chefin Lagarde tritt im Februar 2027 vorzeitig zurück",
+          "url": "https://www.tagesschau.de/wirtschaft/finanzen/ezb-lagarde-ruecktritt-2027-100.html",
+          "asOf": "2026-11-04",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "EZB-Rat",
+        "Lagarde-Nachfolge",
+        "Lohnwachstum 2027",
+        "KI-Produktivität"
+      ],
+      "rechnerHref": "/rechner"
+    },
     {
       "slug": "ezb-leitzins-ausblick-liquiditaet-2026-11-03-4817",
       "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
