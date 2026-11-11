@@ -1,8 +1,52 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
-  "updated": "2026-11-10",
+  "updated": "2026-11-11",
   "disclaimer": "Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.",
   "issues": [
+    {
+      "slug": "etf-besteuerung-vorabpauschale-berechnung-2026-11-11-5558",
+      "title": "ETF-Besteuerung 2026: Vorabpauschale, Basiszins und 30 % Teilfreistellung",
+      "category": "ETF & Indexfonds",
+      "description": "Wie die Vorabpauschale nach § 18 InvStG funktioniert: Basiszins der Deutschen Bundesbank, 70 % Basisertrag und steuerliche Freibeträge im Depot.",
+      "teaser": "Thesaurierende ETFs unterliegen Anfang Januar der Vorabpauschale. Wir zeigen die exakte mathematische Formel und wie der Sparerpauschbetrag den Abzug puffert.",
+      "published": "2026-11-11",
+      "asOf": "2026-11-11",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "author": "Hermes Redaktion",
+      "sections": [
+        {
+          "heading": "1. Gesetzliche Rechenformel nach § 18 InvStG",
+          "body": "Die Vorabpauschale berechnet sich als: Fondswert zu Jahresbeginn × Basiszins × 0,7. Bei einem Aktienfonds greift zusätzlich die 30-prozentige Teilfreistellung nach § 20 InvStG, sodass lediglich 70 % des Ertrags mit 26,375 % Abgeltungsteuer belegt werden."
+        },
+        {
+          "heading": "2. Verrechnung beim späteren Verkauf (§ 19 InvStG)",
+          "body": "Bereits gezahlte Vorabpauschalen werden beim tatsächlichen Verkauf des ETFs vom steuerpflichtigen Veräußerungsgewinn abgezogen. Eine Doppelbesteuerung ist dadurch gesetzlich ausgeschlossen."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Investmentsteuergesetz (InvStG) § 18 Vorabpauschale",
+          "url": "https://www.gesetze-im-internet.de/invstg_2018/__18.html",
+          "asOf": "2026-11-11",
+          "jurisdiction": "DE"
+        },
+        {
+          "label": "Deutsche Bundesbank — Basiszins zur Berechnung der Vorabpauschale",
+          "url": "https://www.bundesbank.de",
+          "asOf": "2026-11-11",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "ETF Vorabpauschale 2026",
+        "InvStG § 18",
+        "Teilfreistellung 30%",
+        "Basiszins ETF",
+        "Thesaurierender Fonds"
+      ],
+      "rechnerHref": "/depot-analyse"
+    },
     {
       "slug": "ezb-leitzins-ausblick-liquiditaet-2026-11-10-4995",
       "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
