@@ -1,6 +1,6 @@
 {
   "site": "https://kontolage.de",
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "disclaimer": "Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.",
   "routes": [
     {
@@ -419,6 +419,10 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "ETF & Indexfonds · 2026-11-14",
+          "body": "ETF-Handel rund um die Uhr: Liquidität, Spreads und Replikationsqualität: Während der DAX neue Hochs markiert, weiten sich Handelszeiten aus. Was bedeutet 24/7-Handel für die Kosteneffizienz von ETF-Sparplänen? (Stand 2026-11-14, 2 Quellen)"
+        },
+        {
           "heading": "Makroökonomie & EZB · 2026-11-13",
           "body": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026: Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV. (Stand 2026-11-13, 2 Quellen)"
         },
@@ -554,6 +558,56 @@
           "heading": "Arbeitnehmer · 2026-10-05",
           "body": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln: Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf. (Stand 2026-10-05, 2 Quellen)"
         }
+      ]
+    },
+    {
+      "path": "/newsletter/etf-handelszeiten-liquiditaet-spreads-2026",
+      "type": "newsletter",
+      "slug": "etf-handelszeiten-liquiditaet-spreads-2026",
+      "category": "ETF & Indexfonds",
+      "h1": "ETF-Handel rund um die Uhr: Liquidität, Spreads und Replikationsqualität",
+      "title": "ETF-Handel rund um die Uhr: Liquidität, Spreads und Replikationsqualität",
+      "description": "Analyse der Auswirkungen erweiterter Handelszeiten auf ETF-Spreads, iNAV-Abweichungen und Tracking Difference am Beispiel deutscher Indizes.",
+      "teaser": "Während der DAX neue Hochs markiert, weiten sich Handelszeiten aus. Was bedeutet 24/7-Handel für die Kosteneffizienz von ETF-Sparplänen?",
+      "intro": "Während der DAX neue Hochs markiert, weiten sich Handelszeiten aus. Was bedeutet 24/7-Handel für die Kosteneffizienz von ETF-Sparplänen?",
+      "published": "2026-11-14",
+      "updated": "2026-11-14",
+      "readTime": "4 Min.",
+      "tier": "free",
+      "rechner": "/depot-analyse",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "1. Preisfindung außerhalb der Xetra-Kernzeit: Mechanik und Akteure",
+          "body": "Die Einführung quasi durchgängiger Handelszeiten an deutschen Handelsplätzen (z. B. Tradegate 8:00–22:00 Uhr, L&S/Quotrix 7:30–23:00 Uhr) verändert die Preisfindung für ETFs auf den DAX oder MSCI World grundlegend. Während der Xetra-Kernhandel (9:00–17:30 Uhr) durch hohe Volumina und enge Spreads (oft < 0,05 % bei Large-Cap-ETFs) gekennzeichnet ist, übernehmen außerhalb dieser Zeiten Market Maker die Liquiditätsbereitstellung. Diese stellen fortlaufend An- und Verkaufskurse (Quotes) basierend auf dem indikativen Nettoinventarwert (iNAV), Futures-Märkten (Eurex FDAX) und ADR-/GDR-Preisen der zugrundeliegenden Werte. Die Spread-Kosten – die Differenz zwischen Brief- und Geldkurs – weiten sich außerhalb der Kernzeit empirisch auf das 2- bis 5-Fache aus. Für einen Sparplan mit monatlicher Ausführung um 10:00 Uhr (Xetra-offen) fällt der Spread-Kostenblock minimal aus; eine Ausführung um 20:00 Uhr über Tradegate kann bei identischem Volumen signifikant höhere implizite Transaktionskosten generieren, die direkt in die Tracking Difference einfließen."
+        },
+        {
+          "heading": "2. Steuerliche und regulatorische Einordnung der Handelskosten",
+          "body": "Aus steuerlicher Sicht (§ 20 Abs. 2 Satz 1 Nr. 7 EStG) mindern Anschaffungsnebenkosten – zu denen der effektive Spread bei der Orderausführung zählt – den steuerlichen Einstandskurs. Ein höherer Spread beim Kauf erhöht den Anschaffungskurs, ein niedrigerer Spread beim Verkauf mindert den Veräußerungserlös; beide Effekte reduzieren den steuerpflichtigen Gewinn bei Veräußerung. Regulatorisch fordert MiFID II (Delegierte Verordnung (EU) 2017/565) unter Art. 27 die \"Best Execution\". Broker müssen nachweisen, dass sie bei der Ausführung außerhalb geregelter Märkte (OTC/MTF) das bestmögliche Ergebnis für den Kunden erzielen (Preis, Kosten, Geschwindigkeit, Abwicklungswahrscheinlichkeit). Die BaFin überwacht dies via Meldungen nach Art. 26 MiFIR (Transaktionsberichterstattung). Anleger sollten prüfen, ob ihr Broker Smart Order Routing (SOR) nutzt, um Orders automatisch auf das liquideste Segment (meist Xetra bei Offenheit) zu leiten, statt standardmäßig auf das hauseigene MTF zu routen, wo Spreads oft breiter sind. Die Tracking Difference eines ETFs (Differenz Fondsrendite minus Indexrendite) setzt sich zusammen aus TER, Swap-Kosten (synthetisch), Sampling-Fehlern und Transaktionskosten des Fondsmanagers; letztere werden durch breitere Spreads bei Rebalancings im Index (z. B. DAX-Quartalsanpassung) verstärkt."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Deutsche Börse AG – Xetra Handelsmodell & Handelszeiten",
+          "url": "https://www.xetra.com/xetra-de/handel/handelsmodell",
+          "asOf": "2026-11-14",
+          "jurisdiction": "DE"
+        },
+        {
+          "label": "BaFin – Merkblatt zu Best Execution und Produktgovernance (MiFID II)",
+          "url": "https://www.bafin.de/DE/Aufsicht/FinTech/FinTech_MiFID_II/mifid_ii_best_execution.html",
+          "asOf": "2026-11-14",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "ETF-Handel",
+        "Spread-Kosten",
+        "iNAV",
+        "Market Maker",
+        "Xetra",
+        "MiFID II"
       ]
     },
     {
