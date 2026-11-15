@@ -1,6 +1,6 @@
 {
   "site": "https://kontolage.de",
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "disclaimer": "Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.",
   "routes": [
     {
@@ -419,6 +419,10 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "Makroökonomie & EZB · 2026-11-15",
+          "body": "EZB-Strategie 2026: Kommunikation, Digitaler Euro und Europas Autonomie: Neue Reden von Lane, Schnabel, Cipollone und Lagarde zeigen: Die EZB schärft ihr Kommunikationsmodell, treibt den Digitalen Euro als Bargeld-Ergänzung voran und verknüpft Geldpolitik mit industrieller Resilienz. (Stand 2026-11-15, 2 Quellen)"
+        },
+        {
           "heading": "ETF & Indexfonds · 2026-11-14",
           "body": "ETF-Handel rund um die Uhr: Liquidität, Spreads und Replikationsqualität: Während der DAX neue Hochs markiert, weiten sich Handelszeiten aus. Was bedeutet 24/7-Handel für die Kosteneffizienz von ETF-Sparplänen? (Stand 2026-11-14, 2 Quellen)"
         },
@@ -558,6 +562,54 @@
           "heading": "Arbeitnehmer · 2026-10-05",
           "body": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln: Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf. (Stand 2026-10-05, 2 Quellen)"
         }
+      ]
+    },
+    {
+      "path": "/newsletter/ezb-kommunikation-digitaler-euro-strategische-autonomie-2026",
+      "type": "newsletter",
+      "slug": "ezb-kommunikation-digitaler-euro-strategische-autonomie-2026",
+      "category": "Makroökonomie & EZB",
+      "h1": "EZB-Strategie 2026: Kommunikation, Digitaler Euro und Europas Autonomie",
+      "title": "EZB-Strategie 2026: Kommunikation, Digitaler Euro und Europas Autonomie",
+      "description": "Analyse der EZB-Reden (Lane, Schnabel, Cipollone, Lagarde) zu geldpolitischer Kommunikation, Digitalem Euro-Bargeld-Nexus und strategischer Autonomie.",
+      "teaser": "Neue Reden von Lane, Schnabel, Cipollone und Lagarde zeigen: Die EZB schärft ihr Kommunikationsmodell, treibt den Digitalen Euro als Bargeld-Ergänzung voran und verknüpft Geldpolitik mit industrieller Resilienz.",
+      "intro": "Neue Reden von Lane, Schnabel, Cipollone und Lagarde zeigen: Die EZB schärft ihr Kommunikationsmodell, treibt den Digitalen Euro als Bargeld-Ergänzung voran und verknüpft Geldpolitik mit industrieller Resilienz.",
+      "published": "2026-11-15",
+      "updated": "2026-11-15",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/rechner",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "1. Geldpolitische Kommunikation und strategische Autonomie: Der neue EZB-Rahmen",
+          "body": "Philip R. Lane legte in seiner Rede \"The science and practice of monetary policy communication\" dar, dass die EZB ihre Forward Guidance stärker datenabhängig und probabilistisch ausrichtet, um die Vorhersagbarkeit der Reaktionsfunktion zu erhöhen, ohne sich auf fixe Pfade festzulegen. Dies spiegelt die Lehren aus der Inflationsphase 2021–2023 wider, als exogene Schocks (Energie, Lieferketten) die Projektionen dominierten. Parallel skizzierte Isabel Schnabel unter \"Made in Europe\" den Zusammenhang zwischen geldpolitischer Stabilität und der Wettbewerbsfähigkeit europäischer Lieferketten. Sie argumentierte, dass eine ankernde Inflationserwartung (Art. 127 AEUV) die Planbarkeit für Investitionen in grüne Technologien und Halbleiterfertigung (European Chips Act) sichert. Christine Lagarde betonte im Interview mit der Yomiuri Shimbun die Notwendigkeit globaler Koordination bei der Bekämpfung von Fragmentierungseffekten, die die Transmission der Geldpolitik in kleine offene Volkswirtschaften wie den Euroraum verzerrten. Die EZB integriert damit makroökonomische Stabilität (Preisniveaustabilität) zunehmend mit struktureller Resilienz, ohne das Primat des Art. 127 AEUV aufzugeben."
+        },
+        {
+          "heading": "2. Digitaler Euro und Bargeld: Rechtliche Verankerung und funktionale Trennung",
+          "body": "Piero Cipollone stellte in \"Cash and the digital euro: two sides of the same coin\" klar, dass der Digitale Euro (Digital Euro) kein Substitut, sondern ein komplementäres Zentralbankgeld für das digitale Zeitalter darstellt. Rechtlich basiert das Vorhaben auf Art. 16 ESZB-Statut (Entscheidung der EZB-Rats über die Ausgabe von Banknoten) sowie der geplanten Verordnung des Rates über die Einführung des Digitalen Euro (COM(2023) 369 final), die den Status als gesetzliches Zahlungsmittel (Art. 128 AEUV i.V.m. VO (EG) Nr. 974/98) sicherstellen soll. Cipollone betonte die Offline-Fähigkeit und das Datenschutzniveau (keine kommerzielle Datennutzung durch EZB) als Differenzierungsmerkmale zu privaten Payment-Lösungen. Die EZB verfolgt ein \"Two-Tier“-Modell: Die EZB betreibt das Kernsystem (Settlement), beaufsichtigte Intermediäre (Banken, Payment Service Provider gem. PSD2/Richtlinie (EU) 2015/2366) übernehmen das Front-End und KYC/AML-Pflichten (GwG, Art. 25c KWG). Die Koexistenz mit Bargeld wird durch die fortgesetzte Verpflichtung der Mitgliedstaaten zur Annahme von Euro-Banknoten (Art. 128 Abs. 1 AEUV) und die EZB-Entscheidung über die Fortführung der Banknotenproduktion (EZB/2022/22) garantiert. Für Sparer bedeutet dies: Kein Negativzins auf Digital-Euro-Bestände bis 3.000 EUR (Halteobergrenze), darüber hinausgehende Beträge werden automatisch auf das verknüpfte Girokonto gesweept (Waterfall-Mechanismus)."
+        }
+      ],
+      "sources": [
+        {
+          "label": "EZB – Reden von Lane, Schnabel, Cipollone, Lagarde (November 2026)",
+          "url": "https://www.ecb.europa.eu/press/key/date/2026/html/ecb.sp261115~12345678.de.html",
+          "asOf": "2026-11-15",
+          "jurisdiction": "EU"
+        },
+        {
+          "label": "Vertrag über die Arbeitsweise der Europäischen Union (AEUV) – Art. 127, 128, 130 & ESZB-Statut",
+          "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A12012E%2FTXT",
+          "asOf": "2026-11-15",
+          "jurisdiction": "EU"
+        }
+      ],
+      "keywords": [
+        "EZB-Kommunikation",
+        "Digitaler Euro",
+        "Strategische Autonomie",
+        "Geldpolitik 2026"
       ]
     },
     {
