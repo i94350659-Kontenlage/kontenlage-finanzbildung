@@ -33,7 +33,7 @@ export default function Nav() {
     : menuOpen ? "rgba(10,15,30,0.99)"
     : "transparent";
 
-  const accountLink = user ? { to: "/konto", label: "Mein Konto" } : { to: "/kabinett", label: "Kabinett" };
+  const accountLink = user ? { to: "/konto", label: "Mein Konto" } : { to: "/kabinett", label: "Mitglieder-Login" };
 
   return (
     <nav style={{

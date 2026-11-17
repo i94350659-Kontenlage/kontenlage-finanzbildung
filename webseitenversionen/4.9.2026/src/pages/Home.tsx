@@ -91,7 +91,7 @@ function Hero() {
               ))}
             </div>
             <div className="hero-badge" style={{ position: "absolute", bottom: -18, left: -18, background: "linear-gradient(135deg, #1a2640, #111827)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 10, padding: "11px 15px", boxShadow: "0 8px 32px rgba(0,0,0,0.4)" }}>
-              <div style={{ fontSize: 10, color: "#a89f94", marginBottom: 3 }}>BaFin-konform · WpHG §2</div>
+              <div style={{ fontSize: 10, color: "#a89f94", marginBottom: 3 }}>100 % Provisionsfrei · WpHG § 2 konform</div>
               <div style={{ fontSize: 13, fontWeight: 600, color: "#c9a84c" }}>Keine Anlageberatung</div>
             </div>
           </div>

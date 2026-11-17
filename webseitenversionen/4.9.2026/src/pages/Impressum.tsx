@@ -170,22 +170,10 @@ export default function Impressum() {
             paddingBottom: 8,
           }}
         >
-          EU-Streitschlichtung & Verbraucherstreitbeilegung
+          Verbraucherstreitbeilegung (§ 36 VSBG)
         </h2>
-        <p style={{ fontSize: 14, color: "#cdc6be", margin: 0, marginBottom: 12 }}>
-          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die Sie unter{" "}
-          <a
-            href="https://ec.europa.eu/consumers/odr/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#c9a84c", textDecoration: "underline" }}
-          >
-            https://ec.europa.eu/consumers/odr/
-          </a>{" "}
-          finden. Unsere E-Mail-Adresse lautet: igor.studpad@gmail.com.
-        </p>
         <p style={{ fontSize: 14, color: "#cdc6be", margin: 0 }}>
-          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Unsere E-Mail-Adresse lautet: igor.studpad@gmail.com.
         </p>
       </div>
 

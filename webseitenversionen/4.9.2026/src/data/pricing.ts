@@ -53,6 +53,7 @@ export interface PricingPlan {
   legalText: string;
   features: PlanFeature[];
   cta: string;
+  checkoutUrl?: string;
 }
 
 export const PRICING_PLANS: Record<"basis" | "starter" | "pro" | "executive", PricingPlan> = {
@@ -96,6 +97,7 @@ export const PRICING_PLANS: Record<"basis" | "starter" | "pro" | "executive", Pr
     desc: "Für Einsteiger: erweiterte Rechner & alle Wochenartikel ohne Limit.",
     tagline: "Erweiterte Rechner und alle Artikel ohne Limit.",
     legalText: `Starter: ${formatGross(4.9)} € pro Monat brutto inkl. 19 % MwSt. (${formatNet(4.9)} € netto)`,
+    checkoutUrl: "https://buy.stripe.com/aFa8wP1FddF1dvq36Rc7u00",
     features: [
       { text: "Unbegrenzter Artikel-Zugang", included: true },
       { text: "Alle Basis-Rechner + Sparplan-Rechner", included: true },
@@ -122,6 +124,7 @@ export const PRICING_PLANS: Record<"basis" | "starter" | "pro" | "executive", Pr
     desc: "Vollständiger Zugang für Privatanleger & Vermögensaufbau.",
     tagline: "Vollständiger Zugang für Privatanleger.",
     legalText: `Pro Digital: ${formatGross(9.0)} € pro Monat brutto inkl. 19 % MwSt. (${formatNet(9.0)} € netto)`,
+    checkoutUrl: "https://buy.stripe.com/9B66oHabJ44r7727n7c7u01",
     features: [
       { text: "Unbegrenzter Artikel- & Analysenzugang", included: true },
       { text: "Alle Rechner & Szenarien (AfA, Tilgung)", included: true },
@@ -149,6 +152,7 @@ export const PRICING_PLANS: Record<"basis" | "starter" | "pro" | "executive", Pr
     desc: "Für Selbständige, Freiberufler, Geschäftsführer & Holdings.",
     tagline: "Für Selbständige, Freiberufler und Holdings.",
     legalText: `Executive B2B: ${formatGross(29.0)} € pro Monat brutto inkl. 19 % MwSt. (${formatNet(29.0)} € netto)`,
+    checkoutUrl: "https://buy.stripe.com/00w8wPabJ44rezufTDc7u02",
     features: [
       { text: "Alles aus Pro Digital enthalten", included: true },
       { text: "Holding-Strukturierungsmodell (§8b KStG)", included: true },

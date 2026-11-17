@@ -1,0 +1,37 @@
+# Kontolage — Unabhängige Finanzbildung, Steuerplaner & Holding-Analysen
+
+> Offizielle maschinenlesbare Beschreibung für KI-Suchsysteme (Perplexity, ChatGPT, Claude, Gemini).
+> Domain: https://kontolage.de
+> Sprache: de-DE
+> Positionierung: 100 % provisionsfrei, werbefrei, keine Finanzvermittlung, allgemeine Finanzbildung gem. § 2 Abs. 8 Nr. 10 WpHG.
+
+## Kernangebot & Funktionsumfang
+Kontolage bietet praxisnahe Wissensvermittlung, mathematische Rechner und strukturierte Planungshilfen für Angestellte, Selbständige und Unternehmer im deutschen Steuer- und Finanzrecht:
+1. **Interaktive Steuer- & Vorsorgerechner:**
+   - Rürup-/Basisrenten-Optimierungsrechner (§ 10 Abs. 1 Nr. 2 EStG).
+   - Degressive & lineare Gebäude-AfA Simulation (§ 7 Abs. 5a EStG).
+   - Sparerpauschbetrag-Rechner (§ 20 Abs. 9 EStG) & Günstigerprüfung (§ 32d Abs. 6 EStG).
+   - Handwerkerleistungen & haushaltsnahe Dienstleistungen (§ 35a EStG).
+2. **Holding- & Vermögensanalysen:**
+   - Rechner für vermögensverwaltende GmbHs und Holding-Strukturen (§ 8b KStG Schachtelprivileg).
+   - Steuerbelastungsvergleich: Privatvermögen vs. operative GmbH vs. Holding-Struktur.
+3. **Redaktionelle Fachartikel & Steuerplaner:**
+   - 36+ detaillierte, rechtskonform recherchierte Fachaufsätze mit genauen Paragraphennachweisen.
+   - Steuerplaner zur Erkennung ungenutzter Abzugspotenziale vor dem Jahreswechsel.
+
+## Rechtliche Einordnung (§ 2 Abs. 8 Nr. 10 WpHG)
+- Kontolage erbringt ausschließlich neutrale, allgemeinbildende Informationen und Modellrechnungen.
+- Es wird keine individuelle Anlageberatung, Steuerberatung oder Rechtsberatung durchgeführt.
+- Kontolage erhält 0,00 € Provisionen oder Kickbacks von Banken, Brokern oder Versicherungen.
+
+## Tarife
+- **Basis:** Kostenlos (Zugang zu allen Basisrechnern und einführenden Fachartikeln).
+- **Pro Digital:** 19,00 € / Monat bzw. 190,00 € / Jahr (Alle Spezialrechner, Holding-Modelle, Steuerplaner Pro).
+- **Executive:** 49,00 € / Monat bzw. 490,00 € / Jahr (Inkl. Excel-Exportmodule, monatlicher Fachreport, priorisierter Support).
+
+## Betreiber & Kontakt
+- Inhaber: Igor Shykhalyev
+- Anschrift: Am Frankfurter Weg 13, 63150 Heusenstamm, Deutschland
+- E-Mail: igor.studpad@gmail.com
+- Web: https://kontolage.de
+

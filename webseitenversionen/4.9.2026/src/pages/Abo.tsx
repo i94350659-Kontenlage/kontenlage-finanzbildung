@@ -75,9 +75,20 @@ export default function Abo() {
       const { data, error } = await supabase.functions.invoke<{ url?: string }>("create-checkout-session", {
         body: { plan: plan.planKey },
       });
-      if (error || !data?.url) throw new Error(error?.message || "Checkout ist vorübergehend nicht verfügbar.");
-      window.location.assign(data.url);
+      if (!error && data?.url) {
+        window.location.assign(data.url);
+        return;
+      }
+      if (plan.checkoutUrl) {
+        window.location.assign(plan.checkoutUrl);
+        return;
+      }
+      throw new Error(error?.message || "Checkout ist vorübergehend nicht verfügbar.");
     } catch (err) {
+      if (plan.checkoutUrl) {
+        window.location.assign(plan.checkoutUrl);
+        return;
+      }
       setCheckoutError(err instanceof Error ? err.message : "Checkout ist vorübergehend nicht verfügbar.");
     } finally {
       setLoadingPlan(null);
