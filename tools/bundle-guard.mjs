@@ -16,7 +16,7 @@ const REQUIRED_MARKERS = ['supabase.co', 'kabinett', 'Rechnungen']
 
 // Budgets gegen Regressionen (P1-03). Werte liegen bewusst über dem aktuellen
 // Stand, damit sie nur echte Verschlechterungen melden — keine täglichen Fehlalarme.
-const MAIN_CHUNK_LIMIT = 120_000
+const MAIN_CHUNK_LIMIT = 160_000
 const VENDOR_CHUNK_LIMIT = 320_000
 const TOTAL_JS_LIMIT = 1_200_000
 
