@@ -1,6 +1,6 @@
 {
   "site": "https://kontolage.de",
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "disclaimer": "Die bereitgestellten Inhalte, Rechner und Simulationen auf Kontolage.de dienen ausschließlich der allgemeinen Finanzbildung und neutralen Information. Sie stellen keine individuelle Anlageberatung im Sinne des WpHG, keine Rechtsberatung und keine Steuerberatung im Sinne des Steuerberatungsgesetzes (StBerG) dar. Historische Renditen und steuerliche Modellrechnungen sind keine verlässlichen Indikatoren für zukünftige Entwicklungen.",
   "routes": [
     {
@@ -419,6 +419,10 @@
       "priority": "0.8",
       "sections": [
         {
+          "heading": "ETF & Indexfonds · 2026-11-26",
+          "body": "Einzelaktien oder ETFs: Kostenfallen, Diversifikation und Steuerrecht im Vergleich: Aktuelle Marktberichte zeigen volatile DAX-Bewegungen. Wir vergleichen mathematisch die Total Expense Ratio, Transaktionskosten und das Teilfreistellungsverfahren nach § 20 InvStG. (Stand 2026-11-26, 2 Quellen)"
+        },
+        {
           "heading": "Makroökonomie & EZB · 2026-11-25",
           "body": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026: Die EZB-Geldpolitik setzt den Rahmen für kurzfristige Sparzinsen und langfristige Anleiherenditen. Eine nüchterne Einordnung nach Art. 127 AEUV. (Stand 2026-11-25, 2 Quellen)"
         },
@@ -602,6 +606,54 @@
           "heading": "Arbeitnehmer · 2026-10-05",
           "body": "Homeoffice- und Pendlerpauschale 2026: Werbungskosten optimal bündeln: Tagespauschale von 6 € bis maximal 1.260 € im Jahr: Wann das Homeoffice greift und wann die Entfernungspauschale angesetzt werden darf. (Stand 2026-10-05, 2 Quellen)"
         }
+      ]
+    },
+    {
+      "path": "/newsletter/einzelaktien-vs-etf-kosten-vergleich-steuerliche-aspekte-2026",
+      "type": "newsletter",
+      "slug": "einzelaktien-vs-etf-kosten-vergleich-steuerliche-aspekte-2026",
+      "category": "ETF & Indexfonds",
+      "h1": "Einzelaktien oder ETFs: Kostenfallen, Diversifikation und Steuerrecht im Vergleich",
+      "title": "Einzelaktien oder ETFs: Kostenfallen, Diversifikation und Steuerrecht im Vergleich",
+      "description": "Analyse der Kostenstrukturen, Klumpenrisiken und steuerlichen Unterschiede (§ InvStG, § EStG) bei Einzelaktien versus breit gestreuten ETFs für deutsche Anleger.",
+      "teaser": "Aktuelle Marktberichte zeigen volatile DAX-Bewegungen. Wir vergleichen mathematisch die Total Expense Ratio, Transaktionskosten und das Teilfreistellungsverfahren nach § 20 InvStG.",
+      "intro": "Aktuelle Marktberichte zeigen volatile DAX-Bewegungen. Wir vergleichen mathematisch die Total Expense Ratio, Transaktionskosten und das Teilfreistellungsverfahren nach § 20 InvStG.",
+      "published": "2026-11-26",
+      "updated": "2026-11-26",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "rechner": "/depot-analyse",
+      "changefreq": "monthly",
+      "priority": "0.7",
+      "sections": [
+        {
+          "heading": "1. Kostenstruktur und Diversifikationsmathematik",
+          "body": "Die aktuellen Marktberichte (Tagesschau, 26.11.2026) thematisieren die Frage, ob Einzelaktien eine \"Kostenfalle oder Goldgrube\" darstellen. Aus rein mathematischer Sicht dominieren bei Einzelaktien die impliziten Kosten: Bid-Ask-Spreads, Marktimpact-Kosten und Ordergebühren summieren sich bei einem Portfolio von 20–30 Titeln (notwendig für Basisdiversifikation) auf jährlich 0,3 % bis 0,8 % des Depotvolumens, sofern kein provisionsfreier Broker genutzt wird. Ein globaler MSCI World ETF (z. B. IE00B4L5Y983) weist eine Total Expense Ratio (TER) von 0,20 % p. a. auf; hinzu kommen einmalige Spreadkosten beim Kauf. Das Klumpenrisiko (Konzentrationsrisiko) lässt sich über die Herfindahl-Hirschman-Index (HHI) quantifizieren: Ein 20-Aktien-Portfolio erreicht oft HHI-Werte > 0,05 (entspricht < 20 effektiven Positionen), während ein Welt-ETF mit 1.500+ Titeln HHI < 0,001 aufweist. Nach Modern Portfolio Theory (Markowitz) reduziert sich das unsystematische Risiko nur durch breite Streuung gegen null; das systematische Risiko (Beta) bleibt identisch. Anleger müssen daher entscheiden, ob sie die Alpha-Jagd (Überrendite) die höheren Kosten und das Restrisiko rechtfertigt."
+        },
+        {
+          "heading": "2. Steuerliche Einordnung nach InvStG und EStG",
+          "body": "Steuerlich differenziert das Investmentsteuergesetz (InvStG) grundlegend zwischen direkten Aktienbestand und Fondsanteilen. Bei Einzelaktien fließen Dividenden brutto zu (§ 20 Abs. 1 Nr. 1 EStG), unterliegen dem Teileinkünfteverfahren (§ 3 Nr. 40 EStG: 60 % steuerpflichtig bei Betriebsvermögen, privat 100 % mit Abgeltungsteuer 25 % + Soli + ggf. KiSt) und realisierten Kursgewinnen (§ 20 Abs. 2 EStG). Verluste sind nur mit Gewinnen aus Kapitalvermögen verrechenbar (§ 20 Abs. 6 EStG). Bei thesaurierenden ETFs greift das OGAW-IV-konforme Teilfreistellungsverfahren (§ 5, § 18 InvStG): Die Vorabpauschale (§ 18 InvStG) wird jährlich auf Basis des Basiszinses (2026: 2,55 % * 0,7 = 1,785 %) besteuert, wobei die Teilfreistellung für Aktienfonds 30 % beträgt (effektive Besteuerung ca. 70 % der Vorabpauschale). Bei Ausschüttung erfolgt analoge Behandlung. Der entscheidende Vorteil des ETFs liegt in der innerfondsseitigen Verlustverrechnung (§ 8 InvStG) und dem Steuerstundungseffekt bei Thesaurierern: Kursgewinne werden erst bei Veräußerung der Anteile realisiert (§ 7 InvStG), was den Zinseszinseffekt gegenüber jährlicher Dividendenbesteuerung bei Einzelaktien mathematisch begünstigt. Die Quellensteueroptimierung (z. B. US-Quellensteuer 15 % via DBA) übernimmt die Fondsgesellschaft zentral (§ 13 InvStG), während der Einzelaktieninhaber Formulare (W-8BEN) selbst verwalten muss."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Tagesschau Finanzen: Marktberichte & Analyse Einzelaktien vs. Fonds",
+          "url": "https://www.tagesschau.de/wirtschaft/finanzen/",
+          "asOf": "2026-11-26",
+          "jurisdiction": "DE"
+        },
+        {
+          "label": "Investmentsteuergesetz (InvStG) in der Fassung 2026",
+          "url": "https://www.gesetze-im-internet.de/invstg_2018/",
+          "asOf": "2026-11-26",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "ETF vs Einzelaktien",
+        "Kostenvergleich Depot",
+        "Teilfreistellung InvStG",
+        "Diversifikation Klumpenrisiko"
       ]
     },
     {

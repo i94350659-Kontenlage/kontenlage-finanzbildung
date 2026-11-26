@@ -1,8 +1,51 @@
 {
   "$comment": "Freie Ausgaben des Kontolage-Newsletters. Single Source of Truth für SEO: /newsletter, /newsletter/:slug, Sitemap und Prerender lesen diese Datei. Gesperrte Ausgaben (tier pro/executive) stehen NICHT hier, sondern ausschließlich in der Supabase-Tabelle newsletter_issues — sonst läge der bezahlte Text im öffentlichen Bundle. Pflege: Skill kontolage-newsletter-editor, Prüfung: tools/newsletter-lint.mjs.",
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "disclaimer": "Die bereitgestellten Inhalte dienen ausschließlich der allgemeinen Finanzbildung gemäß § 2 Abs. 8 Nr. 10 WpHG. Sie stellen keine individuelle Anlageberatung, keine Steuerberatung und keine Rechtsberatung dar.",
   "issues": [
+    {
+      "slug": "einzelaktien-vs-etf-kosten-vergleich-steuerliche-aspekte-2026",
+      "title": "Einzelaktien oder ETFs: Kostenfallen, Diversifikation und Steuerrecht im Vergleich",
+      "category": "ETF & Indexfonds",
+      "description": "Analyse der Kostenstrukturen, Klumpenrisiken und steuerlichen Unterschiede (§ InvStG, § EStG) bei Einzelaktien versus breit gestreuten ETFs für deutsche Anleger.",
+      "teaser": "Aktuelle Marktberichte zeigen volatile DAX-Bewegungen. Wir vergleichen mathematisch die Total Expense Ratio, Transaktionskosten und das Teilfreistellungsverfahren nach § 20 InvStG.",
+      "published": "2026-11-26",
+      "asOf": "2026-11-26",
+      "readTime": "5 Min.",
+      "tier": "free",
+      "author": "Hermes Redaktion",
+      "sections": [
+        {
+          "heading": "1. Kostenstruktur und Diversifikationsmathematik",
+          "body": "Die aktuellen Marktberichte (Tagesschau, 26.11.2026) thematisieren die Frage, ob Einzelaktien eine \"Kostenfalle oder Goldgrube\" darstellen. Aus rein mathematischer Sicht dominieren bei Einzelaktien die impliziten Kosten: Bid-Ask-Spreads, Marktimpact-Kosten und Ordergebühren summieren sich bei einem Portfolio von 20–30 Titeln (notwendig für Basisdiversifikation) auf jährlich 0,3 % bis 0,8 % des Depotvolumens, sofern kein provisionsfreier Broker genutzt wird. Ein globaler MSCI World ETF (z. B. IE00B4L5Y983) weist eine Total Expense Ratio (TER) von 0,20 % p. a. auf; hinzu kommen einmalige Spreadkosten beim Kauf. Das Klumpenrisiko (Konzentrationsrisiko) lässt sich über die Herfindahl-Hirschman-Index (HHI) quantifizieren: Ein 20-Aktien-Portfolio erreicht oft HHI-Werte > 0,05 (entspricht < 20 effektiven Positionen), während ein Welt-ETF mit 1.500+ Titeln HHI < 0,001 aufweist. Nach Modern Portfolio Theory (Markowitz) reduziert sich das unsystematische Risiko nur durch breite Streuung gegen null; das systematische Risiko (Beta) bleibt identisch. Anleger müssen daher entscheiden, ob sie die Alpha-Jagd (Überrendite) die höheren Kosten und das Restrisiko rechtfertigt."
+        },
+        {
+          "heading": "2. Steuerliche Einordnung nach InvStG und EStG",
+          "body": "Steuerlich differenziert das Investmentsteuergesetz (InvStG) grundlegend zwischen direkten Aktienbestand und Fondsanteilen. Bei Einzelaktien fließen Dividenden brutto zu (§ 20 Abs. 1 Nr. 1 EStG), unterliegen dem Teileinkünfteverfahren (§ 3 Nr. 40 EStG: 60 % steuerpflichtig bei Betriebsvermögen, privat 100 % mit Abgeltungsteuer 25 % + Soli + ggf. KiSt) und realisierten Kursgewinnen (§ 20 Abs. 2 EStG). Verluste sind nur mit Gewinnen aus Kapitalvermögen verrechenbar (§ 20 Abs. 6 EStG). Bei thesaurierenden ETFs greift das OGAW-IV-konforme Teilfreistellungsverfahren (§ 5, § 18 InvStG): Die Vorabpauschale (§ 18 InvStG) wird jährlich auf Basis des Basiszinses (2026: 2,55 % * 0,7 = 1,785 %) besteuert, wobei die Teilfreistellung für Aktienfonds 30 % beträgt (effektive Besteuerung ca. 70 % der Vorabpauschale). Bei Ausschüttung erfolgt analoge Behandlung. Der entscheidende Vorteil des ETFs liegt in der innerfondsseitigen Verlustverrechnung (§ 8 InvStG) und dem Steuerstundungseffekt bei Thesaurierern: Kursgewinne werden erst bei Veräußerung der Anteile realisiert (§ 7 InvStG), was den Zinseszinseffekt gegenüber jährlicher Dividendenbesteuerung bei Einzelaktien mathematisch begünstigt. Die Quellensteueroptimierung (z. B. US-Quellensteuer 15 % via DBA) übernimmt die Fondsgesellschaft zentral (§ 13 InvStG), während der Einzelaktieninhaber Formulare (W-8BEN) selbst verwalten muss."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Tagesschau Finanzen: Marktberichte & Analyse Einzelaktien vs. Fonds",
+          "url": "https://www.tagesschau.de/wirtschaft/finanzen/",
+          "asOf": "2026-11-26",
+          "jurisdiction": "DE"
+        },
+        {
+          "label": "Investmentsteuergesetz (InvStG) in der Fassung 2026",
+          "url": "https://www.gesetze-im-internet.de/invstg_2018/",
+          "asOf": "2026-11-26",
+          "jurisdiction": "DE"
+        }
+      ],
+      "keywords": [
+        "ETF vs Einzelaktien",
+        "Kostenvergleich Depot",
+        "Teilfreistellung InvStG",
+        "Diversifikation Klumpenrisiko"
+      ],
+      "rechnerHref": "/depot-analyse"
+    },
     {
       "slug": "ezb-leitzins-ausblick-liquiditaet-2026-11-25-3781",
       "title": "EZB-Zinsstruktur & Liquidität: Einlagefazilität und Auswirkungen auf Festgeld 2026",
